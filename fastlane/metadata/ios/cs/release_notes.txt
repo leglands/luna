@@ -1,0 +1,4 @@
+• Segmentovaný cyklový prsten s barevným kódováním
+• Podpora 40+ jazyků
+• Vylepšené záruky soukromí
+• Místní šifrované úložiště AES-256-GCM

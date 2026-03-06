@@ -1,0 +1,4 @@
+• Segmentirani prsten ciklusa s kodiranjem boja
+• Podrška za 40+ jezika
+• Poboljšana jamstva privatnosti
+• Lokalna šifrirana pohrana AES-256-GCM

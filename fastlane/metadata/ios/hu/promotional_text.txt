@@ -1,0 +1,1 @@
+Kövesse ciklusát privátban. AES-256 titkosítás. Nincs felhő. Nincs nyomkövetés.

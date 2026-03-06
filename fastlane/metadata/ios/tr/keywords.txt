@@ -1,0 +1,1 @@
+döngü,adet,doğurganlık,yumurtlama,gizlilik,çevrimdışı,şifreli

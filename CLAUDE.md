@@ -35,7 +35,10 @@
 ### iOS — App Store Connect / TestFlight
 - **Bundle ID** : `com.macaron.luna` · Team : `P36X572LL9`
 - **App ID ASC** : `6760126548`
-- **Status** : TestFlight internal ✅ · v0.1.0 build 1 · 4.9 MB IPA · 6 mars 2026
+- **Status** : ✅ **Metadata + screenshots uploadés en 36 langues** · TestFlight internal v0.1.0 build 1
+  - Métadonnées : nom, sous-titre, description, keywords, promo, release notes
+  - Screenshots : 6 iPhone 6.7" par locale · 36 locales ASC couvertes
+  - App Store : prêt pour soumission (copyright ✅ · support URL ✅ · precheck ✅)
 - **Cert** : `Apple Distribution: sylvain legland (P36X572LL9)`
 - **Provisioning** : `luna-appstore-distribution.mobileprovision`
 - **ASC API Key** : `~/.appstoreconnect/private_keys/AuthKey_48GLJZYX5K.p8` · issuer `69a6de74-3cdf-47e3-e053-5b8c7c11a4d1`

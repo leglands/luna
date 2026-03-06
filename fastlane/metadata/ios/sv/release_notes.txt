@@ -1,0 +1,4 @@
+• Segmenterad cykelring med färgkodning
+• Stöd för 40+ språk
+• Förbättrade integritetskaarntier
+• Lokalt krypterat lagringsutrymme AES-256-GCM

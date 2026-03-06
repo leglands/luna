@@ -1,0 +1,4 @@
+• Anel de ciclo segmentado com código de cores
+• Suporte para 40+ idiomas
+• Garantias de privacidade melhoradas
+• Armazenamento encriptado AES-256-GCM

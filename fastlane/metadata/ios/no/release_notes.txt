@@ -1,0 +1,4 @@
+• Segmentert syklusring med fargekodig
+• Støtte for 40+ språk
+• Forbedrede personverngarantier
+• Lokalt kryptert lagring AES-256-GCM

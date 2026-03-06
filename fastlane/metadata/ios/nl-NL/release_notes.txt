@@ -1,0 +1,4 @@
+• Gesegmenteerde cyclusring met kleurcodering
+• Ondersteuning voor 40+ talen
+• Verbeterde privacygaranties
+• Lokale versleutelde opslag AES-256-GCM

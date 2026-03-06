@@ -1,0 +1,1 @@
+Pratite ciklus s privatnošću. AES-256 šifriranje. Bez oblaka. Bez praćenja. Podaci ostaju na telefonu.

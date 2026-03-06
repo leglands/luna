@@ -1,0 +1,4 @@
+• Segmentoitu syklirengas värikoodauksella
+• Tuki 40+ kielelle
+• Parannetut tietosuojatakuut
+• Paikallinen salattu tallennus AES-256-GCM

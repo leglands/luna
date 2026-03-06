@@ -12,14 +12,14 @@ FEATURES
 • 6-cycle trend analysis & insights
 
 PRIVACY GUARANTEES
-✓ AES-256-GCM encryption — your key, your data
-✓ No account or sign-up required
-✓ No third-party SDKs (no Firebase, no Crashlytics, no analytics)
-✓ No advertising network
-✓ Zero telemetry
-✓ Panic wipe: erase all data in 3 taps
-✓ Encrypted iCloud/local backup (optional)
-✓ Open source: github.com/macaron-software/luna
+• AES-256-GCM encryption — your key, your data
+• No account or sign-up required
+• No third-party SDKs (no Firebase, no Crashlytics, no analytics)
+• No advertising network
+• Zero telemetry
+• Panic wipe: erase all data in 3 taps
+• Encrypted iCloud/local backup (optional)
+• Open source: github.com/macaron-software/luna
 
 ACCESSIBILITY
 Full VoiceOver support · Dynamic Type · 40+ languages

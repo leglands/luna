@@ -1,0 +1,4 @@
+• Vòng tròn chu kỳ phân đoạn có mã màu
+• Hỗ trợ 40+ ngôn ngữ
+• Đảm bảo quyền riêng tư nâng cao
+• Lưu trữ cục bộ được mã hóa AES-256-GCM

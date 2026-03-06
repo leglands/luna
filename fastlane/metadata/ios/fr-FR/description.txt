@@ -12,11 +12,11 @@ FONCTIONNALITÉS
 • Analyse des tendances sur 6 cycles
 
 GARANTIES DE CONFIDENTIALITÉ
-✓ Chiffrement AES-256-GCM — votre clé, vos données
-✓ Aucun compte ou inscription requis
-✓ Aucun SDK tiers (pas de Firebase, pas de Crashlytics)
-✓ Aucun réseau publicitaire
-✓ Zéro télémétrie
-✓ Effacement d'urgence : supprimez tout en 3 taps
-✓ Sauvegarde iCloud/locale chiffrée (optionnel)
-✓ Open source : github.com/macaron-software/luna
+• Chiffrement AES-256-GCM — votre clé, vos données
+• Aucun compte ou inscription requis
+• Aucun SDK tiers (pas de Firebase, pas de Crashlytics)
+• Aucun réseau publicitaire
+• Zéro télémétrie
+• Effacement d'urgence : supprimez tout en 3 taps
+• Sauvegarde iCloud/locale chiffrée (optionnel)
+• Open source : github.com/macaron-software/luna

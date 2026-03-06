@@ -1,0 +1,4 @@
+• Gelang kitaran tersegmen dengan pengekodan warna
+• Sokongan 40+ bahasa
+• Jaminan privasi yang dipertingkatkan
+• Storan tempatan yang disulitkan AES-256-GCM

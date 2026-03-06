@@ -1,0 +1,4 @@
+• Segmentowany pierścień cyklu z kodowaniem kolorów
+• Obsługa 40+ języków
+• Ulepszone gwarancje prywatności
+• Lokalna zaszyfrowana pamięć AES-256-GCM
