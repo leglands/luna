@@ -23,7 +23,10 @@
 ### Android — Google Play
 - **Package** : `com.macaron.luna` (namespace source : `app.luna` inchangé)
 - **App ID Play Console** : `4973061748192418870` · Developer : `6295830866613067582`
-- **Status** : Tests internes ✅ · v1.0.0 (versionCode 1) · 9.8 MB AAB · 6 mars 2026
+- **Status** : ✅ **Production en cours d'examen Google** · v0.1.1 (versionCode 2) · soumis le 2 mai 2025
+  - Internal testing ✅ v1.0.0 (versionCode 1) · 9.8 MB AAB · 6 mars 2026
+  - 177 pays/régions sélectionnés · 40 fiches store localisées
+  - 16KB page size : erreur ignorée (NDK fix requis pour v0.1.2)
 - **URL** : `play.google.com/console/.../app/4973061748192418870`
 - **Keystore** : `android-app/keystore/luna-release.jks` · alias `luna` · pw `luna_store_2026`
 - **Key props** : `android-app/key.properties` (non commité)
