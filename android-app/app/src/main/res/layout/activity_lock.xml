@@ -86,11 +86,11 @@
             <Button android:id="@+id/btn8" android:layout_width="72dp" android:layout_height="72dp" android:text="8" android:textSize="22sp" android:layout_margin="4dp" />
             <Button android:id="@+id/btn9" android:layout_width="72dp" android:layout_height="72dp" android:text="9" android:textSize="22sp" android:layout_margin="4dp" />
         </LinearLayout>
-        <!-- Rangée *-0-⌫ -->
+        <!-- Rangée *-0--->
         <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
             <View android:layout_width="72dp" android:layout_height="72dp" android:layout_margin="4dp" />
             <Button android:id="@+id/btn0" android:layout_width="72dp" android:layout_height="72dp" android:text="0" android:textSize="22sp" android:layout_margin="4dp" />
-            <Button android:id="@+id/btnDelete" android:layout_width="72dp" android:layout_height="72dp" android:text="⌫" android:textSize="22sp" android:layout_margin="4dp" />
+            <Button android:id="@+id/btnDelete" android:layout_width="72dp" android:layout_height="72dp" android:text="" android:textSize="22sp" android:layout_margin="4dp" />
         </LinearLayout>
 
     </LinearLayout>

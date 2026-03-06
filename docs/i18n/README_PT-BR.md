@@ -18,15 +18,15 @@
 
 | | |
 |---|---|
-| 📵 | **Nenhum servidor.** Não temos nenhum. Sem backend, sem banco de dados remoto, nenhum endpoint de API que o app usa. |
-| 📶 | **Funciona 100% offline.** Nenhuma conexão com a internet é jamais necessária ou usada. Instale uma vez, use para sempre sem rede. |
-| 🚷 | **Sem conta, sem cadastro.** Sem e-mail, sem senha, sem login social, sem verificação de identidade. Nada. |
-| 🧩 | **Sem dependência de serviços de terceiros.** Sem Firebase, sem Google Analytics, sem Mixpanel, sem Sentry, sem Amplitude. Zero SDKs externos. |
-| 🔐 | **Dados criptografados apenas no seu telefone.** Banco de dados SQLCipher criptografado com AES-256-GCM. Chave derivada do seu PIN via Argon2id. A chave nunca sai do dispositivo. |
-| ☁️ | **Backup em nuvem opcional — totalmente criptografado.** iCloud/Google Drive recebe um blob criptografado opaco. Nem Apple nem Google conseguem lê-lo. |
-| 🚫 | **Zero telemetria, zero analytics.** Sem relatórios de falha, sem métricas de uso, sem testes A/B. Nada sai do seu telefone. |
-| 💥 | **Apagamento de pânico em 3 segundos.** Segure o botão: banco de dados + sal + todas as chaves criptográficas são destruídas irreversivelmente. |
-| 🔓 | **100% código aberto.** MIT/Apache-2.0. Cada linha de código é pública e auditável por qualquer pessoa. |
+| | **Nenhum servidor.** Não temos nenhum. Sem backend, sem banco de dados remoto, nenhum endpoint de API que o app usa. |
+| | **Funciona 100% offline.** Nenhuma conexão com a internet é jamais necessária ou usada. Instale uma vez, use para sempre sem rede. |
+| | **Sem conta, sem cadastro.** Sem e-mail, sem senha, sem login social, sem verificação de identidade. Nada. |
+| | **Sem dependência de serviços de terceiros.** Sem Firebase, sem Google Analytics, sem Mixpanel, sem Sentry, sem Amplitude. Zero SDKs externos. |
+| | **Dados criptografados apenas no seu telefone.** Banco de dados SQLCipher criptografado com AES-256-GCM. Chave derivada do seu PIN via Argon2id. A chave nunca sai do dispositivo. |
+| | **Backup em nuvem opcional — totalmente criptografado.** iCloud/Google Drive recebe um blob criptografado opaco. Nem Apple nem Google conseguem lê-lo. |
+| | **Zero telemetria, zero analytics.** Sem relatórios de falha, sem métricas de uso, sem testes A/B. Nada sai do seu telefone. |
+| | **Apagamento de pânico em 3 segundos.** Segure o botão: banco de dados + sal + todas as chaves criptográficas são destruídas irreversivelmente. |
+| | **100% código aberto.** MIT/Apache-2.0. Cada linha de código é pública e auditável por qualquer pessoa. |
 
 ---
 
@@ -43,9 +43,9 @@
 | **Sem SDK oculto** | O binário contém apenas o que você vê neste repositório. |
 
 ```
-iOS:     ATS enforced — no arbitrary network loads
+iOS: ATS enforced — no arbitrary network loads
 Android: networkSecurityConfig blocks ALL outbound connections
-Rust:    Cargo.toml has zero networking dependencies
+Rust: Cargo.toml has zero networking dependencies
 ```
 
 ---
@@ -70,4 +70,4 @@ Núcleo Rust compartilhado (UniFFI) · SwiftUI iOS · Kotlin Android · SQLCiphe
 
 MIT / Apache-2.0 — [LICENSE](../../README.md)
 
-> ⚠️ Este aplicativo não fornece conselho médico.
+> Este aplicativo não fornece conselho médico.

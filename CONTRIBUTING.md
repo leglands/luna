@@ -14,12 +14,12 @@ outside the device without explicit opt-in. All new features must respect:
 
 | Area | Skills needed |
 |------|--------------|
-| 🔐 Security audit | Rust, cryptography |
-| ♿ Accessibility | iOS VoiceOver, Android TalkBack |
-| 🌐 Translations | Any of the 40 supported languages |
-| 📊 BBT chart | SwiftUI Charts / MPAndroidChart |
-| ☁️ CloudKit sync | Swift, CloudKit |
-| 🔬 Science review | Reproductive medicine, statistics |
+| Security audit | Rust, cryptography |
+| Accessibility | iOS VoiceOver, Android TalkBack |
+| Translations | Any of the 40 supported languages |
+| BBT chart | SwiftUI Charts / MPAndroidChart |
+| CloudKit sync | Swift, CloudKit |
+| Science review | Reproductive medicine, statistics |
 
 ## Development Setup
 

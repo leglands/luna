@@ -18,15 +18,15 @@
 
 | | |
 |---|---|
-| 📵 | **Nessun server.** Non ne abbiamo. Nessun backend, nessun database remoto, nessun endpoint API a cui l'app si connette. |
-| 📶 | **Funziona al 100% offline.** Nessuna connessione internet è mai richiesta o utilizzata. Installa una volta, usa per sempre senza rete. |
-| 🚷 | **Nessun account, nessuna registrazione.** Nessuna email, nessuna password, nessun login social, nessuna verifica d'identità. Nulla. |
-| 🧩 | **Nessuna dipendenza da servizi di terze parti.** Nessun Firebase, Google Analytics, Mixpanel, Sentry, Amplitude. Zero SDK esterni. |
-| 🔐 | **Dati cifrati solo sul tuo telefono.** Database SQLCipher cifrato con AES-256-GCM. Chiave derivata dal tuo PIN via Argon2id. La chiave non lascia mai il dispositivo. |
-| ☁️ | **Backup cloud opzionale — completamente cifrato.** iCloud/Google Drive riceve un blob cifrato opaco. Nemmeno Apple e Google possono leggerlo. |
-| 🚫 | **Zero telemetria, zero analytics.** Nessun report di crash, nessuna metrica di utilizzo, nessun A/B test. Niente lascia il tuo telefono. |
-| 💥 | **Cancellazione di emergenza in 3 secondi.** Tieni premuto il pulsante: database + salt + tutte le chiavi crittografiche vengono distrutte irreversibilmente. |
-| 🔓 | **100% open source.** MIT/Apache-2.0. Ogni riga di codice è pubblica e verificabile da chiunque. |
+| | **Nessun server.** Non ne abbiamo. Nessun backend, nessun database remoto, nessun endpoint API a cui l'app si connette. |
+| | **Funziona al 100% offline.** Nessuna connessione internet è mai richiesta o utilizzata. Installa una volta, usa per sempre senza rete. |
+| | **Nessun account, nessuna registrazione.** Nessuna email, nessuna password, nessun login social, nessuna verifica d'identità. Nulla. |
+| | **Nessuna dipendenza da servizi di terze parti.** Nessun Firebase, Google Analytics, Mixpanel, Sentry, Amplitude. Zero SDK esterni. |
+| | **Dati cifrati solo sul tuo telefono.** Database SQLCipher cifrato con AES-256-GCM. Chiave derivata dal tuo PIN via Argon2id. La chiave non lascia mai il dispositivo. |
+| | **Backup cloud opzionale — completamente cifrato.** iCloud/Google Drive riceve un blob cifrato opaco. Nemmeno Apple e Google possono leggerlo. |
+| | **Zero telemetria, zero analytics.** Nessun report di crash, nessuna metrica di utilizzo, nessun A/B test. Niente lascia il tuo telefono. |
+| | **Cancellazione di emergenza in 3 secondi.** Tieni premuto il pulsante: database + salt + tutte le chiavi crittografiche vengono distrutte irreversibilmente. |
+| | **100% open source.** MIT/Apache-2.0. Ogni riga di codice è pubblica e verificabile da chiunque. |
 
 ---
 
@@ -43,9 +43,9 @@
 | **Senza SDK nascosti** | Il binario contiene solo ciò che vedi in questo repository. |
 
 ```
-iOS:     ATS enforced — no arbitrary network loads
+iOS: ATS enforced — no arbitrary network loads
 Android: networkSecurityConfig blocks ALL outbound connections
-Rust:    Cargo.toml has zero networking dependencies
+Rust: Cargo.toml has zero networking dependencies
 ```
 
 ---
@@ -70,4 +70,4 @@ Core Rust condiviso (UniFFI) · SwiftUI iOS · Kotlin Android · SQLCipher cifra
 
 MIT / Apache-2.0 — [LICENSE](../../README.md)
 
-> ⚠️ Questa app non fornisce consulenza medica.
+> Questa app non fornisce consulenza medica.

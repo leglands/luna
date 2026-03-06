@@ -136,7 +136,7 @@ internal open class ForeignBytes : Structure() {
 /**
  * The FfiConverter interface handles converter types to and from the FFI
  *
- * All implementing objects should be public to support external types.  When a
+ * All implementing objects should be public to support external types. When a
  * type is external we need to import it's FfiConverter.
  *
  * @suppress
@@ -157,7 +157,7 @@ public interface FfiConverter<KotlinType, FfiType> {
     // write. It can return more bytes than needed, for example when writing
     // Strings we can't know the exact bytes needed until we the UTF-8
     // encoding, so we pessimistically allocate the largest size possible (3
-    // bytes per codepoint).  Allocating extra bytes is not really a big deal
+    // bytes per codepoint). Allocating extra bytes is not really a big deal
     // because the `RustBuffer` is short-lived.
     fun allocationSize(value: KotlinType): ULong
 
@@ -167,7 +167,7 @@ public interface FfiConverter<KotlinType, FfiType> {
     // Lower a value into a `RustBuffer`
     //
     // This method lowers a value into a `RustBuffer` rather than the normal
-    // FfiType.  It's used by the callback interface code.  Callback interface
+    // FfiType. It's used by the callback interface code. Callback interface
     // returns are always serialized into a `RustBuffer` regardless of their
     // normal FFI type.
     fun lowerIntoRustBuffer(value: KotlinType): RustBuffer.ByValue {
@@ -263,7 +263,7 @@ interface UniffiRustCallStatusErrorHandler<E> {
 // In practice we usually need to be synchronized to call this safely, so it doesn't
 // synchronize itself
 
-// Call a rust function that returns a Result<>.  Pass in the Error class companion that corresponds to the Err
+// Call a rust function that returns a Result<>. Pass in the Error class companion that corresponds to the Err
 private inline fun <U, E: kotlin.Exception> uniffiRustCallWithError(errorHandler: UniffiRustCallStatusErrorHandler<E>, callback: (UniffiRustCallStatus) -> U): U {
     var status = UniffiRustCallStatus()
     val return_value = callback(status)
@@ -279,7 +279,7 @@ private fun<E: kotlin.Exception> uniffiCheckCallStatus(errorHandler: UniffiRustC
         throw errorHandler.lift(status.error_buf)
     } else if (status.isPanic()) {
         // when the rust code sees a panic, it tries to construct a rustbuffer
-        // with the message.  but if that code panics, then it just sends back
+        // with the message. but if that code panics, then it just sends back
         // an empty buffer.
         if (status.error_buf.len > 0) {
             throw InternalException(FfiConverterString.lift(status.error_buf))
@@ -1172,7 +1172,7 @@ public object FfiConverterBoolean: FfiConverter<Boolean, Byte> {
  */
 public object FfiConverterString: FfiConverter<String, RustBuffer.ByValue> {
     // Note: we don't inherit from FfiConverterRustBuffer, because we use a
-    // special encoding when lowering/lifting.  We can use `RustBuffer.len` to
+    // special encoding when lowering/lifting. We can use `RustBuffer.len` to
     // store our length and avoid writing it out to the buffer.
     override fun lift(value: RustBuffer.ByValue): String {
         try {
@@ -1209,7 +1209,7 @@ public object FfiConverterString: FfiConverter<String, RustBuffer.ByValue> {
     }
 
     // We aren't sure exactly how many bytes our string will be once it's UTF-8
-    // encoded.  Allocate 3 bytes per UTF-16 code unit which will always be
+    // encoded. Allocate 3 bytes per UTF-16 code unit which will always be
     // enough.
     override fun allocationSize(value: String): ULong {
         val sizeForLength = 4UL
@@ -1254,43 +1254,43 @@ public object FfiConverterByteArray: FfiConverterRustBuffer<ByteArray> {
 // struct after it has been dropped, and because we must expose a public API for freeing
 // theq Kotlin wrapper object in lieu of reliable finalizers. The core requirements are:
 //
-//   * Each instance holds an opaque pointer to the underlying Rust struct.
-//     Method calls need to read this pointer from the object's state and pass it in to
-//     the Rust FFI.
+// * Each instance holds an opaque pointer to the underlying Rust struct.
+// Method calls need to read this pointer from the object's state and pass it in to
+// the Rust FFI.
 //
-//   * When an instance is no longer needed, its pointer should be passed to a
-//     special destructor function provided by the Rust FFI, which will drop the
-//     underlying Rust struct.
+// * When an instance is no longer needed, its pointer should be passed to a
+// special destructor function provided by the Rust FFI, which will drop the
+// underlying Rust struct.
 //
-//   * Given an instance, calling code is expected to call the special
-//     `destroy` method in order to free it after use, either by calling it explicitly
-//     or by using a higher-level helper like the `use` method. Failing to do so risks
-//     leaking the underlying Rust struct.
+// * Given an instance, calling code is expected to call the special
+// `destroy` method in order to free it after use, either by calling it explicitly
+// or by using a higher-level helper like the `use` method. Failing to do so risks
+// leaking the underlying Rust struct.
 //
-//   * We can't assume that calling code will do the right thing, and must be prepared
-//     to handle Kotlin method calls executing concurrently with or even after a call to
-//     `destroy`, and to handle multiple (possibly concurrent!) calls to `destroy`.
+// * We can't assume that calling code will do the right thing, and must be prepared
+// to handle Kotlin method calls executing concurrently with or even after a call to
+// `destroy`, and to handle multiple (possibly concurrent!) calls to `destroy`.
 //
-//   * We must never allow Rust code to operate on the underlying Rust struct after
-//     the destructor has been called, and must never call the destructor more than once.
-//     Doing so may trigger memory unsafety.
+// * We must never allow Rust code to operate on the underlying Rust struct after
+// the destructor has been called, and must never call the destructor more than once.
+// Doing so may trigger memory unsafety.
 //
-//   * To mitigate many of the risks of leaking memory and use-after-free unsafety, a `Cleaner`
-//     is implemented to call the destructor when the Kotlin object becomes unreachable.
-//     This is done in a background thread. This is not a panacea, and client code should be aware that
-//      1. the thread may starve if some there are objects that have poorly performing
-//     `drop` methods or do significant work in their `drop` methods.
-//      2. the thread is shared across the whole library. This can be tuned by using `android_cleaner = true`,
-//         or `android = true` in the [`kotlin` section of the `uniffi.toml` file](https://mozilla.github.io/uniffi-rs/kotlin/configuration.html).
+// * To mitigate many of the risks of leaking memory and use-after-free unsafety, a `Cleaner`
+// is implemented to call the destructor when the Kotlin object becomes unreachable.
+// This is done in a background thread. This is not a panacea, and client code should be aware that
+// 1. the thread may starve if some there are objects that have poorly performing
+// `drop` methods or do significant work in their `drop` methods.
+// 2. the thread is shared across the whole library. This can be tuned by using `android_cleaner = true`,
+// or `android = true` in the [`kotlin` section of the `uniffi.toml` file](https://mozilla.github.io/uniffi-rs/kotlin/configuration.html).
 //
 // If we try to implement this with mutual exclusion on access to the pointer, there is the
 // possibility of a race between a method call and a concurrent call to `destroy`:
 //
-//    * Thread A starts a method call, reads the value of the pointer, but is interrupted
-//      before it can pass the pointer over the FFI to Rust.
-//    * Thread B calls `destroy` and frees the underlying Rust struct.
-//    * Thread A resumes, passing the already-read pointer value to Rust and triggering
-//      a use-after-free.
+// * Thread A starts a method call, reads the value of the pointer, but is interrupted
+// before it can pass the pointer over the FFI to Rust.
+// * Thread B calls `destroy` and frees the underlying Rust struct.
+// * Thread A resumes, passing the already-read pointer value to Rust and triggering
+// a use-after-free.
 //
 // One possible solution would be to use a `ReadWriteLock`, with each method call taking
 // a read lock (and thus allowed to run concurrently) and the special `destroy` method
@@ -1302,20 +1302,20 @@ public object FfiConverterByteArray: FfiConverterRustBuffer<ByteArray> {
 // the number of in-flight method calls, and an `AtomicBoolean` flag to indicate whether `destroy`
 // has been called. These are updated according to the following rules:
 //
-//    * The initial value of the counter is 1, indicating a live object with no in-flight calls.
-//      The initial value for the flag is false.
+// * The initial value of the counter is 1, indicating a live object with no in-flight calls.
+// The initial value for the flag is false.
 //
-//    * At the start of each method call, we atomically check the counter.
-//      If it is 0 then the underlying Rust struct has already been destroyed and the call is aborted.
-//      If it is nonzero them we atomically increment it by 1 and proceed with the method call.
+// * At the start of each method call, we atomically check the counter.
+// If it is 0 then the underlying Rust struct has already been destroyed and the call is aborted.
+// If it is nonzero them we atomically increment it by 1 and proceed with the method call.
 //
-//    * At the end of each method call, we atomically decrement and check the counter.
-//      If it has reached zero then we destroy the underlying Rust struct.
+// * At the end of each method call, we atomically decrement and check the counter.
+// If it has reached zero then we destroy the underlying Rust struct.
 //
-//    * When `destroy` is called, we atomically flip the flag from false to true.
-//      If the flag was already true we silently fail.
-//      Otherwise we atomically decrement and check the counter.
-//      If it has reached zero then we destroy the underlying Rust struct.
+// * When `destroy` is called, we atomically flip the flag from false to true.
+// If the flag was already true we silently fail.
+// Otherwise we atomically decrement and check the counter.
+// If it has reached zero then we destroy the underlying Rust struct.
 //
 // Astute readers may observe that this all sounds very similar to the way that Rust's `Arc<T>` works,
 // and indeed it is, with the addition of a flag to guard against multiple calls to `destroy`.
@@ -1477,7 +1477,7 @@ public interface LunaEngineInterface {
     fun `logPregnancyDay`(`log`: PregnancyLog)
     
     /**
-     * ⚠️  MODE PANIQUE — supprime TOUTES les données de façon irréversible.
+     * MODE PANIQUE — supprime TOUTES les données de façon irréversible.
      *
      * Séquence :
      * 1. Wipe SQLite (DELETE + VACUUM)
@@ -1788,7 +1788,7 @@ open class LunaEngine: Disposable, AutoCloseable, LunaEngineInterface {
 
     
     /**
-     * ⚠️  MODE PANIQUE — supprime TOUTES les données de façon irréversible.
+     * MODE PANIQUE — supprime TOUTES les données de façon irréversible.
      *
      * Séquence :
      * 1. Wipe SQLite (DELETE + VACUUM)
@@ -1866,7 +1866,7 @@ open class LunaEngine: Disposable, AutoCloseable, LunaEngineInterface {
      * Ouvre (ou crée) le vault chiffré.
      *
      * - `db_path` : chemin absolu vers le fichier SQLite sur le device
-     * - `pin`     : PIN 4-8 chiffres fourni par l'utilisatrice
+     * - `pin` : PIN 4-8 chiffres fourni par l'utilisatrice
      *
      * Retourne `LunaError::WrongPin` si le PIN est incorrect.
      */
@@ -2811,5 +2811,4 @@ public object FfiConverterSequenceTypeDailyLog: FfiConverterRustBuffer<List<Dail
     )
     }
     
-
 

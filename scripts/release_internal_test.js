@@ -4,18 +4,18 @@
  *
  * Uploads AAB to Play Store internal testing track via CDP.
  * Navigates to the existing draft release and:
- *   1. Uploads app-release.aab
- *   2. Fills release name + release notes (all 40 langs)
- *   3. Saves and submits
+ * 1. Uploads app-release.aab
+ * 2. Fills release name + release notes (all 40 langs)
+ * 3. Saves and submits
  */
 
 const { chromium } = require('playwright');
 const path = require('path');
-const fs   = require('fs');
+const fs = require('fs');
 
-const CDP_PORT  = 18800;
+const CDP_PORT = 18800;
 const RELEASE_URL = 'https://play.google.com/console/u/0/developers/6295830866613067582/app/4973061748192418870/tracks/internal-testing';
-const AAB_PATH  = path.join(__dirname, '..', 'android-app', 'app', 'build', 'outputs', 'bundle', 'release', 'app-release.aab');
+const AAB_PATH = path.join(__dirname, '..', 'android-app', 'app', 'build', 'outputs', 'bundle', 'release', 'app-release.aab');
 
 // Release notes per language (Play Console format: <lang-code>notes</lang-code>)
 const NOTES = {
@@ -70,7 +70,7 @@ async function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 (async () => {
   console.log('╔══════════════════════════════════════════════════════╗');
-  console.log('║  LUNA — Internal Test Release Upload                  ║');
+  console.log('║ LUNA — Internal Test Release Upload ║');
   console.log('╚══════════════════════════════════════════════════════╝\n');
 
   const aabSize = (fs.statSync(AAB_PATH).size / 1024 / 1024).toFixed(1);
@@ -99,13 +99,13 @@ async function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
     await page.goto(newReleaseUrl, { waitUntil: 'load', timeout: 40000 });
   }
   await sleep(4000);
-  console.log('   URL:', page.url());
+  console.log(' URL:', page.url());
 
   // 3. Upload AAB
   console.log('3. Uploading AAB...');
   const uploadBtn = page.locator('button.upload-button').first();
   if (await uploadBtn.count() === 0) {
-    console.error('   ✗ Upload button not found');
+    console.error(' Upload button not found');
     await page.screenshot({ path: '/tmp/upload_error.png' });
     await browser.close(); return;
   }
@@ -115,17 +115,17 @@ async function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
     uploadBtn.click(),
   ]);
   await chooser.setFiles(AAB_PATH);
-  console.log('   ✓ File selected, waiting for upload...');
+  console.log(' File selected, waiting for upload...');
 
   // Wait for AAB to finish processing (look for version code to appear)
   for (let i = 0; i < 60; i++) {
     const uploaded = await page.locator('[class*="artifact"], td:has-text("app.luna"), [class*="bundle-row"]').count();
     const err = await page.locator('[class*="error"]:visible').count();
-    if (uploaded > 0) { console.log('   ✓ AAB processed'); break; }
-    if (err > 0) { console.log('   ⚠ Upload error detected'); break; }
+    if (uploaded > 0) { console.log(' AAB processed'); break; }
+    if (err > 0) { console.log(' Upload error detected'); break; }
     await sleep(2000);
     process.stdout.write('.');
-    if (i === 59) console.log('\n   ⚠ Timed out waiting for AAB processing');
+    if (i === 59) console.log('\n Timed out waiting for AAB processing');
   }
   console.log('');
   await page.screenshot({ path: '/tmp/after_upload.png' });
@@ -136,7 +136,7 @@ async function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
   const nameInput = page.locator('[debug-id="version"] textarea, [debug-id="version"] input').first();
   if (await nameInput.count() > 0) {
     await nameInput.fill(versionName);
-    console.log(`   ✓ Release name: "${versionName}"`);
+    console.log(` Release name: "${versionName}"`);
   }
 
   // 5. Fill release notes
@@ -145,9 +145,9 @@ async function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
   if (await notesInput.count() > 0) {
     const notes = buildReleaseNotes();
     await notesInput.fill(notes);
-    console.log(`   ✓ Release notes filled (${Object.keys(NOTES).length} languages)`);
+    console.log(` Release notes filled (${Object.keys(NOTES).length} languages)`);
   } else {
-    console.log('   ⚠ Release notes textarea not found');
+    console.log(' Release notes textarea not found');
   }
 
   await sleep(1000);
@@ -158,14 +158,14 @@ async function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
   if (await nextBtn.count() > 0 && await nextBtn.isEnabled()) {
     await nextBtn.click();
     await sleep(4000);
-    console.log('   ✓ On review page');
+    console.log(' On review page');
     await page.screenshot({ path: '/tmp/review_page.png' });
   } else {
     // Save as draft first
-    console.log('   ⚠ Next button not enabled, saving as draft...');
+    console.log(' Next button not enabled, saving as draft...');
     await page.locator('[debug-id="save-button"]').first().click();
     await sleep(3000);
-    console.log('   ✓ Saved as draft');
+    console.log(' Saved as draft');
     await page.screenshot({ path: '/tmp/saved_draft.png' });
     await browser.close(); return;
   }
@@ -182,13 +182,13 @@ async function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
       await confirmBtn.click();
       await sleep(2000);
     }
-    console.log('   ✓ Internal test release launched!');
+    console.log(' Internal test release launched!');
   } else {
-    console.log('   Page text:', await page.locator('[debug-id="content"]').first().innerText().catch(() => '?'));
+    console.log(' Page text:', await page.locator('[debug-id="content"]').first().innerText().catch(() => '?'));
     await page.screenshot({ path: '/tmp/review_debug.png' });
   }
 
   await page.screenshot({ path: '/tmp/final_state.png' });
-  console.log('\n✅ Done! Check /tmp/final_state.png for result.');
+  console.log('\nDone! Check /tmp/final_state.png for result.');
   await browser.close();
 })();

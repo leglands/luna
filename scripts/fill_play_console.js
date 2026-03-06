@@ -2,83 +2,116 @@
 /**
  * LUNA Play Console Auto-Fill
  *
- * Uses a copy of your Chrome profile (logged into Google) to fill
- * all 40 Play Store listings automatically. Chrome can stay open.
+ * Uses real Chrome (not Chromium) with a copy of your existing Chrome profile
+ * so Google doesn't block login. Already logged into Google = no re-auth needed.
  *
  * Usage:
- *   node scripts/fill_play_console.js
- *   node scripts/fill_play_console.js --locale en-US   (single locale test)
- *   node scripts/fill_play_console.js --dry-run        (navigate only, no fill)
+ * node scripts/fill_play_console.js
+ * node scripts/fill_play_console.js --locale en-US (single locale test)
+ * node scripts/fill_play_console.js --dry-run (navigate only, no fill)
+ * node scripts/fill_play_console.js --fresh (don't copy Chrome profile)
  */
 
 const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
-const { execSync } = require('child_process');
+const { execSync, spawnSync } = require('child_process');
 
 // ── Config ────────────────────────────────────────────────────────────────────
 const DEVELOPER_ID = '6295830866613067582';
-const APP_ID       = '4973061748192418870';
+const APP_ID = '4973061748192418870';
 const METADATA_DIR = path.join(__dirname, '..', 'fastlane', 'metadata', 'android');
+
+// Real Chrome profile to copy session from
+const CHROME_PROFILE = path.join(os.homedir(), 'Library/Application Support/Google/Chrome/Default');
 
 // Map our folder names → Play Console locale codes
 const LOCALE_MAP = {
-  'ar-SA':  'ar',
-  'iw-IL':  'iw',
-  'nb-NO':  'no-NO',
-  'no-NO':  'no-NO',
+  'ar-SA': 'ar',
+  'iw-IL': 'iw',
+  'nb-NO': 'no-NO',
+  'no-NO': 'no-NO',
 };
 function gpLocale(folder) { return LOCALE_MAP[folder] || folder; }
 
 // Parse args
 const args = process.argv.slice(2);
-const DRY_RUN      = args.includes('--dry-run');
-const SINGLE_LOC   = args.includes('--locale') ? args[args.indexOf('--locale') + 1] : null;
-const HEADLESS     = args.includes('--headless');
+const DRY_RUN = args.includes('--dry-run');
+const SINGLE_LOC = args.includes('--locale') ? args[args.indexOf('--locale') + 1] : null;
+const HEADLESS = args.includes('--headless');
+const FRESH = args.includes('--fresh');
 
 // ── Main ─────────────────────────────────────────────────────────────────────
 (async () => {
-  // Use a fresh temp profile — user will log in once, then we fill everything
-  const tmpProfile = path.join(os.tmpdir(), 'luna-play-console-session');
-  if (!fs.existsSync(tmpProfile)) fs.mkdirSync(tmpProfile, { recursive: true });
+  // Use a temp profile that copies Chrome session files (cookies, login data)
+  const tmpProfile = path.join(os.tmpdir(), 'luna-play-chrome-session');
+
+  if (!FRESH && fs.existsSync(CHROME_PROFILE)) {
+    console.log('Copying Chrome session to temp profile...');
+    fs.mkdirSync(tmpProfile, { recursive: true });
+    // Copy essential Chrome session files (not the whole profile — too large)
+    const filesToCopy = ['Cookies', 'Login Data', 'Local State', 'Preferences', 'Web Data'];
+    for (const f of filesToCopy) {
+      const src = path.join(CHROME_PROFILE, f);
+      const dst = path.join(tmpProfile, f);
+      if (fs.existsSync(src)) {
+        try { fs.copyFileSync(src, dst); } catch (e) { /* skip locked files */ }
+      }
+    }
+    // Copy local storage for Google auth
+    const lsDst = path.join(tmpProfile, 'Local Storage');
+    const lsSrc = path.join(CHROME_PROFILE, 'Local Storage');
+    if (fs.existsSync(lsSrc) && !fs.existsSync(lsDst)) {
+      spawnSync('cp', ['-r', lsSrc, lsDst]);
+    }
+    console.log('Session files copied\n');
+  } else {
+    fs.mkdirSync(tmpProfile, { recursive: true });
+  }
 
   console.log('┌─────────────────────────────────────────────┐');
-  console.log('│  LUNA Play Console Auto-Fill                │');
-  console.log('│  A browser window will open.                │');
-  console.log('│  Log in to Google once → script fills all   │');
-  console.log('│  40 store listings automatically.           │');
+  console.log('│ LUNA Play Console Auto-Fill │');
+  console.log('│ Using real Chrome with your Google session │');
   console.log('└─────────────────────────────────────────────┘\n');
   if (DRY_RUN) console.log('DRY RUN — navigating only, no form fill\n');
 
+  // Use real Chrome browser (not Playwright Chromium) — avoids Google bot detection
   const context = await chromium.launchPersistentContext(tmpProfile, {
-    headless: false,  // must be headed so user can log in
-    args: ['--no-sandbox'],
+    channel: 'chrome', // ← use real Chrome binary
+    headless: HEADLESS,
+    args: [
+      '--no-sandbox',
+      '--disable-blink-features=AutomationControlled', // hide automation flag
+      '--disable-features=IsolateOrigins,site-per-process',
+    ],
+    ignoreDefaultArgs: ['--enable-automation'],
     viewport: { width: 1400, height: 900 },
-    slowMo: 50,
+    slowMo: 100,
   });
 
   const page = await context.newPage();
 
-  // Navigate to Play Console — user logs in if needed
+  // Remove automation indicators
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
+  });
+
+  // Navigate to Play Console main listing
+  const mainUrl = `https://play.google.com/console/u/0/developers/${DEVELOPER_ID}/app/${APP_ID}/main-store-listing`;
   console.log('Opening Play Console...');
-  await page.goto(
-    `https://play.google.com/console/u/0/developers/${DEVELOPER_ID}/app/${APP_ID}/main-store-listing`,
-    { waitUntil: 'load', timeout: 15000 }
-  ).catch(() => {});
+  await page.goto(mainUrl, { waitUntil: 'load', timeout: 30000 }).catch(() => {});
 
   // Wait for login if redirected to Google auth
   const currentUrl = page.url();
-  if (currentUrl.includes('accounts.google') || currentUrl.includes('signin')) {
-    console.log('\n⏳ Please log in to Google Play Console in the browser window...');
-    console.log('   Waiting up to 3 minutes for login...\n');
-    
-    // Wait until we're back on Play Console
-    await page.waitForURL(
-      '**/play.google.com/console/**',
-      { timeout: 180000 }  // 3 minute timeout for login
-    );
-    console.log('✓ Logged in!\n');
+  if (currentUrl.includes('accounts.google') || currentUrl.includes('signin') || currentUrl.includes('ServiceLogin')) {
+    console.log('\nNot logged in automatically. Please log in to Google in the browser window...');
+    console.log(' Waiting up to 5 minutes for login...\n');
+    await page.waitForURL('**/play.google.com/console/**', { timeout: 300000 });
+    console.log('Logged in!\n');
+    await page.waitForTimeout(3000);
+  } else {
+    console.log('Already logged in (Chrome session)\n');
     await page.waitForTimeout(2000);
   }
 
@@ -103,12 +136,12 @@ const HEADLESS     = args.includes('--headless');
 
     const title = readFile(dir, 'title.txt');
     const short = readFile(dir, 'short_description.txt');
-    const full  = readFile(dir, 'full_description.txt');
+    const full = readFile(dir, 'full_description.txt');
 
-    if (!title) { console.log(`  [${folder}] SKIP — no title.txt`); continue; }
+    if (!title) { console.log(` [${folder}] SKIP — no title.txt`); continue; }
 
     console.log(`\n── ${folder} (${gp}) ──────────────────────────────`);
-    console.log(`  Title: ${title}`);
+    console.log(` Title: ${title}`);
 
     // Navigate to store listing for this locale
     let url;
@@ -119,12 +152,12 @@ const HEADLESS     = args.includes('--headless');
     }
 
     try {
-      console.log(`  → ${url}`);
+      console.log(` → ${url}`);
       await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
       await page.waitForTimeout(2000);
 
       if (DRY_RUN) {
-        console.log(`  [DRY RUN] Would fill: title, short desc, full desc`);
+        console.log(` [DRY RUN] Would fill: title, short desc, full desc`);
         ok++;
         continue;
       }
@@ -141,26 +174,26 @@ const HEADLESS     = args.includes('--headless');
       // Save
       await clickSave(page);
 
-      console.log(`  ✓ Saved`);
+      console.log(` Saved`);
       ok++;
 
       // Wait between locales to avoid rate limiting
       await page.waitForTimeout(1500);
 
     } catch (err) {
-      console.error(`  ✗ ERROR: ${err.message}`);
+      console.error(` ERROR: ${err.message}`);
       errors.push(`${folder}: ${err.message}`);
       // Take screenshot for debugging
       await page.screenshot({ path: `/tmp/luna_play_error_${folder}.png` });
-      console.error(`  Screenshot: /tmp/luna_play_error_${folder}.png`);
+      console.error(` Screenshot: /tmp/luna_play_error_${folder}.png`);
     }
   }
 
   console.log(`\n${'─'.repeat(60)}`);
-  console.log(`✅ Done: ${ok}/${locales.length} locales filled`);
+  console.log(`Done: ${ok}/${locales.length} locales filled`);
   if (errors.length) {
-    console.log(`\n❌ Errors (${errors.length}):`);
-    errors.forEach(e => console.log(`  ${e}`));
+    console.log(`\nErrors (${errors.length}):`);
+    errors.forEach(e => console.log(` ${e}`));
   }
 
   await context.close();
@@ -179,8 +212,22 @@ function readFile(dir, filename) {
  * We try multiple strategies in order.
  */
 async function fillField(page, value, fieldType, label) {
-  // Strategy 1: aria-label variants
-  const ariaLabels = [label, label.toLowerCase()];
+  // Strategy 1: Play Console specific - mat-form-field with label text
+  try {
+    const matField = page.locator(`mat-form-field:has(label:has-text("${label}"))`).first();
+    if (await matField.count() > 0) {
+      const input = matField.locator('textarea, input').first();
+      if (await input.count() > 0) {
+        await input.click({ clickCount: 3 });
+        await input.fill(value);
+        console.log(` ${label}: ${value.length} chars`);
+        return true;
+      }
+    }
+  } catch {}
+
+  // Strategy 2: aria-label variants
+  const ariaLabels = [label, label.toLowerCase(), `${label} *`, `${label.toLowerCase()} *`];
   for (const al of ariaLabels) {
     for (const tag of ['textarea', 'input']) {
       try {
@@ -188,50 +235,71 @@ async function fillField(page, value, fieldType, label) {
         if (await el.count() > 0) {
           await el.click({ clickCount: 3 });
           await el.fill(value);
-          console.log(`  ✓ ${label}: ${value.length} chars`);
+          console.log(` ${label} (aria): ${value.length} chars`);
           return true;
         }
       } catch {}
     }
   }
 
-  // Strategy 2: placeholder text
+  // Strategy 3: placeholder text
   for (const tag of ['textarea', 'input']) {
     try {
       const el = page.locator(`${tag}[placeholder*="${label}"]`).first();
       if (await el.count() > 0) {
         await el.click({ clickCount: 3 });
         await el.fill(value);
-        console.log(`  ✓ ${label} (placeholder): ${value.length} chars`);
+        console.log(` ${label} (placeholder): ${value.length} chars`);
         return true;
       }
     } catch {}
   }
 
-  // Strategy 3: label text → sibling/child textarea
+  // Strategy 4: label text → sibling/child textarea
   try {
     const el = page.locator(`label:has-text("${label}") ~ * textarea, label:has-text("${label}") textarea`).first();
     if (await el.count() > 0) {
       await el.click({ clickCount: 3 });
       await el.fill(value);
-      console.log(`  ✓ ${label} (label sibling): ${value.length} chars`);
+      console.log(` ${label} (label sibling): ${value.length} chars`);
       return true;
     }
   } catch {}
 
-  // Strategy 4: content-editable (Play Console uses these for rich text)
+  // Strategy 5: Play Console uses formcontrolname attributes
+  const controlNames = {
+    'App name': 'title',
+    'Short description': 'shortDescription',
+    'Full description': 'fullDescription',
+  };
+  const controlName = controlNames[label];
+  if (controlName) {
+    for (const tag of ['textarea', 'input']) {
+      try {
+        const el = page.locator(`${tag}[formcontrolname="${controlName}"]`).first();
+        if (await el.count() > 0) {
+          await el.click({ clickCount: 3 });
+          await el.fill(value);
+          console.log(` ${label} (formcontrol): ${value.length} chars`);
+          return true;
+        }
+      } catch {}
+    }
+  }
+
+  // Strategy 6: content-editable (Play Console uses these for rich text)
   try {
     const el = page.locator(`[contenteditable="true"]`).first();
     if (await el.count() > 0) {
       await el.click({ clickCount: 3 });
       await page.keyboard.press('Control+a');
       await el.type(value, { delay: 10 });
-      console.log(`  ✓ ${label} (contenteditable): ${value.length} chars`);
+      console.log(` ${label} (contenteditable): ${value.length} chars`);
       return true;
     }
   } catch {}
 
-  console.warn(`  ⚠️  Could not auto-fill "${label}" — fill manually`);
+  console.warn(` Could not auto-fill "${label}" — fill manually`);
   return false;
 }
 
@@ -255,5 +323,5 @@ async function clickSave(page) {
       }
     } catch {}
   }
-  console.warn('  ⚠️  Save button not found');
+  console.warn(' Save button not found');
 }

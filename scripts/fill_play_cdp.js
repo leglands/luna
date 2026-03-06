@@ -6,17 +6,17 @@
  * using the Chrome remote debugging protocol. No re-login needed.
  *
  * Step 1 — Start Chrome with debugging (run once):
- *   /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
- *     --remote-debugging-port=9222 --no-first-run --no-default-browser-check \
- *     "https://play.google.com/console/u/0/developers/6295830866613067582/app/4973061748192418870/main-store-listing"
+ * /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
+ * --remote-debugging-port=9222 --no-first-run --no-default-browser-check \
+ * "https://play.google.com/console/u/0/developers/6295830866613067582/app/4973061748192418870/main-store-listing"
  *
  * Step 2 — In that Chrome window, make sure you're logged into Google Play Console
  *
  * Step 3 — Run this script:
- *   node scripts/fill_play_cdp.js
- *   node scripts/fill_play_cdp.js --locale en-US   (single locale)
- *   node scripts/fill_play_cdp.js --dry-run        (navigate only)
- *   node scripts/fill_play_cdp.js --text-only      (no screenshots)
+ * node scripts/fill_play_cdp.js
+ * node scripts/fill_play_cdp.js --locale en-US (single locale)
+ * node scripts/fill_play_cdp.js --dry-run (navigate only)
+ * node scripts/fill_play_cdp.js --text-only (no screenshots)
  */
 
 const { chromium } = require('playwright');
@@ -25,9 +25,9 @@ const path = require('path');
 const http = require('http');
 
 // ── Config ────────────────────────────────────────────────────────────────────
-const CDP_PORT     = 18800;  // existing Chrome instance (Finary scrapers Chrome)
+const CDP_PORT = 18800; // existing Chrome instance (Finary scrapers Chrome)
 const DEVELOPER_ID = '6295830866613067582';
-const APP_ID       = '4973061748192418870';
+const APP_ID = '4973061748192418870';
 const METADATA_DIR = path.join(__dirname, '..', 'fastlane', 'metadata', 'android');
 
 const LOCALE_MAP = {
@@ -46,8 +46,8 @@ function gpLocale(folder) { return LOCALE_MAP[folder] || folder; }
 
 // ── Args ──────────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
-const DRY_RUN    = args.includes('--dry-run');
-const TEXT_ONLY  = args.includes('--text-only');
+const DRY_RUN = args.includes('--dry-run');
+const TEXT_ONLY = args.includes('--text-only');
 const SINGLE_LOC = args.includes('--locale') ? args[args.indexOf('--locale') + 1] : null;
 
 // ── CDP check ─────────────────────────────────────────────────────────────────
@@ -66,27 +66,27 @@ function checkCDP() {
 // ── Main ──────────────────────────────────────────────────────────────────────
 (async () => {
   console.log('┌─────────────────────────────────────────────────────────────┐');
-  console.log('│  LUNA Play Console Auto-Fill  (CDP mode)                    │');
+  console.log('│ LUNA Play Console Auto-Fill (CDP mode) │');
   console.log('└─────────────────────────────────────────────────────────────┘\n');
 
   // Check Chrome debugging is available
   const cdpInfo = await checkCDP();
   if (!cdpInfo) {
-    console.error('❌  Chrome not found on port 9222.\n');
+    console.error('Chrome not found on port 9222.\n');
     console.error('Run this command first, then re-run this script:\n');
-    console.error(`  /Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome \\`);
-    console.error(`    --remote-debugging-port=9222 --no-first-run \\`);
-    console.error(`    "https://play.google.com/console/u/0/developers/${DEVELOPER_ID}/app/${APP_ID}/main-store-listing"\n`);
+    console.error(` /Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome \\`);
+    console.error(` --remote-debugging-port=9222 --no-first-run \\`);
+    console.error(` "https://play.google.com/console/u/0/developers/${DEVELOPER_ID}/app/${APP_ID}/main-store-listing"\n`);
     process.exit(1);
   }
 
-  console.log(`✓ Connected to Chrome ${cdpInfo.Browser}\n`);
+  console.log(`Connected to Chrome ${cdpInfo.Browser}\n`);
 
   // Connect via CDP
   const browser = await chromium.connectOverCDP(`http://localhost:${CDP_PORT}`);
   const contexts = browser.contexts();
-  const context  = contexts[0];
-  const pages    = context.pages();
+  const context = contexts[0];
+  const pages = context.pages();
 
   // Use existing page or open new one
   let page = pages.find(p => p.url().includes('play.google.com')) || pages[0];
@@ -103,13 +103,13 @@ function checkCDP() {
   }
 
   if (page.url().includes('accounts.google') || page.url().includes('signin')) {
-    console.error('❌  Not logged in to Play Console.');
-    console.error('   Log in to play.google.com/console in the Chrome window, then re-run.\n');
+    console.error('Not logged in to Play Console.');
+    console.error(' Log in to play.google.com/console in the Chrome window, then re-run.\n');
     await browser.close();
     process.exit(1);
   }
 
-  console.log('✓ Logged into Play Console\n');
+  console.log('Logged into Play Console\n');
 
   // Load locales
   const locales = fs.readdirSync(METADATA_DIR)
@@ -128,14 +128,14 @@ function checkCDP() {
   const errors = [];
 
   for (const folder of locales) {
-    const gp  = gpLocale(folder);
+    const gp = gpLocale(folder);
     const dir = path.join(METADATA_DIR, folder);
 
     const title = readFile(dir, 'title.txt');
     const short = readFile(dir, 'short_description.txt');
-    const full  = readFile(dir, 'full_description.txt');
+    const full = readFile(dir, 'full_description.txt');
 
-    if (!title) { console.log(`  [${folder}] SKIP — no title.txt`); continue; }
+    if (!title) { console.log(` [${folder}] SKIP — no title.txt`); continue; }
 
     console.log(`\n── ${folder} (${gp}) ${'─'.repeat(40 - folder.length - gp.length)}`);
 
@@ -149,7 +149,7 @@ function checkCDP() {
       await page.waitForTimeout(2000);
 
       if (DRY_RUN) {
-        console.log(`  [DRY RUN] ${url}`);
+        console.log(` [DRY RUN] ${url}`);
         ok++;
         continue;
       }
@@ -157,29 +157,29 @@ function checkCDP() {
       // Fill fields
       const titleOk = await fillField(page, title, 'App name');
       const shortOk = await fillField(page, short, 'Short description');
-      const fullOk  = await fillField(page, full,  'Full description');
+      const fullOk = await fillField(page, full, 'Full description');
 
       // Save
       if (titleOk || shortOk || fullOk) {
         await clickSave(page);
       }
 
-      console.log(`  ✓ Saved`);
+      console.log(` Saved`);
       ok++;
       await page.waitForTimeout(1500);
 
     } catch (err) {
-      console.error(`  ✗ ERROR: ${err.message}`);
+      console.error(` ERROR: ${err.message}`);
       errors.push(`${folder}: ${err.message}`);
       await page.screenshot({ path: `/tmp/luna_play_error_${folder}.png` }).catch(() => {});
     }
   }
 
   console.log(`\n${'─'.repeat(60)}`);
-  console.log(`✅ Done: ${ok}/${locales.length} locales filled`);
+  console.log(`Done: ${ok}/${locales.length} locales filled`);
   if (errors.length) {
-    console.log(`\n❌ Errors (${errors.length}):`);
-    errors.forEach(e => console.log(`  ${e}`));
+    console.log(`\nErrors (${errors.length}):`);
+    errors.forEach(e => console.log(` ${e}`));
   }
 
   await browser.close();
@@ -214,7 +214,7 @@ async function fillField(page, value, label) {
         if (await el.count() > 0) {
           await el.click({ clickCount: 3 });
           await el.fill(value);
-          console.log(`  ✓ ${label} (group>${inputTag} "${al.substring(0,25)}"): ${value.length} chars`);
+          console.log(` ${label} (group>${inputTag} "${al.substring(0,25)}"): ${value.length} chars`);
           return true;
         }
       } catch {}
@@ -224,7 +224,7 @@ async function fillField(page, value, label) {
         if (await el.count() > 0) {
           await el.click({ clickCount: 3 });
           await el.fill(value);
-          console.log(`  ✓ ${label} (group*>${inputTag} "${al.substring(0,25)}"): ${value.length} chars`);
+          console.log(` ${label} (group*>${inputTag} "${al.substring(0,25)}"): ${value.length} chars`);
           return true;
         }
       } catch {}
@@ -242,7 +242,7 @@ async function fillField(page, value, label) {
       if (await el.count() > 0) {
         await el.click({ clickCount: 3 });
         await el.fill(value);
-        console.log(`  ✓ ${label} (${sel.split('"')[1].substring(0,25)}): ${value.length} chars`);
+        console.log(` ${label} (${sel.split('"')[1].substring(0,25)}): ${value.length} chars`);
         return true;
       }
     } catch {}
@@ -257,7 +257,7 @@ async function fillField(page, value, label) {
         if (await inp.count() > 0) {
           await inp.click({ clickCount: 3 });
           await inp.fill(value);
-          console.log(`  ✓ ${label} (mat-form-field): ${value.length} chars`);
+          console.log(` ${label} (mat-form-field): ${value.length} chars`);
           return true;
         }
       }
@@ -271,7 +271,7 @@ async function fillField(page, value, label) {
     for (const t of ['textarea', 'input']) {
       try {
         const el = page.locator(`${t}[formcontrolname="${controlName}"]`).first();
-        if (await el.count() > 0) { await el.click({clickCount:3}); await el.fill(value); console.log(`  ✓ ${label} (formcontrol): ${value.length} chars`); return true; }
+        if (await el.count() > 0) { await el.click({clickCount:3}); await el.fill(value); console.log(` ${label} (formcontrol): ${value.length} chars`); return true; }
       } catch {}
     }
   }
@@ -279,8 +279,8 @@ async function fillField(page, value, label) {
   // Strategy 4: positional fallback based on DOM order
   // Order: App name (input[0]), Short description (input[1]), Full description (textarea[0])
   const posMap = {
-    'App name':         { tag: 'input',    idx: 0 },
-    'Short description':{ tag: 'input',    idx: 1 },
+    'App name': { tag: 'input', idx: 0 },
+    'Short description':{ tag: 'input', idx: 1 },
     'Full description': { tag: 'textarea', idx: 0 },
   };
   const pos = posMap[label];
@@ -291,13 +291,13 @@ async function fillField(page, value, label) {
         const el = els.nth(pos.idx);
         await el.click({ clickCount: 3 });
         await el.fill(value);
-        console.log(`  ✓ ${label} (positional ${pos.tag}[${pos.idx}]): ${value.length} chars`);
+        console.log(` ${label} (positional ${pos.tag}[${pos.idx}]): ${value.length} chars`);
         return true;
       }
     } catch {}
   }
 
-  console.warn(`  ⚠️  Could not fill "${label}"`);
+  console.warn(` Could not fill "${label}"`);
   return false;
 }
 
@@ -313,5 +313,5 @@ async function clickSave(page) {
       if (btn) { await btn.click(); await page.waitForTimeout(2000); return; }
     } catch {}
   }
-  console.warn('  ⚠️  Save button not found');
+  console.warn(' Save button not found');
 }

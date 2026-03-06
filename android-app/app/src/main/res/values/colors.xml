@@ -7,8 +7,8 @@
   Rationale: plum primary avoids pink cliché while retaining warmth.
   @source: Epstein CHI 2017; Clement 2015; Maddocks 2021
 
-  ⚠️ RTL/East Asian cultural overrides handled in code (CulturalRules), not here.
-  ⚠️ Red-as-danger: NEVER use luna_status_danger in zh/ja/ko — use luna_status_warning.
+  RTL/East Asian cultural overrides handled in code (CulturalRules), not here.
+  Red-as-danger: NEVER use luna_status_danger in zh/ja/ko — use luna_status_warning.
 -->
 <resources>
 
@@ -84,7 +84,7 @@
     <!-- Status -->
     <color name="luna_status_success">@color/luna_sage_500</color>
     <color name="luna_status_warning">@color/luna_amber_600</color>
-    <!-- ⚠️ Never use danger color in zh/ja/ko — use warning instead -->
+    <!-- Never use danger color in zh/ja/ko — use warning instead -->
     <color name="luna_status_danger">@color/luna_rose_500</color>
     <color name="luna_status_info">@color/luna_plum_500</color>
 

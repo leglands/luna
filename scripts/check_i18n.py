@@ -92,14 +92,14 @@ def main():
     all_errors = ios_errors + android_errors
 
     if all_errors:
-        print(f"\n⚠️  {len(all_errors)} clé(s) i18n manquante(s) :")
+        print(f"\n{len(all_errors)} clé(s) i18n manquante(s) :")
         for e in all_errors:
-            print(f"  • {e}")
+            print(f" • {e}")
         print()
         # Warnings uniquement (pas blocant en CI pour le MVP — à passer en erreur en Tier 2)
         sys.exit(0)
     else:
-        print("✅ i18n: toutes les clés source sont présentes dans toutes les locales configurées.")
+        print("i18n: toutes les clés source sont présentes dans toutes les locales configurées.")
         sys.exit(0)
 
 if __name__ == "__main__":

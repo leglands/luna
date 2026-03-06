@@ -695,14 +695,14 @@ NSAppTransportSecurity → NSAllowsArbitraryLoads = false
 
     <p>What we <strong>never</strong> access, store, or transmit:</p>
     <ul class="never-list">
-      <li><span class="icon-no">✗</span> Device identifiers, IDFA, advertising IDs, GAID</li>
-      <li><span class="icon-no">✗</span> Location data of any kind</li>
-      <li><span class="icon-no">✗</span> Contact information, email, phone number</li>
-      <li><span class="icon-no">✗</span> Browsing history or cross-app activity</li>
-      <li><span class="icon-no">✗</span> Crash reports or usage analytics sent externally</li>
-      <li><span class="icon-no">✗</span> IP address — no server means no server logs</li>
-      <li><span class="icon-no">✗</span> Any biometric data outside the device secure enclave</li>
-      <li><span class="icon-no">✗</span> Anything at all, ever</li>
+      <li><span class="icon-no"></span> Device identifiers, IDFA, advertising IDs, GAID</li>
+      <li><span class="icon-no"></span> Location data of any kind</li>
+      <li><span class="icon-no"></span> Contact information, email, phone number</li>
+      <li><span class="icon-no"></span> Browsing history or cross-app activity</li>
+      <li><span class="icon-no"></span> Crash reports or usage analytics sent externally</li>
+      <li><span class="icon-no"></span> IP address — no server means no server logs</li>
+      <li><span class="icon-no"></span> Any biometric data outside the device secure enclave</li>
+      <li><span class="icon-no"></span> Anything at all, ever</li>
     </ul>
   </section>
 
@@ -714,7 +714,7 @@ NSAppTransportSecurity → NSAllowsArbitraryLoads = false
     <div class="code-block">
 // Rust core — vault.rs
 let key = argon2id_derive(pin, salt, memory_cost=65536, iterations=3);
-let db  = sqlite_open_encrypted(path, key, cipher="aes-256-gcm");
+let db = sqlite_open_encrypted(path, key, cipher="aes-256-gcm");
     </div>
 
     <p>Optional encrypted backup (iCloud / Google Drive) uses the same key — you must re-enter your PIN to restore. We never have access to your backup.</p>
@@ -733,12 +733,12 @@ let db  = sqlite_open_encrypted(path, key, cipher="aes-256-gcm");
     <h2>6. Data Sharing</h2>
     <p>We <strong>never</strong> share, sell, license, or transmit your personal health data to:</p>
     <ul class="never-list">
-      <li><span class="icon-no">✗</span> Third-party analytics companies (Mixpanel, Amplitude, etc.)</li>
-      <li><span class="icon-no">✗</span> Advertising networks (Meta, Google Ads, etc.)</li>
-      <li><span class="icon-no">✗</span> Social media platforms</li>
-      <li><span class="icon-no">✗</span> Data brokers</li>
-      <li><span class="icon-no">✗</span> Any server operated by us or anyone else</li>
-      <li><span class="icon-no">✗</span> Law enforcement (we have no data to provide)</li>
+      <li><span class="icon-no"></span> Third-party analytics companies (Mixpanel, Amplitude, etc.)</li>
+      <li><span class="icon-no"></span> Advertising networks (Meta, Google Ads, etc.)</li>
+      <li><span class="icon-no"></span> Social media platforms</li>
+      <li><span class="icon-no"></span> Data brokers</li>
+      <li><span class="icon-no"></span> Any server operated by us or anyone else</li>
+      <li><span class="icon-no"></span> Law enforcement (we have no data to provide)</li>
     </ul>
     <p style="font-size: 13px; color: var(--gray); font-style: italic;">We cannot share what we do not have. LUNA has no database of users.</p>
   </section>

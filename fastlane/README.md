@@ -1,70 +1,125 @@
-# Fastlane Setup
+fastlane documentation
+----
 
-## Local Deployment
+# Installation
 
-### iOS
+Make sure you have the latest version of the Xcode command line tools installed:
 
-Requires macOS with Xcode and the Apple Distribution certificate in keychain.
-
-```bash
-# Full build + upload (once app is created on ASC)
-./scripts/deploy.sh ios
-
-# Or step by step:
-fastlane ios build          # Build IPA
-fastlane ios upload         # Upload to App Store Connect
-fastlane ios upload_metadata # Upload metadata + screenshots
+```sh
+xcode-select --install
 ```
 
-### Android
+For _fastlane_ installation instructions, see [Installing _fastlane_](https://docs.fastlane.tools/#installing-fastlane)
 
-```bash
-# Build AAB
-./scripts/deploy.sh android
+# Available Actions
 
-# Upload (requires Google Play service account JSON key)
-GOOGLE_PLAY_JSON_KEY=/path/to/key.json fastlane android upload
+## iOS
+
+### ios build_rust
+
+```sh
+[bundle exec] fastlane ios build_rust
 ```
 
-## GitHub Actions (CI/CD)
+Build Rust core for iOS device (arm64)
 
-Set these secrets in GitHub repository settings (Settings > Secrets > Actions):
+### ios build
 
-| Secret | Description |
-|--------|-------------|
-| `ASC_KEY_ID` | App Store Connect API Key ID (`48GLJZYX5K`) |
-| `ASC_ISSUER_ID` | App Store Connect Issuer ID |
-| `ASC_PRIVATE_KEY` | Content of `AuthKey_48GLJZYX5K.p8` |
-| `IOS_PROVISIONING_PROFILE` | Base64-encoded `.mobileprovision` |
-| `IOS_CERTIFICATE_P12` | Base64-encoded Apple Distribution `.p12` |
-| `IOS_CERTIFICATE_PASSWORD` | P12 certificate password |
-| `ANDROID_KEYSTORE_BASE64` | Base64-encoded `luna-release.jks` |
-| `ANDROID_STORE_PASSWORD` | Keystore password |
-| `ANDROID_KEY_PASSWORD` | Key alias password |
-| `GOOGLE_PLAY_SERVICE_ACCOUNT_JSON` | Google Play service account JSON |
-
-### Encode secrets for GitHub:
-
-```bash
-# Provisioning profile
-base64 -i ~/Library/MobileDevice/Provisioning\ Profiles/luna-appstore-distribution.mobileprovision | pbcopy
-
-# Android keystore
-base64 -i android-app/keystore/luna-release.jks | pbcopy
-
-# iOS P12 (export from Keychain Access > My Certificates > Apple Distribution)
-base64 -i /path/to/AppleDistribution.p12 | pbcopy
+```sh
+[bundle exec] fastlane ios build
 ```
 
-## Google Play Service Account Setup
+Archive and export IPA for App Store
 
-1. Go to [Google Play Console](https://play.google.com/console) > Setup > API access
-2. Link to a Google Cloud project
-3. Create a service account with "Release manager" role
-4. Download the JSON key
-5. Add as `GOOGLE_PLAY_SERVICE_ACCOUNT_JSON` secret in GitHub
+### ios upload_testflight
 
-## Triggers
+```sh
+[bundle exec] fastlane ios upload_testflight
+```
 
-- Push a tag `v*` to trigger automatic release
-- Or manually trigger via GitHub Actions > Release > Run workflow
+Upload IPA to App Store Connect (TestFlight)
+
+### ios upload_metadata
+
+```sh
+[bundle exec] fastlane ios upload_metadata
+```
+
+Upload metadata and screenshots to App Store Connect
+
+### ios release
+
+```sh
+[bundle exec] fastlane ios release
+```
+
+Full release: build + upload to TestFlight
+
+### ios submit_for_review
+
+```sh
+[bundle exec] fastlane ios submit_for_review
+```
+
+Submit existing build for App Store review (no binary upload)
+
+### ios upload
+
+```sh
+[bundle exec] fastlane ios upload
+```
+
+Upload already-built IPA to App Store (shortcut)
+
+----
+
+
+## Android
+
+### android build
+
+```sh
+[bundle exec] fastlane android build
+```
+
+Build signed AAB
+
+### android upload_internal
+
+```sh
+[bundle exec] fastlane android upload_internal
+```
+
+Upload AAB to Google Play (internal track, no assets)
+
+### android upload_store_assets
+
+```sh
+[bundle exec] fastlane android upload_store_assets
+```
+
+Upload only metadata + screenshots (no binary)
+
+### android release
+
+```sh
+[bundle exec] fastlane android release
+```
+
+Full release: build + upload AAB + metadata + screenshots to internal track
+
+### android upload
+
+```sh
+[bundle exec] fastlane android upload
+```
+
+Upload already-built AAB to Play Store (shortcut)
+
+----
+
+This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
+
+More information about _fastlane_ can be found on [fastlane.tools](https://fastlane.tools).
+
+The documentation of _fastlane_ can be found on [docs.fastlane.tools](https://docs.fastlane.tools).

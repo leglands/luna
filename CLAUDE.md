@@ -23,8 +23,8 @@
 ### Android — Google Play
 - **Package** : `com.macaron.luna` (namespace source : `app.luna` inchangé)
 - **App ID Play Console** : `4973061748192418870` · Developer : `6295830866613067582`
-- **Status** : ✅ **Production en cours d'examen Google** · v0.1.1 (versionCode 2) · soumis le 2 mai 2025
-  - Internal testing ✅ v1.0.0 (versionCode 1) · 9.8 MB AAB · 6 mars 2026
+- **Status** : **Production en cours d'examen Google** · v0.1.1 (versionCode 2) · soumis le 2 mai 2025
+  - Internal testing v1.0.0 (versionCode 1) · 9.8 MB AAB · 6 mars 2026
   - 177 pays/régions sélectionnés · 40 fiches store localisées
   - 16KB page size : erreur ignorée (NDK fix requis pour v0.1.2)
 - **URL** : `play.google.com/console/.../app/4973061748192418870`
@@ -35,10 +35,10 @@
 ### iOS — App Store Connect / TestFlight
 - **Bundle ID** : `com.macaron.luna` · Team : `P36X572LL9`
 - **App ID ASC** : `6760126548`
-- **Status** : ✅ **Metadata + screenshots uploadés en 36 langues** · TestFlight internal v0.1.0 build 1
+- **Status** : **Metadata + screenshots uploadés en 36 langues** · TestFlight internal v0.1.0 build 1
   - Métadonnées : nom, sous-titre, description, keywords, promo, release notes
   - Screenshots : 6 iPhone 6.7" par locale · 36 locales ASC couvertes
-  - App Store : prêt pour soumission (copyright ✅ · support URL ✅ · precheck ✅)
+  - App Store : prêt pour soumission (copyright · support URL · precheck )
 - **Cert** : `Apple Distribution: sylvain legland (P36X572LL9)`
 - **Provisioning** : `luna-appstore-distribution.mobileprovision`
 - **ASC API Key** : `~/.appstoreconnect/private_keys/AuthKey_48GLJZYX5K.p8` · issuer `69a6de74-3cdf-47e3-e053-5b8c7c11a4d1`
@@ -50,7 +50,7 @@
 - Pour Android : `./gradlew bundleRelease` + CDP script `scripts/release_internal_test.js`
 
 ### Scripts CDP (Play Store automation)
-- `scripts/upload_play_assets.js` — upload screenshots + FG 40 locales (✅ terminé)
+- `scripts/upload_play_assets.js` — upload screenshots + FG 40 locales (terminé)
 - `scripts/release_internal_test.js` — upload AAB + release notes → track internal-testing
 - Chrome CDP port **18800** (`chrome --remote-debugging-port=18800`)
 - Trick filechooser : 1 `page.goto()` par upload (bug CDP multi-upload)
@@ -64,20 +64,18 @@
 
 ---
 
-## BUILD ✅ (2026-03-05 · commit 2f5a3e5)
+## BUILD (2026-03-05 · commit 2f5a3e5)
 
 ```bash
 cd _FLO
-cargo test                          # 23/23 ✅
-
-# iOS sim (iPhone 16 Pro · 7A806776-2927-46EF-98F6-4D852C5AC671)
+cargo test # 23/23 # iOS sim (iPhone 16 Pro · 7A806776-2927-46EF-98F6-4D852C5AC671)
 cd ios-app && xcodegen generate
 xcodebuild build -scheme LunaApp \
   -destination 'platform=iOS Simulator,id=7A806776-2927-46EF-98F6-4D852C5AC671' \
   CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=YES
 
 # iOS release IPA (fastlane)
-fastlane ios build           # → /tmp/fastlane_build/LUNA.ipa
+fastlane ios build # → /tmp/fastlane_build/LUNA.ipa
 fastlane ios upload_testflight
 
 # Android AAB release
@@ -106,10 +104,10 @@ cargo run -p uniffi-bindgen -- generate \
 
 ```rust
 LunaEngine::open_vault(db_path, pin) -> Result<LunaEngine>
-.log_day(DailyLog)           .get_log(date) -> Option<DailyLog>
-.get_cycles(limit)           .start_cycle(date)  .end_cycle(id, date)
-.predict_next() -> Prediction  .get_cycle_summary() -> CycleSummary
-.change_pin(old, new)        .panic_wipe()        .export_encrypted_backup(pin)
+.log_day(DailyLog) .get_log(date) -> Option<DailyLog>
+.get_cycles(limit) .start_cycle(date) .end_cycle(id, date)
+.predict_next() -> Prediction .get_cycle_summary() -> CycleSummary
+.change_pin(old, new) .panic_wipe() .export_encrypted_backup(pin)
 vault_exists(db_path) -> bool
 ```
 
@@ -132,40 +130,40 @@ Symptoms : 43 constantes (cramps, SPM, ovulation, folliculaire, générale, pér
 
 ```
 luna-core/src/
-  api.rs              UniFFI public (LunaEngine)
-  engine/types.rs     DailyLog, Cycle, Prediction, CycleSummary, symptoms::*
+  api.rs UniFFI public (LunaEngine)
+  engine/types.rs DailyLog, Cycle, Prediction, CycleSummary, symptoms::*
   engine/prediction.rs PredictionEngine (calendar|bbt|lh|combined)
-  vault/crypto.rs     derive_key, encrypt/decrypt, compress/decompress_blob, secure_zero
-  vault/database.rs   SQLCipher · upsert_log · get_log · get_logs_range
-  error.rs            LunaError (8 variants)
+  vault/crypto.rs derive_key, encrypt/decrypt, compress/decompress_blob, secure_zero
+  vault/database.rs SQLCipher · upsert_log · get_log · get_logs_range
+  error.rs LunaError (8 variants)
 
 ios-app/
-  project.yml                      xcodegen config — regénérer xcodeproj si modifié
-  LunaApp/Generated/               NE PAS ÉDITER (luna_core.swift, .a, .modulemap)
-  LunaApp/Views/                   OnboardingView, LockView, HomeView, Calendar,
+  project.yml xcodegen config — regénérer xcodeproj si modifié
+  LunaApp/Generated/ NE PAS ÉDITER (luna_core.swift, .a, .modulemap)
+  LunaApp/Views/ OnboardingView, LockView, HomeView, Calendar,
                                    Insights, Settings, LogSheetView, RootView
-  LunaApp/Resources/Localizable.xcstrings  100+ clés, 40 langues
-  LunaApp/Services/KeychainService.swift   SecItemAdd/CopyMatching/Delete
-  LunaApp/Info.plist               UILaunchScreen dict · ITSAppUsesNonExemptEncryption=false
+  LunaApp/Resources/Localizable.xcstrings 100+ clés, 40 langues
+  LunaApp/Services/KeychainService.swift SecItemAdd/CopyMatching/Delete
+  LunaApp/Info.plist UILaunchScreen dict · ITSAppUsesNonExemptEncryption=false
 
 android-app/app/src/main/
-  AndroidManifest.xml              ZÉRO permissions réseau + ZÉRO permissions santé
-  generated/uniffi/luna_core/luna_core.kt  NE PAS ÉDITER
+  AndroidManifest.xml ZÉRO permissions réseau + ZÉRO permissions santé
+  generated/uniffi/luna_core/luna_core.kt NE PAS ÉDITER
   jniLibs/{arm64-v8a,x86_64}/libluna_core.so
   kotlin/app/luna/
-    LunaApplication.kt             System.loadLibrary("luna_core")
-    services/VaultService.kt       singleton LunaEngine
-    services/KeystoreService.kt    Keystore AES-256-GCM
+    LunaApplication.kt System.loadLibrary("luna_core")
+    services/VaultService.kt singleton LunaEngine
+    services/KeystoreService.kt Keystore AES-256-GCM
     ui/{LockActivity, OnboardingActivity, MainActivity}.kt
     ui/{LogBottomSheet, SettingsActivity}.kt
-  res/values/strings.xml           40 langues
-  res/drawable/ic_luna_*.xml       11 icônes Vector
-  build.gradle.kts                 applicationId="com.macaron.luna" · namespace="app.luna"
+  res/values/strings.xml 40 langues
+  res/drawable/ic_luna_*.xml 11 icônes Vector
+  build.gradle.kts applicationId="com.macaron.luna" · namespace="app.luna"
 
 fastlane/
-  Appfile    package_name "com.macaron.luna" · app_identifier "com.macaron.luna"
-  Fastfile   lanes: ios build · upload_testflight · release · android upload_internal
-  metadata/  fiches store 40 locales
+  Appfile package_name "com.macaron.luna" · app_identifier "com.macaron.luna"
+  Fastfile lanes: ios build · upload_testflight · release · android upload_internal
+  metadata/ fiches store 40 locales
   screenshots/ 40 locales · phone + tablettes + feature graphic
 ```
 
@@ -181,9 +179,7 @@ fastlane/
 
 ---
 
-## PRIVACY — VÉRIFIÉ ✅
-
-- Zéro `INTERNET` permission · zéro URLSession/reqwest · zéro Firebase/Analytics
+## PRIVACY — VÉRIFIÉ - Zéro `INTERNET` permission · zéro URLSession/reqwest · zéro Firebase/Analytics
 - **Zéro permissions santé** Android (READ/WRITE_MENSTRUATION supprimées)
 - Zéro HealthConnect · pas de partage Google · données 100% locales
 - DB chiffrée SQLCipher · clé Argon2id · nonce CSPRNG unique · secrecy::SecretVec zeroize
@@ -198,24 +194,24 @@ fastlane/
 
 | Critère | |
 |---------|--|
-| Zéro réseau | ✅ |
-| DB chiffrée AES-256 + Argon2id | ✅ |
-| iOS Keychain + Android Keystore | ✅ |
-| Panic wipe | ✅ |
-| Backup chiffré | ✅ API (UI partielle) |
-| iOS TestFlight | ✅ v0.1.0 build 1 |
-| Android Play Store internal | ✅ v1.0.0 |
-| Rust 23 tests | ✅ |
-| i18n 40 langues · AR RTL · DE · JA | ✅ testé sim |
-| Light/Dark auto | ✅ |
-| zstd BLOB compression | ✅ |
-| Calm Mode + reduceMotion | ✅ |
-| Zéro emoji UI | ✅ |
-| minSdk Android 23 | ✅ |
-| sleep_quality + weight_kg | ✅ |
-| Zéro permissions santé Android | ✅ |
-| Icônes iOS sans alpha | ✅ |
-| Parcours UI end-to-end | ⚠️ partiel |
+| Zéro réseau | |
+| DB chiffrée AES-256 + Argon2id | |
+| iOS Keychain + Android Keystore | |
+| Panic wipe | |
+| Backup chiffré | API (UI partielle) |
+| iOS TestFlight | v0.1.0 build 1 |
+| Android Play Store internal | v1.0.0 |
+| Rust 23 tests | |
+| i18n 40 langues · AR RTL · DE · JA | testé sim |
+| Light/Dark auto | |
+| zstd BLOB compression | |
+| Calm Mode + reduceMotion | |
+| Zéro emoji UI | |
+| minSdk Android 23 | |
+| sleep_quality + weight_kg | |
+| Zéro permissions santé Android | |
+| Icônes iOS sans alpha | |
+| Parcours UI end-to-end | partiel |
 
 ---
 
@@ -247,17 +243,17 @@ Basse : Apple Watch · Wear OS
 ## COMMANDES RAPIDES
 
 ```bash
-cargo test -p luna-core                                    # tests Rust
-xcrun simctl io 7A806776-... screenshot /tmp/s.png        # screenshot iOS
-xcrun simctl ui 7A806776-... appearance dark|light        # toggle theme
-adb -s emulator-5554 shell logcat -d | grep app.luna      # logcat Android
+cargo test -p luna-core # tests Rust
+xcrun simctl io 7A806776-... screenshot /tmp/s.png # screenshot iOS
+xcrun simctl ui 7A806776-... appearance dark|light # toggle theme
+adb -s emulator-5554 shell logcat -d | grep app.luna # logcat Android
 
 # Re-déployer Android
 cd android-app && ./gradlew bundleRelease
-node scripts/release_internal_test.js   # CDP → Play Console internal
+node scripts/release_internal_test.js # CDP → Play Console internal
 
 # Re-déployer iOS
-fastlane ios release                    # build + TestFlight en une commande
+fastlane ios release # build + TestFlight en une commande
 ```
 
 ---
@@ -332,13 +328,11 @@ fastlane ios release                    # build + TestFlight en une commande
 
 ---
 
-## BUILD ✅ (2026-03-05 · commit 2f5a3e5)
+## BUILD (2026-03-05 · commit 2f5a3e5)
 
 ```bash
 cd _FLO
-cargo test                          # 23/23 ✅
-
-# iOS sim (iPhone 16 Pro · 7A806776-2927-46EF-98F6-4D852C5AC671)
+cargo test # 23/23 # iOS sim (iPhone 16 Pro · 7A806776-2927-46EF-98F6-4D852C5AC671)
 cd ios-app && xcodegen generate
 xcodebuild build -scheme LunaApp \
   -destination 'platform=iOS Simulator,id=7A806776-2927-46EF-98F6-4D852C5AC671' \
@@ -367,10 +361,10 @@ cargo run -p uniffi-bindgen -- generate \
 
 ```rust
 LunaEngine::open_vault(db_path, pin) -> Result<LunaEngine>
-.log_day(DailyLog)           .get_log(date) -> Option<DailyLog>
-.get_cycles(limit)           .start_cycle(date)  .end_cycle(id, date)
-.predict_next() -> Prediction  .get_cycle_summary() -> CycleSummary
-.change_pin(old, new)        .panic_wipe()        .export_encrypted_backup(pin)
+.log_day(DailyLog) .get_log(date) -> Option<DailyLog>
+.get_cycles(limit) .start_cycle(date) .end_cycle(id, date)
+.predict_next() -> Prediction .get_cycle_summary() -> CycleSummary
+.change_pin(old, new) .panic_wipe() .export_encrypted_backup(pin)
 vault_exists(db_path) -> bool
 ```
 
@@ -393,32 +387,32 @@ Symptoms : 43 constantes (cramps, SPM, ovulation, folliculaire, générale, pér
 
 ```
 luna-core/src/
-  api.rs              UniFFI public (LunaEngine)
-  engine/types.rs     DailyLog, Cycle, Prediction, CycleSummary, symptoms::*
+  api.rs UniFFI public (LunaEngine)
+  engine/types.rs DailyLog, Cycle, Prediction, CycleSummary, symptoms::*
   engine/prediction.rs PredictionEngine (calendar|bbt|lh|combined)
-  vault/crypto.rs     derive_key, encrypt/decrypt, compress/decompress_blob, secure_zero
-  vault/database.rs   SQLCipher · upsert_log · get_log · get_logs_range
-  error.rs            LunaError (8 variants)
+  vault/crypto.rs derive_key, encrypt/decrypt, compress/decompress_blob, secure_zero
+  vault/database.rs SQLCipher · upsert_log · get_log · get_logs_range
+  error.rs LunaError (8 variants)
 
 ios-app/
-  project.yml                      xcodegen config — regénérer xcodeproj si modifié
-  LunaApp/Generated/               NE PAS ÉDITER (luna_core.swift, .a, .modulemap)
-  LunaApp/Views/                   OnboardingView, LockView, HomeView, Calendar,
+  project.yml xcodegen config — regénérer xcodeproj si modifié
+  LunaApp/Generated/ NE PAS ÉDITER (luna_core.swift, .a, .modulemap)
+  LunaApp/Views/ OnboardingView, LockView, HomeView, Calendar,
                                    Insights, Settings, LogSheetView, RootView
-  LunaApp/Resources/Localizable.xcstrings  100+ clés, 40 langues
-  LunaApp/Services/KeychainService.swift   SecItemAdd/CopyMatching/Delete
+  LunaApp/Resources/Localizable.xcstrings 100+ clés, 40 langues
+  LunaApp/Services/KeychainService.swift SecItemAdd/CopyMatching/Delete
 
 android-app/app/src/main/
-  generated/uniffi/luna_core/luna_core.kt  NE PAS ÉDITER
+  generated/uniffi/luna_core/luna_core.kt NE PAS ÉDITER
   jniLibs/{arm64-v8a,x86_64}/libluna_core.so
   kotlin/app/luna/
-    LunaApplication.kt             System.loadLibrary("luna_core")
-    services/VaultService.kt       singleton LunaEngine
-    services/KeystoreService.kt    Keystore AES-256-GCM
+    LunaApplication.kt System.loadLibrary("luna_core")
+    services/VaultService.kt singleton LunaEngine
+    services/KeystoreService.kt Keystore AES-256-GCM
     ui/{LockActivity, OnboardingActivity, MainActivity}.kt
     ui/{LogBottomSheet, SettingsActivity}.kt
-  res/values/strings.xml           40 langues
-  res/drawable/ic_luna_*.xml       11 icônes Vector
+  res/values/strings.xml 40 langues
+  res/drawable/ic_luna_*.xml 11 icônes Vector
 ```
 
 ---
@@ -433,9 +427,7 @@ android-app/app/src/main/
 
 ---
 
-## PRIVACY — VÉRIFIÉ ✅
-
-- Zéro `INTERNET` permission · zéro URLSession/reqwest · zéro Firebase/Analytics
+## PRIVACY — VÉRIFIÉ - Zéro `INTERNET` permission · zéro URLSession/reqwest · zéro Firebase/Analytics
 - DB chiffrée SQLCipher · clé Argon2id · nonce CSPRNG unique · secrecy::SecretVec zeroize
 - iOS Keychain `kSecAttrAccessibleWhenUnlockedThisDeviceOnly`
 - Android Keystore hardware-backed AES-256-GCM
@@ -447,22 +439,22 @@ android-app/app/src/main/
 
 | Critère | |
 |---------|--|
-| Zéro réseau | ✅ |
-| DB chiffrée AES-256 + Argon2id | ✅ |
-| iOS Keychain + Android Keystore | ✅ |
-| Panic wipe | ✅ |
-| Backup chiffré | ✅ API (UI partielle) |
-| iOS build sim | ✅ iPhone 16 Pro |
-| Android build emu | ✅ Pixel6_API34 |
-| Rust 23 tests | ✅ |
-| i18n 40 langues · AR RTL · DE · JA | ✅ testé sim |
-| Light/Dark auto | ✅ |
-| zstd BLOB compression | ✅ |
-| Calm Mode + reduceMotion | ✅ |
-| Zéro emoji UI | ✅ |
-| minSdk Android 23 | ✅ |
-| sleep_quality + weight_kg | ✅ |
-| Parcours UI end-to-end | ⚠️ partiel |
+| Zéro réseau | |
+| DB chiffrée AES-256 + Argon2id | |
+| iOS Keychain + Android Keystore | |
+| Panic wipe | |
+| Backup chiffré | API (UI partielle) |
+| iOS build sim | iPhone 16 Pro |
+| Android build emu | Pixel6_API34 |
+| Rust 23 tests | |
+| i18n 40 langues · AR RTL · DE · JA | testé sim |
+| Light/Dark auto | |
+| zstd BLOB compression | |
+| Calm Mode + reduceMotion | |
+| Zéro emoji UI | |
+| minSdk Android 23 | |
+| sleep_quality + weight_kg | |
+| Parcours UI end-to-end | partiel |
 
 ---
 
@@ -489,10 +481,10 @@ Basse : Apple Watch · Wear OS
 ## COMMANDES RAPIDES
 
 ```bash
-cargo test -p luna-core                                    # tests Rust
-xcrun simctl io 7A806776-... screenshot /tmp/s.png        # screenshot iOS
-xcrun simctl ui 7A806776-... appearance dark|light        # toggle theme
-adb -s emulator-5554 shell logcat -d | grep app.luna      # logcat Android
+cargo test -p luna-core # tests Rust
+xcrun simctl io 7A806776-... screenshot /tmp/s.png # screenshot iOS
+xcrun simctl ui 7A806776-... appearance dark|light # toggle theme
+adb -s emulator-5554 shell logcat -d | grep app.luna # logcat Android
 ```
 
 ---
@@ -553,4 +545,3 @@ adb -s emulator-5554 shell logcat -d | grep app.luna      # logcat Android
 | ABI Android | arm64-v8a · armeabi-v7a · x86_64 | 32-bit ARM inclus |
 
 > iOS 16 minimum imposé par `NavigationStack` + `.presentationDetents` — descendre à iOS 15 nécessiterait remplacer par `NavigationView` (faible ROI, les utilisateurs iOS upgradent rapidement)
-

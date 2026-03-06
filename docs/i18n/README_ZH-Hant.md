@@ -18,15 +18,15 @@
 
 | | |
 |---|---|
-| 📵 | **無伺服器。** 我們沒有伺服器。無後端，無遠端資料庫，無應用程式連接的API端點。 |
-| 📶 | **100% 離線運作。** 從不需要或使用網路連線。安裝一次，無需網路永久使用。 |
-| 🚷 | **無帳戶，無註冊。** 無電子郵件，無密碼，無社交登入，無身份驗證。什麼都不需要。 |
-| 🧩 | **不依賴任何第三方服務。** 無Firebase，無Google Analytics，無Mixpanel，無Sentry。零外部SDK。 |
-| 🔐 | **資料僅加密存儲在您的手機上。** AES-256-GCM加密的SQLCipher資料庫。密鑰永不離開裝置。 |
-| ☁️ | **可選雲端備份——完全加密。** iCloud/Google Drive收到不透明的加密數據塊。即使Apple和Google也無法讀取。 |
-| 🚫 | **零遙測，零分析。** 沒有任何東西離開您的手機。 |
-| 💥 | **3秒緊急清除。** 長按按鈕：資料庫+鹽+所有加密密鑰不可逆地銷毀。 |
-| 🔓 | **100% 開源。** MIT/Apache-2.0。每一行程式碼都是公開的，任何人都可以審計。 |
+| | **無伺服器。** 我們沒有伺服器。無後端，無遠端資料庫，無應用程式連接的API端點。 |
+| | **100% 離線運作。** 從不需要或使用網路連線。安裝一次，無需網路永久使用。 |
+| | **無帳戶，無註冊。** 無電子郵件，無密碼，無社交登入，無身份驗證。什麼都不需要。 |
+| | **不依賴任何第三方服務。** 無Firebase，無Google Analytics，無Mixpanel，無Sentry。零外部SDK。 |
+| | **資料僅加密存儲在您的手機上。** AES-256-GCM加密的SQLCipher資料庫。密鑰永不離開裝置。 |
+| | **可選雲端備份——完全加密。** iCloud/Google Drive收到不透明的加密數據塊。即使Apple和Google也無法讀取。 |
+| | **零遙測，零分析。** 沒有任何東西離開您的手機。 |
+| | **3秒緊急清除。** 長按按鈕：資料庫+鹽+所有加密密鑰不可逆地銷毀。 |
+| | **100% 開源。** MIT/Apache-2.0。每一行程式碼都是公開的，任何人都可以審計。 |
 
 ---
 
@@ -43,9 +43,9 @@
 | **無隱藏SDK** | 二進位檔案只包含您在此儲存庫中看到的內容。 |
 
 ```
-iOS:     ATS enforced — no arbitrary network loads
+iOS: ATS enforced — no arbitrary network loads
 Android: networkSecurityConfig blocks ALL outbound connections
-Rust:    Cargo.toml has zero networking dependencies
+Rust: Cargo.toml has zero networking dependencies
 ```
 
 ---
@@ -70,4 +70,4 @@ Rust:    Cargo.toml has zero networking dependencies
 
 MIT / Apache-2.0 — [LICENSE](../../README.md)
 
-> ⚠️ 本應用程式不提供醫療建議。
+> 本應用程式不提供醫療建議。

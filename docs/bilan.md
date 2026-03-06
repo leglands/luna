@@ -1,7 +1,5 @@
 # LUNA — Bilan Global
-> Version 2026-03-05 · commit 94862bd · iOS ✅ · Android ✅ · Rust 41 tests ✅
-
----
+> Version 2026-03-05 · commit 94862bd · iOS · Android · Rust 41 tests ---
 
 ## 1. VISION & POSITIONNEMENT
 
@@ -16,17 +14,17 @@
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│  iOS — SwiftUI 5 (iOS 16+)                          │
-│  Kotlin Views (Android 6+ / API 23)                 │
+│ iOS — SwiftUI 5 (iOS 16+) │
+│ Kotlin Views (Android 6+ / API 23) │
 ├─────────────────────────────────────────────────────┤
-│           UniFFI 0.28 (proc-macros)                 │
-│     Swift bindings ←→ Kotlin bindings               │
+│ UniFFI 0.28 (proc-macros) │
+│ Swift bindings ←→ Kotlin bindings │
 ├─────────────────────────────────────────────────────┤
-│         RUST CORE (luna-core)                       │
-│  api.rs · engine/ · vault/                          │
+│ RUST CORE (luna-core) │
+│ api.rs · engine/ · vault/ │
 ├─────────────────────────────────────────────────────┤
-│  SQLCipher (rusqlite + vendored OpenSSL)             │
-│  AES-256-GCM · Argon2id · HKDF-SHA256 · zstd       │
+│ SQLCipher (rusqlite + vendored OpenSSL) │
+│ AES-256-GCM · Argon2id · HKDF-SHA256 · zstd │
 └─────────────────────────────────────────────────────┘
 ```
 
@@ -54,86 +52,86 @@
 
 | Feature | Implémenté | Détail |
 |---------|:----------:|--------|
-| Période (date, durée, flux) | ✅ | flow_light/medium/heavy/clots |
-| 43 symptômes catégorisés | ✅ | Menstruel, SPM, ovulation, folliculaire, péri-méno, général |
-| Humeur 1–5 | ✅ | Cercles numériques (zéro emoji) |
-| Énergie 1–5 | ✅ | |
-| Sommeil 1–5 | ✅ | |
-| Poids (kg) | ✅ | |
-| BBT (température basale) | ✅ | Précision 0.01°C |
-| Test LH ovulation | ✅ | positive/negative/peak |
-| Mucus cervical (5 types) | ✅ | dry/sticky/creamy/watery/egg_white |
-| Activité sexuelle | ✅ | protected/unprotected/none |
-| Notes libres | ✅ | champ texte libre |
+| Période (date, durée, flux) | | flow_light/medium/heavy/clots |
+| 43 symptômes catégorisés | | Menstruel, SPM, ovulation, folliculaire, péri-méno, général |
+| Humeur 1–5 | | Cercles numériques (zéro emoji) |
+| Énergie 1–5 | | |
+| Sommeil 1–5 | | |
+| Poids (kg) | | |
+| BBT (température basale) | | Précision 0.01°C |
+| Test LH ovulation | | positive/negative/peak |
+| Mucus cervical (5 types) | | dry/sticky/creamy/watery/egg_white |
+| Activité sexuelle | | protected/unprotected/none |
+| Notes libres | | champ texte libre |
 
 ### 3.2 Cycle & Prédiction
 
 | Feature | Implémenté | Détail |
 |---------|:----------:|--------|
-| Démarrage/fin de cycle | ✅ | |
-| Prédiction prochaine période | ✅ | On-device, moyenne pondérée |
-| Fenêtre fertile (6 jours) | ✅ | Ovulation ± décalage lutéal |
-| Jour d'ovulation estimé | ✅ | avg_cycle - 14 (phase lutéale fixe) |
-| Confidence score | ✅ | ↑ avec chaque cycle enregistré |
-| Algorithme BBT + LH | 🔜 | Phase 2 (infrastructure prête) |
-| Résumé de cycles | ✅ | Moyenne, min, max, irrégularité |
-| Calendrier interactif | ✅ | Color-coded per event type |
+| Démarrage/fin de cycle | | |
+| Prédiction prochaine période | | On-device, moyenne pondérée |
+| Fenêtre fertile (6 jours) | | Ovulation ± décalage lutéal |
+| Jour d'ovulation estimé | | avg_cycle - 14 (phase lutéale fixe) |
+| Confidence score | | ↑ avec chaque cycle enregistré |
+| Algorithme BBT + LH | | Phase 2 (infrastructure prête) |
+| Résumé de cycles | | Moyenne, min, max, irrégularité |
+| Calendrier interactif | | Color-coded per event type |
 
 ### 3.3 Modes de tracking
 
 | Mode | Implémenté | Détail |
 |------|:----------:|--------|
-| Regular (standard) | ✅ | |
-| TTC (conception) | ✅ | Banner "Fertile window", ovulation focus |
-| Pregnant | ✅ | PregnancyLogSheet: hCG, kicks, nausée, poids |
-| Postpartum | ✅ | |
-| Perimenopause | ✅ | Symptômes dédiés: hot_flash, night_sweats, vaginal_dryness |
-| Contraception | ✅ | Pill/Patch/Ring/Injection/IUD/Implant/Condom/Other |
-| Rappel pilule | ✅ | Heure configurable, notification locale |
+| Regular (standard) | | |
+| TTC (conception) | | Banner "Fertile window", ovulation focus |
+| Pregnant | | PregnancyLogSheet: hCG, kicks, nausée, poids |
+| Postpartum | | |
+| Perimenopause | | Symptômes dédiés: hot_flash, night_sweats, vaginal_dryness |
+| Contraception | | Pill/Patch/Ring/Injection/IUD/Implant/Condom/Other |
+| Rappel pilule | | Heure configurable, notification locale |
 
 ### 3.4 Sécurité & Privacy
 
 | Feature | Implémenté | Détail |
 |---------|:----------:|--------|
-| PIN 6–8 chiffres | ✅ | Stocké via Argon2id, jamais en clair |
-| Biométrie (FaceID/TouchID/empreinte) | ✅ | LAContext iOS + BiometricPrompt Android |
-| Vault lock auto | ✅ | Fermeture si app en arrière-plan |
-| Panic wipe | ✅ | Supprime DB + clés en < 500ms |
-| Backup chiffré (AES-256-GCM) | ✅ | Export local uniquement |
-| Export CSV | ✅ | RFC 4180, sans données sensibles structurées |
-| Zéro réseau | ✅ | Aucune permission réseau déclarée |
-| Zéro télémétrie | ✅ | Aucun SDK analytics |
-| Zéro compte | ✅ | Pas d'auth serveur |
+| PIN 6–8 chiffres | | Stocké via Argon2id, jamais en clair |
+| Biométrie (FaceID/TouchID/empreinte) | | LAContext iOS + BiometricPrompt Android |
+| Vault lock auto | | Fermeture si app en arrière-plan |
+| Panic wipe | | Supprime DB + clés en < 500ms |
+| Backup chiffré (AES-256-GCM) | | Export local uniquement |
+| Export CSV | | RFC 4180, sans données sensibles structurées |
+| Zéro réseau | | Aucune permission réseau déclarée |
+| Zéro télémétrie | | Aucun SDK analytics |
+| Zéro compte | | Pas d'auth serveur |
 
 ### 3.5 UX & Accessibilité
 
 | Feature | Implémenté | Détail |
 |---------|:----------:|--------|
-| Dark / Light mode auto | ✅ | Suit le système (nil = auto) |
-| Calm Mode (a11y psy) | ✅ | Cache prédictions, réduit charge cognitive |
-| Reduce Motion | ✅ | `@Environment(\.accessibilityReduceMotion)` |
-| VoiceOver / TalkBack | ✅ | `accessibilityLabel` sur tous les éléments actifs |
-| i18n 40 langues | ✅ | xcstrings FR→40 langues, strings.xml Android |
-| RTL complet (arabe, hébreu, persan) | ✅ | FlowLayout + `.environment(\.layoutDirection)` |
-| Zéro emoji dans l'UI | ✅ | Remplacés par cercles numériques et icônes vectorielles |
-| WCAG 2.2 AA | ✅ | Contrastes, taille minimale cibles tactiles |
+| Dark / Light mode auto | | Suit le système (nil = auto) |
+| Calm Mode (a11y psy) | | Cache prédictions, réduit charge cognitive |
+| Reduce Motion | | `@Environment(\.accessibilityReduceMotion)` |
+| VoiceOver / TalkBack | | `accessibilityLabel` sur tous les éléments actifs |
+| i18n 40 langues | | xcstrings FR→40 langues, strings.xml Android |
+| RTL complet (arabe, hébreu, persan) | | FlowLayout + `.environment(\.layoutDirection)` |
+| Zéro emoji dans l'UI | | Remplacés par cercles numériques et icônes vectorielles |
+| WCAG 2.2 AA | | Contrastes, taille minimale cibles tactiles |
 
 ### 3.6 Health Bridges
 
 | Feature | Implémenté | Détail |
 |---------|:----------:|--------|
-| HealthKit (iOS) | ✅ | Écriture flux menstruel, lecture BBT |
-| HealthConnect (Android) | ✅ | API 26+, runtime check |
+| HealthKit (iOS) | | Écriture flux menstruel, lecture BBT |
+| HealthConnect (Android) | | API 26+, runtime check |
 
 ### 3.7 Insights & Visualisations
 
 | Feature | Implémenté | Détail |
 |---------|:----------:|--------|
-| Statistiques cycle | ✅ | Moyenne, écart-type, irrégularité |
-| Graphique barres (longueurs cycles) | ✅ | SwiftUI Charts / Canvas Android |
-| Graphique ligne (BBT) | ✅ | |
-| Top symptômes | ✅ | Tri par fréquence |
-| Notifications période / ovulation | ✅ | UNUserNotificationCenter / WorkManager |
+| Statistiques cycle | | Moyenne, écart-type, irrégularité |
+| Graphique barres (longueurs cycles) | | SwiftUI Charts / Canvas Android |
+| Graphique ligne (BBT) | | |
+| Top symptômes | | Tri par fréquence |
+| Notifications période / ovulation | | UNUserNotificationCenter / WorkManager |
 
 ---
 
@@ -143,20 +141,20 @@
 
 | Parcours | Test | Résultat |
 |----------|------|---------|
-| J1: Onboarding (vault neuf, PIN, consent) | `behavior_tests::test_01_onboarding` | ✅ |
-| J2: Log quotidien (saisie, lecture, CRUD) | `behavior_tests::test_02_daily_log` | ✅ |
-| J3: Cycle complet (démarrage → fin → prochain) | `behavior_tests::test_03_cycle_tracking` | ✅ |
-| J4: Prédiction (amélioration avec 3+ cycles) | `behavior_tests::test_04_prediction` | ✅ |
-| J5: Résumé statistique | `behavior_tests::test_05_cycle_summary` | ✅ |
-| J6: Mauvais PIN → accès refusé | `behavior_tests::test_06_wrong_pin` | ✅ |
-| J7: Panic wipe → vault détruit | `behavior_tests::test_07_panic_wipe` | ✅ |
-| J8: Export backup chiffré → restauration | `behavior_tests::test_08_encrypted_backup` | ✅ |
-| J9: Thread-safety concurrent | `behavior_tests::test_09_concurrent_access` | ✅ |
-| J10: AppState iOS (vault, lock, calmMode) | `J1_AppStateTests` | ✅ |
-| J11: NotificationManager (singleton, crash) | `J3_NotificationTests` | ✅ |
-| J12: TrackingMode round-trip | `LunaServicesTests` | ✅ |
-| J13: Android BehaviorTests (19 scénarios) | `BehaviorTests.kt` | ✅ |
-| J14: NotificationWorker channels | `NotificationWorkerTest.kt` | ✅ |
+| J1: Onboarding (vault neuf, PIN, consent) | `behavior_tests::test_01_onboarding` | |
+| J2: Log quotidien (saisie, lecture, CRUD) | `behavior_tests::test_02_daily_log` | |
+| J3: Cycle complet (démarrage → fin → prochain) | `behavior_tests::test_03_cycle_tracking` | |
+| J4: Prédiction (amélioration avec 3+ cycles) | `behavior_tests::test_04_prediction` | |
+| J5: Résumé statistique | `behavior_tests::test_05_cycle_summary` | |
+| J6: Mauvais PIN → accès refusé | `behavior_tests::test_06_wrong_pin` | |
+| J7: Panic wipe → vault détruit | `behavior_tests::test_07_panic_wipe` | |
+| J8: Export backup chiffré → restauration | `behavior_tests::test_08_encrypted_backup` | |
+| J9: Thread-safety concurrent | `behavior_tests::test_09_concurrent_access` | |
+| J10: AppState iOS (vault, lock, calmMode) | `J1_AppStateTests` | |
+| J11: NotificationManager (singleton, crash) | `J3_NotificationTests` | |
+| J12: TrackingMode round-trip | `LunaServicesTests` | |
+| J13: Android BehaviorTests (19 scénarios) | `BehaviorTests.kt` | |
+| J14: NotificationWorker channels | `NotificationWorkerTest.kt` | |
 
 ### Critères d'acceptation fondamentaux
 
@@ -179,13 +177,13 @@
 ```
 PIN utilisateur (6–8 chiffres)
         │
-        ▼ Argon2id (64MB / 3 iter / 4 threads ≈ 300ms mobile mid-range)
+        Argon2id (64MB / 3 iter / 4 threads ≈ 300ms mobile mid-range)
   master_key (256 bits)
         │
-        ├── HKDF-SHA256 (context="db_key")   → clé SQLCipher
+        ├── HKDF-SHA256 (context="db_key") → clé SQLCipher
         └── HKDF-SHA256 (context="sync_key") → clé backup export
                 │
-                ▼ AES-256-GCM (nonce aléatoire CSPRNG, jamais réutilisé)
+                AES-256-GCM (nonce aléatoire CSPRNG, jamais réutilisé)
           SQLCipher DB + BLOBs zstd
 ```
 
@@ -193,8 +191,8 @@ PIN utilisateur (6–8 chiffres)
 
 | Plateforme | Mécanisme | Hardware-backed |
 |-----------|-----------|:--------------:|
-| iOS | `kSecAttrAccessibleWhenUnlockedThisDeviceOnly` | ✅ Secure Enclave |
-| Android API 23+ | Android Keystore (AES-256-GCM) | ✅ Si TEE dispo |
+| iOS | `kSecAttrAccessibleWhenUnlockedThisDeviceOnly` | Secure Enclave |
+| Android API 23+ | Android Keystore (AES-256-GCM) | Si TEE dispo |
 | Fallback Android | Software keystore (Keystore API) | Partiel |
 
 ### 5.3 Pratiques défensives
@@ -253,34 +251,34 @@ PIN utilisateur (6–8 chiffres)
 
 | Feature | Flo | Clue | Natural Cycles | **LUNA** |
 |---------|:---:|:----:|:--------------:|:--------:|
-| Suivi période | ✅ | ✅ | ✅ | ✅ |
+| Suivi période | | | | |
 | Symptômes | Partiel | Partiel | — | **43** |
-| BBT | ✅ | ✅ | ✅ | ✅ |
-| Test LH | ✅ | ✅ | ✅ | ✅ |
+| BBT | | | | |
+| Test LH | | | | |
 | Prédiction | Cloud | Cloud | Serveur | **On-device** |
-| Export | — | — | — | ✅ CSV + backup |
-| Dark mode | ✅ | ✅ | ✅ | ✅ |
+| Export | — | — | — | CSV + backup |
+| Dark mode | | | | |
 | i18n | 22 | 15 | 12 | **40** |
-| RTL | Partiel | — | — | ✅ |
-| WCAG | Partiel | Partiel | — | ✅ 2.2 AA |
-| Calm Mode | — | — | — | **✅ unique** |
-| PIN + Biométrie | — | — | — | ✅ |
-| Panic wipe | — | — | — | **✅ unique** |
-| Zéro réseau | — | — | — | **✅ unique** |
-| Données chiffrées | Partiel | Partiel | Partiel | **✅ Argon2id + AES-256** |
-| Données revendables | ✅ Flo | — | — | **Impossible** |
-| Compression stockage | — | — | — | ✅ zstd |
-| TTC mode | ✅ | ✅ | ✅ | ✅ |
-| Grossesse | ✅ | ✅ | — | ✅ |
-| Péri-ménopause | ✅ | ✅ | — | ✅ |
-| Contraception rappel | ✅ | ✅ | — | ✅ |
-| HealthKit | ✅ | ✅ | ✅ | ✅ |
-| HealthConnect | ✅ | Partiel | — | ✅ |
-| Graphiques tendance | ✅ | ✅ | ✅ | ✅ |
-| Notifications | ✅ | ✅ | ✅ | ✅ |
-| Gratuit | Freemium | Freemium | Payant | **✅ Gratuit** |
-| Open source | — | — | — | **✅ Core AGPL-3** |
-| Zéro emoji UI | — | — | — | **✅ unique** |
+| RTL | Partiel | — | — | |
+| WCAG | Partiel | Partiel | — | 2.2 AA |
+| Calm Mode | — | — | — | **unique** |
+| PIN + Biométrie | — | — | — | |
+| Panic wipe | — | — | — | **unique** |
+| Zéro réseau | — | — | — | **unique** |
+| Données chiffrées | Partiel | Partiel | Partiel | **Argon2id + AES-256** |
+| Données revendables | Flo | — | — | **Impossible** |
+| Compression stockage | — | — | — | zstd |
+| TTC mode | | | | |
+| Grossesse | | | — | |
+| Péri-ménopause | | | — | |
+| Contraception rappel | | | — | |
+| HealthKit | | | | |
+| HealthConnect | | Partiel | — | |
+| Graphiques tendance | | | | |
+| Notifications | | | | |
+| Gratuit | Freemium | Freemium | Payant | **Gratuit** |
+| Open source | — | — | — | **Core AGPL-3** |
+| Zéro emoji UI | — | — | — | **unique** |
 
 **Score LUNA : 28/28** (seule app à couvrir tous les critères)
 
@@ -296,9 +294,7 @@ PIN utilisateur (6–8 chiffres)
 
 ## 8. PATTERNS & ANTI-PATTERNS
 
-### 8.1 Patterns appliqués ✅
-
-| Pattern | Où | Bénéfice |
+### 8.1 Patterns appliqués | Pattern | Où | Bénéfice |
 |---------|-----|---------|
 | **Rust core partagé** (UniFFI) | luna-core | Une seule implémentation, deux UIs natives |
 | **Vault pattern** | LunaEngine | État opaque — pas d'accès DB sans PIN validé |
@@ -313,9 +309,7 @@ PIN utilisateur (6–8 chiffres)
 | **FileProvider** | Android | Partage fichiers sans exposition du file path |
 | **Graceful degradation** | HealthKit/HC | Aucune feature bloquante si indispo |
 
-### 8.2 Anti-patterns évités ✅
-
-| Anti-pattern | Comment évité |
+### 8.2 Anti-patterns évités | Anti-pattern | Comment évité |
 |--------------|--------------|
 | **Données en clair** | SQLCipher obligatoire — pas d'accès non chiffré possible |
 | **PIN stocké en clair** | Argon2id → seul le hash dérivé est utilisé |
@@ -344,18 +338,18 @@ PIN utilisateur (6–8 chiffres)
 
 | Suite | Fichier | Tests | Statut |
 |-------|---------|:-----:|:------:|
-| Rust behavior (integration) | `behavior_tests.rs` | 23 | ✅ |
-| Rust crypto | `vault/crypto.rs` | 5 | ✅ |
-| Rust prediction | `engine/prediction.rs` | 4 | ✅ |
-| Rust export CSV | `engine/export.rs` | 6 | ✅ |
-| Rust DB | `vault/database.rs` | 3 | ✅ |
-| iOS unit (AppState, Notif, HK) | `LunaTests.swift` | 8 | ✅ |
-| iOS services | `LunaServicesTests.swift` | 6 | ✅ |
-| iOS UI (XCUITest parcours) | `UserJourneyTests.swift` | 7 | 🔜 simulateur |
-| Android unit | `BehaviorTests.kt` | 19 | ✅ |
-| Android notif worker | `NotificationWorkerTest.kt` | 8 | ✅ |
-| Android instrumented | `UserJourneyTest.kt` | 5 | 🔜 device |
-| **Total unitaires/intégration** | | **82** | **✅** |
+| Rust behavior (integration) | `behavior_tests.rs` | 23 | |
+| Rust crypto | `vault/crypto.rs` | 5 | |
+| Rust prediction | `engine/prediction.rs` | 4 | |
+| Rust export CSV | `engine/export.rs` | 6 | |
+| Rust DB | `vault/database.rs` | 3 | |
+| iOS unit (AppState, Notif, HK) | `LunaTests.swift` | 8 | |
+| iOS services | `LunaServicesTests.swift` | 6 | |
+| iOS UI (XCUITest parcours) | `UserJourneyTests.swift` | 7 | simulateur |
+| Android unit | `BehaviorTests.kt` | 19 | |
+| Android notif worker | `NotificationWorkerTest.kt` | 8 | |
+| Android instrumented | `UserJourneyTest.kt` | 5 | device |
+| **Total unitaires/intégration** | | **82** | **** |
 
 ---
 
@@ -363,16 +357,16 @@ PIN utilisateur (6–8 chiffres)
 
 | Promesse | Vérifié par | Statut |
 |----------|-------------|:------:|
-| 0 data captée hors device | Aucune permission réseau · test_09 zéro appel réseau | ✅ |
-| Stockage chiffré AES-256-GCM | crypto.rs tests 1–5 | ✅ |
-| 0 dépendance analytics | `grep -r "firebase\|mixpanel\|amplitude" .` → vide | ✅ |
-| 0 partage avec tiers | Manifest/Info.plist : INTERNET absent | ✅ |
-| Panic wipe < 500ms | test_07 + mesure manuelle | ✅ |
-| Données compressées binaires | zstd BLOB + SQLCipher → taille 3–5× inférieure à JSON | ✅ |
-| 40 langues | xcstrings 100+ clés × 40 locales | ✅ |
-| Zéro emoji UI | grep `"😀\|🩸\|💊"` → 0 occurrences | ✅ |
-| minSdk 23 Android | build.gradle.kts `minSdk = 23` | ✅ |
-| iOS 16+ | project.yml `deployment_target: "16.0"` | ✅ |
+| 0 data captée hors device | Aucune permission réseau · test_09 zéro appel réseau | |
+| Stockage chiffré AES-256-GCM | crypto.rs tests 1–5 | |
+| 0 dépendance analytics | `grep -r "firebase\|mixpanel\|amplitude" .` → vide | |
+| 0 partage avec tiers | Manifest/Info.plist : INTERNET absent | |
+| Panic wipe < 500ms | test_07 + mesure manuelle | |
+| Données compressées binaires | zstd BLOB + SQLCipher → taille 3–5× inférieure à JSON | |
+| 40 langues | xcstrings 100+ clés × 40 locales | |
+| Zéro emoji UI | grep `"\|\|"` → 0 occurrences | |
+| minSdk 23 Android | build.gradle.kts `minSdk = 23` | |
+| iOS 16+ | project.yml `deployment_target: "16.0"` | |
 
 ---
 

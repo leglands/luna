@@ -34,12 +34,12 @@ bundle exec fastlane ios upload_testflight
 
 | File | Status |
 |------|--------|
-| `fastlane/metadata/ios/en-US/` | ✅ Full metadata |
-| `fastlane/metadata/ios/fr-FR/` | ✅ French |
-| `fastlane/metadata/ios/de-DE/` | ✅ German |
-| `fastlane/metadata/ios/es-ES/` | ✅ Spanish |
-| `fastlane/metadata/ios/ja/` | ✅ Japanese |
-| Screenshots (1290×2796) 6 screens × 8 langs | ✅ Generated |
+| `fastlane/metadata/ios/en-US/` | Full metadata |
+| `fastlane/metadata/ios/fr-FR/` | French |
+| `fastlane/metadata/ios/de-DE/` | German |
+| `fastlane/metadata/ios/es-ES/` | Spanish |
+| `fastlane/metadata/ios/ja/` | Japanese |
+| Screenshots (1290×2796) 6 screens × 8 langs | Generated |
 
 ## Build Requirements
 

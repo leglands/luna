@@ -28,7 +28,7 @@
 
 ## Your data. Your phone. Full stop.
 
-> LUNA works **100% without internet**. Your cycle data **never leaves your device**.  
+> LUNA works **100% without internet**. Your cycle data **never leaves your device**. 
 > No account. No server. No third-party service. Not now, not ever.
 
 ### What LUNA guarantees — by design, not by promise
@@ -60,13 +60,13 @@
 ### How this is technically enforced — not just stated
 
 ```
-iOS:     App Transport Security (ATS) enforced — no arbitrary network loads allowed
+iOS: App Transport Security (ATS) enforced — no arbitrary network loads allowed
 Android: android:networkSecurityConfig blocks ALL outbound connections at OS level
-Rust:    Cargo.toml has zero networking dependencies (no reqwest, no hyper, nothing)
-Build:   CI verifies cargo deny — any new network dep fails the build
+Rust: Cargo.toml has zero networking dependencies (no reqwest, no hyper, nothing)
+Build: CI verifies cargo deny — any new network dep fails the build
 ```
 
-The privacy is **architectural**. It is not a policy, a checkbox, or a promise.  
+The privacy is **architectural**. It is not a policy, a checkbox, or a promise. 
 It is physically impossible for this app to send your data anywhere.
 
 ---
@@ -111,7 +111,7 @@ It is physically impossible for this app to send your data anywhere.
 
 ---
 
-## ️ Architecture
+## Architecture
 
 ```
 luna/
@@ -243,7 +243,7 @@ LUNA targets **WCAG 2.2 Level AA**:
 
 ---
 
-## ️ Security Architecture
+## Security Architecture
 
 ```
 User PIN

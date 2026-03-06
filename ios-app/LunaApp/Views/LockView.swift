@@ -141,7 +141,7 @@ struct PINEntryView: View {
     @Binding var pin: String
     let onComplete: (String) -> Void
 
-    private let digits = [["1","2","3"],["4","5","6"],["7","8","9"],["","0","⌫"]]
+    private let digits = [["1","2","3"],["4","5","6"],["7","8","9"],["","0",""]]
 
     var body: some View {
         VStack(spacing: 12) {
@@ -171,7 +171,7 @@ struct PINEntryView: View {
                                     .frame(width: 72, height: 72)
                                     .background(Color("CardBackground"), in: Circle())
                             }
-                            .accessibilityLabel(digit == "⌫"
+                            .accessibilityLabel(digit == ""
                                 ? Text("pin_delete_a11y")
                                 : Text("pin_digit_\(digit)_a11y")
                             )
@@ -183,7 +183,7 @@ struct PINEntryView: View {
     }
 
     private func handleDigit(_ digit: String) {
-        if digit == "⌫" {
+        if digit == "" {
             if !pin.isEmpty { pin.removeLast() }
         } else if pin.count < 6 {
             pin.append(digit)
@@ -193,5 +193,4 @@ struct PINEntryView: View {
         }
     }
 }
-
 

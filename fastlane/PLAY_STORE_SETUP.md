@@ -43,28 +43,28 @@ For the very first upload, Google requires uploading via the Play Console UI:
 
 | File | Status |
 |------|--------|
-| `app-release.aab` (9.8 MB signed) | ✅ Built & signed |
-| `fastlane/metadata/android/en-US/` | ✅ Title, description, short desc |
-| `fastlane/metadata/android/fr-FR/` | ✅ French |
-| `fastlane/metadata/android/de-DE/` | ✅ German |
-| `fastlane/metadata/android/es-ES/` | ✅ Spanish |
-| `fastlane/metadata/android/ja-JP/` | ✅ Japanese |
-| `fastlane/metadata/android/zh-CN/` | ✅ Chinese Simplified |
-| `fastlane/metadata/android/ko-KR/` | ✅ Korean |
-| `fastlane/metadata/android/pt-BR/` | ✅ Portuguese (Brazil) |
-| `fastlane/metadata/android/it-IT/` | ✅ Italian |
-| `fastlane/metadata/android/nl-NL/` | ✅ Dutch |
-| `fastlane/metadata/android/ar-SA/` | ✅ Arabic |
-| `fastlane/metadata/android/ru-RU/` | ✅ Russian |
-| Screenshots (1080×1920) 6 screens × 8 langs | ✅ Generated |
-| Feature graphic (1024×500) × 8 langs | ✅ Generated |
+| `app-release.aab` (9.8 MB signed) | Built & signed |
+| `fastlane/metadata/android/en-US/` | Title, description, short desc |
+| `fastlane/metadata/android/fr-FR/` | French |
+| `fastlane/metadata/android/de-DE/` | German |
+| `fastlane/metadata/android/es-ES/` | Spanish |
+| `fastlane/metadata/android/ja-JP/` | Japanese |
+| `fastlane/metadata/android/zh-CN/` | Chinese Simplified |
+| `fastlane/metadata/android/ko-KR/` | Korean |
+| `fastlane/metadata/android/pt-BR/` | Portuguese (Brazil) |
+| `fastlane/metadata/android/it-IT/` | Italian |
+| `fastlane/metadata/android/nl-NL/` | Dutch |
+| `fastlane/metadata/android/ar-SA/` | Arabic |
+| `fastlane/metadata/android/ru-RU/` | Russian |
+| Screenshots (1080×1920) 6 screens × 8 langs | Generated |
+| Feature graphic (1024×500) × 8 langs | Generated |
 
 ## Keystore
 
 ```
-Location:  android-app/keystore/luna-release.jks
-Alias:     luna
-SHA-256:   F3:7A:E2:FC:24:C3:8A:86:F3:17:2E:3A:28:38:00:C1:...
+Location: android-app/keystore/luna-release.jks
+Alias: luna
+SHA-256: F3:7A:E2:FC:24:C3:8A:86:F3:17:2E:3A:28:38:00:C1:...
 ```
 
-⚠️ **Back up the keystore!** You CANNOT update the app without it.
+**Back up the keystore!** You CANNOT update the app without it.

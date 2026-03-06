@@ -18,15 +18,15 @@
 
 | | |
 |---|---|
-| 📵 | **Geen server.** Wij hebben er geen. Geen backend, geen externe database, geen API-eindpunt waarmee de app verbinding maakt. |
-| 📶 | **Werkt 100% offline.** Er is nooit een internetverbinding nodig of wordt gebruikt. Eenmalig installeren, altijd gebruiken zonder netwerk. |
-| 🚷 | **Geen account, geen registratie.** Geen e-mail, geen wachtwoord, geen sociale login, geen identiteitsverificatie. Niets. |
-| 🧩 | **Geen afhankelijkheid van diensten van derden.** Geen Firebase, Google Analytics, Mixpanel, Sentry, Amplitude. Nul externe SDK's. |
-| 🔐 | **Gegevens alleen versleuteld op jouw telefoon.** SQLCipher-database versleuteld met AES-256-GCM. Sleutel afgeleid van jouw PIN via Argon2id. De sleutel verlaat het apparaat nooit. |
-| ☁️ | **Optionele cloudback-up — volledig versleuteld.** iCloud/Google Drive ontvangt een ondoorzichtige versleutelde blob. Zelfs Apple en Google kunnen het niet lezen. |
-| 🚫 | **Nul telemetrie, nul analytics.** Geen crashrapporten, geen gebruiksstatistieken, geen A/B-tests. Niets verlaat jouw telefoon. |
-| 💥 | **Paniekvegwissen in 3 seconden.** Houd de knop ingedrukt: database + salt + alle cryptografische sleutels worden onomkeerbaar vernietigd. |
-| 🔓 | **100% open source.** MIT/Apache-2.0. Elke regel code is openbaar en door iedereen te auditen. |
+| | **Geen server.** Wij hebben er geen. Geen backend, geen externe database, geen API-eindpunt waarmee de app verbinding maakt. |
+| | **Werkt 100% offline.** Er is nooit een internetverbinding nodig of wordt gebruikt. Eenmalig installeren, altijd gebruiken zonder netwerk. |
+| | **Geen account, geen registratie.** Geen e-mail, geen wachtwoord, geen sociale login, geen identiteitsverificatie. Niets. |
+| | **Geen afhankelijkheid van diensten van derden.** Geen Firebase, Google Analytics, Mixpanel, Sentry, Amplitude. Nul externe SDK's. |
+| | **Gegevens alleen versleuteld op jouw telefoon.** SQLCipher-database versleuteld met AES-256-GCM. Sleutel afgeleid van jouw PIN via Argon2id. De sleutel verlaat het apparaat nooit. |
+| | **Optionele cloudback-up — volledig versleuteld.** iCloud/Google Drive ontvangt een ondoorzichtige versleutelde blob. Zelfs Apple en Google kunnen het niet lezen. |
+| | **Nul telemetrie, nul analytics.** Geen crashrapporten, geen gebruiksstatistieken, geen A/B-tests. Niets verlaat jouw telefoon. |
+| | **Paniekvegwissen in 3 seconden.** Houd de knop ingedrukt: database + salt + alle cryptografische sleutels worden onomkeerbaar vernietigd. |
+| | **100% open source.** MIT/Apache-2.0. Elke regel code is openbaar en door iedereen te auditen. |
 
 ---
 
@@ -43,9 +43,9 @@
 | **Geen verborgen SDK** | Het binaire bestand bevat alleen wat je in deze repository ziet. |
 
 ```
-iOS:     ATS enforced — no arbitrary network loads
+iOS: ATS enforced — no arbitrary network loads
 Android: networkSecurityConfig blocks ALL outbound connections
-Rust:    Cargo.toml has zero networking dependencies
+Rust: Cargo.toml has zero networking dependencies
 ```
 
 ---
@@ -70,4 +70,4 @@ Gedeelde Rust-kern (UniFFI) · SwiftUI iOS · Kotlin Android · SQLCipher versle
 
 MIT / Apache-2.0 — [LICENSE](../../README.md)
 
-> ⚠️ Deze app biedt geen medisch advies.
+> Deze app biedt geen medisch advies.

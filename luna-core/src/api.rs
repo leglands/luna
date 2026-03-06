@@ -22,7 +22,7 @@ impl LunaEngine {
     /// Ouvre (ou crée) le vault chiffré.
     ///
     /// - `db_path` : chemin absolu vers le fichier SQLite sur le device
-    /// - `pin`     : PIN 4-8 chiffres fourni par l'utilisatrice
+    /// - `pin` : PIN 4-8 chiffres fourni par l'utilisatrice
     ///
     /// Retourne `LunaError::WrongPin` si le PIN est incorrect.
     #[uniffi::constructor]
@@ -127,7 +127,7 @@ impl LunaEngine {
         let regularity = match std_dev as u32 {
             0..=2 => "regular",
             3..=5 => "slightly_irregular",
-            _     => "irregular",
+            _ => "irregular",
         };
 
         let avg_period = cycles
@@ -187,16 +187,16 @@ impl LunaEngine {
         Ok(())
     }
 
-    /// ⚠️  MODE PANIQUE — supprime TOUTES les données de façon irréversible.
+    /// MODE PANIQUE — supprime TOUTES les données de façon irréversible.
     ///
     /// Séquence :
-    ///   1. Wipe SQLite (DELETE + VACUUM)
-    ///   2. Suppression des fichiers DB + salt
-    ///   3. Zeroize les clés en RAM
+    /// 1. Wipe SQLite (DELETE + VACUUM)
+    /// 2. Suppression des fichiers DB + salt
+    /// 3. Zeroize les clés en RAM
     ///
     /// L'app côté natif (Swift/Kotlin) doit en plus supprimer :
-    ///   - Les records CloudKit / Drive
-    ///   - La clé dans le Keychain / KeyStore
+    /// - Les records CloudKit / Drive
+    /// - La clé dans le Keychain / KeyStore
     pub fn panic_wipe(&self) -> Result<(), LunaError> {
         // Wipe DB
         {

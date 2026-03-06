@@ -18,15 +18,15 @@
 
 | | |
 |---|---|
-| 📵 | **서버 없음.** 우리는 서버가 없습니다. 백엔드 없음, 원격 데이터베이스 없음, 앱이 연결하는 API 엔드포인트 없음. |
-| 📶 | **100% 오프라인 작동.** 인터넷 연결이 필요하거나 사용된 적이 없습니다. 한 번 설치하면 네트워크 없이 영원히 사용 가능합니다. |
-| 🚷 | **계정 없음, 가입 없음.** 이메일 없음, 비밀번호 없음, 소셜 로그인 없음, 신원 확인 없음. 아무것도 없습니다. |
-| 🧩 | **타사 서비스 의존성 없음.** Firebase, Google Analytics, Mixpanel, Sentry, Amplitude 없음. 외부 SDK 제로. |
-| 🔐 | **데이터는 전화기에만 암호화 저장.** AES-256-GCM으로 암호화된 SQLCipher 데이터베이스. Argon2id를 통해 PIN에서 파생된 키. 키는 장치를 절대 떠나지 않습니다. |
-| ☁️ | **선택적 클라우드 백업 — 완전 암호화.** iCloud/Google Drive는 불투명한 암호화된 블롭을 받습니다. Apple과 Google도 읽을 수 없습니다. |
-| 🚫 | **텔레메트리 제로, 분석 제로.** 충돌 보고서 없음, 사용 메트릭 없음, A/B 테스트 없음. 전화기를 떠나는 것은 아무것도 없습니다. |
-| 💥 | **3초 패닉 와이프.** 버튼을 길게 누르세요: 데이터베이스 + 솔트 + 모든 암호화 키가 되돌릴 수 없이 파괴됩니다. |
-| 🔓 | **100% 오픈 소스.** MIT/Apache-2.0. 모든 코드 줄이 공개되어 있고 누구나 감사할 수 있습니다. |
+| | **서버 없음.** 우리는 서버가 없습니다. 백엔드 없음, 원격 데이터베이스 없음, 앱이 연결하는 API 엔드포인트 없음. |
+| | **100% 오프라인 작동.** 인터넷 연결이 필요하거나 사용된 적이 없습니다. 한 번 설치하면 네트워크 없이 영원히 사용 가능합니다. |
+| | **계정 없음, 가입 없음.** 이메일 없음, 비밀번호 없음, 소셜 로그인 없음, 신원 확인 없음. 아무것도 없습니다. |
+| | **타사 서비스 의존성 없음.** Firebase, Google Analytics, Mixpanel, Sentry, Amplitude 없음. 외부 SDK 제로. |
+| | **데이터는 전화기에만 암호화 저장.** AES-256-GCM으로 암호화된 SQLCipher 데이터베이스. Argon2id를 통해 PIN에서 파생된 키. 키는 장치를 절대 떠나지 않습니다. |
+| | **선택적 클라우드 백업 — 완전 암호화.** iCloud/Google Drive는 불투명한 암호화된 블롭을 받습니다. Apple과 Google도 읽을 수 없습니다. |
+| | **텔레메트리 제로, 분석 제로.** 충돌 보고서 없음, 사용 메트릭 없음, A/B 테스트 없음. 전화기를 떠나는 것은 아무것도 없습니다. |
+| | **3초 패닉 와이프.** 버튼을 길게 누르세요: 데이터베이스 + 솔트 + 모든 암호화 키가 되돌릴 수 없이 파괴됩니다. |
+| | **100% 오픈 소스.** MIT/Apache-2.0. 모든 코드 줄이 공개되어 있고 누구나 감사할 수 있습니다. |
 
 ---
 
@@ -43,9 +43,9 @@
 | **숨겨진 SDK 없음** | 바이너리에는 이 저장소에서 보는 것만 포함됩니다. |
 
 ```
-iOS:     ATS enforced — no arbitrary network loads
+iOS: ATS enforced — no arbitrary network loads
 Android: networkSecurityConfig blocks ALL outbound connections
-Rust:    Cargo.toml has zero networking dependencies
+Rust: Cargo.toml has zero networking dependencies
 ```
 
 ---
@@ -70,4 +70,4 @@ Rust:    Cargo.toml has zero networking dependencies
 
 MIT / Apache-2.0 — [LICENSE](../../README.md)
 
-> ⚠️ 이 앱은 의료 조언을 제공하지 않습니다.
+> 이 앱은 의료 조언을 제공하지 않습니다.

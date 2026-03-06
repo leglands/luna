@@ -1,4 +1,4 @@
-# 🔬 LUNA — Base Scientifique
+# LUNA — Base Scientifique
 
 > Documentation des preuves et méta-analyses qui fondent les décisions de design, d'algorithme et d'UX de LUNA.
 > Chaque décision importante renvoie à ce document.
@@ -50,13 +50,13 @@
 
 | Méthode | Précision (ovulation) | Données requises | Adapté LUNA |
 |---------|-----------------------|-----------------|-------------|
-| Calendrier pur | 63–72% | 1+ cycle | ✅ v1 baseline |
-| Moyenne mobile pondérée | 74–80% | 3+ cycles | ✅ v1 amélioré |
-| ARIMA | 81–85% | 6+ cycles | ✅ v2 |
-| LSTM | 87–91% | 12+ cycles | ⚠️ cloud ML seulement |
-| BBT seul | 68–75% | Quotidien | ✅ v2 |
-| LH seul | 78–83% | Quotidien | ✅ v2 |
-| **Calendrier + BBT + LH** | **92–96%** | Quotidien | ✅ v3 cible |
+| Calendrier pur | 63–72% | 1+ cycle | v1 baseline |
+| Moyenne mobile pondérée | 74–80% | 3+ cycles | v1 amélioré |
+| ARIMA | 81–85% | 6+ cycles | v2 |
+| LSTM | 87–91% | 12+ cycles | cloud ML seulement |
+| BBT seul | 68–75% | Quotidien | v2 |
+| LH seul | 78–83% | Quotidien | v2 |
+| **Calendrier + BBT + LH** | **92–96%** | Quotidien | v3 cible |
 
 > **Sources :** Symul et al. npj Digital Medicine 2019; Bull et al. 2019; Liang et al. 2023; Johnson et al. 2024 (méta-analyse).
 
@@ -68,7 +68,7 @@ Prédiction(n+1) = Σ(wi × durée_i) / Σ(wi)
   
 Confiance = "élevée" si stddev < 3j (3+ cycles)
             "moyenne" si stddev 3–6j OU 1–2 cycles
-            "faible"  si 0 cycle (par défaut médiane populationnelle 28j)
+            "faible" si 0 cycle (par défaut médiane populationnelle 28j)
 ```
 
 **Pourquoi pas LSTM ?**

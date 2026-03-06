@@ -1,11 +1,11 @@
-# ❓ FAQ — LUNA
+# FAQ — LUNA
 
 > Questions fréquentes sur LUNA, son fonctionnement et sa politique de confidentialité.
 > Ce fichier est embarqué dans le bundle de l'application (accessible hors connexion).
 
 ---
 
-## 🔒 Confidentialité & Données
+## Confidentialité & Données
 
 ### Où sont stockées mes données ?
 **Sur ton appareil uniquement.** LUNA ne possède aucun serveur. Tes données ne quittent jamais ton téléphone, sauf si tu actives la synchronisation iCloud (iOS) — et dans ce cas, elles sont chiffrées *avant* d'être envoyées, avec une clé que seul ton PIN connaît. Même Apple ne peut pas les lire.
@@ -33,7 +33,7 @@ L'opération est **irréversible**. Elle est conçue pour les situations où tu 
 
 ---
 
-## 📅 Suivi du Cycle
+## Suivi du Cycle
 
 ### Combien de cycles faut-il pour que les prédictions soient précises ?
 - **1 cycle** : prédiction basée sur ta durée saisie + médiane populationnelle. Confiance : faible.
@@ -54,7 +54,7 @@ Une variation de ±3–5 jours est tout à fait normale. Si tes cycles varient d
 
 ---
 
-## 🌡️ BBT & Tests LH
+## BBT & Tests LH
 
 ### Quand et comment mesurer ma BBT ?
 La Température Basale du Corps (BBT) doit être mesurée **au réveil, avant tout mouvement**, à la même heure chaque jour (±30 minutes), après au moins 3 heures de sommeil continu. Utilise un thermomètre basal (précision 0,01°C). La bouche ou le vagin donnent des mesures plus stables que l'aisselle.
@@ -67,7 +67,7 @@ Non, ils sont complémentaires. Le LH détecte le pic *avant* l'ovulation (24–
 
 ---
 
-## 📱 Technique
+## Technique
 
 ### Sur quels appareils fonctionne LUNA ?
 - **iOS** : iPhone avec iOS 16.0 ou supérieur.
@@ -87,7 +87,7 @@ Pas encore directement. Si tu exportes tes données depuis Flo/Clue en CSV, un o
 
 ---
 
-## ♿ Accessibilité
+## Accessibilité
 
 ### LUNA est-elle accessible aux personnes aveugles ?
 Oui. LUNA est conçue pour être entièrement utilisable avec VoiceOver (iOS) et TalkBack (Android). Tous les éléments interactifs ont des labels d'accessibilité. Le parcours principal (log du jour, consultation du cycle, paramètres) est entièrement navigable avec un lecteur d'écran.
@@ -100,7 +100,7 @@ LUNA supporte Dynamic Type sur iOS (toutes les tailles jusqu'à Accessibilité 5
 
 ---
 
-## 🌍 Langues
+## Langues
 
 ### En combien de langues est disponible LUNA ?
 LUNA est disponible au lancement en **15 langues** (français, anglais, espagnol, portugais brésilien, allemand, italien, néerlandais, polonais, russe, ukrainien, turc, japonais, coréen, chinois simplifié, chinois traditionnel). Le support de l'arabe, hébreu, hindi et d'autres langues est prévu dans les 6 mois suivants le lancement.
@@ -110,7 +110,7 @@ Oui. Le support RTL complet (mise en page, calendrier, chiffres arabes) est pré
 
 ---
 
-## ❤️ À propos de LUNA
+## À propos de LUNA
 
 ### Qui développe LUNA ?
 LUNA est un projet open-source développé par une équipe indépendante. L'application est gratuite et sans publicité. Le code du noyau Rust est disponible sur GitHub (licence Apache 2.0 / MIT).

@@ -18,15 +18,15 @@
 
 | | |
 |---|---|
-| 📵 | **No server.** We do not have one. No backend, no remote database, no API endpoint the app ever calls. |
-| 📶 | **Works 100% offline.** No internet connection is ever required or used. Install once, use forever without a network. |
-| 🚷 | **No account, no registration.** No email, no password, no social login, no identity verification. Nothing. |
-| 🧩 | **No third-party service dependency.** No Firebase, no Google Analytics, no Mixpanel, no Sentry, no Amplitude. Zero external SDKs. |
-| 🔐 | **Data encrypted on your phone only.** AES-256-GCM encrypted SQLCipher database. Key derived from your PIN via Argon2id. The key never leaves the device. |
-| ☁️ | **Optional encrypted backup.** iCloud/Google Drive receives an opaque ciphertext blob. Even Apple and Google cannot read it. |
-| 🚫 | **Zero telemetry, zero analytics.** No crash reports, no usage metrics, no A/B tests. Nothing leaves your phone. |
-| 💥 | **Panic wipe in 3 seconds.** Hold the button: database + salt + all cryptographic keys destroyed irreversibly. |
-| 🔓 | **100% open source.** MIT/Apache-2.0. Every line of code is public and auditable by anyone. |
+| | **No server.** We do not have one. No backend, no remote database, no API endpoint the app ever calls. |
+| | **Works 100% offline.** No internet connection is ever required or used. Install once, use forever without a network. |
+| | **No account, no registration.** No email, no password, no social login, no identity verification. Nothing. |
+| | **No third-party service dependency.** No Firebase, no Google Analytics, no Mixpanel, no Sentry, no Amplitude. Zero external SDKs. |
+| | **Data encrypted on your phone only.** AES-256-GCM encrypted SQLCipher database. Key derived from your PIN via Argon2id. The key never leaves the device. |
+| | **Optional encrypted backup.** iCloud/Google Drive receives an opaque ciphertext blob. Even Apple and Google cannot read it. |
+| | **Zero telemetry, zero analytics.** No crash reports, no usage metrics, no A/B tests. Nothing leaves your phone. |
+| | **Panic wipe in 3 seconds.** Hold the button: database + salt + all cryptographic keys destroyed irreversibly. |
+| | **100% open source.** MIT/Apache-2.0. Every line of code is public and auditable by anyone. |
 
 ---
 
@@ -43,9 +43,9 @@
 | **No hidden SDK** | The binary contains only what you see in this repository. |
 
 ```
-iOS:     ATS enforced — no arbitrary network loads
+iOS: ATS enforced — no arbitrary network loads
 Android: networkSecurityConfig blocks ALL outbound connections
-Rust:    Cargo.toml has zero networking dependencies
+Rust: Cargo.toml has zero networking dependencies
 ```
 
 ---
@@ -70,4 +70,4 @@ Teras Rust dikongsi (UniFFI) · SwiftUI iOS · Kotlin Android · SQLCipher disul
 
 MIT / Apache-2.0 — [LICENSE](../../README.md)
 
-> ⚠️ This app does not provide medical advice.
+> This app does not provide medical advice.

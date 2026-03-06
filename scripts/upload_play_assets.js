@@ -9,21 +9,21 @@
  * FIX: One upload per page.goto(). Two passes: screenshots first, then FG.
  *
  * Usage:
- *   node scripts/upload_play_assets.js              # run all remaining
- *   node scripts/upload_play_assets.js --locale fr-FR   # single locale
- *   node scripts/upload_play_assets.js --screenshots-only
- *   node scripts/upload_play_assets.js --fg-only
- *   node scripts/upload_play_assets.js --reset-progress  # clear progress cache
+ * node scripts/upload_play_assets.js # run all remaining
+ * node scripts/upload_play_assets.js --locale fr-FR # single locale
+ * node scripts/upload_play_assets.js --screenshots-only
+ * node scripts/upload_play_assets.js --fg-only
+ * node scripts/upload_play_assets.js --reset-progress # clear progress cache
  */
 
 const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
 
-const CDP_PORT     = 18800;
+const CDP_PORT = 18800;
 const DEVELOPER_ID = '6295830866613067582';
-const APP_ID       = '4973061748192418870';
-const LISTING_URL  = `https://play.google.com/console/u/0/developers/${DEVELOPER_ID}/app/${APP_ID}/main-store-listing`;
+const APP_ID = '4973061748192418870';
+const LISTING_URL = `https://play.google.com/console/u/0/developers/${DEVELOPER_ID}/app/${APP_ID}/main-store-listing`;
 const METADATA_DIR = path.join(__dirname, '..', 'fastlane', 'metadata', 'android');
 const PROGRESS_FILE = path.join(__dirname, 'upload_progress.json');
 
@@ -41,14 +41,14 @@ const GP_TO_FOLDER = {
 const TARGET_GP_CODES = Object.keys(GP_TO_FOLDER);
 
 // Button indices (all 7 asset slots, stable using [add-button,add-more-button] nth()):
-const BTN_ICON        = 0;  // 512x512 icon
-const BTN_FG          = 1;  // 1024x500 feature graphic
-const BTN_SCREENSHOTS = 2;  // phone screenshots
+const BTN_ICON = 0; // 512x512 icon
+const BTN_FG = 1; // 1024x500 feature graphic
+const BTN_SCREENSHOTS = 2; // phone screenshots
 
-const args          = process.argv.slice(2);
-const SINGLE        = args.includes('--locale')     ? args[args.indexOf('--locale') + 1]     : null;
+const args = process.argv.slice(2);
+const SINGLE = args.includes('--locale') ? args[args.indexOf('--locale') + 1] : null;
 const SCREENSHOTS_ONLY = args.includes('--screenshots-only');
-const FG_ONLY       = args.includes('--fg-only');
+const FG_ONLY = args.includes('--fg-only');
 const RESET_PROGRESS = args.includes('--reset-progress');
 
 // ---------- Progress tracking ----------
@@ -62,15 +62,15 @@ function loadProgress() {
   }
   // Pre-seed known-done locales from previous sessions
   return {
-    'en-US':  { screenshots: true, fg: true, icon: true },
-    'it-IT':  { screenshots: true, fg: true },
-    'nl-NL':  { screenshots: true },
-    'pt-BR':  { screenshots: true },
-    'sv-SE':  { screenshots: true },
-    'no-NO':  { screenshots: true },
-    'fr-FR':  { fg: true },
-    'de-DE':  { fg: true },
-    'ar-SA':  { fg: true },
+    'en-US': { screenshots: true, fg: true, icon: true },
+    'it-IT': { screenshots: true, fg: true },
+    'nl-NL': { screenshots: true },
+    'pt-BR': { screenshots: true },
+    'sv-SE': { screenshots: true },
+    'no-NO': { screenshots: true },
+    'fr-FR': { fg: true },
+    'de-DE': { fg: true },
+    'ar-SA': { fg: true },
   };
 }
 function saveProgress(progress) {
@@ -89,7 +89,7 @@ function isDone(progress, folder, type) {
 function getAssets(folder) {
   const base = path.join(METADATA_DIR, folder, 'images');
   const icon = path.join(METADATA_DIR, 'en-US', 'images', 'icon.png');
-  const fg   = path.join(base, 'featureGraphic.png');
+  const fg = path.join(base, 'featureGraphic.png');
   const shots = fs.existsSync(path.join(base, 'phoneScreenshots'))
     ? fs.readdirSync(path.join(base, 'phoneScreenshots'))
         .filter(f => /\.(png|jpg|jpeg)$/i.test(f)).sort()
@@ -110,7 +110,7 @@ async function gotoListing(page) {
       await page.waitForTimeout(3000);
       return true;
     } catch (e) {
-      console.log(`  ⚠ goto failed (${i+1}/3): ${e.message.split('\n')[0]}`);
+      console.log(` goto failed (${i+1}/3): ${e.message.split('\n')[0]}`);
       await page.waitForTimeout(3000);
     }
   }
@@ -166,11 +166,11 @@ async function uploadSection(page, btnIndex, files, label) {
   const allBtns = page.locator('[debug-id="add-button"], [debug-id="add-more-button"]');
   const sectionBtn = allBtns.nth(btnIndex);
   if (await sectionBtn.count() === 0) {
-    console.log(`    ✗ ${label}: section button not found`);
+    console.log(` ${label}: section button not found`);
     return 'error';
   }
   if (await sectionBtn.isDisabled()) {
-    console.log(`    ⏭ ${label}: slot full, skipping`);
+    console.log(` ${label}: slot full, skipping`);
     return 'skip';
   }
 
@@ -181,7 +181,7 @@ async function uploadSection(page, btnIndex, files, label) {
   const uploadBtn = page.locator('[debug-id="upload-button"]').first();
   await uploadBtn.waitFor({ timeout: 5000 }).catch(() => {});
   if (await uploadBtn.count() === 0) {
-    console.log(`    ✗ ${label}: upload-button not found in panel`);
+    console.log(` ${label}: upload-button not found in panel`);
     return 'error';
   }
 
@@ -193,7 +193,7 @@ async function uploadSection(page, btnIndex, files, label) {
       uploadBtn.click(),
     ]);
   } catch (e) {
-    console.log(`    ✗ ${label}: file chooser timed out — ${e.message.split('\n')[0]}`);
+    console.log(` ${label}: file chooser timed out — ${e.message.split('\n')[0]}`);
     await closePanelIfOpen(page);
     return 'error';
   }
@@ -207,16 +207,16 @@ async function uploadSection(page, btnIndex, files, label) {
   // 5. Click "Ajouter" to add assets to listing form
   const addToContent = page.locator('[debug-id="add-to-content-button"]').first();
   if (await addToContent.count() === 0) {
-    console.log(`    ✗ ${label}: add-to-content-button not found — may already be uploaded`);
+    console.log(` ${label}: add-to-content-button not found — may already be uploaded`);
     await closePanelIfOpen(page);
-    return 'already-done';  // Slot may already have max assets
+    return 'already-done'; // Slot may already have max assets
   }
   await addToContent.click();
   await page.waitForTimeout(500);
   await closePanelIfOpen(page);
 
   const sizes = fileArr.map(f => `${(fs.statSync(f).size / 1024).toFixed(0)}KB`);
-  console.log(`    ✓ ${label}: ${fileArr.length} file(s) [${sizes.join(', ')}]`);
+  console.log(` ${label}: ${fileArr.length} file(s) [${sizes.join(', ')}]`);
   return 'ok';
 }
 
@@ -249,9 +249,9 @@ async function uploadLocaleSingleAsset(page, gpCode, folder, isDefault, btnIndex
     try {
       await addSingleLanguage(page, gpCode);
       const switched = await switchToLanguage(page, gpCode);
-      if (!switched) { console.log(`  ✗ Could not switch to ${gpCode}`); return 'error'; }
+      if (!switched) { console.log(` Could not switch to ${gpCode}`); return 'error'; }
     } catch (e) {
-      console.log(`  ✗ Language setup: ${e.message.split('\n')[0]}`);
+      console.log(` Language setup: ${e.message.split('\n')[0]}`);
       return 'error';
     }
   }
@@ -260,8 +260,8 @@ async function uploadLocaleSingleAsset(page, gpCode, folder, isDefault, btnIndex
   const result = await uploadSection(page, btnIndex, files, label);
   if (result === 'ok') {
     const saved = await clickSave(page);
-    if (!saved) { console.log('  ✗ Save failed'); return 'error'; }
-    console.log('  ✓ Saved');
+    if (!saved) { console.log(' Save failed'); return 'error'; }
+    console.log(' Saved');
     return 'ok';
   }
   if (result === 'skip' || result === 'already-done') return result;
@@ -271,7 +271,7 @@ async function uploadLocaleSingleAsset(page, gpCode, folder, isDefault, btnIndex
 // ---------- MAIN ----------
 (async () => {
   console.log('╔══════════════════════════════════════════════════════════╗');
-  console.log('║  LUNA Play Store — Upload Graphical Assets (1-per-reload) ║');
+  console.log('║ LUNA Play Store — Upload Graphical Assets (1-per-reload) ║');
   console.log('╚══════════════════════════════════════════════════════════╝\n');
 
   const progress = loadProgress();
@@ -308,11 +308,11 @@ async function uploadLocaleSingleAsset(page, gpCode, folder, isDefault, btnIndex
       if (!assets.phoneScreenshots.length) continue;
 
       if (isDone(progress, folder, 'screenshots')) {
-        console.log(`  ⏭ ${folder}: screenshots already done`);
+        console.log(` ${folder}: screenshots already done`);
         skipped++; continue;
       }
 
-      console.log(`\n  [screenshots] ${folder}`);
+      console.log(`\n [screenshots] ${folder}`);
       const result = await uploadLocaleSingleAsset(
         page, gpCode, folder, isDefault,
         BTN_SCREENSHOTS, assets.phoneScreenshots, `${assets.phoneScreenshots.length} screenshots`
@@ -332,11 +332,11 @@ async function uploadLocaleSingleAsset(page, gpCode, folder, isDefault, btnIndex
       if (!assets.featureGraphic) continue;
 
       if (isDone(progress, folder, 'fg')) {
-        console.log(`  ⏭ ${folder}: FG already done`);
+        console.log(` ${folder}: FG already done`);
         skipped++; continue;
       }
 
-      console.log(`\n  [FG] ${folder}`);
+      console.log(`\n [FG] ${folder}`);
       const result = await uploadLocaleSingleAsset(
         page, gpCode, folder, isDefault,
         BTN_FG, assets.featureGraphic, 'featureGraphic'
@@ -355,7 +355,7 @@ async function uploadLocaleSingleAsset(page, gpCode, folder, isDefault, btnIndex
       console.log('\n═══ PASS 3: Icon (en-US) ═══\n');
       const assets = getAssets('en-US');
       if (assets.icon) {
-        console.log('  [icon] en-US');
+        console.log(' [icon] en-US');
         const result = await uploadLocaleSingleAsset(page, null, 'en-US', true, BTN_ICON, assets.icon, 'icon');
         if (result === 'ok' || result === 'skip') { markDone(progress, 'en-US', 'icon'); done++; }
         else if (result !== 'no-files') failed.push('en-US:icon');
@@ -364,8 +364,8 @@ async function uploadLocaleSingleAsset(page, gpCode, folder, isDefault, btnIndex
   }
 
   console.log(`\n╔═══════════════════════════════════════════════╗`);
-  console.log(`║  Uploaded: ${done} · Skipped: ${skipped} · Failed: ${failed.length}`);
-  if (failed.length) console.log(`║  Failed: ${failed.join(', ')}`);
+  console.log(`║ Uploaded: ${done} · Skipped: ${skipped} · Failed: ${failed.length}`);
+  if (failed.length) console.log(`║ Failed: ${failed.join(', ')}`);
   console.log(`╚═══════════════════════════════════════════════╝`);
 
   const remaining = locales.filter(l => {
@@ -375,7 +375,7 @@ async function uploadLocaleSingleAsset(page, gpCode, folder, isDefault, btnIndex
     return needShots || needFG;
   }).map(l => l.folder);
   if (remaining.length) console.log(`\nRemaining locales: ${remaining.join(', ')}`);
-  else console.log('\n✅ All assets uploaded!');
+  else console.log('\nAll assets uploaded!');
 
   await browser.close();
 })();
