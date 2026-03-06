@@ -35,10 +35,14 @@
 ### iOS — App Store Connect / TestFlight
 - **Bundle ID** : `com.macaron.luna` · Team : `P36X572LL9`
 - **App ID ASC** : `6760126548`
-- **Status** : **Metadata + screenshots uploadés en 36 langues** · TestFlight internal v0.1.0 build 1
-  - Métadonnées : nom, sous-titre, description, keywords, promo, release notes
-  - Screenshots : 6 iPhone 6.7" par locale · 36 locales ASC couvertes
-  - App Store : prêt pour soumission (copyright · support URL · precheck )
+- **Status** : **En attente App Privacy pour soumission App Store** · TestFlight internal v0.1.0 build 1
+  - Screenshots uploadés via API : 18 screenshots en-US COMPLETE (iPhone 6.7", 6.5", iPad Pro 12.9")
+  - Métadonnées : 36 langues · Prix FREE · Build v1 attaché · Submission `6d571940` créée
+  - VERSION_ID : `db3dba64-1c0a-4eb5-9d71-a27a4a4b72c1` · BUILD_ID : `a3a6b402-4618-4a06-b331-18be82573a79`
+  - **DERNIERE ACTION REQUISE** : Publier App Privacy dans ASC :
+    - URL : https://appstoreconnect.apple.com/apps/6760126548/distribution/privacy
+    - Cliquer "Modifier" → "NON" aux données collectées → "Publier"
+    - Script auto-soumission : `python3 scripts/complete_ios_submission.py` (poll 30s)
 - **Cert** : `Apple Distribution: sylvain legland (P36X572LL9)`
 - **Provisioning** : `luna-appstore-distribution.mobileprovision`
 - **ASC API Key** : `~/.appstoreconnect/private_keys/AuthKey_48GLJZYX5K.p8` · issuer `69a6de74-3cdf-47e3-e053-5b8c7c11a4d1`
