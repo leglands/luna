@@ -305,6 +305,24 @@ impl LunaDb {
         Ok(())
     }
 
+    /// Re-chiffre la base de données avec une nouvelle clé via SQLCipher PRAGMA rekey.
+    pub fn rekey(&self, new_db_key: &SecretVec<u8>) -> Result<(), LunaError> {
+        let pragma = key_to_sqlcipher_pragma(new_db_key);
+        let pragma_str = std::str::from_utf8(pragma.expose_secret())
+            .map_err(|_| LunaError::CryptoError("Pragma UTF-8 invalide".into()))?;
+
+        self.conn
+            .execute_batch(&format!("PRAGMA rekey = \"{}\";", pragma_str))
+            .map_err(|e| LunaError::CryptoError(format!("PRAGMA rekey failed: {}", e)))?;
+
+        // Vérification : la DB doit rester lisible après rekey
+        self.conn
+            .execute_batch("SELECT count(*) FROM sqlite_master;")
+            .map_err(|e| LunaError::CryptoError(format!("Post-rekey verification failed: {}", e)))?;
+
+        Ok(())
+    }
+
     // ─── UserProfile ──────────────────────────────────────────────────────────
 
     pub fn get_user_profile(&self) -> Result<UserProfile, LunaError> {

@@ -1,0 +1,49 @@
+appId: com.macaron.luna
+name: "01 - Onboarding complet"
+tags:
+  - critical
+  - onboarding
+---
+# Étape 0 : Welcome
+- assertVisible: "Welcome"
+- assertVisible:
+    id: "next_button"
+- tapOn:
+    id: "next_button"
+
+# Étape 1 : Dernières règles
+- assertVisible:
+    id: "onboarding_title"
+- tapOn:
+    id: "next_button"
+
+# Étape 2 : Profil cycle
+- assertVisible:
+    id: "onboarding_title"
+- tapOn:
+    id: "next_button"
+
+# Étape 3 : Objectifs
+- assertVisible:
+    id: "onboarding_title"
+- tapOn:
+    id: "next_button"
+
+# Étape 4 : PIN setup
+- assertVisible:
+    id: "pin_input"
+- tapOn:
+    id: "pin_input"
+- inputText: "111111"
+- tapOn:
+    id: "pin_confirm_input"
+- inputText: "111111"
+- tapOn:
+    id: "next_button"
+
+# Résultat : arrivée sur Home
+- assertVisible:
+    id: "log_today_button"
+    timeout: 5000
+- assertVisible:
+    id: "bottom_navigation"

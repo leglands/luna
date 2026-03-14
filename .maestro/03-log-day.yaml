@@ -1,0 +1,37 @@
+appId: com.macaron.luna
+name: "03 - Log quotidien"
+tags:
+  - critical
+  - daily-log
+---
+# Pré-condition : sur Home (déverrouillé)
+- assertVisible:
+    id: "log_today_button"
+    timeout: 5000
+
+# Ouvrir le bottom sheet log
+- tapOn:
+    id: "log_today_button"
+
+# Vérifier que le sheet est affiché
+- assertVisible:
+    id: "save_button"
+    timeout: 3000
+
+# Sélectionner mood (taper sur le 4ème bouton mood = "Good")
+- tapOn: "Good"
+
+# Sélectionner flow (radio button "Light")
+- tapOn: "Light"
+
+# Sélectionner un symptôme (chip)
+- tapOn: "Cramps"
+
+# Sauvegarder
+- tapOn:
+    id: "save_button"
+
+# Vérifier retour sur Home (le sheet se ferme)
+- assertVisible:
+    id: "log_today_button"
+    timeout: 3000

@@ -1,0 +1,36 @@
+appId: com.macaron.luna
+name: "07 - Panic Wipe"
+tags:
+  - critical
+  - security
+  - destructive
+---
+# ⚠️ Ce test EFFACE toutes les données ! Lancer en dernier.
+
+# Pré-condition : sur Home (déverrouillé)
+- assertVisible:
+    id: "bottom_navigation"
+    timeout: 5000
+
+# Naviguer vers Settings
+- tapOn: "Me"
+
+# Scroll down pour voir le bouton panic
+- scrollUntilVisible:
+    element:
+      id: "panic_wipe_button"
+    direction: DOWN
+
+# Taper sur Panic Wipe
+- tapOn:
+    id: "panic_wipe_button"
+
+# Confirmer dans la dialog
+- assertVisible: "Delete all data?"
+  timeout: 3000
+- tapOn: "Delete everything"
+
+# Résultat : retour à l'écran de lock ou onboarding
+- assertVisible:
+    id: "onboarding_title"
+    timeout: 5000

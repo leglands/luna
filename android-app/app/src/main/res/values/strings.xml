@@ -147,4 +147,28 @@
     <string name="perimeno_banner_a11y">Open perimenopause dashboard</string>
     <string name="ttc_banner_title">TTC Mode — Fertile window highlighted</string>
 
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">Pregnancy Log</string>
+    <string name="hcg_test_label">hCG Test</string>
+    <string name="hcg_not_done">Not done</string>
+    <string name="hcg_positive">Positive</string>
+    <string name="hcg_negative">Negative</string>
+    <string name="kicks_label">Fetal kicks</string>
+    <string name="kicks_decrease">Decrease kicks</string>
+    <string name="kicks_increase">Increase kicks</string>
+    <string name="nausea_label">Nausea level</string>
+    <string name="nausea_slider_a11y">Nausea level from 0 to 5</string>
+    <string name="weight_label">Weight</string>
+    <string name="notes_label">Notes</string>
+    <string name="symptom_logged_a11y">Symptom logged</string>
+
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">Perimenopause</string>
+    <string name="perimenopause_quick_log_title">Quick log symptoms</string>
+    <string name="perimenopause_variability_title">Cycle variability</string>
+    <string name="perimenopause_need_more_data">Log at least 2 cycles to see variability</string>
+    <string name="perimenopause_variability_summary">Average %1$d days (range: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">About perimenopause</string>
+    <string name="perimenopause_info_body">Perimenopause typically begins in your 40s and can last several years. Cycle lengths may vary significantly, and symptoms like hot flashes and night sweats are common. Tracking helps you understand your body\'s transition.</string>
+
 </resources>

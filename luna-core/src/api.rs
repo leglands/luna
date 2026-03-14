@@ -148,7 +148,7 @@ impl LunaEngine {
         })
     }
 
-    /// Change le PIN — re-dérive la clé et re-chiffre la DB.
+    /// Change le PIN — re-dérive la clé et re-chiffre la DB via PRAGMA rekey.
     pub fn change_pin(&self, old_pin: String, new_pin: String) -> Result<(), LunaError> {
         let salt_path = format!("{}.salt", self.db_path);
         let salt = Self::load_or_create_salt(&salt_path)?;
@@ -164,20 +164,10 @@ impl LunaEngine {
         let new_master = derive_key(&new_pin, &new_salt)?;
         let new_db_key = derive_subkey(&new_master, b"db_key")?;
 
-        // SQLCipher PRAGMA rekey
+        // SQLCipher PRAGMA rekey — re-chiffre la DB avec la nouvelle clé
         {
             let db = self.db.lock().unwrap();
-            use crate::vault::crypto::key_to_sqlcipher_pragma;
-            use secrecy::ExposeSecret;
-            let new_pragma = key_to_sqlcipher_pragma(&new_db_key);
-            let pragma_str = std::str::from_utf8(new_pragma.expose_secret())
-                .map_err(|_| LunaError::CryptoError("Pragma invalide".into()))?;
-            db.set_meta("_rekey_in_progress", "1")?;
-            // Note : rusqlite ne supporte pas PRAGMA rekey directement avec SQLCipher
-            // En production, on exporterait et re-importerait la DB avec la nouvelle clé
-            // TODO: implémenter via export_encrypted_backup + reimport
-            let _ = pragma_str;
-            db.set_meta("_rekey_in_progress", "0")?;
+            db.rekey(&new_db_key)?;
         }
 
         // Sauvegarder le nouveau salt

@@ -1,0 +1,42 @@
+appId: com.macaron.luna
+name: "06 - Settings (mode, export, calm)"
+tags:
+  - settings
+---
+# Pré-condition : sur Home (déverrouillé)
+- assertVisible:
+    id: "bottom_navigation"
+    timeout: 5000
+
+# Naviguer vers Settings via bottom nav
+- tapOn: "Me"
+
+# Vérifier éléments Settings
+- assertVisible:
+    id: "tracking_mode_button"
+    timeout: 3000
+- assertVisible:
+    id: "export_csv_button"
+- assertVisible:
+    id: "panic_wipe_button"
+
+# Changer le mode de tracking
+- tapOn:
+    id: "tracking_mode_button"
+
+# Vérifier que TrackingModeActivity s'affiche
+- assertVisible: "Regular"
+  timeout: 3000
+
+# Revenir aux settings (back)
+- pressKey: back
+
+# Toggle une notification
+- tapOn:
+    id: "toggle_daily_notif"
+
+# Retour à Home
+- pressKey: back
+- assertVisible:
+    id: "log_today_button"
+    timeout: 3000

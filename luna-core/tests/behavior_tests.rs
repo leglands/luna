@@ -13,11 +13,17 @@
 //! 7. Mode panique (wipe complet)
 //! 8. Export chiffré (backup)
 //! 9. Accès concurrent (thread-safety)
+//! 10. Profil utilisateur
+//! 11. Log grossesse
+//! 12. Export CSV
+//! 13. Changement de PIN
+//! 14. Péri-ménopause (symptômes spécifiques)
+//! 15. Calm Mode (masquage prédictions)
 
 use std::sync::Arc;
 
 use luna_core::api::{vault_exists, LunaEngine};
-use luna_core::engine::types::{DailyLog, symptoms};
+use luna_core::engine::types::{DailyLog, PregnancyLog, UserProfile, TrackingMode, symptoms};
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -479,7 +485,7 @@ fn j9_concurrent_log_day_is_safe() {
 
 // ─── Journey 10 : UserProfile CRUD ──────────────────────────────────────────
 
-use luna_core::engine::types::{TrackingMode, ContraceptionType, UserProfile};
+use luna_core::engine::types::ContraceptionType;
 
 /// J10-1 : Profil par défaut retourné si jamais sauvegardé
 #[test]
@@ -539,8 +545,6 @@ fn j10_profile_upsert_overwrites() {
 }
 
 // ─── Journey 11 : Pregnancy Log ──────────────────────────────────────────────
-
-use luna_core::engine::types::PregnancyLog;
 
 /// J11-1 : Log grossesse roundtrip
 #[test]
@@ -640,4 +644,148 @@ fn j12_export_csv_escapes_commas() {
         .expect("export_logs_csv");
     // RFC 4180 : les guillemets doivent être doublés
     assert!(csv.contains("\"\"") || csv.contains(","), "Special chars should be RFC-4180 escaped");
+}
+
+// ─── Journey 13 : Changement de PIN ─────────────────────────────────────────
+
+/// J13-1 : change_pin avec l'ancien PIN correct réussit
+#[test]
+fn j13_change_pin_success() {
+    let (_dir, db_path) = tmp_db();
+    let _engine = open_fresh(&db_path);
+
+    // Rouvrir pour changer le PIN (open_fresh utilise "111111")
+    let engine = LunaEngine::open_vault(db_path.clone(), "111111".to_string())
+        .expect("open with old pin");
+    engine.change_pin("111111".to_string(), "222222".to_string())
+        .expect("change_pin should succeed");
+}
+
+/// J13-2 : change_pin avec un mauvais ancien PIN échoue
+#[test]
+fn j13_change_pin_wrong_old_pin_fails() {
+    let (_dir, db_path) = tmp_db();
+    let engine = open_fresh(&db_path);
+
+    let result = engine.change_pin("999999".to_string(), "222222".to_string());
+    assert!(result.is_err(), "change_pin with wrong old PIN should fail");
+}
+
+/// J13-3 : après change_pin, le nouveau PIN ouvre le vault
+#[test]
+fn j13_reopen_with_new_pin_after_change() {
+    let (_dir, db_path) = tmp_db();
+    let engine = open_fresh(&db_path);
+
+    engine.change_pin("111111".to_string(), "333333".to_string())
+        .expect("change_pin");
+
+    // L'ancien PIN ne doit plus fonctionner
+    let old_result = LunaEngine::open_vault(db_path.clone(), "111111".to_string());
+    assert!(old_result.is_err(), "Old PIN should no longer work");
+
+    // Le nouveau PIN doit fonctionner
+    let new_result = LunaEngine::open_vault(db_path, "333333".to_string());
+    assert!(new_result.is_ok(), "New PIN should work after change");
+}
+
+// ─── Journey 14 : Péri-ménopause ─────────────────────────────────────────────
+
+/// J14-1 : Log avec symptômes péri-ménopause (hot_flash, night_sweats, vaginal_dryness)
+#[test]
+fn j14_perimenopause_symptoms_logged() {
+    let (_dir, db_path) = tmp_db();
+    let engine = open_fresh(&db_path);
+
+    let mut log = DailyLog::new(chrono::NaiveDate::parse_from_str(&today(), "%Y-%m-%d").unwrap());
+    log.symptoms = vec![
+        symptoms::HOT_FLASH.to_string(),
+        symptoms::NIGHT_SWEATS.to_string(),
+        symptoms::VAGINAL_DRYNESS.to_string(),
+    ];
+    log.mood = Some(3);
+    engine.log_day(log).expect("log_day with perimenopause symptoms");
+
+    let loaded = engine.get_log(today()).unwrap().unwrap();
+    assert_eq!(loaded.symptoms.len(), 3);
+    assert!(loaded.symptoms.contains(&symptoms::HOT_FLASH.to_string()));
+    assert!(loaded.symptoms.contains(&symptoms::NIGHT_SWEATS.to_string()));
+    assert!(loaded.symptoms.contains(&symptoms::VAGINAL_DRYNESS.to_string()));
+}
+
+/// J14-2 : Profil en mode Perimenopause persiste
+#[test]
+fn j14_tracking_mode_perimenopause_roundtrip() {
+    let (_dir, db_path) = tmp_db();
+    let engine = open_fresh(&db_path);
+
+    let mut profile = UserProfile::default();
+    profile.tracking_mode = TrackingMode::Perimenopause;
+    engine.set_user_profile(profile).expect("set profile perimenopause");
+
+    let loaded = engine.get_user_profile().expect("get profile");
+    assert_eq!(loaded.tracking_mode, TrackingMode::Perimenopause);
+}
+
+/// J14-3 : Symptômes péri-ménopause coexistent avec symptômes menstruels
+#[test]
+fn j14_perimenopause_and_menstrual_symptoms_coexist() {
+    let (_dir, db_path) = tmp_db();
+    let engine = open_fresh(&db_path);
+
+    let mut log = DailyLog::new(chrono::NaiveDate::parse_from_str(&today(), "%Y-%m-%d").unwrap());
+    log.symptoms = vec![
+        symptoms::HOT_FLASH.to_string(),
+        symptoms::CRAMPS.to_string(),
+        symptoms::FATIGUE.to_string(),
+    ];
+    log.flow = Some("medium".to_string());
+    engine.log_day(log).expect("log_day with mixed symptoms");
+
+    let loaded = engine.get_log(today()).unwrap().unwrap();
+    assert_eq!(loaded.symptoms.len(), 3);
+    assert!(loaded.flow.is_some());
+}
+
+// ─── Journey 15 : Calm Mode ─────────────────────────────────────────────────
+
+/// J15-1 : Calm Mode désactivé par défaut
+#[test]
+fn j15_calm_mode_default_off() {
+    let (_dir, db_path) = tmp_db();
+    let engine = open_fresh(&db_path);
+
+    let profile = engine.get_user_profile().expect("get profile");
+    assert!(!profile.calm_mode, "Calm mode should be off by default");
+}
+
+/// J15-2 : Activer Calm Mode persiste
+#[test]
+fn j15_calm_mode_toggle_on() {
+    let (_dir, db_path) = tmp_db();
+    let engine = open_fresh(&db_path);
+
+    let mut profile = UserProfile::default();
+    profile.calm_mode = true;
+    engine.set_user_profile(profile).expect("set calm mode on");
+
+    let loaded = engine.get_user_profile().expect("get profile");
+    assert!(loaded.calm_mode, "Calm mode should be on after toggle");
+}
+
+/// J15-3 : Calm Mode n'empêche pas predict_next (c'est l'UI qui masque)
+#[test]
+fn j15_calm_mode_prediction_still_works() {
+    let (_dir, db_path) = tmp_db();
+    let engine = open_fresh(&db_path);
+    seed_cycles(&engine, 3);
+
+    // Activer calm mode
+    let mut profile = UserProfile::default();
+    profile.calm_mode = true;
+    engine.set_user_profile(profile).expect("set calm mode");
+
+    // predict_next fonctionne toujours (c'est l'UI qui masque, pas le core)
+    let prediction = engine.predict_next().expect("predict should still work in calm mode");
+    assert!(!prediction.next_period_start.is_empty(), "Prediction available even in calm mode");
 }

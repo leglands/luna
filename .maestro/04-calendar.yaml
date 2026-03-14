@@ -1,0 +1,38 @@
+appId: com.macaron.luna
+name: "04 - Navigation calendrier"
+tags:
+  - navigation
+  - calendar
+---
+# Pré-condition : sur Home (déverrouillé)
+- assertVisible:
+    id: "bottom_navigation"
+    timeout: 5000
+
+# Naviguer vers le Calendrier via bottom nav
+- tapOn: "Calendar"
+
+# Vérifier le calendrier affiché
+- assertVisible:
+    id: "month_title"
+    timeout: 3000
+- assertVisible:
+    id: "calendar_grid"
+
+# Naviguer au mois précédent
+- tapOn:
+    id: "prev_month_button"
+- assertVisible:
+    id: "month_title"
+
+# Revenir au mois courant
+- tapOn:
+    id: "next_month_button"
+- assertVisible:
+    id: "month_title"
+
+# Retour à Home
+- tapOn: "Today"
+- assertVisible:
+    id: "log_today_button"
+    timeout: 3000

@@ -1,6 +1,7 @@
 package app.luna
 
 import android.app.Application
+import android.util.Log
 import app.luna.services.VaultService
 
 /**
@@ -12,7 +13,12 @@ class LunaApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         // Charger la bibliothèque native Rust (générée par cargo-ndk)
-        System.loadLibrary("luna_core")
+        try {
+            System.loadLibrary("luna_core")
+        } catch (e: UnsatisfiedLinkError) {
+            Log.e("LunaApplication", "Failed to load native library", e)
+            throw RuntimeException("Native Rust library failed to load", e)
+        }
         // Créer les canaux de notification (requis API 26+)
         app.luna.services.NotificationWorker.createChannels(this)
     }

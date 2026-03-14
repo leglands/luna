@@ -1,0 +1,25 @@
+appId: com.macaron.luna
+name: "05 - Insights / Statistiques"
+tags:
+  - insights
+---
+# Pré-condition : sur Home (déverrouillé)
+- assertVisible:
+    id: "bottom_navigation"
+    timeout: 5000
+
+# Naviguer vers Insights via bottom nav
+- tapOn: "Insights"
+
+# Vérifier les éléments Insights affichés
+- assertVisible:
+    id: "avg_cycle_value"
+    timeout: 3000
+- assertVisible:
+    id: "avg_period_value"
+
+# Retour à Home
+- tapOn: "Today"
+- assertVisible:
+    id: "log_today_button"
+    timeout: 3000

@@ -1,0 +1,33 @@
+appId: com.macaron.luna
+name: "02 - Lock / Unlock PIN"
+tags:
+  - critical
+  - security
+---
+# Pré-condition : app lancée, écran de lock affiché
+- assertVisible:
+    id: "pin_section"
+    timeout: 5000
+
+# Saisie PIN correct (111111)
+- tapOn:
+    id: "btn1"
+- tapOn:
+    id: "btn1"
+- tapOn:
+    id: "btn1"
+- tapOn:
+    id: "btn1"
+- tapOn:
+    id: "btn1"
+- tapOn:
+    id: "btn1"
+
+# Résultat : arrivée sur Home
+- assertVisible:
+    id: "log_today_button"
+    timeout: 5000
+
+# Vérifier le badge privacy
+- assertVisible:
+    id: "privacy_badge"
