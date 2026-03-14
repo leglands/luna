@@ -14,12 +14,22 @@ struct LogSheetView: View {
     @State private var showAdvanced: Bool = false
     @State private var bbt: String = ""
     @State private var isSaving: Bool = false
+    @State private var showSavedFeedback: Bool = false
 
     // Symptômes rapides affichés en surface (les plus courants)
     private let quickSymptoms = [
         "cramps", "bloating", "fatigue", "headache",
         "breast_tenderness", "irritability", "low_mood",
         "high_energy", "motivation",
+    ]
+
+    // Symptômes avancés organisés par catégorie (Hick's Law)
+    private let symptomCategories: [(String, [String])] = [
+        ("symptoms_menstrual", ["cramps", "flow_light", "flow_medium", "flow_heavy", "clots", "lower_back_pain", "bloating", "nausea", "headache", "fatigue", "diarrhea"]),
+        ("symptoms_pms", ["breast_tenderness", "breast_swelling", "water_retention", "acne", "irritability", "anxiety", "low_mood", "cravings_sweet", "cravings_salty", "insomnia", "migraine", "constipation", "low_libido"]),
+        ("symptoms_ovulatory", ["high_libido", "mittelschmerz", "light_spotting", "high_energy"]),
+        ("symptoms_general", ["dizziness", "fever", "cold", "high_stress", "poor_sleep", "intense_exercise", "travel"]),
+        ("symptoms_perimenopause", ["hot_flash", "night_sweats", "vaginal_dryness"]),
     ]
 
     var body: some View {
@@ -57,6 +67,22 @@ struct LogSheetView: View {
                             selected: $selectedSymptoms
                         )
                         .padding(.horizontal)
+
+                        // Catégories complètes (Hick's Law : disclosure progressive)
+                        ForEach(symptomCategories, id: \.0) { category, symptoms in
+                            DisclosureGroup {
+                                SymptomChipsRow(
+                                    symptoms: symptoms.filter { !quickSymptoms.contains($0) },
+                                    selected: $selectedSymptoms
+                                )
+                                .padding(.top, 4)
+                            } label: {
+                                Text(LocalizedStringKey(category))
+                                    .font(.caption.weight(.medium))
+                                    .foregroundStyle(.secondary)
+                            }
+                            .padding(.horizontal)
+                        }
                     }
 
                     // ── Section avancée (BBT, LH, glaire) ────────────────
@@ -108,6 +134,23 @@ struct LogSheetView: View {
                 }
             }
         }
+        .overlay {
+            // Peak-End Rule : checkmark feedback après save
+            if showSavedFeedback {
+                VStack(spacing: 12) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 48))
+                        .foregroundStyle(Color("AccentPrimary"))
+                    Text("log_saved_feedback")
+                        .font(.headline)
+                        .foregroundStyle(.primary)
+                }
+                .padding(32)
+                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20))
+                .transition(.scale.combined(with: .opacity))
+            }
+        }
+        .animation(reduceMotion ? .none : .easeOut(duration: 0.3), value: showSavedFeedback)
     }
 
     private func save() async {
@@ -137,6 +180,11 @@ struct LogSheetView: View {
 
         do {
             try engine.logDay(log: log)
+            // Peak-End Rule : feedback positif après sauvegarde
+            let generator = UIImpactFeedbackGenerator(style: .medium)
+            generator.impactOccurred()
+            showSavedFeedback = true
+            try? await Task.sleep(nanoseconds: 600_000_000) // 0.6s pour voir le feedback
             // Annonce d'accessibilité après sauvegarde
             UIAccessibility.post(
                 notification: .announcement,
@@ -165,6 +213,8 @@ struct MoodPicker: View {
                 ForEach(1...5, id: \.self) { value in
                     Button {
                         selection = (selection == value) ? 0 : value
+                        // Flow : haptic feedback immédiat
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     } label: {
                         ZStack {
                             Circle()
@@ -192,6 +242,17 @@ struct MoodPicker: View {
                 Text(LocalizedStringKey(keys[selection - 1]))
                     .font(.caption)
                     .foregroundColor(.secondary)
+                    .transition(.opacity)
+            } else {
+                // Jakob's Law : toujours montrer les labels texte (pas juste a11y)
+                HStack(spacing: 0) {
+                    Text(LocalizedStringKey("mood_very_bad"))
+                        .font(.system(size: 9))
+                    Spacer()
+                    Text(LocalizedStringKey("mood_great"))
+                        .font(.system(size: 9))
+                }
+                .foregroundColor(.secondary.opacity(0.6))
             }
         }
     }
@@ -244,6 +305,7 @@ struct FlowPicker: View {
                 ForEach(options, id: \.self) { opt in
                     Button {
                         selection = opt
+                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     } label: {
                         Text(NSLocalizedString("flow_\(opt)", comment: "Flow level"))
                             .font(.caption)
@@ -326,17 +388,37 @@ struct SymptomChip: View {
 
 struct AdvancedBiometricsView: View {
     @Binding var bbt: String
+    @State private var showBbtInfo = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            // BBT
+            // BBT — Cognitive Load : tooltip expliquant la mesure
             HStack {
                 VStack(alignment: .leading) {
-                    Text("bbt_label")
-                        .font(.subheadline.bold())
-                    Text("bbt_hint")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                    HStack(spacing: 4) {
+                        Text("bbt_label")
+                            .font(.subheadline.bold())
+                        Button {
+                            showBbtInfo.toggle()
+                        } label: {
+                            Image(systemName: "info.circle")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                        .accessibilityLabel(Text("bbt_info_a11y"))
+                    }
+                    if showBbtInfo {
+                        Text("bbt_tooltip")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                            .padding(8)
+                            .background(Color(.secondarySystemBackground))
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                    } else {
+                        Text("bbt_hint")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
                 }
                 Spacer()
                 TextField("bbt_placeholder", text: $bbt)
@@ -345,6 +427,10 @@ struct AdvancedBiometricsView: View {
                     .frame(width: 80)
                     .accessibilityLabel(Text("bbt_a11y_label"))
                     .accessibilityHint(Text("bbt_a11y_hint"))
+                    // Postel's Law : accept both comma and dot
+                    .onChange(of: bbt) { newValue in
+                        bbt = newValue.replacingOccurrences(of: ",", with: ".")
+                    }
             }
         }
     }

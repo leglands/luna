@@ -16,6 +16,7 @@ struct OnboardingView: View {
     @State private var pinConfirm: String = ""
     @State private var pinError: String? = nil
     @State private var isSettingUp: Bool = false
+    @State private var showWelcome: Bool = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
@@ -58,6 +59,46 @@ struct OnboardingView: View {
                 .padding(.bottom, 32)
             }
         }
+        // Doherty Threshold : loading pendant Argon2id
+        .overlay {
+            if isSettingUp && !showWelcome {
+                VStack(spacing: 16) {
+                    ProgressView()
+                        .scaleEffect(1.5)
+                    Text("creating_vault_loading")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(.ultraThinMaterial)
+            }
+        }
+        // Peak-End Rule : écran de bienvenue
+        .overlay {
+            if showWelcome {
+                VStack(spacing: 20) {
+                    Image(systemName: "checkmark.seal.fill")
+                        .font(.system(size: 64))
+                        .foregroundStyle(Color("AccentPrimary"))
+                    Text("welcome_title")
+                        .font(.title.bold())
+                    if !firstName.isEmpty {
+                        Text(firstName)
+                            .font(.title2)
+                            .foregroundStyle(.secondary)
+                    }
+                    Text("welcome_subtitle_privacy")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 32)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color("AppBackground").ignoresSafeArea())
+                .transition(.opacity)
+            }
+        }
+        .animation(reduceMotion ? .none : .easeInOut(duration: 0.5), value: showWelcome)
     }
 
     private var canProceed: Bool {
@@ -81,19 +122,24 @@ struct OnboardingView: View {
 
         Task {
             do {
-                // Créer le vault avec le PIN choisi
                 let engine = try LunaEngine.openVault(dbPath: appState.dbPath, pin: pin)
 
-                // Stocker le PIN dans le Keychain si biométrie activée
                 if lockEnabled {
                     KeychainService.shared.storePin(pin)
                 }
 
-                // Enregistrer les préférences de base
                 await MainActor.run {
                     appState.engine = engine
                     appState.isVaultOpen = true
                     appState.userName = firstName.isEmpty ? nil : firstName
+                }
+
+                // Peak-End Rule : écran de bienvenue avant transition
+                await MainActor.run { showWelcome = true }
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
+                try? await Task.sleep(nanoseconds: 1_800_000_000) // 1.8s
+
+                await MainActor.run {
                     appState.isOnboardingDone = true
                 }
             } catch {

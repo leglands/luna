@@ -68,7 +68,10 @@ class LogBottomSheet : BottomSheetDialogFragment() {
             val btn = android.widget.Button(requireContext()).apply {
                 text = "${i + 1}"
                 textSize = 16f
-                setOnClickListener { selectedMood = i + 1; updateMoodSelection(container, i) }
+                setOnClickListener { selectedMood = i + 1; updateMoodSelection(container, i)
+                    // Flow : haptic feedback immédiat
+                    performHapticFeedback(android.view.HapticFeedbackConstants.VIRTUAL_KEY)
+                }
                 minWidth = dpToPx(48)
                 minHeight = dpToPx(48)
                 contentDescription = getString(
@@ -169,7 +172,8 @@ class LogBottomSheet : BottomSheetDialogFragment() {
                     weightKg = null
                 )
                 engine.logDay(log)
-                // a11y : annoncer le succès
+                // Peak-End Rule : haptic feedback + a11y announcement
+                view?.performHapticFeedback(android.view.HapticFeedbackConstants.CONFIRM)
                 view?.announceForAccessibility(getString(R.string.log_saved_a11y))
                 dismiss()
             } catch (e: Exception) {

@@ -66,7 +66,7 @@ struct HomeView: View {
                 }
             }
             .overlay(alignment: .bottom) {
-                LogButton { showLogSheet = true }
+                LogButton(action: { showLogSheet = true }, hasLoggedToday: vm.hasLoggedToday)
                     .padding(.bottom, 16)
             }
             .sheet(isPresented: $showLogSheet) {
@@ -312,19 +312,28 @@ struct CycleProgressWidget: View {
 
 struct LogButton: View {
     let action: () -> Void
+    var hasLoggedToday: Bool = false
 
     var body: some View {
         Button(action: action) {
-            Label("log_today_button", systemImage: "plus.circle.fill")
-                .font(.headline)
-                .padding(.horizontal, 32)
-                .padding(.vertical, 16)
-                .background(Color("AccentPrimary"), in: Capsule())
-                .foregroundStyle(.white)
+            HStack(spacing: 8) {
+                Label("log_today_button", systemImage: "plus.circle.fill")
+                    .font(.headline)
+                // Zeigarnik Effect : badge si pas encore loggé aujourd'hui
+                if !hasLoggedToday {
+                    Circle()
+                        .fill(Color.red)
+                        .frame(width: 8, height: 8)
+                        .accessibilityLabel(Text("not_logged_today_a11y"))
+                }
+            }
+            .padding(.horizontal, 32)
+            .padding(.vertical, 16)
+            .background(Color("AccentPrimary"), in: Capsule())
+            .foregroundStyle(.white)
         }
         .accessibilityLabel(Text("log_today_a11y"))
         .accessibilityHint(Text("log_today_hint_a11y"))
-        // Cible tactile ≥ 44pt garantie par le padding
     }
 }
 
@@ -342,6 +351,9 @@ struct PrivacyBadge: View {
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
         .background(Color("AccentPrimary").opacity(0.12), in: Capsule())
+        // Fitts's Law : cible tactile minimale 44×44pt
+        .frame(minWidth: 44, minHeight: 44)
+        .contentShape(Rectangle())
         .accessibilityLabel(Text("privacy_badge_a11y"))
     }
 }
