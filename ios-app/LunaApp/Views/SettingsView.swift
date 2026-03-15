@@ -28,7 +28,7 @@ struct SettingsView: View {
     @State private var notifPeriodReminder: Bool = true
     @State private var notifFertileWindow: Bool = false
     @State private var notifBBTReminder: Bool = false
-    @State private var iCloudSync: Bool = false
+
     @State private var lockEnabled: Bool = true
     @State private var pillReminderEnabled: Bool = false
     @State private var pillReminderTime: Date = Calendar.current.date(from: DateComponents(hour: 8, minute: 0)) ?? Date()
@@ -78,11 +78,6 @@ struct SettingsView: View {
                             .font(.callout)
                             .foregroundStyle(.secondary)
                     }
-
-                    Toggle(isOn: $iCloudSync) {
-                        Label("settings_icloud_label", systemImage: "icloud")
-                    }
-                    .disabled(true) // Tier 2 feature
 
                     // Badge trust
                     HStack(spacing: 6) {
