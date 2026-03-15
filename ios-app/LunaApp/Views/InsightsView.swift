@@ -64,6 +64,7 @@ struct InsightsView: View {
 
 struct CycleStatsSection: View {
     @EnvironmentObject var appState: AppState
+    @State private var appeared = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -78,12 +79,22 @@ struct CycleStatsSection: View {
                     label: "stats_avg_cycle",
                     icon: "arrow.triangle.2.circlepath"
                 )
+                .offset(y: appeared ? 0 : 20)
+                .opacity(appeared ? 1 : 0)
+
                 StatCard(
                     value: appState.averagePeriodLength.map { String(format: "%.1f", $0) } ?? "--",
                     unit: "stats_days",
                     label: "stats_avg_period",
                     icon: "drop.fill"
                 )
+                .offset(y: appeared ? 0 : 20)
+                .opacity(appeared ? 1 : 0)
+            }
+        }
+        .onAppear {
+            withAnimation(.easeOut(duration: 0.5).delay(0.1)) {
+                appeared = true
             }
         }
     }
@@ -127,6 +138,8 @@ struct StatCard: View {
 
 struct TrendChartsSection: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
+    @State private var animateCharts = false
 
     // Sample data — à connecter à LunaEngine get_logs_range
     private var cycleLengths: [(Int, Int)] {
@@ -158,7 +171,7 @@ struct TrendChartsSection: View {
                 Chart(cycleLengths, id: \.0) { cycle, length in
                     BarMark(
                         x: .value("charts_cycle_num", "C\(cycle)"),
-                        y: .value("charts_days", length)
+                        y: .value("charts_days", animateCharts ? length : 0)
                     )
                     .foregroundStyle(Color("AccentPrimary"))
                     .cornerRadius(4)
@@ -183,17 +196,17 @@ struct TrendChartsSection: View {
                 Chart(bbtData, id: \.0) { date, temp in
                     LineMark(
                         x: .value("charts_day", date),
-                        y: .value("charts_temp_c", temp)
+                        y: .value("charts_temp_c", animateCharts ? temp : 36.5)
                     )
                     .foregroundStyle(Color("AccentAccent"))
                     .interpolationMethod(.catmullRom)
 
                     PointMark(
                         x: .value("charts_day", date),
-                        y: .value("charts_temp_c", temp)
+                        y: .value("charts_temp_c", animateCharts ? temp : 36.5)
                     )
                     .foregroundStyle(Color("AccentAccent"))
-                    .symbolSize(20)
+                    .symbolSize(animateCharts ? 20 : 0)
                 }
                 .frame(height: 120)
                 .chartYScale(domain: 36.0...37.5)
@@ -203,12 +216,24 @@ struct TrendChartsSection: View {
             .padding(16)
             .background(Color("CardBackground"), in: RoundedRectangle(cornerRadius: 16))
         }
+        .onAppear {
+            guard !reduceMotion else {
+                animateCharts = true
+                return
+            }
+            withAnimation(.easeOut(duration: 0.8).delay(0.3)) {
+                animateCharts = true
+            }
+        }
     }
 }
 
 // MARK: - SymptomFrequencySection
 
 struct SymptomFrequencySection: View {
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
+    @State private var animateBars = false
+
     // Données de démonstration — à connecter à LunaEngine
     private let topSymptoms: [(String, Double)] = [
         ("cramps", 0.85),
@@ -225,12 +250,21 @@ struct SymptomFrequencySection: View {
                 .accessibilityAddTraits(.isHeader)
 
             VStack(spacing: 8) {
-                ForEach(topSymptoms, id: \.0) { (symptom, freq) in
-                    SymptomFrequencyRow(symptom: symptom, frequency: freq)
+                ForEach(Array(topSymptoms.enumerated()), id: \.element.0) { index, item in
+                    SymptomFrequencyRow(symptom: item.0, frequency: item.1, animate: animateBars, delay: Double(index) * 0.08)
                 }
             }
             .padding(16)
             .background(Color("CardBackground"), in: RoundedRectangle(cornerRadius: 16))
+        }
+        .onAppear {
+            guard !reduceMotion else {
+                animateBars = true
+                return
+            }
+            withAnimation(.easeOut(duration: 0.6).delay(0.2)) {
+                animateBars = true
+            }
         }
     }
 }
@@ -238,6 +272,8 @@ struct SymptomFrequencySection: View {
 struct SymptomFrequencyRow: View {
     let symptom: String
     let frequency: Double
+    var animate: Bool = true
+    var delay: Double = 0
 
     var body: some View {
         HStack(spacing: 12) {
@@ -250,7 +286,8 @@ struct SymptomFrequencyRow: View {
                     Capsule().fill(Color.secondary.opacity(0.15))
                     Capsule()
                         .fill(Color("AccentPrimary").opacity(0.7))
-                        .frame(width: geo.size.width * frequency)
+                        .frame(width: geo.size.width * (animate ? frequency : 0))
+                        .animation(.easeOut(duration: 0.6).delay(delay), value: animate)
                 }
             }
             .frame(height: 8)
@@ -260,6 +297,7 @@ struct SymptomFrequencyRow: View {
                 .foregroundStyle(.secondary)
                 .monospacedDigit()
                 .frame(width: 36, alignment: .trailing)
+                .opacity(animate ? 1 : 0)
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
@@ -271,7 +309,7 @@ struct SymptomFrequencyRow: View {
 // MARK: - InsightCardView
 
 struct InsightCardView: View {
-    // TODO: brancher sur LunaEngine insights
+    @State private var appeared = false
     private let sampleInsight = "insight_sample_luteal_cramps"
 
     var body: some View {
@@ -292,6 +330,13 @@ struct InsightCardView: View {
         .padding(16)
         .background(Color("AccentAccent").opacity(0.08), in: RoundedRectangle(cornerRadius: 16))
         .accessibilityElement(children: .combine)
+        .scaleEffect(appeared ? 1 : 0.95)
+        .opacity(appeared ? 1 : 0)
+        .onAppear {
+            withAnimation(.easeOut(duration: 0.4).delay(0.5)) {
+                appeared = true
+            }
+        }
     }
 }
 
