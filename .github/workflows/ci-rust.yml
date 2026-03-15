@@ -41,7 +41,7 @@ jobs:
       - name: cargo clippy (zero warnings)
         run: cargo clippy --manifest-path luna-core/Cargo.toml --all-targets -- -D warnings
 
-      - name: "cargo test — unit + behavior (64 tests)"
+      - name: "cargo test — unit + behavior (79 tests)"
         run: cargo test --manifest-path luna-core/Cargo.toml --all-features
 
       - name: cargo audit (known CVEs)

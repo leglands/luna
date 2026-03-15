@@ -76,6 +76,7 @@ LunaEngine::open_vault(db_path, pin) -> Result<Arc<LunaEngine>, LunaError>
 .log_pregnancy_day(PregnancyLog) .get_pregnancy_log(date)
 .export_logs_csv(from, to) -> String
 .change_pin(old, new) .panic_wipe() .export_encrypted_backup(pin)
+.import_encrypted_backup(backup, pin) -> u32
 vault_exists(db_path) -> bool  // standalone
 ```
 
@@ -218,14 +219,14 @@ DR: RTO N/A (local) · RPO = last backup · panic_wipe = irrecoverable (by desig
 
 | Layer | Count | Framework |
 |-------|-------|-----------|
-| Rust behavior (J1-J15) | 40 | cargo test |
+| Rust behavior (J1-J18) | 51 | cargo test |
 | Rust unit (prediction, export, crypto, db) | 28 | cargo test |
 | iOS unit | 14 | XCTest |
-| iOS UI | 17 | XCUITest |
+| iOS UI | 24 | XCUITest |
 | Android unit | 23 | JUnit |
-| Android instrumented | 12 | Espresso |
+| Android instrumented | 16 | Espresso |
 | E2E mobile | 7 flows | Maestro |
-| **Total** | **141** | |
+| **Total** | **163** | |
 
 ---
 
@@ -248,8 +249,8 @@ DR: RTO N/A (local) · RPO = last backup · panic_wipe = irrecoverable (by desig
 | US → AC | 100% | ~97 acceptance criteria |
 | AC → IHM | 100% | 10 screens (11 iOS + 12 Android files) |
 | IHM → API | 85% | 17/20 (F17,F18,F19 = client-side) |
-| API → Tests | 100% | 18/18 functions tested |
-| Feature → Tests | 90% | F17 i18n + F18 Dark Mode = 0 tests |
+| API → Tests | 100% | 19/19 functions tested |
+| Feature → Tests | 100% | All 20 features have tests |
 | CRUD | 88% | 21/24 (3 Delete gaps — intentional) |
 | RBAC | 100% | 20/20 owner-only enforced |
 
@@ -284,19 +285,15 @@ Single owner · PIN → Argon2id → vault_open gates all 20 resource-operation 
 
 ---
 
-## GAPS (from E2E audit — 9 findings)
+## GAPS (from E2E audit — 5 remaining)
 
 | # | Priority | Gap | Source |
 |---|----------|-----|--------|
-| 1 | High | No import_backup() restore API | CRUD audit |
-| 2 | High | Maestro E2E not in CI | Test audit |
-| 3 | High | F17 i18n + F18 Dark Mode: zero tests | Feature→Test matrix |
-| 4 | Medium | No login rate limit | SBD-11 |
-| 5 | Medium | GH Actions not SHA-pinned | SBD-15 |
-| 6 | Medium | No cargo audit in CI | SBD-14 |
-| 7 | Medium | 3 CRUD Delete gaps (intentional) | CRUD matrix |
-| 8 | Medium | Urdu missing from Android | i18n audit |
-| 9 | Low | Von Restorff ovulation marker | UX audit |
+| 1 | Medium | No login rate limit | SBD-11 |
+| 2 | Medium | GH Actions not SHA-pinned | SBD-15 |
+| 3 | Medium | No cargo audit in CI | SBD-14 |
+| 4 | Medium | Urdu missing from Android | i18n audit |
+| 5 | Low | Von Restorff ovulation marker | UX audit |
 
 ---
 

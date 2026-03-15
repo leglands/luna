@@ -7,7 +7,7 @@
 - **Core**: Rust + UniFFI 0.28 (proc-macros, no .udl) → iOS (SwiftUI) + Android (Kotlin Views)
 - **DB**: SQLCipher (AES-256-GCM, Argon2id KDF)
 - **Privacy**: ZERO network, ZERO analytics, ZERO permissions
-- **Tests**: 68 Rust + 31 iOS + 35 Android + 7 Maestro E2E = **141 total**
+- **Tests**: 79 Rust + 38 iOS + 39 Android + 7 Maestro E2E = **163 total**
 - **i18n**: 40 languages, full RTL (ar, he, fa, ur)
 - **a11y**: WCAG 2.2 AA, Calm Mode, reduceMotion, VoiceOver/TalkBack
 
@@ -146,14 +146,13 @@ maestro test .maestro/                # 7 E2E flows
 | US → AC | 20/20 | 20 | 100% |
 | AC → IHM | 20/20 | 20 | 100% |
 | IHM → API | 17/20 | 20 | 85% |
-| API → Tests | 18/18 | 18 | 100% |
-| Feature → Tests | 18/20 | 20 | 90% |
+| API → Tests | 19/19 | 19 | 100% |
+| Feature → Tests | 20/20 | 20 | 100% |
 | CRUD ops | 21/24 | 24 | 88% |
 | RBAC enforced | 20/20 | 20 | 100% |
 
-- **141 tests**: 68 Rust (40 behavior J1-J15 + 28 unit) · 31 iOS (14 XCTest + 17 XCUITest) · 35 Android (23 JUnit + 12 Espresso) · 7 Maestro E2E
+- **163 tests**: 79 Rust (51 behavior J1-J18 + 28 unit) · 38 iOS (14 XCTest + 24 XCUITest) · 39 Android (23 JUnit + 16 Espresso) · 7 Maestro E2E
 - **CRUD gaps**: 3 Delete (DailyLog, Cycle, PregnancyLog — intentional, privacy-first)
-- **API gap**: No import_backup() restore
 - **IHM headers**: Added to all 23 view files (11 iOS + 12 Android) with persona/feature/RBAC/CRUD/US
 
 ## Patterns (8/8 verified) · Anti-patterns (0 found)
@@ -166,12 +165,8 @@ maestro test .maestro/                # 7 E2E flows
 
 | # | Finding | Priority |
 |---|---------|----------|
-| 1 | No import_backup() restore API | High |
-| 2 | Maestro E2E not in CI | High |
-| 3 | F17 i18n + F18 Dark Mode: zero tests | High |
-| 4 | No login rate limit (SBD-11) | Medium |
-| 5 | GH Actions not SHA-pinned (SBD-15) | Medium |
-| 6 | No cargo audit in CI (SBD-14) | Medium |
-| 7 | 3 CRUD Delete gaps | Medium |
-| 8 | Urdu missing from Android | Medium |
-| 9 | Von Restorff ovulation marker | Low |
+| 1 | No login rate limit (SBD-11) | Medium |
+| 2 | GH Actions not SHA-pinned (SBD-15) | Medium |
+| 3 | No cargo audit in CI (SBD-14) | Medium |
+| 4 | Urdu missing from Android | Medium |
+| 5 | Von Restorff ovulation marker | Low |

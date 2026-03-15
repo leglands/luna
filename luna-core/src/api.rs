@@ -203,8 +203,8 @@ impl LunaEngine {
 
     /// Export chiffré pour la sync iCloud/Drive.
     ///
-    /// Retourne un blob opaque : JSON de toutes les données, chiffré AES-256-GCM
-    /// avec la clé sync (dérivée distinctement de la clé DB).
+    /// Format: salt (16 bytes) || nonce+ciphertext (AES-256-GCM)
+    /// Le salt est inclus pour permettre la restauration sur un autre vault.
     pub fn export_encrypted_backup(&self, pin: String) -> Result<Vec<u8>, LunaError> {
         let salt_path = format!("{}.salt", self.db_path);
         let salt = Self::load_or_create_salt(&salt_path)?;
@@ -227,7 +227,71 @@ impl LunaEngine {
         });
 
         let plaintext = serde_json::to_vec(&payload)?;
-        crate::vault::crypto::encrypt(&sync_key, &plaintext)
+        let encrypted = crate::vault::crypto::encrypt(&sync_key, &plaintext)?;
+
+        // Prepend salt so the backup is self-contained for restore
+        let mut output = Vec::with_capacity(16 + encrypted.len());
+        output.extend_from_slice(&salt);
+        output.extend_from_slice(&encrypted);
+        Ok(output)
+    }
+
+    /// Importe un backup chiffré produit par `export_encrypted_backup()`.
+    ///
+    /// Le blob contient : salt (16 bytes) || encrypted_data
+    /// Déchiffre avec la clé sync dérivée du salt embarqué + PIN fourni,
+    /// puis restaure cycles et logs dans le vault actuel (merge par date/id).
+    pub fn import_encrypted_backup(&self, backup: Vec<u8>, pin: String) -> Result<u32, LunaError> {
+        if backup.len() < 16 + 12 {
+            return Err(LunaError::InvalidData("Backup too short".into()));
+        }
+
+        // Extract salt from the backup (first 16 bytes)
+        let mut salt = [0u8; 16];
+        salt.copy_from_slice(&backup[..16]);
+        let encrypted = &backup[16..];
+
+        let master_key = derive_key(&pin, &salt)?;
+        let sync_key = derive_subkey(&master_key, b"sync_key")?;
+
+        let plaintext = crate::vault::crypto::decrypt(&sync_key, encrypted)?;
+        let payload: serde_json::Value = serde_json::from_slice(&plaintext)
+            .map_err(|e| LunaError::InvalidData(format!("Invalid backup JSON: {}", e)))?;
+
+        let version = payload.get("version")
+            .and_then(|v| v.as_u64())
+            .ok_or_else(|| LunaError::InvalidData("Missing backup version".into()))?;
+
+        if version != 1 {
+            return Err(LunaError::InvalidData(format!("Unsupported backup version: {}", version)));
+        }
+
+        let mut restored = 0u32;
+        let db = self.db.lock().unwrap();
+
+        // Restore cycles
+        if let Some(cycles) = payload.get("cycles").and_then(|v| v.as_array()) {
+            for c in cycles {
+                if let Ok(cycle) = serde_json::from_value::<Cycle>(c.clone()) {
+                    if db.insert_cycle(&cycle).is_ok() {
+                        restored += 1;
+                    }
+                }
+            }
+        }
+
+        // Restore daily logs
+        if let Some(logs) = payload.get("logs").and_then(|v| v.as_array()) {
+            for l in logs {
+                if let Ok(log) = serde_json::from_value::<DailyLog>(l.clone()) {
+                    if db.upsert_log(&log).is_ok() {
+                        restored += 1;
+                    }
+                }
+            }
+        }
+
+        Ok(restored)
     }
 
     /// Retourne le profil utilisateur (mode de suivi, contraception, etc.)

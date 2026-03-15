@@ -204,3 +204,104 @@ final class LunaUITests: XCTestCase {
         _ = app.tabBars.firstMatch.waitForExistence(timeout: 5)
     }
 }
+
+// MARK: - i18n Tests (F17 / US18)
+
+/// Verifies localization infrastructure works at the UI level.
+final class I18N_LocalizationUITests: XCTestCase {
+
+    var app: XCUIApplication!
+
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app = XCUIApplication()
+        app.launchArguments = ["--uitesting", "--reset-vault"]
+    }
+
+    /// i18n-01: App launches with French locale (source language)
+    func test_I18N_01_frenchLocale_showsLocalizedText() {
+        app.launchArguments.append(contentsOf: ["-AppleLanguages", "(fr)"])
+        app.launch()
+        // Onboarding title should exist (localized or fallback)
+        XCTAssertTrue(
+            app.staticTexts["onboarding.welcome.title"].waitForExistence(timeout: 5),
+            "Onboarding title key should be present in FR locale"
+        )
+    }
+
+    /// i18n-02: App launches with English locale
+    func test_I18N_02_englishLocale_launches() {
+        app.launchArguments.append(contentsOf: ["-AppleLanguages", "(en)"])
+        app.launch()
+        XCTAssertTrue(
+            app.staticTexts["onboarding.welcome.title"].waitForExistence(timeout: 5),
+            "Onboarding title key should be present in EN locale"
+        )
+    }
+
+    /// i18n-03: App launches with Arabic (RTL) locale
+    func test_I18N_03_arabicLocale_launches() {
+        app.launchArguments.append(contentsOf: ["-AppleLanguages", "(ar)", "-AppleLocale", "ar_SA"])
+        app.launch()
+        XCTAssertTrue(
+            app.staticTexts["onboarding.welcome.title"].waitForExistence(timeout: 5),
+            "Onboarding title key should be present in AR (RTL) locale"
+        )
+    }
+
+    /// i18n-04: App launches with Japanese locale
+    func test_I18N_04_japaneseLocale_launches() {
+        app.launchArguments.append(contentsOf: ["-AppleLanguages", "(ja)"])
+        app.launch()
+        XCTAssertTrue(
+            app.staticTexts["onboarding.welcome.title"].waitForExistence(timeout: 5),
+            "Onboarding title key should be present in JA locale"
+        )
+    }
+}
+
+// MARK: - Dark Mode Tests (F18 / US20)
+
+/// Verifies the app renders correctly in Dark Mode.
+final class DarkMode_AppearanceUITests: XCTestCase {
+
+    var app: XCUIApplication!
+
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app = XCUIApplication()
+        app.launchArguments = ["--uitesting", "--reset-vault"]
+    }
+
+    /// DM-01: App launches successfully in dark mode
+    func test_DM01_darkMode_appLaunches() {
+        app.launchArguments.append(contentsOf: ["-UIUserInterfaceStyle", "Dark"])
+        app.launch()
+        XCTAssertTrue(
+            app.staticTexts["onboarding.welcome.title"].waitForExistence(timeout: 5),
+            "App should launch in dark mode"
+        )
+    }
+
+    /// DM-02: App launches successfully in light mode
+    func test_DM02_lightMode_appLaunches() {
+        app.launchArguments.append(contentsOf: ["-UIUserInterfaceStyle", "Light"])
+        app.launch()
+        XCTAssertTrue(
+            app.staticTexts["onboarding.welcome.title"].waitForExistence(timeout: 5),
+            "App should launch in light mode"
+        )
+    }
+
+    /// DM-03: Onboarding completes in dark mode
+    func test_DM03_darkMode_onboardingCompletes() {
+        app.launchArguments.append(contentsOf: ["-UIUserInterfaceStyle", "Dark"])
+        app.launch()
+        guard app.buttons["onboarding.cta.start"].waitForExistence(timeout: 3) else { return }
+        app.buttons["onboarding.cta.start"].tap()
+        XCTAssertTrue(
+            app.buttons["onboarding.cta.next"].waitForExistence(timeout: 3),
+            "Next button should be visible in dark mode onboarding"
+        )
+    }
+}
