@@ -24,10 +24,10 @@ struct SettingsView: View {
     @EnvironmentObject var appState: AppState
     @State private var showPanicWipeConfirmation: Bool = false
     @State private var showExportSheet: Bool = false
-    @State private var notifDailyLog: Bool = true
-    @State private var notifPeriodReminder: Bool = true
-    @State private var notifFertileWindow: Bool = false
-    @State private var notifBBTReminder: Bool = false
+    @AppStorage("notif_daily_log") private var notifDailyLog: Bool = false
+    @AppStorage("notif_period_reminder") private var notifPeriodReminder: Bool = false
+    @AppStorage("notif_fertile_window") private var notifFertileWindow: Bool = false
+    @AppStorage("notif_bbt_reminder") private var notifBBTReminder: Bool = false
 
     @State private var lockEnabled: Bool = true
     @State private var pillReminderEnabled: Bool = false
@@ -128,17 +128,45 @@ struct SettingsView: View {
                         Text("notif_daily_log_label")
                     }
                     .accessibilityLabel(Text("notif_daily_log_a11y"))
+                    .onChange(of: notifDailyLog) { enabled in
+                        handleNotifToggle(enabled: enabled) {
+                            NotificationManager.shared.scheduleDailyLogReminder()
+                        } onDisable: {
+                            NotificationManager.shared.cancelDailyLogReminder()
+                        }
+                    }
 
                     Toggle(isOn: $notifPeriodReminder) {
                         Text("notif_period_reminder_label")
+                    }
+                    .onChange(of: notifPeriodReminder) { enabled in
+                        handleNotifToggle(enabled: enabled) {
+                            // Scheduled dynamically when prediction is computed
+                        } onDisable: {
+                            NotificationManager.shared.cancelAll(ofCategory: "period_reminder")
+                        }
                     }
 
                     Toggle(isOn: $notifFertileWindow) {
                         Text("notif_fertile_window_label")
                     }
+                    .onChange(of: notifFertileWindow) { enabled in
+                        handleNotifToggle(enabled: enabled) {
+                            // Scheduled dynamically when prediction is computed
+                        } onDisable: {
+                            NotificationManager.shared.cancelAll(ofCategory: "fertile_alert")
+                        }
+                    }
 
                     Toggle(isOn: $notifBBTReminder) {
                         Text("notif_bbt_reminder_label")
+                    }
+                    .onChange(of: notifBBTReminder) { enabled in
+                        handleNotifToggle(enabled: enabled) {
+                            NotificationManager.shared.scheduleBBTReminder()
+                        } onDisable: {
+                            NotificationManager.shared.cancelBBTReminder()
+                        }
                     }
 
                     NavigationLink("settings_tracking_mode") {
@@ -256,6 +284,19 @@ struct SettingsView: View {
                     showShareSheet = true
                 }
             }
+        }
+    }
+
+    private func handleNotifToggle(enabled: Bool, onEnable: @escaping () -> Void, onDisable: @escaping () -> Void) {
+        if enabled {
+            Task {
+                let granted = await NotificationManager.shared.requestPermission()
+                if granted {
+                    onEnable()
+                }
+            }
+        } else {
+            onDisable()
         }
     }
 

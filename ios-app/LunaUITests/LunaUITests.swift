@@ -423,6 +423,22 @@ final class SettingsE2ETests: XCTestCase {
 
         XCTAssertTrue(deleteButton.waitForExistence(timeout: 3), "Panic wipe/delete button should exist")
     }
+
+    /// F17: Notification toggles exist and are interactive
+    func test_settings_hasNotificationToggles() {
+        app.tabBars.firstMatch.buttons["Me"].tap()
+        sleep(1)
+
+        // Scroll to notification section
+        let list = app.tables.firstMatch.exists ? app.tables.firstMatch : app.collectionViews.firstMatch
+        if list.exists { list.swipeUp() }
+        sleep(1)
+
+        // Look for daily log reminder toggle
+        let dailyLog = app.descendants(matching: .any)
+            .matching(NSPredicate(format: "label CONTAINS[c] 'Daily log reminder'")).firstMatch
+        XCTAssertTrue(dailyLog.waitForExistence(timeout: 3), "Daily log notification toggle should exist")
+    }
 }
 
 // MARK: - E2E Tab Navigation Tests

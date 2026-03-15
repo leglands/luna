@@ -79,6 +79,56 @@ final class NotificationManager {
         UNUserNotificationCenter.current().add(request)
     }
 
+    // MARK: - Daily Log Reminder (20:00 daily)
+
+    func scheduleDailyLogReminder() {
+        cancelAll(ofCategory: "daily_log")
+
+        let content = UNMutableNotificationContent()
+        content.title = NSLocalizedString("notif_daily_log_title", comment: "")
+        content.body  = NSLocalizedString("notif_daily_log_body", comment: "")
+        content.sound = .default
+        content.categoryIdentifier = "daily_log"
+
+        var components = DateComponents()
+        components.hour = 20
+        components.minute = 0
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
+        let request = UNNotificationRequest(identifier: "luna_daily_log",
+                                            content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request)
+    }
+
+    func cancelDailyLogReminder() {
+        cancelAll(ofCategory: "daily_log")
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["luna_daily_log"])
+    }
+
+    // MARK: - BBT Reminder (06:30 daily, before getting up)
+
+    func scheduleBBTReminder() {
+        cancelAll(ofCategory: "bbt_reminder")
+
+        let content = UNMutableNotificationContent()
+        content.title = NSLocalizedString("notif_bbt_reminder_title", comment: "")
+        content.body  = NSLocalizedString("notif_bbt_reminder_body", comment: "")
+        content.sound = .default
+        content.categoryIdentifier = "bbt_reminder"
+
+        var components = DateComponents()
+        components.hour = 6
+        components.minute = 30
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
+        let request = UNNotificationRequest(identifier: "luna_bbt_daily",
+                                            content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request)
+    }
+
+    func cancelBBTReminder() {
+        cancelAll(ofCategory: "bbt_reminder")
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["luna_bbt_daily"])
+    }
+
     // MARK: - Cancel helpers
 
     func cancelPillReminder() {
@@ -86,7 +136,7 @@ final class NotificationManager {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ["luna_pill_daily"])
     }
 
-    private func cancelAll(ofCategory category: String) {
+    func cancelAll(ofCategory category: String) {
         UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
             let ids = requests
                 .filter { $0.content.categoryIdentifier == category }
