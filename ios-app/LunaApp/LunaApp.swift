@@ -100,6 +100,8 @@ final class AppState: ObservableObject {
             let debugFile = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("luna_debug.txt")
             do {
                 engine = try LunaEngine.openVault(dbPath: dbPath, pin: "123456")
+                // Store PIN in Keychain so manual relaunch works too
+                KeychainService.shared.storePin("123456")
                 try? "OK: vault opened at \(dbPath)".write(to: debugFile, atomically: true, encoding: .utf8)
             } catch {
                 try? "FAIL: \(error) at \(dbPath)".write(to: debugFile, atomically: true, encoding: .utf8)
