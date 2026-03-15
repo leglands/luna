@@ -1,5 +1,21 @@
+// ┌──────────────────────────────────────────────────────────────┐
+// │ Screen: LockView (S02)                                       │
+// │ Personas: P1 (Emma), P5 (Aïcha)                             │
+// │ Features: F02 (Lock / Unlock)                                │
+// │ CRUD: R                                                      │
+// │ RBAC: none (vault locked)                                    │
+// │ User Stories: US02                                           │
+// │ Why: PIN entry to unlock encrypted vault                     │
+// └──────────────────────────────────────────────────────────────┘
+
 import SwiftUI
 import LocalAuthentication
+
+// ┌─────────────────────────────────────────────────────────┐
+// │ Screen: LockView · Personas: P1,P5 · Features: F02
+// │ CRUD: Read · RBAC: owner (PIN verification)
+// │ Stories: US02 · Why: Vault gate — PIN entry, biometric
+// └─────────────────────────────────────────────────────────┘
 
 // MARK: - LockView
 
@@ -9,16 +25,15 @@ struct LockView: View {
     @State private var errorMessage: String? = nil
     @State private var attemptsLeft: Int = 5
     @State private var isUnlocking: Bool = false
+    @State private var biometricAvailable: Bool = false
 
     var body: some View {
         ZStack {
-            // Fond neutre — ne révèle rien si app dans le switcher
             Color("LockBackground").ignoresSafeArea()
 
-            VStack(spacing: 40) {
+            VStack(spacing: 32) {
                 Spacer()
 
-                // Logo + nom de l'app
                 VStack(spacing: 12) {
                     Image(systemName: "moon.circle.fill")
                         .font(.system(size: 64))
@@ -29,7 +44,6 @@ struct LockView: View {
                         .accessibilityAddTraits(.isHeader)
                 }
 
-                // Message d'erreur
                 if let error = errorMessage {
                     Text(error)
                         .font(.callout)
@@ -39,23 +53,27 @@ struct LockView: View {
                         .transition(.opacity)
                 }
 
-                // Biométrie
-                Button {
-                    authenticateBiometric()
-                } label: {
-                    Label("lock_biometric_button", systemImage: biometricIcon)
-                        .font(.title3)
-                        .foregroundStyle(Color("AccentPrimary"))
+                if biometricAvailable {
+                    Button {
+                        authenticateBiometric()
+                    } label: {
+                        Label("lock_biometric_button", systemImage: biometricIcon)
+                            .font(.title3)
+                            .foregroundStyle(Color("AccentPrimary"))
+                    }
+                    .frame(minWidth: 44, minHeight: 44)
+                    .disabled(attemptsLeft == 0)
+                    .accessibilityLabel(Text("lock_biometric_a11y"))
+
+                    Text("lock_or_separator")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                } else {
+                    Text("lock_enter_pin")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
                 }
-                .frame(minWidth: 44, minHeight: 44)
-                .disabled(attemptsLeft == 0)
-                .accessibilityLabel(Text("lock_biometric_a11y"))
 
-                Text("lock_or_separator")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-
-                // Clavier PIN
                 PINEntryView(pin: $pin, onComplete: unlock)
                     .disabled(attemptsLeft == 0)
 
@@ -69,7 +87,10 @@ struct LockView: View {
             }
             .padding()
         }
-        .onAppear(perform: authenticateBiometric)
+        .onAppear {
+            checkBiometric()
+            if biometricAvailable { authenticateBiometric() }
+        }
         .animation(.easeInOut, value: errorMessage)
     }
 
@@ -80,6 +101,12 @@ struct LockView: View {
             return "lock.fill"
         }
         return ctx.biometryType == .faceID ? "faceid" : "touchid"
+    }
+
+    private func checkBiometric() {
+        let ctx = LAContext()
+        var error: NSError?
+        biometricAvailable = ctx.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
     }
 
     private func authenticateBiometric() {
