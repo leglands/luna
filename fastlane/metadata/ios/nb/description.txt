@@ -1,0 +1,25 @@
+Spor din menstruasjonssyklus, fruktbarhet og velvære med fullstendig privatliv. Dataene dine forblir på telefonen – alltid.
+
+INGEN SERVER. STADIG.
+LUNA sender aldri dataene dine hvor som helst. Ingen sky. Ingen sporing. Ingen analyser. Fungerer 100 % offline.
+
+FUNKSJONER
+• Smarte syklusspådommer basert på din personlige historie
+• Kartlegging av basal kroppstemperatur (BBT).
+• Humør, energi og symptomlogging
+• 4 sporingsmoduser: Vanlig, TTC, Graviditet, Perimenopause
+• Forutsigelse av fruktbart vindu og eggløsning
+• 6-syklus trendanalyse og innsikt
+
+PERSONVERN GARANTIER
+• AES-256-GCM-kryptering — nøkkelen din, dataene dine
+• Ingen konto eller registrering kreves
+• Ingen tredjeparts SDK-er (ingen Firebase, ingen Crashlytics, ingen analyser)
+• Ikke noe reklamenettverk
+• Null telemetri
+• Panikktørk: slett alle data med 3 trykk
+• Kryptert iCloud/lokal sikkerhetskopi (valgfritt)
+• Åpen kildekode: github.com/macaron-software/luna
+
+TILGJENGELIGHET
+Full VoiceOver-støtte · Dynamic Type · 40+ språk

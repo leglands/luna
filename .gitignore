@@ -47,3 +47,7 @@ google-services.json
 *.lcov
 coverage/
 ios-app/LunaApp/Generated/libluna_core.a
+
+# Local deploy keys (symlinks — never commit)
+fastlane/google_play_key.json
+fastlane/app_store_connect_api_key.json

@@ -1,6 +1,16 @@
+// ┌──────────────────────────────────────────────────────────────┐
+// │ Screen: OnboardingView (S01)                                 │
+// │ Personas: P1 (Emma), P5 (Aïcha)                             │
+// │ Features: F01 (Onboarding / Vault Creation)                  │
+// │ CRUD: C                                                      │
+// │ RBAC: none (vault does not exist yet)                        │
+// │ User Stories: US01                                           │
+// │ Why: First-run — warm welcome, cycle info, goals, auto vault │
+// └──────────────────────────────────────────────────────────────┘
+
 import SwiftUI
 
-// MARK: - OnboardingView (5 étapes)
+// MARK: - OnboardingView (4 steps — no PIN, lock optional later in Settings)
 
 struct OnboardingView: View {
     @EnvironmentObject var appState: AppState
@@ -10,47 +20,36 @@ struct OnboardingView: View {
     @State private var periodDuration: Int = 5
     @State private var cycleRegularity: String = "regular"
     @State private var goals: Set<String> = ["track"]
-    @State private var iCloudEnabled: Bool = false
-    @State private var lockEnabled: Bool = true
-    @State private var pin: String = ""
-    @State private var pinConfirm: String = ""
-    @State private var pinError: String? = nil
     @State private var isSettingUp: Bool = false
     @State private var showWelcome: Bool = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    private let totalSteps = 4
 
     var body: some View {
         ZStack {
             Color("AppBackground").ignoresSafeArea()
 
             VStack(spacing: 0) {
-                // Barre de progression
-                ProgressBar(current: step, total: 5)
+                ProgressBar(current: step, total: totalSteps)
                     .padding(.horizontal, 24)
                     .padding(.top, 16)
-                    .accessibilityLabel(Text("onboarding_step_a11y \(step+1) sur 5"))
+                    .accessibilityLabel(Text("onboarding_step_a11y \(step+1) / \(totalSteps)"))
 
-                // Contenu de l'étape
                 TabView(selection: $step) {
                     WelcomeStep(firstName: $firstName).tag(0)
                     LastPeriodStep(selectedDate: $lastPeriodDate).tag(1)
                     CycleProfileStep(duration: $periodDuration, regularity: $cycleRegularity).tag(2)
                     GoalsStep(goals: $goals).tag(3)
-                    PrivacySetupStep(
-                        iCloud: $iCloudEnabled,
-                        lock: $lockEnabled,
-                        pin: $pin,
-                        pinConfirm: $pinConfirm,
-                        pinError: $pinError
-                    ).tag(4)
                 }
+                .accessibilityIdentifier("onboarding_pager")
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .animation(reduceMotion ? .none : .easeInOut, value: step)
 
-                // Navigation
                 OnboardingNavBar(
                     step: step,
-                    canProceed: canProceed,
+                    totalSteps: totalSteps,
+                    canProceed: true,
                     isSettingUp: isSettingUp,
                     onNext: nextStep,
                     onBack: { step -= 1 }
@@ -59,7 +58,7 @@ struct OnboardingView: View {
                 .padding(.bottom, 32)
             }
         }
-        // Doherty Threshold : loading pendant Argon2id
+        // Doherty Threshold: loading during Argon2id key derivation
         .overlay {
             if isSettingUp && !showWelcome {
                 VStack(spacing: 16) {
@@ -73,7 +72,7 @@ struct OnboardingView: View {
                 .background(.ultraThinMaterial)
             }
         }
-        // Peak-End Rule : écran de bienvenue
+        // Peak-End Rule: warm welcome before transition
         .overlay {
             if showWelcome {
                 VStack(spacing: 20) {
@@ -92,6 +91,16 @@ struct OnboardingView: View {
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 32)
+
+                    // Privacy badge
+                    HStack(spacing: 6) {
+                        Image(systemName: "lock.shield.fill")
+                            .foregroundStyle(Color("AccentPrimary"))
+                        Text("onboarding_privacy_guarantee")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    .padding(.top, 8)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color("AppBackground").ignoresSafeArea())
@@ -101,15 +110,8 @@ struct OnboardingView: View {
         .animation(reduceMotion ? .none : .easeInOut(duration: 0.5), value: showWelcome)
     }
 
-    private var canProceed: Bool {
-        switch step {
-        case 4: return pin.count == 6 && pin == pinConfirm
-        default: return true
-        }
-    }
-
     private func nextStep() {
-        if step < 4 {
+        if step < totalSteps - 1 {
             step += 1
         } else {
             finishOnboarding()
@@ -122,30 +124,33 @@ struct OnboardingView: View {
 
         Task {
             do {
-                let engine = try LunaEngine.openVault(dbPath: appState.dbPath, pin: pin)
+                // Auto-generate PIN — user never sees or types it.
+                // Vault encryption requires a key; the PIN is derived via Argon2id.
+                // Stored in Keychain, gated by device auth when lock is enabled.
+                let autoPin = String(format: "%06d", Int.random(in: 0...999999))
 
-                if lockEnabled {
-                    KeychainService.shared.storePin(pin)
-                }
+                let engine = try LunaEngine.openVault(dbPath: appState.dbPath, pin: autoPin)
+
+                // Always store PIN — needed for vault re-open
+                KeychainService.shared.storePin(autoPin)
 
                 await MainActor.run {
                     appState.engine = engine
                     appState.isVaultOpen = true
                     appState.userName = firstName.isEmpty ? nil : firstName
+                    appState.lockEnabled = false // No lock by default — enable in Settings
                 }
 
-                // Peak-End Rule : écran de bienvenue avant transition
                 await MainActor.run { showWelcome = true }
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
-                try? await Task.sleep(nanoseconds: 1_800_000_000) // 1.8s
+                try? await Task.sleep(nanoseconds: 1_800_000_000)
 
                 await MainActor.run {
                     appState.isOnboardingDone = true
                 }
             } catch {
-                // Afficher erreur — unlikely ici car vault neuf
+                await MainActor.run { isSettingUp = false }
             }
-            isSettingUp = false
         }
     }
 }
@@ -344,97 +349,7 @@ struct GoalsStep: View {
     }
 }
 
-// MARK: - Étape 5 — Vie privée
-
-struct PrivacySetupStep: View {
-    @Binding var iCloud: Bool
-    @Binding var lock: Bool
-    @Binding var pin: String
-    @Binding var pinConfirm: String
-    @Binding var pinError: String?
-
-    var body: some View {
-        ScrollView {
-            VStack(spacing: 24) {
-                Spacer(minLength: 20)
-                OnboardingStepHeader(
-                    icon: "lock.shield.fill",
-                    title: "onboarding_privacy_title",
-                    subtitle: "onboarding_privacy_subtitle"
-                )
-
-                // Illustration privacy
-                HStack(spacing: 8) {
-                    Image(systemName: "iphone")
-                    Image(systemName: "lock.fill")
-                }
-                .font(.system(size: 48))
-                .foregroundStyle(Color("AccentPrimary"))
-                .accessibilityHidden(true)
-
-                Text("onboarding_privacy_guarantee")
-                    .font(.callout)
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(.secondary)
-
-                Toggle(isOn: $iCloud) {
-                    Label("onboarding_icloud_toggle", systemImage: "icloud.fill")
-                }
-                .padding(14)
-                .background(Color("CardBackground"), in: RoundedRectangle(cornerRadius: 12))
-                .disabled(true) // Tier 2
-
-                Toggle(isOn: $lock) {
-                    Label("onboarding_lock_toggle", systemImage: "lock.fill")
-                }
-                .padding(14)
-                .background(Color("CardBackground"), in: RoundedRectangle(cornerRadius: 12))
-
-                if lock {
-                    PINSetupView(pin: $pin, pinConfirm: $pinConfirm, error: $pinError)
-                }
-
-                Spacer(minLength: 20)
-            }
-            .padding(.horizontal, 24)
-        }
-    }
-}
-
-// MARK: - PINSetupView
-
-struct PINSetupView: View {
-    @Binding var pin: String
-    @Binding var pinConfirm: String
-    @Binding var error: String?
-    @State private var confirmActive: Bool = false
-
-    var body: some View {
-        VStack(spacing: 16) {
-            Text(confirmActive ? "onboarding_pin_confirm_label" : "onboarding_pin_create_label")
-                .font(.subheadline.bold())
-
-            SecureField(confirmActive ? "onboarding_pin_confirm_placeholder" : "onboarding_pin_placeholder",
-                        text: confirmActive ? $pinConfirm : $pin)
-                .keyboardType(.numberPad)
-                .textContentType(.newPassword)
-                .padding(12)
-                .background(Color("CardBackground"), in: RoundedRectangle(cornerRadius: 10))
-                .onChange(of: pin) { v in if v.count == 6 && !confirmActive { confirmActive = true } }
-                .onChange(of: pinConfirm) { v in
-                    if v.count == 6 {
-                        error = v != pin ? NSLocalizedString("onboarding_pin_mismatch", comment: "") : nil
-                    }
-                }
-
-            if let err = error {
-                Text(err).font(.caption).foregroundStyle(.red)
-            }
-        }
-    }
-}
-
-// MARK: - Composants partagés
+// MARK: - Shared Components
 
 struct OnboardingStepHeader: View {
     let icon: String
@@ -490,10 +405,13 @@ struct ProgressBar: View {
 
 struct OnboardingNavBar: View {
     let step: Int
+    let totalSteps: Int
     let canProceed: Bool
     let isSettingUp: Bool
     let onNext: () -> Void
     let onBack: () -> Void
+
+    private var isLastStep: Bool { step == totalSteps - 1 }
 
     var body: some View {
         HStack {
@@ -501,6 +419,7 @@ struct OnboardingNavBar: View {
                 Button("onboarding_back") { onBack() }
                     .frame(minHeight: 44)
                     .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("onboarding_back")
             }
             Spacer()
             Button {
@@ -509,7 +428,7 @@ struct OnboardingNavBar: View {
                 if isSettingUp {
                     ProgressView().tint(.white)
                 } else {
-                    Text(step == 4 ? "onboarding_start_button" : "onboarding_next_button")
+                    Text(isLastStep ? "onboarding_start_button" : "onboarding_next_button")
                         .bold()
                 }
             }
@@ -518,7 +437,8 @@ struct OnboardingNavBar: View {
             .padding(.vertical, 14)
             .background(canProceed ? Color("AccentPrimary") : Color.secondary.opacity(0.3), in: Capsule())
             .foregroundStyle(.white)
-            .accessibilityLabel(step == 4
+            .accessibilityIdentifier(isLastStep ? "onboarding_finish" : "onboarding_next")
+            .accessibilityLabel(isLastStep
                 ? Text("onboarding_start_a11y")
                 : Text("onboarding_next_a11y")
             )

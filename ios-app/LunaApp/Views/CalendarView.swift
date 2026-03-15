@@ -1,4 +1,20 @@
+// ┌──────────────────────────────────────────────────────────────┐
+// │ Screen: CalendarView (S05)                                   │
+// │ Personas: P1 (Emma), P2 (Sarah)                             │
+// │ Features: F05 (Calendar View)                                │
+// │ CRUD: R                                                      │
+// │ RBAC: owner (vault_open required)                            │
+// │ User Stories: US05                                           │
+// │ Why: Monthly calendar with period and fertile window markers │
+// └──────────────────────────────────────────────────────────────┘
+
 import SwiftUI
+
+// ┌─────────────────────────────────────────────────────────┐
+// │ Screen: CalendarView · Personas: P1,P2 · Features: F05
+// │ CRUD: Read · RBAC: owner (vault_open)
+// │ Stories: US05 · Why: Monthly calendar — period/fertile markers
+// └─────────────────────────────────────────────────────────┘
 
 // MARK: - CalendarView
 

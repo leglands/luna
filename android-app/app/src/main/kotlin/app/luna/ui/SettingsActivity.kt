@@ -1,3 +1,12 @@
+// ┌──────────────────────────────────────────────────────────────────────────────┐
+// │ Screen: SettingsActivity (S07)                                               │
+// │ Personas: P1 (Emma), P5 (Aïcha), P6 (Sophie)                                │
+// │ Features: F08, F09, F10, F11, F15, F16                                       │
+// │ CRUD: R, U, D                                                                │
+// │ RBAC: owner (vault_open required)                                            │
+// │ User Stories: US08, US09, US10, US11, US15, US16                             │
+// │ Why: Config, security, export, calm mode                                     │
+// └──────────────────────────────────────────────────────────────────────────────┘
 package app.luna.ui
 
 import android.content.Context

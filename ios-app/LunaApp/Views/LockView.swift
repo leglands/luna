@@ -5,27 +5,16 @@
 // │ CRUD: R                                                      │
 // │ RBAC: none (vault locked)                                    │
 // │ User Stories: US02                                           │
-// │ Why: PIN entry to unlock encrypted vault                     │
+// │ Why: Device auth (bank-app style) to unlock encrypted vault  │
 // └──────────────────────────────────────────────────────────────┘
 
 import SwiftUI
 import LocalAuthentication
 
-// ┌─────────────────────────────────────────────────────────┐
-// │ Screen: LockView · Personas: P1,P5 · Features: F02
-// │ CRUD: Read · RBAC: owner (PIN verification)
-// │ Stories: US02 · Why: Vault gate — PIN entry, biometric
-// └─────────────────────────────────────────────────────────┘
-
-// MARK: - LockView
-
 struct LockView: View {
     @EnvironmentObject var appState: AppState
-    @State private var pin: String = ""
     @State private var errorMessage: String? = nil
-    @State private var attemptsLeft: Int = 5
     @State private var isUnlocking: Bool = false
-    @State private var biometricAvailable: Bool = false
 
     var body: some View {
         ZStack {
@@ -39,9 +28,14 @@ struct LockView: View {
                         .font(.system(size: 64))
                         .foregroundStyle(Color("AccentPrimary"))
                         .accessibilityHidden(true)
-                    Text("app_name")
-                        .font(.largeTitle.bold())
+                    Text("lock_welcome_back")
+                        .font(.title2.bold())
+                        .foregroundStyle(.white)
                         .accessibilityAddTraits(.isHeader)
+                    Text("lock_subtitle")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
                 }
 
                 if let error = errorMessage {
@@ -49,96 +43,84 @@ struct LockView: View {
                         .font(.callout)
                         .foregroundStyle(.red)
                         .padding(.horizontal)
-                        .accessibilityLabel(Text(error))
                         .transition(.opacity)
                 }
 
-                if biometricAvailable {
-                    Button {
-                        authenticateBiometric()
-                    } label: {
-                        Label("lock_biometric_button", systemImage: biometricIcon)
-                            .font(.title3)
-                            .foregroundStyle(Color("AccentPrimary"))
+                // Big unlock button — triggers Face ID / Touch ID / device passcode
+                Button {
+                    authenticateWithDevice()
+                } label: {
+                    HStack(spacing: 12) {
+                        Image(systemName: authIcon)
+                            .font(.title2)
+                        Text("lock_unlock_button")
+                            .font(.title3.bold())
                     }
-                    .frame(minWidth: 44, minHeight: 44)
-                    .disabled(attemptsLeft == 0)
-                    .accessibilityLabel(Text("lock_biometric_a11y"))
-
-                    Text("lock_or_separator")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                } else {
-                    Text("lock_enter_pin")
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 32)
+                    .padding(.vertical, 16)
+                    .background(Color("AccentPrimary"), in: Capsule())
                 }
-
-                PINEntryView(pin: $pin, onComplete: unlock)
-                    .disabled(attemptsLeft == 0)
-
-                if attemptsLeft < 5 && attemptsLeft > 0 {
-                    Text(String(format: NSLocalizedString("lock_attempts_left", comment: ""), attemptsLeft))
-                        .font(.caption)
-                        .foregroundStyle(.orange)
-                }
+                .frame(minWidth: 44, minHeight: 48)
+                .disabled(isUnlocking)
+                .accessibilityLabel(Text("lock_unlock_a11y"))
 
                 Spacer()
             }
             .padding()
         }
-        .onAppear {
-            checkBiometric()
-            if biometricAvailable { authenticateBiometric() }
-        }
+        .onAppear { authenticateWithDevice() }
         .animation(.easeInOut, value: errorMessage)
     }
 
-    private var biometricIcon: String {
+    private var authIcon: String {
         let ctx = LAContext()
         var error: NSError?
-        guard ctx.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
-            return "lock.fill"
+        if ctx.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            return ctx.biometryType == .faceID ? "faceid" : "touchid"
         }
-        return ctx.biometryType == .faceID ? "faceid" : "touchid"
+        return "lock.open.fill"
     }
 
-    private func checkBiometric() {
-        let ctx = LAContext()
-        var error: NSError?
-        biometricAvailable = ctx.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
-    }
+    private func authenticateWithDevice() {
+        guard !isUnlocking else { return }
+        isUnlocking = true
+        errorMessage = nil
 
-    private func authenticateBiometric() {
         let ctx = LAContext()
-        var error: NSError?
-        guard ctx.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else { return }
+        ctx.localizedFallbackTitle = NSLocalizedString("lock_passcode_fallback", comment: "")
 
         ctx.evaluatePolicy(
-            .deviceOwnerAuthenticationWithBiometrics,
-            localizedReason: NSLocalizedString("lock_biometric_reason", comment: "")
-        ) { success, _ in
+            .deviceOwnerAuthentication,
+            localizedReason: NSLocalizedString("lock_auth_reason", comment: "")
+        ) { success, authError in
             Task { @MainActor in
                 if success {
-                    openVaultWithBiometric()
+                    openVaultFromKeychain()
+                } else if let err = authError as? LAError {
+                    switch err.code {
+                    case .userCancel:
+                        errorMessage = NSLocalizedString("lock_tap_to_retry", comment: "")
+                    case .passcodeNotSet:
+                        errorMessage = NSLocalizedString("lock_no_passcode", comment: "")
+                    default:
+                        errorMessage = NSLocalizedString("lock_auth_failed", comment: "")
+                    }
                 }
+                isUnlocking = false
             }
         }
     }
 
-    private func openVaultWithBiometric() {
-        // Récupérer le PIN depuis le Keychain (stocké au setup initial)
-        guard let storedPin = KeychainService.shared.readPin() else { return }
-        unlock(pin: storedPin)
-    }
-
-    private func unlock(pin: String) {
-        guard !isUnlocking else { return }
-        isUnlocking = true
+    private func openVaultFromKeychain() {
+        guard let storedPin = KeychainService.shared.readPin() else {
+            errorMessage = NSLocalizedString("lock_keychain_unavailable", comment: "")
+            return
+        }
 
         Task {
             do {
-                let engine = try LunaEngine.openVault(dbPath: appState.dbPath, pin: pin)
+                let engine = try LunaEngine.openVault(dbPath: appState.dbPath, pin: storedPin)
                 await MainActor.run {
                     appState.engine = engine
                     appState.isVaultOpen = true
@@ -149,21 +131,14 @@ struct LockView: View {
                 }
             } catch {
                 await MainActor.run {
-                    attemptsLeft -= 1
-                    errorMessage = attemptsLeft > 0
-                        ? NSLocalizedString("lock_wrong_pin", comment: "")
-                        : NSLocalizedString("lock_max_attempts", comment: "")
-                    self.pin = ""
-                    UIAccessibility.post(notification: .announcement, argument: errorMessage ?? "")
+                    errorMessage = NSLocalizedString("lock_vault_error", comment: "")
                 }
             }
-            isUnlocking = false
         }
     }
 }
 
-// MARK: - PINEntryView
-
+// PINEntryView kept for potential future use (settings PIN change)
 struct PINEntryView: View {
     @Binding var pin: String
     let onComplete: (String) -> Void
@@ -172,7 +147,6 @@ struct PINEntryView: View {
 
     var body: some View {
         VStack(spacing: 12) {
-            // Dots indicateurs
             HStack(spacing: 16) {
                 ForEach(0..<6, id: \.self) { i in
                     Circle()
@@ -181,9 +155,8 @@ struct PINEntryView: View {
                 }
             }
             .accessibilityLabel(Text("pin_entry_a11y"))
-            .accessibilityValue(Text("\(pin.count) chiffres saisis sur 6"))
+            .accessibilityValue(Text("\(pin.count) / 6"))
 
-            // Clavier
             ForEach(digits, id: \.self) { row in
                 HStack(spacing: 20) {
                     ForEach(row, id: \.self) { digit in
@@ -198,10 +171,7 @@ struct PINEntryView: View {
                                     .frame(width: 72, height: 72)
                                     .background(Color("CardBackground"), in: Circle())
                             }
-                            .accessibilityLabel(digit == ""
-                                ? Text("pin_delete_a11y")
-                                : Text("pin_digit_\(digit)_a11y")
-                            )
+                            .accessibilityLabel(Text(digit))
                         }
                     }
                 }
@@ -220,4 +190,3 @@ struct PINEntryView: View {
         }
     }
 }
-

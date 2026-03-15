@@ -1,0 +1,25 @@
+Feu un seguiment del vostre cicle menstrual, fertilitat i benestar amb total privadesa. Les teves dades es mantenen al teu telèfon, sempre.
+
+SENSE SERVIDOR. MAI.
+LUNA mai envia les teves dades enlloc. Sense núvol. Sense seguiment. Sense analítiques. Funciona 100% fora de línia.
+
+CARACTERÍSTIQUES
+• Prediccions de cicle intel·ligent basades en el vostre historial personal
+• Gràfic de temperatura corporal basal (BBT).
+• Registre d'estat d'ànim, energia i símptomes
+• 4 modes de seguiment: Regular, TTC, Embaràs, Perimenopausa
+• Finestra fèrtil i predicció de l'ovulació
+• Anàlisi de tendències de 6 cicles i coneixements
+
+GARANTIES DE PRIVACITAT
+• Xifratge AES-256-GCM: la vostra clau, les vostres dades
+• No cal cap compte ni registre
+• Sense SDK de tercers (no Firebase, ni Crashlytics, ni analítiques)
+• Sense xarxa publicitària
+• Telemetria zero
+• Esborrat de pànic: esborra totes les dades en 3 tocs
+• Còpia de seguretat local/iCloud xifrada (opcional)
+• Codi obert: github.com/macaron-software/luna
+
+ACCESSIBILITAT
+Suport complet de VoiceOver · Tipus dinàmic · Més de 40 idiomes

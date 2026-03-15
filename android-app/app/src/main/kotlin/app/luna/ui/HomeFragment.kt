@@ -1,3 +1,12 @@
+// ┌──────────────────────────────────────────────────────────────────────────────┐
+// │ Screen: HomeFragment (S03 — Dashboard content)                               │
+// │ Personas: P1 (Emma), P2 (Sarah), P4 (Nathalie)                              │
+// │ Features: F03 (Dashboard), F06 (Predictions)                                 │
+// │ CRUD: R                                                                      │
+// │ RBAC: owner (vault_open required)                                            │
+// │ User Stories: US03, US06                                                     │
+// │ Why: Cycle gauge, prediction, week strip, log CTA                            │
+// └──────────────────────────────────────────────────────────────────────────────┘
 package app.luna.ui
 
 import android.os.Bundle

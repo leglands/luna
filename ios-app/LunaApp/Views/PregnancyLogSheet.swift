@@ -1,3 +1,13 @@
+// ┌──────────────────────────────────────────────────────────────┐
+// │ Screen: PregnancyLogSheet (S09)                              │
+// │ Personas: P3 (Marie)                                         │
+// │ Features: F13 (Pregnancy Mode)                               │
+// │ CRUD: C, R, U                                                │
+// │ RBAC: owner (vault_open required)                            │
+// │ User Stories: US13                                           │
+// │ Why: Pregnancy-specific data — hCG, kicks, contractions, wt  │
+// └──────────────────────────────────────────────────────────────┘
+
 import SwiftUI
 
 // MARK: - PregnancyLogSheet

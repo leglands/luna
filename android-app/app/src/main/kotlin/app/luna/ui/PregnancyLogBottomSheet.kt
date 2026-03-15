@@ -1,3 +1,12 @@
+// ┌──────────────────────────────────────────────────────────────────────────────┐
+// │ Screen: PregnancyLogBottomSheet (S09)                                        │
+// │ Personas: P3 (Marie)                                                         │
+// │ Features: F13 (Pregnancy Mode)                                               │
+// │ CRUD: C, R, U                                                                │
+// │ RBAC: owner (vault_open required)                                            │
+// │ User Stories: US13                                                           │
+// │ Why: Pregnancy log — hCG, kicks, nausea, weight                              │
+// └──────────────────────────────────────────────────────────────────────────────┘
 package app.luna.ui
 
 import android.os.Bundle

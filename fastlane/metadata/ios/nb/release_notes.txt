@@ -1,0 +1,5 @@
+• Segmentert syklusring med fasefargekoding
+• 40+ språkstøtte med full i18n
+• Sterkere personverngarantier håndhevet på OS-nivå
+• AES-256-GCM kryptert lokal lagring
+• Forbedret tilgjengelighet (VoiceOver, Dynamic Type)

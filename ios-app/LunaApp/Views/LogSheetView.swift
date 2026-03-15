@@ -1,4 +1,20 @@
+// ┌──────────────────────────────────────────────────────────────┐
+// │ Screen: LogSheetView (S04)                                   │
+// │ Personas: P1 (Emma), P2 (Sarah)                             │
+// │ Features: F04 (Log Day)                                      │
+// │ CRUD: C, R, U                                                │
+// │ RBAC: owner (vault_open required)                            │
+// │ User Stories: US04                                           │
+// │ Why: Daily health data entry — mood, flow, symptoms, BBT     │
+// └──────────────────────────────────────────────────────────────┘
+
 import SwiftUI
+
+// ┌─────────────────────────────────────────────────────────┐
+// │ Screen: LogSheetView · Personas: P1,P2 · Features: F04
+// │ CRUD: Create,Read,Update · RBAC: owner (vault_open)
+// │ Stories: US04 · Why: Daily log — mood, flow, symptoms, BBT
+// └─────────────────────────────────────────────────────────┘
 
 struct LogSheetView: View {
     let date: Date
@@ -131,6 +147,7 @@ struct LogSheetView: View {
                     }
                     .disabled(isSaving)
                     .bold()
+                    .accessibilityIdentifier("log_save_button")
                 }
             }
         }
@@ -231,6 +248,7 @@ struct MoodPicker: View {
                         .frame(width: 44, height: 44)
                     }
                     .accessibilityLabel(Text(LocalizedStringKey(keys[value - 1])))
+                    .accessibilityIdentifier("mood_\(value)")
                     .accessibilityAddTraits(selection == value ? .isSelected : [])
                     .accessibilityHint(
                         Text(selection == value ? "tap_to_deselect_a11y" : "tap_to_select_a11y")
@@ -320,6 +338,7 @@ struct FlowPicker: View {
                             .foregroundStyle(selection == opt ? .white : .primary)
                     }
                     .frame(minHeight: 44)
+                    .accessibilityIdentifier("flow_\(opt)")
                     .accessibilityAddTraits(selection == opt ? .isSelected : [])
                 }
             }

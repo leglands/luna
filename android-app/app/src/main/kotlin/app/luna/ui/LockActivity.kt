@@ -1,3 +1,12 @@
+// ┌──────────────────────────────────────────────────────────────────────────────┐
+// │ Screen: LockActivity (S02)                                                   │
+// │ Personas: P1 (Emma), P5 (Aïcha)                                             │
+// │ Features: F02 (Lock / Unlock)                                                │
+// │ CRUD: R                                                                      │
+// │ RBAC: none (vault locked)                                                    │
+// │ User Stories: US02                                                           │
+// │ Why: PIN entry + optional biometric to unlock vault                          │
+// └──────────────────────────────────────────────────────────────────────────────┘
 package app.luna.ui
 
 import android.content.Context

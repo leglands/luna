@@ -1,3 +1,12 @@
+// ┌──────────────────────────────────────────────────────────────────────────────┐
+// │ Screen: CycleChartView (Custom View)                                         │
+// │ Personas: P1 (Emma), P2 (Sarah), P4 (Nathalie)                              │
+// │ Features: F07 (Insights), F14 (Perimenopause)                                │
+// │ CRUD: R                                                                      │
+// │ RBAC: owner (vault_open required)                                            │
+// │ User Stories: US07, US14                                                     │
+// │ Why: Canvas charts — cycle length bars, BBT line, weight trend               │
+// └──────────────────────────────────────────────────────────────────────────────┘
 package app.luna.ui
 
 import android.content.Context

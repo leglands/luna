@@ -1,3 +1,12 @@
+// ┌──────────────────────────────────────────────────────────────────────────────┐
+// │ Screen: PerimenopauseFragment (S10)                                          │
+// │ Personas: P4 (Nathalie)                                                      │
+// │ Features: F14 (Perimenopause Mode)                                           │
+// │ CRUD: R                                                                      │
+// │ RBAC: owner (vault_open required)                                            │
+// │ User Stories: US14                                                           │
+// │ Why: Perimenopause dashboard — cycle variability, symptom tracking           │
+// └──────────────────────────────────────────────────────────────────────────────┘
 package app.luna.ui
 
 import android.os.Bundle

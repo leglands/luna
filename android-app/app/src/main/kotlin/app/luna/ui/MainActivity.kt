@@ -1,3 +1,12 @@
+// ┌──────────────────────────────────────────────────────────────────────────────┐
+// │ Screen: MainActivity (S03 — Home container)                                  │
+// │ Personas: P1 (Emma), P2 (Sarah), P4 (Nathalie)                              │
+// │ Features: F03 (Dashboard), F05 (Calendar), F07 (Insights)                    │
+// │ CRUD: R                                                                      │
+// │ RBAC: owner (vault_open required)                                            │
+// │ User Stories: US03, US05, US07                                               │
+// │ Why: Main container with bottom navigation (Home/Calendar/Insights/Settings) │
+// └──────────────────────────────────────────────────────────────────────────────┘
 package app.luna.ui
 
 import android.os.Bundle

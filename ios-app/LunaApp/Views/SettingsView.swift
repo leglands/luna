@@ -1,6 +1,22 @@
+// ┌──────────────────────────────────────────────────────────────┐
+// │ Screen: SettingsView (S07)                                   │
+// │ Personas: P1 (Emma), P5 (Aïcha), P6 (Sophie)               │
+// │ Features: F08, F09, F10, F11, F15, F16                      │
+// │ CRUD: R, U, D                                                │
+// │ RBAC: owner (vault_open required)                            │
+// │ User Stories: US08, US09, US10, US11, US15, US16            │
+// │ Why: Configuration, security actions, data export, calm mode │
+// └──────────────────────────────────────────────────────────────┘
+
 import SwiftUI
 import LocalAuthentication
 import UIKit
+
+// ┌──────────────────────────────────────────────────────────────┐
+// │ Screen: SettingsView · Personas: P1,P5,P6 · Features: F08-F11,F16
+// │ CRUD: Read,Update,Delete · RBAC: owner (vault_open)
+// │ Stories: US08-US11,US16 · Why: Profile, privacy, notifications, export
+// └──────────────────────────────────────────────────────────────┘
 
 // MARK: - SettingsView
 
@@ -41,7 +57,17 @@ struct SettingsView: View {
                     Toggle(isOn: $lockEnabled) {
                         Label("settings_lock_label", systemImage: "faceid")
                     }
+                    .accessibilityIdentifier("settings_lock_toggle")
                     .onChange(of: lockEnabled) { new in
+                        if new {
+                            // Verify device auth is available before enabling
+                            let ctx = LAContext()
+                            var error: NSError?
+                            if !ctx.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
+                                lockEnabled = false
+                                return
+                            }
+                        }
                         appState.lockEnabled = new
                     }
 
@@ -72,6 +98,7 @@ struct SettingsView: View {
                     } label: {
                         Label("settings_delete_all_label", systemImage: "trash")
                     }
+                    .accessibilityIdentifier("panic_wipe_button")
                     .accessibilityLabel(Text("settings_delete_all_a11y"))
                     .accessibilityHint(Text("settings_delete_all_hint_a11y"))
                 } header: {

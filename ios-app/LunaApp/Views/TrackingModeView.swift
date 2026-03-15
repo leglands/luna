@@ -1,3 +1,13 @@
+// ┌──────────────────────────────────────────────────────────────┐
+// │ Screen: TrackingModeView (S08)                               │
+// │ Personas: P2 (Sarah), P3 (Marie), P4 (Nathalie)            │
+// │ Features: F12 (TTC), F13 (Pregnancy), F14 (Perimenopause)  │
+// │ CRUD: R, U                                                   │
+// │ RBAC: owner (vault_open required)                            │
+// │ User Stories: US12, US13, US14                               │
+// │ Why: Switch tracking mode — Regular, TTC, Pregnant, Perimeno │
+// └──────────────────────────────────────────────────────────────┘
+
 import SwiftUI
 
 // MARK: - TrackingMode extension (generated enum helper)

@@ -1,3 +1,12 @@
+// ┌──────────────────────────────────────────────────────────────────────────────┐
+// │ Screen: OnboardingActivity (S01)                                             │
+// │ Personas: P1 (Emma), P5 (Aïcha)                                             │
+// │ Features: F01 (Onboarding / Vault Creation)                                  │
+// │ CRUD: C                                                                      │
+// │ RBAC: none (vault does not exist yet)                                        │
+// │ User Stories: US01                                                           │
+// │ Why: First-run 5-step setup — name, period, profile, goals, PIN              │
+// └──────────────────────────────────────────────────────────────────────────────┘
 package app.luna.ui
 
 import android.content.Context

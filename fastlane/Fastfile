@@ -33,16 +33,12 @@ platform :ios do
       export_options: {
         method: "app-store",
         teamID: "P36X572LL9",
-        signingStyle: "manual",
-        signingCertificate: "Apple Distribution",
-        provisioningProfiles: {
-          "com.macaron.luna" => "LUNA App Store Distribution"
-        }
+        signingStyle: "automatic"
       },
       output_directory: "/tmp/fastlane_build",
       output_name: "LUNA.ipa",
       clean: false,
-      xcargs: "IPHONEOS_DEPLOYMENT_TARGET=16.0 CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM=P36X572LL9 CODE_SIGN_IDENTITY='Apple Distribution' PROVISIONING_PROFILE_SPECIFIER='LUNA App Store Distribution'"
+      xcargs: "IPHONEOS_DEPLOYMENT_TARGET=16.0 DEVELOPMENT_TEAM=P36X572LL9"
     )
     UI.success "IPA exported to /tmp/fastlane_build/LUNA.ipa"
   end
@@ -75,6 +71,7 @@ platform :ios do
       screenshots_path: "./fastlane/screenshots/ios",
       precheck_include_in_app_purchases: false,
       ignore_language_directory_validation: true,
+      overwrite_screenshots: true,
       privacy_url: {
         'default' => 'https://privacy.macaron-software.com/luna'
       },

@@ -1,4 +1,20 @@
+// ┌──────────────────────────────────────────────────────────────┐
+// │ Screen: HomeView (S03)                                       │
+// │ Personas: P1 (Emma), P2 (Sarah), P4 (Nathalie)             │
+// │ Features: F03 (Dashboard), F06 (Predictions)                │
+// │ CRUD: R                                                      │
+// │ RBAC: owner (vault_open required)                            │
+// │ User Stories: US03, US06                                     │
+// │ Why: Cycle dashboard — day count, prediction, week strip, CTA│
+// └──────────────────────────────────────────────────────────────┘
+
 import SwiftUI
+
+// ┌─────────────────────────────────────────────────────────┐
+// │ Screen: HomeView · Personas: P1,P2,P4 · Features: F03,F06
+// │ CRUD: Read · RBAC: owner (vault_open) · Stories: US03,US06
+// │ Why: Central dashboard — cycle day, prediction, week strip
+// └─────────────────────────────────────────────────────────┘
 
 struct HomeView: View {
     @EnvironmentObject var appState: AppState
@@ -332,6 +348,7 @@ struct LogButton: View {
             .background(Color("AccentPrimary"), in: Capsule())
             .foregroundStyle(.white)
         }
+        .accessibilityIdentifier("log_today_button")
         .accessibilityLabel(Text("log_today_a11y"))
         .accessibilityHint(Text("log_today_hint_a11y"))
     }

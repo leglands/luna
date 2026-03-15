@@ -1,0 +1,4 @@
+• Anello ciclo segmentato con codice colore
+• Supporto per 40+ lingue
+• Garanzie di privacy migliorate
+• Archiviazione crittografata AES-256-GCM

@@ -1,3 +1,12 @@
+// ┌──────────────────────────────────────────────────────────────────────────────┐
+// │ Screen: LogBottomSheet (S04)                                                 │
+// │ Personas: P1 (Emma), P2 (Sarah)                                              │
+// │ Features: F04 (Log Day)                                                      │
+// │ CRUD: C, R, U                                                                │
+// │ RBAC: owner (vault_open required)                                            │
+// │ User Stories: US04                                                           │
+// │ Why: Daily log — mood, flow, symptoms, BBT, notes                            │
+// └──────────────────────────────────────────────────────────────────────────────┘
 package app.luna.ui
 
 import android.os.Bundle

@@ -1,3 +1,12 @@
+// ┌──────────────────────────────────────────────────────────────────────────────┐
+// │ Screen: CalendarFragment (S05)                                               │
+// │ Personas: P1 (Emma), P2 (Sarah)                                              │
+// │ Features: F05 (Calendar View)                                                │
+// │ CRUD: R                                                                      │
+// │ RBAC: owner (vault_open required)                                            │
+// │ User Stories: US05                                                           │
+// │ Why: Monthly calendar grid with phase coloring                               │
+// └──────────────────────────────────────────────────────────────────────────────┘
 package app.luna.ui
 
 import android.os.Bundle

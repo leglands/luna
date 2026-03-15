@@ -58,7 +58,7 @@ fileprivate extension Data {
     }
 }
 
-// Define reader functionality. Normally this would be defined in a class or
+// Define reader functionality.  Normally this would be defined in a class or
 // struct, but we use standalone functions instead in order to make external
 // types work.
 //
@@ -66,9 +66,9 @@ fileprivate extension Data {
 // method on another source file's FfiConverter, but then what visibility
 // should Reader have?
 // - If Reader is fileprivate, then this means the read() must also
-// be fileprivate, which doesn't work with external types.
+//   be fileprivate, which doesn't work with external types.
 // - If Reader is internal/public, we'll get compile errors since both source
-// files will try define the same type.
+//   files will try define the same type.
 //
 // Instead, the read() method and these helper functions input a tuple of data
 
@@ -125,9 +125,9 @@ fileprivate func hasRemaining(_ reader: (data: Data, offset: Data.Index)) -> Boo
     return reader.offset < reader.data.count
 }
 
-// Define writer functionality. Normally this would be defined in a class or
+// Define writer functionality.  Normally this would be defined in a class or
 // struct, but we use standalone functions instead in order to make external
-// types work. See the above discussion on Readers for details.
+// types work.  See the above discussion on Readers for details.
 
 fileprivate func createWriter() -> [UInt8] {
     return []
@@ -306,7 +306,7 @@ private func uniffiCheckCallStatus<E: Swift.Error>(
 
         case CALL_UNEXPECTED_ERROR:
             // When the rust code sees a panic, it tries to construct a RustBuffer
-            // with the message. But if that code panics, then it just sends back
+            // with the message.  But if that code panics, then it just sends back
             // an empty buffer.
             if callStatus.errorBuf.len > 0 {
                 throw UniffiInternalError.rustPanic(try FfiConverterString.lift(callStatus.errorBuf))
@@ -539,7 +539,7 @@ fileprivate struct FfiConverterData: FfiConverterRustBuffer {
 public protocol LunaEngineProtocol : AnyObject {
     
     /**
-     * Change le PIN — re-dérive la clé et re-chiffre la DB.
+     * Change le PIN — re-dérive la clé et re-chiffre la DB via PRAGMA rekey.
      */
     func changePin(oldPin: String, newPin: String) throws 
     
@@ -551,45 +551,54 @@ public protocol LunaEngineProtocol : AnyObject {
     /**
      * Export chiffré pour la sync iCloud/Drive.
      *
-     * Retourne un blob opaque : JSON de toutes les données, chiffré AES-256-GCM
-     * avec la clé sync (dérivée distinctement de la clé DB).
+     * Format: salt (16 bytes) || nonce+ciphertext (AES-256-GCM)
+     * Le salt est inclus pour permettre la restauration sur un autre vault.
      */
-    func exportEncryptedBackup(pin: String) throws -> Data
+    func exportEncryptedBackup(pin: String) throws  -> Data
     
     /**
      * Exporte les logs d'une plage de dates en CSV RFC 4180.
      */
-    func exportLogsCsv(from: String, to: String) throws -> String
+    func exportLogsCsv(from: String, to: String) throws  -> String
     
     /**
      * Résumé statistique des cycles.
      */
-    func getCycleSummary() throws -> CycleSummary
+    func getCycleSummary() throws  -> CycleSummary
     
     /**
      * Récupère les N cycles les plus récents.
      */
-    func getCycles(limit: UInt32) throws -> [Cycle]
+    func getCycles(limit: UInt32) throws  -> [Cycle]
     
     /**
      * Récupère le log d'une date donnée (ISO-8601).
      */
-    func getLog(date: String) throws -> DailyLog?
+    func getLog(date: String) throws  -> DailyLog?
     
     /**
      * Récupère les logs d'une plage de dates.
      */
-    func getLogsRange(from: String, to: String) throws -> [DailyLog]
+    func getLogsRange(from: String, to: String) throws  -> [DailyLog]
     
     /**
      * Récupère le log de grossesse d'une date donnée.
      */
-    func getPregnancyLog(date: String) throws -> PregnancyLog?
+    func getPregnancyLog(date: String) throws  -> PregnancyLog?
     
     /**
      * Retourne le profil utilisateur (mode de suivi, contraception, etc.)
      */
-    func getUserProfile() throws -> UserProfile
+    func getUserProfile() throws  -> UserProfile
+    
+    /**
+     * Importe un backup chiffré produit par `export_encrypted_backup()`.
+     *
+     * Le blob contient : salt (16 bytes) || encrypted_data
+     * Déchiffre avec la clé sync dérivée du salt embarqué + PIN fourni,
+     * puis restaure cycles et logs dans le vault actuel (merge par date/id).
+     */
+    func importEncryptedBackup(backup: Data, pin: String) throws  -> UInt32
     
     /**
      * Enregistre ou met à jour le log du jour.
@@ -618,7 +627,7 @@ public protocol LunaEngineProtocol : AnyObject {
     /**
      * Calcule la prochaine prédiction de cycle.
      */
-    func predictNext() throws -> Prediction
+    func predictNext() throws  -> Prediction
     
     /**
      * Enregistre le profil utilisateur.
@@ -628,7 +637,7 @@ public protocol LunaEngineProtocol : AnyObject {
     /**
      * Démarre un nouveau cycle à la date donnée.
      */
-    func startCycle(startDate: String) throws -> Cycle
+    func startCycle(startDate: String) throws  -> Cycle
     
 }
 
@@ -661,7 +670,7 @@ open class LunaEngine:
     // - Parameter noPointer: Placeholder value so we can have a constructor separate from the default empty one that may be implemented for classes extending [FFIObject].
     //
     // - Warning:
-    // Any object instantiated with this constructor cannot be passed to an actual Rust-backed object. Since there isn't a backing [Pointer] the FFI lower functions will crash.
+    //     Any object instantiated with this constructor cannot be passed to an actual Rust-backed object. Since there isn't a backing [Pointer] the FFI lower functions will crash.
 #if swift(>=5.8)
     @_documentation(visibility: private)
 #endif
@@ -694,8 +703,8 @@ open class LunaEngine:
      *
      * Retourne `LunaError::WrongPin` si le PIN est incorrect.
      */
-public static func openVault(dbPath: String, pin: String)throws -> LunaEngine {
-    return try FfiConverterTypeLunaEngine.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
+public static func openVault(dbPath: String, pin: String)throws  -> LunaEngine {
+    return try  FfiConverterTypeLunaEngine.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
     uniffi_luna_core_fn_constructor_lunaengine_open_vault(
         FfiConverterString.lower(dbPath),
         FfiConverterString.lower(pin),$0
@@ -706,9 +715,9 @@ public static func openVault(dbPath: String, pin: String)throws -> LunaEngine {
 
     
     /**
-     * Change le PIN — re-dérive la clé et re-chiffre la DB.
+     * Change le PIN — re-dérive la clé et re-chiffre la DB via PRAGMA rekey.
      */
-open func changePin(oldPin: String, newPin: String)throws {try rustCallWithError(FfiConverterTypeLunaError.lift) {
+open func changePin(oldPin: String, newPin: String)throws  {try rustCallWithError(FfiConverterTypeLunaError.lift) {
     uniffi_luna_core_fn_method_lunaengine_change_pin(self.uniffiClonePointer(),
         FfiConverterString.lower(oldPin),
         FfiConverterString.lower(newPin),$0
@@ -719,7 +728,7 @@ open func changePin(oldPin: String, newPin: String)throws {try rustCallWithError
     /**
      * Clôture le cycle en cours avec une date de fin.
      */
-open func endCycle(cycleId: String, endDate: String)throws {try rustCallWithError(FfiConverterTypeLunaError.lift) {
+open func endCycle(cycleId: String, endDate: String)throws  {try rustCallWithError(FfiConverterTypeLunaError.lift) {
     uniffi_luna_core_fn_method_lunaengine_end_cycle(self.uniffiClonePointer(),
         FfiConverterString.lower(cycleId),
         FfiConverterString.lower(endDate),$0
@@ -730,11 +739,11 @@ open func endCycle(cycleId: String, endDate: String)throws {try rustCallWithErro
     /**
      * Export chiffré pour la sync iCloud/Drive.
      *
-     * Retourne un blob opaque : JSON de toutes les données, chiffré AES-256-GCM
-     * avec la clé sync (dérivée distinctement de la clé DB).
+     * Format: salt (16 bytes) || nonce+ciphertext (AES-256-GCM)
+     * Le salt est inclus pour permettre la restauration sur un autre vault.
      */
-open func exportEncryptedBackup(pin: String)throws -> Data {
-    return try FfiConverterData.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
+open func exportEncryptedBackup(pin: String)throws  -> Data {
+    return try  FfiConverterData.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
     uniffi_luna_core_fn_method_lunaengine_export_encrypted_backup(self.uniffiClonePointer(),
         FfiConverterString.lower(pin),$0
     )
@@ -744,8 +753,8 @@ open func exportEncryptedBackup(pin: String)throws -> Data {
     /**
      * Exporte les logs d'une plage de dates en CSV RFC 4180.
      */
-open func exportLogsCsv(from: String, to: String)throws -> String {
-    return try FfiConverterString.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
+open func exportLogsCsv(from: String, to: String)throws  -> String {
+    return try  FfiConverterString.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
     uniffi_luna_core_fn_method_lunaengine_export_logs_csv(self.uniffiClonePointer(),
         FfiConverterString.lower(from),
         FfiConverterString.lower(to),$0
@@ -756,8 +765,8 @@ open func exportLogsCsv(from: String, to: String)throws -> String {
     /**
      * Résumé statistique des cycles.
      */
-open func getCycleSummary()throws -> CycleSummary {
-    return try FfiConverterTypeCycleSummary.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
+open func getCycleSummary()throws  -> CycleSummary {
+    return try  FfiConverterTypeCycleSummary.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
     uniffi_luna_core_fn_method_lunaengine_get_cycle_summary(self.uniffiClonePointer(),$0
     )
 })
@@ -766,8 +775,8 @@ open func getCycleSummary()throws -> CycleSummary {
     /**
      * Récupère les N cycles les plus récents.
      */
-open func getCycles(limit: UInt32)throws -> [Cycle] {
-    return try FfiConverterSequenceTypeCycle.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
+open func getCycles(limit: UInt32)throws  -> [Cycle] {
+    return try  FfiConverterSequenceTypeCycle.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
     uniffi_luna_core_fn_method_lunaengine_get_cycles(self.uniffiClonePointer(),
         FfiConverterUInt32.lower(limit),$0
     )
@@ -777,8 +786,8 @@ open func getCycles(limit: UInt32)throws -> [Cycle] {
     /**
      * Récupère le log d'une date donnée (ISO-8601).
      */
-open func getLog(date: String)throws -> DailyLog? {
-    return try FfiConverterOptionTypeDailyLog.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
+open func getLog(date: String)throws  -> DailyLog? {
+    return try  FfiConverterOptionTypeDailyLog.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
     uniffi_luna_core_fn_method_lunaengine_get_log(self.uniffiClonePointer(),
         FfiConverterString.lower(date),$0
     )
@@ -788,8 +797,8 @@ open func getLog(date: String)throws -> DailyLog? {
     /**
      * Récupère les logs d'une plage de dates.
      */
-open func getLogsRange(from: String, to: String)throws -> [DailyLog] {
-    return try FfiConverterSequenceTypeDailyLog.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
+open func getLogsRange(from: String, to: String)throws  -> [DailyLog] {
+    return try  FfiConverterSequenceTypeDailyLog.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
     uniffi_luna_core_fn_method_lunaengine_get_logs_range(self.uniffiClonePointer(),
         FfiConverterString.lower(from),
         FfiConverterString.lower(to),$0
@@ -800,8 +809,8 @@ open func getLogsRange(from: String, to: String)throws -> [DailyLog] {
     /**
      * Récupère le log de grossesse d'une date donnée.
      */
-open func getPregnancyLog(date: String)throws -> PregnancyLog? {
-    return try FfiConverterOptionTypePregnancyLog.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
+open func getPregnancyLog(date: String)throws  -> PregnancyLog? {
+    return try  FfiConverterOptionTypePregnancyLog.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
     uniffi_luna_core_fn_method_lunaengine_get_pregnancy_log(self.uniffiClonePointer(),
         FfiConverterString.lower(date),$0
     )
@@ -811,9 +820,25 @@ open func getPregnancyLog(date: String)throws -> PregnancyLog? {
     /**
      * Retourne le profil utilisateur (mode de suivi, contraception, etc.)
      */
-open func getUserProfile()throws -> UserProfile {
-    return try FfiConverterTypeUserProfile.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
+open func getUserProfile()throws  -> UserProfile {
+    return try  FfiConverterTypeUserProfile.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
     uniffi_luna_core_fn_method_lunaengine_get_user_profile(self.uniffiClonePointer(),$0
+    )
+})
+}
+    
+    /**
+     * Importe un backup chiffré produit par `export_encrypted_backup()`.
+     *
+     * Le blob contient : salt (16 bytes) || encrypted_data
+     * Déchiffre avec la clé sync dérivée du salt embarqué + PIN fourni,
+     * puis restaure cycles et logs dans le vault actuel (merge par date/id).
+     */
+open func importEncryptedBackup(backup: Data, pin: String)throws  -> UInt32 {
+    return try  FfiConverterUInt32.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
+    uniffi_luna_core_fn_method_lunaengine_import_encrypted_backup(self.uniffiClonePointer(),
+        FfiConverterData.lower(backup),
+        FfiConverterString.lower(pin),$0
     )
 })
 }
@@ -821,7 +846,7 @@ open func getUserProfile()throws -> UserProfile {
     /**
      * Enregistre ou met à jour le log du jour.
      */
-open func logDay(log: DailyLog)throws {try rustCallWithError(FfiConverterTypeLunaError.lift) {
+open func logDay(log: DailyLog)throws  {try rustCallWithError(FfiConverterTypeLunaError.lift) {
     uniffi_luna_core_fn_method_lunaengine_log_day(self.uniffiClonePointer(),
         FfiConverterTypeDailyLog.lower(log),$0
     )
@@ -831,7 +856,7 @@ open func logDay(log: DailyLog)throws {try rustCallWithError(FfiConverterTypeLun
     /**
      * Enregistre un log de grossesse pour une date donnée.
      */
-open func logPregnancyDay(log: PregnancyLog)throws {try rustCallWithError(FfiConverterTypeLunaError.lift) {
+open func logPregnancyDay(log: PregnancyLog)throws  {try rustCallWithError(FfiConverterTypeLunaError.lift) {
     uniffi_luna_core_fn_method_lunaengine_log_pregnancy_day(self.uniffiClonePointer(),
         FfiConverterTypePregnancyLog.lower(log),$0
     )
@@ -850,7 +875,7 @@ open func logPregnancyDay(log: PregnancyLog)throws {try rustCallWithError(FfiCon
      * - Les records CloudKit / Drive
      * - La clé dans le Keychain / KeyStore
      */
-open func panicWipe()throws {try rustCallWithError(FfiConverterTypeLunaError.lift) {
+open func panicWipe()throws  {try rustCallWithError(FfiConverterTypeLunaError.lift) {
     uniffi_luna_core_fn_method_lunaengine_panic_wipe(self.uniffiClonePointer(),$0
     )
 }
@@ -859,8 +884,8 @@ open func panicWipe()throws {try rustCallWithError(FfiConverterTypeLunaError.lif
     /**
      * Calcule la prochaine prédiction de cycle.
      */
-open func predictNext()throws -> Prediction {
-    return try FfiConverterTypePrediction.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
+open func predictNext()throws  -> Prediction {
+    return try  FfiConverterTypePrediction.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
     uniffi_luna_core_fn_method_lunaengine_predict_next(self.uniffiClonePointer(),$0
     )
 })
@@ -869,7 +894,7 @@ open func predictNext()throws -> Prediction {
     /**
      * Enregistre le profil utilisateur.
      */
-open func setUserProfile(profile: UserProfile)throws {try rustCallWithError(FfiConverterTypeLunaError.lift) {
+open func setUserProfile(profile: UserProfile)throws  {try rustCallWithError(FfiConverterTypeLunaError.lift) {
     uniffi_luna_core_fn_method_lunaengine_set_user_profile(self.uniffiClonePointer(),
         FfiConverterTypeUserProfile.lower(profile),$0
     )
@@ -879,8 +904,8 @@ open func setUserProfile(profile: UserProfile)throws {try rustCallWithError(FfiC
     /**
      * Démarre un nouveau cycle à la date donnée.
      */
-open func startCycle(startDate: String)throws -> Cycle {
-    return try FfiConverterTypeCycle.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
+open func startCycle(startDate: String)throws  -> Cycle {
+    return try  FfiConverterTypeCycle.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
     uniffi_luna_core_fn_method_lunaengine_start_cycle(self.uniffiClonePointer(),
         FfiConverterString.lower(startDate),$0
     )
@@ -2393,7 +2418,7 @@ fileprivate struct FfiConverterSequenceTypeDailyLog: FfiConverterRustBuffer {
  * Vérifie si un vault existe au chemin donné.
  */
 public func vaultExists(dbPath: String) -> Bool {
-    return try! FfiConverterBool.lift(try! rustCall() {
+    return try!  FfiConverterBool.lift(try! rustCall() {
     uniffi_luna_core_fn_func_vault_exists(
         FfiConverterString.lower(dbPath),$0
     )
@@ -2418,13 +2443,13 @@ private var initializationResult: InitializationResult = {
     if (uniffi_luna_core_checksum_func_vault_exists() != 3131) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_luna_core_checksum_method_lunaengine_change_pin() != 23820) {
+    if (uniffi_luna_core_checksum_method_lunaengine_change_pin() != 37046) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_luna_core_checksum_method_lunaengine_end_cycle() != 55936) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_luna_core_checksum_method_lunaengine_export_encrypted_backup() != 109) {
+    if (uniffi_luna_core_checksum_method_lunaengine_export_encrypted_backup() != 53054) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_luna_core_checksum_method_lunaengine_export_logs_csv() != 44608) {
@@ -2448,13 +2473,16 @@ private var initializationResult: InitializationResult = {
     if (uniffi_luna_core_checksum_method_lunaengine_get_user_profile() != 11649) {
         return InitializationResult.apiChecksumMismatch
     }
+    if (uniffi_luna_core_checksum_method_lunaengine_import_encrypted_backup() != 36609) {
+        return InitializationResult.apiChecksumMismatch
+    }
     if (uniffi_luna_core_checksum_method_lunaengine_log_day() != 24369) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_luna_core_checksum_method_lunaengine_log_pregnancy_day() != 42471) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_luna_core_checksum_method_lunaengine_panic_wipe() != 42119) {
+    if (uniffi_luna_core_checksum_method_lunaengine_panic_wipe() != 29351) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_luna_core_checksum_method_lunaengine_predict_next() != 41985) {
@@ -2466,7 +2494,7 @@ private var initializationResult: InitializationResult = {
     if (uniffi_luna_core_checksum_method_lunaengine_start_cycle() != 41395) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_luna_core_checksum_constructor_lunaengine_open_vault() != 38596) {
+    if (uniffi_luna_core_checksum_constructor_lunaengine_open_vault() != 31386) {
         return InitializationResult.apiChecksumMismatch
     }
 

@@ -1,0 +1,5 @@
+• Anell de cicle segmentat amb codificació de color de fase
+• Suport de més de 40 idiomes amb i18n complet
+• Garanties de privadesa més sòlides a nivell del sistema operatiu
+• Emmagatzematge local xifrat AES-256-GCM
+• Accessibilitat millorada (VoiceOver, tipus dinàmic)

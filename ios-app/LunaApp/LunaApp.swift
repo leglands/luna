@@ -75,6 +75,16 @@ final class AppState: ObservableObject {
     }
 
     init() {
+        // Reset state for testing (must come before reading defaults)
+        if ProcessInfo.processInfo.arguments.contains("-ResetState") {
+            let domain = Bundle.main.bundleIdentifier ?? "com.macaron.luna"
+            UserDefaults.standard.removePersistentDomain(forName: domain)
+            UserDefaults.standard.synchronize()
+            KeychainService.shared.deletePin()
+            // Also remove vault database so fresh onboarding can create a new one
+            try? FileManager.default.removeItem(atPath: AppState.sharedDbPath)
+        }
+
         isOnboardingDone = defaults.bool(forKey: "onboarding_done")
         userName = defaults.string(forKey: "user_name")
         lockEnabled = defaults.bool(forKey: "lock_enabled")

@@ -316,6 +316,11 @@ RustBuffer uniffi_luna_core_fn_method_lunaengine_get_pregnancy_log(void*_Nonnull
 RustBuffer uniffi_luna_core_fn_method_lunaengine_get_user_profile(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
 );
 #endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_FN_METHOD_LUNAENGINE_IMPORT_ENCRYPTED_BACKUP
+#define UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_FN_METHOD_LUNAENGINE_IMPORT_ENCRYPTED_BACKUP
+uint32_t uniffi_luna_core_fn_method_lunaengine_import_encrypted_backup(void*_Nonnull ptr, RustBuffer backup, RustBuffer pin, RustCallStatus *_Nonnull out_status
+);
+#endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_FN_METHOD_LUNAENGINE_LOG_DAY
 #define UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_FN_METHOD_LUNAENGINE_LOG_DAY
 void uniffi_luna_core_fn_method_lunaengine_log_day(void*_Nonnull ptr, RustBuffer log, RustCallStatus *_Nonnull out_status
@@ -694,6 +699,12 @@ uint16_t uniffi_luna_core_checksum_method_lunaengine_get_pregnancy_log(void
 #ifndef UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_CHECKSUM_METHOD_LUNAENGINE_GET_USER_PROFILE
 #define UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_CHECKSUM_METHOD_LUNAENGINE_GET_USER_PROFILE
 uint16_t uniffi_luna_core_checksum_method_lunaengine_get_user_profile(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_CHECKSUM_METHOD_LUNAENGINE_IMPORT_ENCRYPTED_BACKUP
+#define UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_CHECKSUM_METHOD_LUNAENGINE_IMPORT_ENCRYPTED_BACKUP
+uint16_t uniffi_luna_core_checksum_method_lunaengine_import_encrypted_backup(void
     
 );
 #endif

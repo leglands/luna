@@ -5,17 +5,27 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000462">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000214">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: app_store_connect_api_key" time="0.002513">
+      <testcase classname="fastlane.lanes" name="1: Switch to ios build_rust lane" time="6.3e-05">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: deliver" time="359.550726">
+      <testcase classname="fastlane.lanes" name="2: cd /Users/sylvain/_MACARON-SOFTWARE/_FLO &amp;&amp; IPHONEOS_DEPLOYMENT_TARGET=16.0 cargo build --target aarch64-apple-ios --release -p luna-core" time="5.917935">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="3: cp /Users/sylvain/_MACARON-SOFTWARE/_FLO/target/aarch64-apple-ios/release/libluna_core.a /Users/sylvain/_MACARON-SOFTWARE/_FLO/ios-app/LunaApp/Generated/libluna_core.a" time="0.05401">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="4: gym" time="22.138156">
         
       </testcase>
     

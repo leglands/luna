@@ -1,5 +1,21 @@
+// ┌──────────────────────────────────────────────────────────────┐
+// │ Screen: InsightsView (S06)                                   │
+// │ Personas: P1 (Emma), P2 (Sarah)                             │
+// │ Features: F07 (Insights / Statistics)                        │
+// │ CRUD: R                                                      │
+// │ RBAC: owner (vault_open required)                            │
+// │ User Stories: US07                                           │
+// │ Why: Cycle statistics — averages, regularity, symptom freq.  │
+// └──────────────────────────────────────────────────────────────┘
+
 import SwiftUI
 import Charts
+
+// ┌─────────────────────────────────────────────────────────┐
+// │ Screen: InsightsView · Personas: P1,P2 · Features: F07
+// │ CRUD: Read · RBAC: owner (vault_open)
+// │ Stories: US07 · Why: Cycle statistics, averages, trends
+// └─────────────────────────────────────────────────────────┘
 
 // MARK: - InsightsView
 

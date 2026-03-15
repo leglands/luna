@@ -1,3 +1,12 @@
+// ┌──────────────────────────────────────────────────────────────────────────────┐
+// │ Screen: InsightsFragment (S06)                                               │
+// │ Personas: P1 (Emma), P2 (Sarah)                                              │
+// │ Features: F07 (Insights / Statistics)                                        │
+// │ CRUD: R                                                                      │
+// │ RBAC: owner (vault_open required)                                            │
+// │ User Stories: US07                                                           │
+// │ Why: Cycle stats — avg length, avg period, regularity                        │
+// └──────────────────────────────────────────────────────────────────────────────┘
 package app.luna.ui
 
 import android.os.Bundle

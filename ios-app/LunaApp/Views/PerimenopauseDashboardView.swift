@@ -1,3 +1,13 @@
+// ┌──────────────────────────────────────────────────────────────┐
+// │ Screen: PerimenopauseDashboardView (S10)                     │
+// │ Personas: P4 (Nathalie)                                      │
+// │ Features: F14 (Perimenopause Mode)                           │
+// │ CRUD: R                                                      │
+// │ RBAC: owner (vault_open required)                            │
+// │ User Stories: US14                                           │
+// │ Why: Irregular cycle tracking — variability, perimeno symptoms│
+// └──────────────────────────────────────────────────────────────┘
+
 import SwiftUI
 
 // MARK: - Perimenopause Dashboard View
