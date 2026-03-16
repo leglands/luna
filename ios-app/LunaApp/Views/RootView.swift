@@ -51,6 +51,7 @@ struct RootView: View {
                 appState.engine = engine
                 appState.isVaultOpen = true
             }
+            await appState.refreshCycleData()
         } catch {
             await MainActor.run { autoUnlockFailed = true }
         }

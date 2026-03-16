@@ -129,6 +129,7 @@ struct LockView: View {
                         argument: NSLocalizedString("lock_unlocked_a11y", comment: "")
                     )
                 }
+                await appState.refreshCycleData()
             } catch {
                 await MainActor.run {
                     errorMessage = NSLocalizedString("lock_vault_error", comment: "")

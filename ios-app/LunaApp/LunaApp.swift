@@ -62,6 +62,10 @@ final class AppState: ObservableObject {
     // ── Stats (pour InsightsView) ──────────────────────────────────────────
     @Published var averageCycleLength: Double? = nil
     @Published var averagePeriodLength: Double? = nil
+    @Published var cycleLengthHistory: [(Int, Int)] = []   // (cycle#, days)
+    @Published var bbtHistory: [(String, Double)] = []     // (date, temp °C)
+    @Published var symptomFrequencies: [(String, Double)] = []  // (symptom, 0-1)
+    @Published var currentPhaseInsight: String? = nil       // dynamic insight key
 
     // ── Storage ────────────────────────────────────────────────────────────
     private let defaults = UserDefaults.standard
@@ -103,6 +107,7 @@ final class AppState: ObservableObject {
                 // Store PIN in Keychain so manual relaunch works too
                 KeychainService.shared.storePin("123456")
                 try? "OK: vault opened at \(dbPath)".write(to: debugFile, atomically: true, encoding: .utf8)
+                Task { await refreshCycleData() }
             } catch {
                 try? "FAIL: \(error) at \(dbPath)".write(to: debugFile, atomically: true, encoding: .utf8)
             }
@@ -125,8 +130,90 @@ final class AppState: ObservableObject {
     @MainActor
     func refreshCycleData() async {
         guard let engine else { return }
-        // TODO: appeler engine.listCycles() et construire cycleEvents + stats
-        // Implémentation complète en Phase 1 sprint 2
-        _ = engine
+
+        // ── Cycle summary stats ──────────────────────────────────────────
+        if let summary = try? engine.getCycleSummary() {
+            averageCycleLength = summary.averageCycleLength
+            averagePeriodLength = summary.averagePeriodLength
+        }
+
+        // ── Cycle length history (for bar chart) ─────────────────────────
+        if let cycles = try? engine.getCycles(limit: 12) {
+            var lengths: [(Int, Int)] = []
+            let sorted = cycles.sorted { $0.startDate < $1.startDate }
+            for (i, cycle) in sorted.enumerated() {
+                if let endStr = cycle.endDate,
+                   let start = Self.parseDate(cycle.startDate),
+                   let end = Self.parseDate(endStr) {
+                    let days = Calendar.current.dateComponents([.day], from: start, to: end).day ?? 28
+                    lengths.append((i + 1, max(days, 1)))
+                }
+            }
+            cycleLengthHistory = lengths
+        }
+
+        // ── BBT + Symptom data from recent logs ─────────────────────────
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+        let today = Date()
+        let from90 = Calendar.current.date(byAdding: .day, value: -90, to: today)!
+        let fromStr = fmt.string(from: from90)
+        let toStr = fmt.string(from: today)
+
+        if let logs = try? engine.getLogsRange(from: fromStr, to: toStr) {
+            // BBT: last 14 days with BBT data
+            var bbtPoints: [(String, Double)] = []
+            for log in logs {
+                if let bbt = log.bbt, bbt > 0 {
+                    // Short date label
+                    let label = String(log.date.suffix(5)) // "MM-DD"
+                    bbtPoints.append((label, bbt))
+                }
+            }
+            bbtHistory = Array(bbtPoints.suffix(14))
+
+            // Symptom frequencies: count each symptom across all logs
+            var counts: [String: Int] = [:]
+            let totalLogs = max(logs.count, 1)
+            for log in logs {
+                for symptom in log.symptoms {
+                    counts[symptom, default: 0] += 1
+                }
+            }
+            symptomFrequencies = counts
+                .map { ($0.key, Double($0.value) / Double(totalLogs)) }
+                .sorted { $0.1 > $1.1 }
+                .prefix(5)
+                .map { ($0.0, $0.1) }
+
+            // Calendar events
+            var events: [String: CycleEventType] = [:]
+            for log in logs {
+                if let flow = log.flow, ["light", "medium", "heavy", "spotting",
+                    "flow_light", "flow_medium", "flow_heavy"].contains(flow) {
+                    events[log.date] = .period
+                } else {
+                    events[log.date] = .logged
+                }
+            }
+            cycleEvents = events
+        }
+
+        // ── Phase-based insight ──────────────────────────────────────────
+        if let pred = try? engine.predictNext() {
+            switch pred.currentPhase {
+            case "menstrual": currentPhaseInsight = "insight_menstrual"
+            case "follicular": currentPhaseInsight = "insight_follicular"
+            case "ovulatory": currentPhaseInsight = "insight_ovulatory"
+            case "luteal": currentPhaseInsight = "insight_luteal"
+            default: currentPhaseInsight = nil
+            }
+        }
+    }
+
+    private static func parseDate(_ str: String) -> Date? {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+        return fmt.date(from: str)
     }
 }

@@ -147,22 +147,6 @@ struct TrendChartsSection: View {
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     @State private var animateCharts = false
 
-    // Sample data — à connecter à LunaEngine get_logs_range
-    private var cycleLengths: [(Int, Int)] {
-        // (cycle number, length in days) — derniers 6 cycles
-        [(1,28),(2,30),(3,27),(4,29),(5,28),(6,31)]
-    }
-
-    private var bbtData: [(String, Double)] {
-        // (date label, temp) — derniers 14 jours
-        let base = 36.5
-        let offsets: [Double] = [0.05, -0.08, 0.12, -0.03, 0.07, -0.10, 0.02,
-                                  0.28, 0.35, 0.22, 0.40, 0.31, 0.27, 0.38]
-        return (0..<14).map { i in
-            ("J\(i+1)", base + (i < 7 ? 0.0 : 0.3) + offsets[i])
-        }
-    }
-
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             Text("charts_section_title")
@@ -170,57 +154,61 @@ struct TrendChartsSection: View {
                 .accessibilityAddTraits(.isHeader)
 
             // Durées des cycles — graphique en barres
-            VStack(alignment: .leading, spacing: 8) {
-                Text("charts_cycle_lengths")
-                    .font(.subheadline.bold())
+            if !appState.cycleLengthHistory.isEmpty {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("charts_cycle_lengths")
+                        .font(.subheadline.bold())
 
-                Chart(cycleLengths, id: \.0) { cycle, length in
-                    BarMark(
-                        x: .value("charts_cycle_num", "C\(cycle)"),
-                        y: .value("charts_days", animateCharts ? length : 0)
-                    )
-                    .foregroundStyle(Color("AccentPrimary"))
-                    .cornerRadius(4)
-                }
-                .frame(height: 120)
-                .chartYAxis {
-                    AxisMarks(values: [21, 28, 35]) { _ in
-                        AxisValueLabel()
-                        AxisGridLine()
+                    Chart(appState.cycleLengthHistory, id: \.0) { cycle, length in
+                        BarMark(
+                            x: .value("charts_cycle_num", "C\(cycle)"),
+                            y: .value("charts_days", animateCharts ? length : 0)
+                        )
+                        .foregroundStyle(Color("AccentPrimary"))
+                        .cornerRadius(4)
                     }
+                    .frame(height: 120)
+                    .chartYAxis {
+                        AxisMarks(values: [21, 28, 35]) { _ in
+                            AxisValueLabel()
+                            AxisGridLine()
+                        }
+                    }
+                    .accessibilityLabel(Text("charts_cycle_lengths_a11y"))
                 }
-                .accessibilityLabel(Text("charts_cycle_lengths_a11y"))
+                .padding(16)
+                .background(Color("CardBackground"), in: RoundedRectangle(cornerRadius: 16))
             }
-            .padding(16)
-            .background(Color("CardBackground"), in: RoundedRectangle(cornerRadius: 16))
 
             // Température basale — courbe
-            VStack(alignment: .leading, spacing: 8) {
-                Text("charts_bbt_title")
-                    .font(.subheadline.bold())
+            if !appState.bbtHistory.isEmpty {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("charts_bbt_title")
+                        .font(.subheadline.bold())
 
-                Chart(bbtData, id: \.0) { date, temp in
-                    LineMark(
-                        x: .value("charts_day", date),
-                        y: .value("charts_temp_c", animateCharts ? temp : 36.5)
-                    )
-                    .foregroundStyle(Color("AccentAccent"))
-                    .interpolationMethod(.catmullRom)
+                    Chart(appState.bbtHistory, id: \.0) { date, temp in
+                        LineMark(
+                            x: .value("charts_day", date),
+                            y: .value("charts_temp_c", animateCharts ? temp : 36.5)
+                        )
+                        .foregroundStyle(Color("AccentAccent"))
+                        .interpolationMethod(.catmullRom)
 
-                    PointMark(
-                        x: .value("charts_day", date),
-                        y: .value("charts_temp_c", animateCharts ? temp : 36.5)
-                    )
-                    .foregroundStyle(Color("AccentAccent"))
-                    .symbolSize(animateCharts ? 20 : 0)
+                        PointMark(
+                            x: .value("charts_day", date),
+                            y: .value("charts_temp_c", animateCharts ? temp : 36.5)
+                        )
+                        .foregroundStyle(Color("AccentAccent"))
+                        .symbolSize(animateCharts ? 20 : 0)
+                    }
+                    .frame(height: 120)
+                    .chartYScale(domain: 36.0...37.5)
+                    .chartXAxis(.hidden)
+                    .accessibilityLabel(Text("charts_bbt_a11y"))
                 }
-                .frame(height: 120)
-                .chartYScale(domain: 36.0...37.5)
-                .chartXAxis(.hidden)
-                .accessibilityLabel(Text("charts_bbt_a11y"))
+                .padding(16)
+                .background(Color("CardBackground"), in: RoundedRectangle(cornerRadius: 16))
             }
-            .padding(16)
-            .background(Color("CardBackground"), in: RoundedRectangle(cornerRadius: 16))
         }
         .onAppear {
             guard !reduceMotion else {
@@ -237,39 +225,33 @@ struct TrendChartsSection: View {
 // MARK: - SymptomFrequencySection
 
 struct SymptomFrequencySection: View {
+    @EnvironmentObject var appState: AppState
     @Environment(\.accessibilityReduceMotion) var reduceMotion
     @State private var animateBars = false
 
-    // Données de démonstration — à connecter à LunaEngine
-    private let topSymptoms: [(String, Double)] = [
-        ("cramps", 0.85),
-        ("fatigue", 0.70),
-        ("bloating", 0.55),
-        ("headache", 0.40),
-        ("breast_tenderness", 0.35),
-    ]
-
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("symptoms_stats_title")
-                .font(.title3.bold())
-                .accessibilityAddTraits(.isHeader)
+        if !appState.symptomFrequencies.isEmpty {
+            VStack(alignment: .leading, spacing: 12) {
+                Text("symptoms_stats_title")
+                    .font(.title3.bold())
+                    .accessibilityAddTraits(.isHeader)
 
-            VStack(spacing: 8) {
-                ForEach(Array(topSymptoms.enumerated()), id: \.element.0) { index, item in
-                    SymptomFrequencyRow(symptom: item.0, frequency: item.1, animate: animateBars, delay: Double(index) * 0.08)
+                VStack(spacing: 8) {
+                    ForEach(Array(appState.symptomFrequencies.enumerated()), id: \.element.0) { index, item in
+                        SymptomFrequencyRow(symptom: item.0, frequency: item.1, animate: animateBars, delay: Double(index) * 0.08)
+                    }
                 }
+                .padding(16)
+                .background(Color("CardBackground"), in: RoundedRectangle(cornerRadius: 16))
             }
-            .padding(16)
-            .background(Color("CardBackground"), in: RoundedRectangle(cornerRadius: 16))
-        }
-        .onAppear {
-            guard !reduceMotion else {
-                animateBars = true
-                return
-            }
-            withAnimation(.easeOut(duration: 0.6).delay(0.2)) {
-                animateBars = true
+            .onAppear {
+                guard !reduceMotion else {
+                    animateBars = true
+                    return
+                }
+                withAnimation(.easeOut(duration: 0.6).delay(0.2)) {
+                    animateBars = true
+                }
             }
         }
     }
@@ -315,8 +297,12 @@ struct SymptomFrequencyRow: View {
 // MARK: - InsightCardView
 
 struct InsightCardView: View {
+    @EnvironmentObject var appState: AppState
     @State private var appeared = false
-    private let sampleInsight = "insight_sample_luteal_cramps"
+
+    private var insightKey: String {
+        appState.currentPhaseInsight ?? "insight_no_data"
+    }
 
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
@@ -328,7 +314,7 @@ struct InsightCardView: View {
             VStack(alignment: .leading, spacing: 6) {
                 Text("insight_title")
                     .font(.subheadline.bold())
-                Text(LocalizedStringKey(sampleInsight))
+                Text(LocalizedStringKey(insightKey))
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }

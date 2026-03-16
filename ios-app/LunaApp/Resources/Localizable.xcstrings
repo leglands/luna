@@ -74645,6 +74645,1231 @@
           }
         }
       }
+    },
+    "insight_menstrual": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You may experience cramps and fatigue. Rest, stay hydrated, and be gentle with yourself."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous pourriez ressentir des crampes et de la fatigue. Reposez-vous et hydratez-vous."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Krämpfe und Müdigkeit sind normal. Ruhen Sie sich aus und trinken Sie viel."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puedes sentir calambres y fatiga. Descansa e hidrátate."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Potresti avere crampi e stanchezza. Riposati e mantieniti idratata."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cólicas e fadiga são normais. Descanse e beba bastante água."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "けいれんや疲労を感じるかもしれません。休息を取り、水分を摂りましょう。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "경련과 피로를 느낄 수 있어요. 쉬면서 수분을 섭취하세요."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你可能会感到痉挛和疲劳。多休息，多喝水。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你可能會感到痙攣和疲勞。多休息，多喝水。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قد تشعرين بتقلصات وإرهاق. ارتاحي واشربي الماء."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ייתכן שתחושי כאבים ועייפות. נוחי ושתי מים."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Возможны спазмы и усталость. Отдыхайте и пейте воду."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Можливі спазми та втома. Відпочивайте та пийте воду."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Możesz odczuwać skurcze i zmęczenie. Odpoczywaj i pij dużo wody."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je kunt krampen en vermoeidheid ervaren. Rust uit en drink voldoende."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du kan uppleva kramper och trötthet. Vila och drick mycket vatten."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du kan opleve kramper og træthed. Hvil dig og drik vand."
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du kan oppleve kramper og tretthet. Hvil deg og drikk vann."
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saatat kokea kramppeja ja väsymystä. Lepää ja juo vettä."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kramplar ve yorgunluk hissedebilirsiniz. Dinlenin ve bol su için."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Μπορεί να νιώσετε κράμπες και κούραση. Ξεκουραστείτε και πίνετε νερό."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Můžete pociťovat křeče a únavu. Odpočívejte a pijte vodu."
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Môžete pociťovať kŕče a únavu. Odpočívajte a pite vodu."
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Görcsöket és fáradtságot tapasztalhat. Pihenjen és igyon vizet."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puteți avea crampe și oboseală. Odihniți-vă și beți apă."
+          }
+        },
+        "bg": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Може да изпитвате спазми и умора. Почивайте и пийте вода."
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Možete osjetiti grčeve i umor. Odmorite se i pijte vodu."
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pots sentir rampes i fatiga. Descansa i hidrata't."
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anda mungkin mengalami kekejangan dan keletihan. Rehat dan minum air."
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anda mungkin mengalami kram dan kelelahan. Istirahat dan minum air."
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "คุณอาจรู้สึกปวดท้องและเหนื่อย พักผ่อนและดื่มน้ำมากๆ"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bạn có thể bị chuột rút và mệt mỏi. Hãy nghỉ ngơi và uống nước."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपको ऐंठन और थकान हो सकती है। आराम करें और पानी पिएं।"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "আপনার খিঁচুনি ও ক্লান্তি হতে পারে। বিশ্রাম নিন ও পানি পান করুন।"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "தசைப்பிடிப்பு மற்றும் சோர்வு ஏற்படலாம். ஓய்வு எடுங்கள், நீர் அருந்துங்கள்."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ممکن است گرفتگی و خستگی داشته باشید. استراحت کنید و آب بنوشید."
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unaweza kupata maumivu na uchovu. Pumzika na kunywa maji."
+          }
+        },
+        "fil": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maaaring makaranas ka ng pulikat at pagod. Magpahinga at uminom ng tubig."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "آپ کو درد اور تھکاوٹ ہو سکتی ہے۔ آرام کریں اور پانی پئیں۔"
+          }
+        }
+      }
+    },
+    "insight_follicular": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Energy levels are rising. Great time for exercise, creativity, and social activities."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Votre énergie remonte. Bon moment pour le sport et les activités sociales."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ihre Energie steigt. Ideal für Sport und soziale Aktivitäten."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu energía está subiendo. Buen momento para ejercicio y socializar."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I livelli di energia stanno salendo. Ottimo momento per lo sport."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sua energia está subindo. Ótimo momento para exercícios e socializar."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "エネルギーが上がっています。運動や社交活動に最適な時期です。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "에너지가 높아지고 있어요. 운동과 사교 활동에 좋은 시기예요."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "精力正在恢复。适合运动和社交活动。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "精力正在恢復。適合運動和社交活動。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "مستويات الطاقة ترتفع. وقت مثالي للرياضة والنشاطات الاجتماعية."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "רמות האנרגיה עולות. זמן מצוין לפעילות גופנית וחברתית."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Уровень энергии растёт. Отлично для спорта и общения."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рівень енергії зростає. Чудово для спорту та спілкування."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poziom energii rośnie. Świetny czas na ćwiczenia i aktywności społeczne."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je energieniveau stijgt. Ideaal voor sport en sociale activiteiten."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Energinivåerna stiger. Bra tid för träning och sociala aktiviteter."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Energiniveauet stiger. Godt tidspunkt for motion og sociale aktiviteter."
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Energinivået stiger. Bra tid for trening og sosiale aktiviteter."
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Energiataso nousee. Hyvä aika liikunnalle ja sosiaalisille aktiviteeteille."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enerji seviyeniz yükseliyor. Egzersiz ve sosyal aktiviteler için harika bir zaman."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Τα επίπεδα ενέργειας αυξάνονται. Ιδανική στιγμή για γυμναστική."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hladina energie stoupá. Skvělý čas na cvičení a sociální aktivity."
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hladina energie stúpa. Skvelý čas na cvičenie a spoločenské aktivity."
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Az energiaszint emelkedik. Remek idő a testmozgásra és társas tevékenységekre."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nivelul de energie crește. Moment ideal pentru sport și socializare."
+          }
+        },
+        "bg": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нивото на енергия расте. Чудесно време за спорт и общуване."
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Razina energije raste. Sjajno vrijeme za vježbanje i druženje."
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Els nivells d'energia pugen. Bon moment per fer exercici i socialitzar."
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tahap tenaga meningkat. Masa yang baik untuk bersenam dan bersosial."
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tingkat energi meningkat. Waktu yang tepat untuk olahraga dan bersosialisasi."
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ระดับพลังงานกำลังเพิ่มขึ้น เหมาะสำหรับออกกำลังกายและกิจกรรมสังคม"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mức năng lượng đang tăng. Thời điểm tốt để tập thể dục và giao lưu."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ऊर्जा का स्तर बढ़ रहा है। व्यायाम और सामाजिक गतिविधियों के लिए अच्छा समय।"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "শক্তির মাত্রা বাড়ছে। ব্যায়াম ও সামাজিক কার্যকলাপের জন্য দুর্দান্ত সময়।"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ஆற்றல் அதிகரிக்கிறது. உடற்பயிற்சி மற்றும் சமூக நடவடிக்கைகளுக்கு நல்ல நேரம்."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سطح انرژی بالا می‌رود. زمان مناسب برای ورزش و فعالیت‌های اجتماعی."
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Viwango vya nishati vinaongezeka. Wakati mzuri wa mazoezi na shughuli za kijamii."
+          }
+        },
+        "fil": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tumataas ang antas ng enerhiya. Magandang oras para sa ehersisyo at pakikisalamuha."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "توانائی بڑھ رہی ہے۔ ورزش اور سماجی سرگرمیوں کے لیے اچھا وقت۔"
+          }
+        }
+      }
+    },
+    "insight_ovulatory": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You're at your most fertile. Skin may glow, energy peaks. Stay mindful of your body."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous êtes au pic de fertilité. Énergie et confiance au maximum."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sie sind am fruchtbarsten. Energie und Selbstvertrauen sind am Höchststand."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estás en tu pico de fertilidad. Energía y confianza al máximo."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sei al picco di fertilità. Energia e fiducia al massimo."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Você está no pico de fertilidade. Energia e confiança no máximo."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最も妊娠しやすい時期です。エネルギーと自信が最高潮。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "가장 가임력이 높은 시기예요. 에너지와 자신감이 최고조."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你正处于最易受孕的时期。精力和自信达到顶峰。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你正處於最易受孕的時期。精力和自信達到頂峰。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "أنتِ في ذروة الخصوبة. الطاقة والثقة في أعلى مستوياتهما."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "את בשיא הפוריות. אנרגיה וביטחון בשיא."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пик фертильности. Энергия и уверенность на максимуме."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пік фертильності. Енергія і впевненість на максимумі."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Szczyt płodności. Energia i pewność siebie na najwyższym poziomie."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je bent op je vruchtbaarst. Energie en zelfvertrouwen pieken."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du är som mest fertil. Energi och självförtroende toppar."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du er mest frugtbar. Energi og selvtillid topper."
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Du er mest fruktbar. Energi og selvtillit topper."
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Olet hedelmällisimmilläsi. Energia ja itseluottamus huipussaan."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En doğurgan dönemdesiniz. Enerji ve özgüven zirve yapıyor."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Βρίσκεστε στην πιο γόνιμη περίοδο. Ενέργεια και αυτοπεποίθηση κορυφώνονται."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jste ve svém nejplodnějším období. Energie a sebevědomí na vrcholu."
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ste v najplodnejšom období. Energia a sebavedomie na vrchole."
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A legtermékenyebb időszakában van. Energia és önbizalom csúcsán."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sunteți în perioada cea mai fertilă. Energia și încrederea la apogeu."
+          }
+        },
+        "bg": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В най-плодовития период. Енергия и увереност на максимум."
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "U najplodnijem ste razdoblju. Energija i samopouzdanje na vrhuncu."
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estàs al pic de fertilitat. Energia i confiança al màxim."
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anda berada di puncak kesuburan. Tenaga dan keyakinan di tahap tertinggi."
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anda berada di puncak kesuburan. Energi dan kepercayaan diri tertinggi."
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "คุณอยู่ในช่วงที่เจริญพันธุ์มากที่สุด พลังงานและความมั่นใจสูงสุด"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bạn đang ở đỉnh phong độ sinh sản. Năng lượng và tự tin cao nhất."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप सबसे उपजाऊ समय में हैं। ऊर्जा और आत्मविश्वास चरम पर।"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "আপনি সবচেয়ে উর্বর সময়ে আছেন। শক্তি ও আত্মবিশ্বাস সর্বোচ্চে।"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "மிகவும் கருவுறும் நேரத்தில் இருக்கிறீர்கள். ஆற்றலும் நம்பிக்கையும் உச்சத்தில்."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "در اوج باروری هستید. انرژی و اعتماد به نفس در بالاترین سطح."
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uko katika kilele cha uzazi. Nishati na kujiamini kwa juu."
+          }
+        },
+        "fil": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nasa pinakamataba ka. Enerhiya at kumpiyansa sa pinakamataas."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "آپ سب سے زیادہ زرخیز ہیں۔ توانائی اور اعتماد عروج پر۔"
+          }
+        }
+      }
+    },
+    "insight_luteal": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PMS symptoms may appear. Prioritize rest, comfort food, and self-care."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Des symptômes de SPM peuvent apparaître. Repos et auto-soin recommandés."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PMS-Symptome können auftreten. Gönnen Sie sich Ruhe und Selbstfürsorge."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pueden aparecer síntomas del SPM. Prioriza el descanso y el autocuidado."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Potrebbero comparire sintomi PMS. Dai priorità al riposo e alla cura di te."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sintomas de TPM podem surgir. Priorize descanso e autocuidado."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PMS症状が出るかもしれません。休息とセルフケアを優先しましょう。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PMS 증상이 나타날 수 있어요. 휴식과 자기 관리를 우선시하세요."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "可能出现经前综合征。优先休息和自我关爱。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "可能出現經前綜合症。優先休息和自我關愛。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "قد تظهر أعراض ما قبل الدورة. أعطي الأولوية للراحة والعناية بالذات."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "עלולים להופיע תסמיני PMS. העדיפי מנוחה וטיפוח עצמי."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Могут появиться симптомы ПМС. Отдыхайте и заботьтесь о себе."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Можуть з'явитися симптоми ПМС. Відпочивайте та піклуйтеся про себе."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mogą pojawić się objawy PMS. Priorytetem odpoczynek i dbanie o siebie."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PMS-symptomen kunnen verschijnen. Geef prioriteit aan rust en zelfzorg."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PMS-symtom kan uppstå. Prioritera vila och egenvård."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PMS-symptomer kan opstå. Prioritér hvile og selvpleje."
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PMS-symptomer kan oppstå. Prioriter hvile og egenomsorg."
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PMS-oireet voivat ilmaantua. Priorisoi lepo ja itsestä huolehtiminen."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PMS belirtileri görülebilir. Dinlenmeye ve öz bakıma öncelik verin."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ενδέχεται να εμφανιστούν συμπτώματα ΠΕΣ. Προτεραιότητα η ξεκούραση."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mohou se objevit příznaky PMS. Dejte přednost odpočinku a péči o sebe."
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Môžu sa objaviť príznaky PMS. Uprednostnite odpočinok a starostlivosť o seba."
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PMS tünetek jelentkezhetnek. Helyezze előtérbe a pihenést és az önápolást."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pot apărea simptome PMS. Prioritizați odihna și îngrijirea de sine."
+          }
+        },
+        "bg": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Възможни са ПМС симптоми. Дайте приоритет на почивка и грижа за себе си."
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mogu se pojaviti PMS simptomi. Dajte prednost odmoru i brizi o sebi."
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Poden aparèixer símptomes de SPM. Prioritza el descans i l'autocura."
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gejala PMS mungkin muncul. Utamakan rehat dan penjagaan diri."
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gejala PMS mungkin muncul. Utamakan istirahat dan perawatan diri."
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "อาจมีอาการ PMS ให้ความสำคัญกับการพักผ่อนและดูแลตัวเอง"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Triệu chứng PMS có thể xuất hiện. Ưu tiên nghỉ ngơi và chăm sóc bản thân."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PMS लक्षण दिख सकते हैं। आराम और आत्म-देखभाल को प्राथमिकता दें।"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PMS লক্ষণ দেখা দিতে পারে। বিশ্রাম ও আত্মযত্নকে প্রাধান্য দিন।"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PMS அறிகுறிகள் தோன்றலாம். ஓய்வு மற்றும் சுய பராமரிப்புக்கு முன்னுரிமை கொடுங்கள்."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "علائم PMS ممکن است ظاهر شوند. استراحت و مراقبت از خود را اولویت دهید."
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dalili za PMS zinaweza kutokea. Kipaumbele pumziko na kujitunza."
+          }
+        },
+        "fil": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maaaring lumabas ang mga sintomas ng PMS. Bigyang-priyoridad ang pahinga at pag-aalaga sa sarili."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PMS علامات ظاہر ہو سکتی ہیں۔ آرام اور خود کی دیکھ بھال کو ترجیح دیں۔"
+          }
+        }
+      }
+    },
+    "insight_no_data": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log a few days to unlock personalized insights about your cycle."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistrez quelques jours pour obtenir des informations personnalisées."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Loggen Sie einige Tage, um personalisierte Einblicke freizuschalten."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registra algunos días para desbloquear información personalizada."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registra qualche giorno per sbloccare informazioni personalizzate."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registre alguns dias para desbloquear informações personalizadas."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "数日間記録すると、パーソナライズされた洞察が得られます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "며칠 기록하면 맞춤형 인사이트를 받을 수 있어요."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "记录几天后即可解锁个性化洞察。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "記錄幾天後即可解鎖個人化洞察。"
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "سجلي بضعة أيام لفتح رؤى مخصصة حول دورتك."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "רשמי כמה ימים כדי לפתוח תובנות מותאמות אישית."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Записывайте несколько дней, чтобы получить персональные рекомендации."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Записуйте кілька днів, щоб отримати персональні рекомендації."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaloguj kilka dni, aby odblokować spersonalizowane informacje."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log een paar dagen om gepersonaliseerde inzichten te ontgrendelen."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logga några dagar för att låsa upp personliga insikter."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log et par dage for at låse op for personlige indsigter."
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Logg noen dager for å låse opp personlige innsikter."
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kirjaa muutama päivä avataksesi henkilökohtaiset oivallukset."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kişiselleştirilmiş bilgiler için birkaç gün kayıt yapın."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Καταγράψτε μερικές ημέρες για εξατομικευμένες πληροφορίες."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaznamenejte několik dní pro personalizované poznatky."
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zaznamenajte niekoľko dní pre personalizované poznatky."
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Naplózzon néhány napot a személyre szabott betekintésekhez."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Înregistrați câteva zile pentru a debloca informații personalizate."
+          }
+        },
+        "bg": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запишете няколко дни за персонализирани прозрения."
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zabilježite nekoliko dana za personalizirane uvide."
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registra uns dies per desbloquejar informació personalitzada."
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log beberapa hari untuk membuka pandangan peribadi."
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Catat beberapa hari untuk membuka wawasan personal."
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "บันทึกสักสองสามวันเพื่อปลดล็อกข้อมูลเฉพาะบุคคล"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ghi lại vài ngày để mở khóa thông tin cá nhân hóa."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "व्यक्तिगत जानकारी प्राप्त करने के लिए कुछ दिन लॉग करें।"
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ব্যক্তিগত তথ্য পেতে কয়েক দিন লগ করুন।"
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "தனிப்பயனாக்கப்பட்ட நுண்ணறிவுகளைத் திறக்க சில நாட்கள் பதிவு செய்யுங்கள்."
+          }
+        },
+        "fa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "چند روز ثبت کنید تا بینش‌های شخصی‌سازی شده باز شوند."
+          }
+        },
+        "sw": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rekodi siku chache kupata maoni ya kibinafsi."
+          }
+        },
+        "fil": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mag-log ng ilang araw upang ma-unlock ang personalized na mga insight."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ذاتی بصیرت حاصل کرنے کے لیے چند دن لاگ کریں۔"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
