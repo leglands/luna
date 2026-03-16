@@ -344,7 +344,7 @@ struct EducationSection: View {
                 .accessibilityAddTraits(.isHeader)
 
             VStack(spacing: 8) {
-                ForEach(EducationArticle.sampleArticles) { article in
+                ForEach(EducationArticle.all) { article in
                     Button {
                         selectedArticle = article
                     } label: {
@@ -390,7 +390,7 @@ struct EducationArticle: Identifiable {
     let categoryKey: String
     let bodyKey: String
 
-    static let sampleArticles: [EducationArticle] = [
+    static let all: [EducationArticle] = [
         EducationArticle(id: "pms", titleKey: "article_pms_title", categoryKey: "article_cat_cycle", bodyKey: "article_pms_body"),
         EducationArticle(id: "ovulation", titleKey: "article_ovulation_title", categoryKey: "article_cat_fertility", bodyKey: "article_ovulation_body"),
         EducationArticle(id: "bbt", titleKey: "article_bbt_title", categoryKey: "article_cat_biometrics", bodyKey: "article_bbt_body"),

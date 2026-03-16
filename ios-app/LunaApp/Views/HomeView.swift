@@ -34,7 +34,7 @@ struct HomeView: View {
                             .padding(.horizontal)
                     } else {
                         // ── Cycle progress donut ──────────────────────────
-                        CycleProgressWidget(prediction: vm.prediction, currentDay: vm.currentCycleDay)
+                        CycleProgressWidget(prediction: vm.prediction, currentDay: vm.currentCycleDay, periodLength: Int(appState.averagePeriodLength ?? 5))
                             .padding(.horizontal)
                             .animation(reduceMotion ? .none : .spring(response: 0.5), value: vm.currentCycleDay)
 
@@ -230,6 +230,7 @@ struct SegmentedCycleRing: View {
 struct CycleProgressWidget: View {
     let prediction: Prediction?
     let currentDay: Int
+    var periodLength: Int = 5
 
     private static let isoFmt: ISO8601DateFormatter = {
         let f = ISO8601DateFormatter(); f.formatOptions = [.withFullDate]; return f
@@ -242,7 +243,7 @@ struct CycleProgressWidget: View {
                 SegmentedCycleRing(
                     totalDays: cycleLength,
                     currentDay: currentDay,
-                    menstrualEnd: 5,
+                    menstrualEnd: periodLength,
                     fertileStart: fertileStartDay,
                     fertileEnd: fertileEndDay,
                     ovulationCycleDay: ovulationCycleDay
@@ -396,10 +397,70 @@ struct ExpectedSymptomsCard: View {
 
 struct WeekStripView: View {
     let prediction: Prediction?
+    @EnvironmentObject var appState: AppState
+
+    private var weekDays: [Date] {
+        let cal = Calendar.current
+        let today = Date()
+        return (-3...3).compactMap { cal.date(byAdding: .day, value: $0, to: today) }
+    }
+
+    private let dateFmt: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "yyyy-MM-dd"
+        return f
+    }()
+
+    private let dayFmt: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "EEE"
+        return f
+    }()
+
     var body: some View {
-        Text("week_strip_placeholder")
-            .font(.caption)
-            .foregroundStyle(.secondary)
+        HStack(spacing: 0) {
+            ForEach(weekDays, id: \.self) { day in
+                let key = dateFmt.string(from: day)
+                let isToday = Calendar.current.isDateInToday(day)
+                let event = appState.cycleEvents[key]
+
+                VStack(spacing: 4) {
+                    Text(dayFmt.string(from: day).prefix(2).uppercased())
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundStyle(.secondary)
+
+                    Text("\(Calendar.current.component(.day, from: day))")
+                        .font(.system(size: 14, weight: isToday ? .bold : .regular))
+                        .foregroundStyle(isToday ? Color("AccentPrimary") : .primary)
+                        .frame(width: 32, height: 32)
+                        .background {
+                            if isToday {
+                                Circle().fill(Color("AccentPrimary").opacity(0.12))
+                            }
+                        }
+
+                    Circle()
+                        .fill(dotColor(for: event))
+                        .frame(width: 6, height: 6)
+                        .opacity(event != nil ? 1 : 0)
+                }
+                .frame(maxWidth: .infinity)
+                .accessibilityElement(children: .combine)
+            }
+        }
+        .padding(.vertical, 8)
+        .padding(.horizontal, 12)
+        .background(Color("CardBackground"), in: RoundedRectangle(cornerRadius: 12))
+    }
+
+    private func dotColor(for event: CycleEventType?) -> Color {
+        switch event {
+        case .period: return Color("AccentPrimary")
+        case .fertile: return Color("AccentAccent")
+        case .ovulation: return Color("AccentSecondary")
+        case .logged: return .secondary
+        case .none: return .clear
+        }
     }
 }
 

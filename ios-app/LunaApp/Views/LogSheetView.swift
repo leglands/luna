@@ -31,6 +31,7 @@ struct LogSheetView: View {
     @State private var bbt: String = ""
     @State private var isSaving: Bool = false
     @State private var showSavedFeedback: Bool = false
+    @State private var showSaveError: Bool = false
 
     // Symptômes rapides affichés en surface (les plus courants)
     private let quickSymptoms = [
@@ -137,6 +138,11 @@ struct LogSheetView: View {
             }
             .navigationTitle("log_sheet_title")
             .navigationBarTitleDisplayMode(.inline)
+            .alert("log_save_error_title", isPresented: $showSaveError) {
+                Button("ok_button", role: .cancel) { }
+            } message: {
+                Text("log_save_error_message")
+            }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("cancel_button") { dismiss() }
@@ -209,7 +215,7 @@ struct LogSheetView: View {
             )
             dismiss()
         } catch {
-            // TODO: afficher une alerte d'erreur
+            await MainActor.run { showSaveError = true }
         }
     }
 }

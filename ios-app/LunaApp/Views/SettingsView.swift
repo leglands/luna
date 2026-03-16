@@ -572,7 +572,47 @@ struct ExportSheetView: View {
     }
 
     private func export(format: String) {
-        // TODO: implémenter les exports depuis LunaEngine
-        dismiss()
+        guard let engine = appState.engine else { dismiss(); return }
+        isExporting = true
+
+        Task {
+            defer { Task { @MainActor in isExporting = false } }
+            let fmt = ISO8601DateFormatter()
+            let to = fmt.string(from: Date())
+            let from = fmt.string(from: Calendar.current.date(byAdding: .year, value: -2, to: Date())!)
+
+            switch format {
+            case "csv":
+                if let csv = try? engine.exportLogsCsv(from: from, to: to) {
+                    let tmpURL = FileManager.default.temporaryDirectory.appendingPathComponent("luna_export.csv")
+                    try? csv.write(to: tmpURL, atomically: true, encoding: .utf8)
+                    await MainActor.run {
+                        let ac = UIActivityViewController(activityItems: [tmpURL], applicationActivities: nil)
+                        UIApplication.shared.connectedScenes
+                            .compactMap { $0 as? UIWindowScene }
+                            .first?.windows.first?.rootViewController?
+                            .present(ac, animated: true)
+                    }
+                }
+            case "backup":
+                if let pin = KeychainService.shared.readPin() {
+                    let backupData = try? engine.exportEncryptedBackup(pin: pin)
+                    if let backupData {
+                        let tmpURL = FileManager.default.temporaryDirectory.appendingPathComponent("luna_backup.enc")
+                        try? backupData.write(to: tmpURL)
+                        await MainActor.run {
+                            let ac = UIActivityViewController(activityItems: [tmpURL], applicationActivities: nil)
+                            UIApplication.shared.connectedScenes
+                                .compactMap { $0 as? UIWindowScene }
+                                .first?.windows.first?.rootViewController?
+                                .present(ac, animated: true)
+                        }
+                    }
+                }
+            default:
+                break
+            }
+            await MainActor.run { dismiss() }
+        }
     }
 }
