@@ -7,7 +7,7 @@
 - **Core**: Rust + UniFFI 0.28 (proc-macros, no .udl) → iOS (SwiftUI) + Android (Kotlin Views)
 - **DB**: SQLCipher (AES-256-GCM, Argon2id KDF)
 - **Privacy**: ZERO network, ZERO analytics, ZERO permissions
-- **Tests**: 79 Rust + 38 iOS + 39 Android + 7 Maestro E2E = **163 total**
+- **Tests**: 79 Rust + 69 iOS + 39 Android + 7 Maestro E2E = **194 total**
 - **i18n**: 40 languages, full RTL (ar, he, fa, ur)
 - **a11y**: WCAG 2.2 AA, Calm Mode, reduceMotion, VoiceOver/TalkBack
 
@@ -151,7 +151,7 @@ maestro test .maestro/                # 7 E2E flows
 | CRUD ops | 21/24 | 24 | 88% |
 | RBAC enforced | 20/20 | 20 | 100% |
 
-- **163 tests**: 79 Rust (51 behavior J1-J18 + 28 unit) · 38 iOS (14 XCTest + 24 XCUITest) · 39 Android (23 JUnit + 16 Espresso) · 7 Maestro E2E
+- **194 tests**: 79 Rust (51 behavior J1-J18 + 28 unit) · 69 iOS (14 XCTest + 55 XCUITest) · 39 Android (23 JUnit + 16 Espresso) · 7 Maestro E2E
 - **CRUD gaps**: 3 Delete (DailyLog, Cycle, PregnancyLog — intentional, privacy-first)
 - **IHM headers**: Added to all 23 view files (11 iOS + 12 Android) with persona/feature/RBAC/CRUD/US
 

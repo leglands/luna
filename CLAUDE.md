@@ -113,7 +113,7 @@ ios-app/
   LunaApp/Resources/        Localizable.xcstrings (100+ keys, 40 langs)
   LunaApp/Services/         KeychainService, NotificationManager, HealthKitManager
   LunaTests/                14 unit tests (XCTest) — 2 files
-  LunaUITests/              17 UI tests (XCUITest) — 2 files
+  LunaUITests/              55 UI tests (XCUITest) — 2 files
 
 android-app/app/src/main/
   AndroidManifest.xml       ZERO network + ZERO health permissions
@@ -222,11 +222,11 @@ DR: RTO N/A (local) · RPO = last backup · panic_wipe = irrecoverable (by desig
 | Rust behavior (J1-J18) | 51 | cargo test |
 | Rust unit (prediction, export, crypto, db) | 28 | cargo test |
 | iOS unit | 14 | XCTest |
-| iOS UI | 24 | XCUITest |
+| iOS UI | 55 | XCUITest |
 | Android unit | 23 | JUnit |
 | Android instrumented | 16 | Espresso |
 | E2E mobile | 7 flows | Maestro |
-| **Total** | **163** | |
+| **Total** | **194** | |
 
 ---
 
