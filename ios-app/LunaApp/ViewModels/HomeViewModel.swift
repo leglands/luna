@@ -14,10 +14,12 @@ final class HomeViewModel: ObservableObject {
     func load(engine: LunaEngine?) async {
         guard let engine else { return }
         do {
-            prediction = try engine.predictNext()
-            // TODO: calculer currentCycleDay et phase depuis les cycles
+            let pred = try engine.predictNext()
+            prediction = pred
+            currentCycleDay = Int(pred.currentCycleDay)
+            currentPhase = pred.currentPhase
         } catch {
-            // Silencieux — l'UI affiche "pas encore de données"
+            // No data yet — UI shows default state
         }
         if let profile = try? engine.getUserProfile() {
             self.trackingMode = profile.trackingMode.rawString

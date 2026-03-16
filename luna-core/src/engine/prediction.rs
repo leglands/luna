@@ -47,6 +47,19 @@ impl PredictionEngine {
             "calendar"
         };
 
+        // Current cycle day (1-based) and phase
+        let today = chrono::Local::now().date_naive();
+        let day_of_cycle = (today - last_start).num_days();
+        let current_cycle_day = if day_of_cycle >= 0 { (day_of_cycle + 1) as u32 } else { 1 };
+        let current_phase = Self::phase_for_date(today, last_start, avg_cycle, None);
+        let phase_str = match current_phase {
+            CyclePhase::Menstrual => "menstrual",
+            CyclePhase::Follicular => "follicular",
+            CyclePhase::Ovulatory => "ovulatory",
+            CyclePhase::Luteal => "luteal",
+            CyclePhase::Unknown => "unknown",
+        };
+
         Prediction {
             next_period_start: next_start.to_string(),
             confidence_days,
@@ -55,6 +68,8 @@ impl PredictionEngine {
             ovulation_day: Some(ovulation_day.to_string()),
             algorithm: algorithm.to_string(),
             confidence_score: confidence,
+            current_cycle_day,
+            current_phase: phase_str.to_string(),
         }
     }
 

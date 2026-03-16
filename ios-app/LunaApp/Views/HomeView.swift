@@ -302,13 +302,14 @@ struct CycleProgressWidget: View {
 
     private var phaseLabel: String {
         guard let p = prediction else { return "" }
-        let days = daysUntilNext(p)
-        if currentDay <= 5 { return NSLocalizedString("phase_menstrual", comment: "") }
-        if currentDay >= fertileStartDay && currentDay <= fertileEndDay {
-            return NSLocalizedString("phase_ovulatory", comment: "")
+        // Use Rust-computed phase (accurate, uses last_period_start + avg_cycle)
+        switch p.currentPhase {
+        case "menstrual": return NSLocalizedString("phase_menstrual", comment: "")
+        case "follicular": return NSLocalizedString("phase_follicular", comment: "")
+        case "ovulatory": return NSLocalizedString("phase_ovulatory", comment: "")
+        case "luteal": return NSLocalizedString("phase_luteal", comment: "")
+        default: return ""
         }
-        if days < 14 { return NSLocalizedString("phase_luteal", comment: "") }
-        return NSLocalizedString("phase_follicular", comment: "")
     }
 
     private var accessibilityDescription: String {

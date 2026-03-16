@@ -1436,6 +1436,14 @@ public struct Prediction {
      * 0–100 : niveau de confiance de la prédiction
      */
     public var confidenceScore: UInt8
+    /**
+     * Jour actuel du cycle (1-based: J1 = premier jour des règles)
+     */
+    public var currentCycleDay: UInt32
+    /**
+     * Phase actuelle : "menstrual" | "follicular" | "ovulatory" | "luteal" | "unknown"
+     */
+    public var currentPhase: String
 
     // Default memberwise initializers are never public by default, so we
     // declare one manually.
@@ -1460,7 +1468,13 @@ public struct Prediction {
          */algorithm: String, 
         /**
          * 0–100 : niveau de confiance de la prédiction
-         */confidenceScore: UInt8) {
+         */confidenceScore: UInt8, 
+        /**
+         * Jour actuel du cycle (1-based: J1 = premier jour des règles)
+         */currentCycleDay: UInt32, 
+        /**
+         * Phase actuelle : "menstrual" | "follicular" | "ovulatory" | "luteal" | "unknown"
+         */currentPhase: String) {
         self.nextPeriodStart = nextPeriodStart
         self.confidenceDays = confidenceDays
         self.fertileWindowStart = fertileWindowStart
@@ -1468,6 +1482,8 @@ public struct Prediction {
         self.ovulationDay = ovulationDay
         self.algorithm = algorithm
         self.confidenceScore = confidenceScore
+        self.currentCycleDay = currentCycleDay
+        self.currentPhase = currentPhase
     }
 }
 
@@ -1496,6 +1512,12 @@ extension Prediction: Equatable, Hashable {
         if lhs.confidenceScore != rhs.confidenceScore {
             return false
         }
+        if lhs.currentCycleDay != rhs.currentCycleDay {
+            return false
+        }
+        if lhs.currentPhase != rhs.currentPhase {
+            return false
+        }
         return true
     }
 
@@ -1507,6 +1529,8 @@ extension Prediction: Equatable, Hashable {
         hasher.combine(ovulationDay)
         hasher.combine(algorithm)
         hasher.combine(confidenceScore)
+        hasher.combine(currentCycleDay)
+        hasher.combine(currentPhase)
     }
 }
 
@@ -1524,7 +1548,9 @@ public struct FfiConverterTypePrediction: FfiConverterRustBuffer {
                 fertileWindowEnd: FfiConverterString.read(from: &buf), 
                 ovulationDay: FfiConverterOptionString.read(from: &buf), 
                 algorithm: FfiConverterString.read(from: &buf), 
-                confidenceScore: FfiConverterUInt8.read(from: &buf)
+                confidenceScore: FfiConverterUInt8.read(from: &buf), 
+                currentCycleDay: FfiConverterUInt32.read(from: &buf), 
+                currentPhase: FfiConverterString.read(from: &buf)
         )
     }
 
@@ -1536,6 +1562,8 @@ public struct FfiConverterTypePrediction: FfiConverterRustBuffer {
         FfiConverterOptionString.write(value.ovulationDay, into: &buf)
         FfiConverterString.write(value.algorithm, into: &buf)
         FfiConverterUInt8.write(value.confidenceScore, into: &buf)
+        FfiConverterUInt32.write(value.currentCycleDay, into: &buf)
+        FfiConverterString.write(value.currentPhase, into: &buf)
     }
 }
 

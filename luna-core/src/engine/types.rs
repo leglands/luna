@@ -121,6 +121,10 @@ pub struct Prediction {
     pub algorithm: String,
     /// 0–100 : niveau de confiance de la prédiction
     pub confidence_score: u8,
+    /// Jour actuel du cycle (1-based: J1 = premier jour des règles)
+    pub current_cycle_day: u32,
+    /// Phase actuelle : "menstrual" | "follicular" | "ovulatory" | "luteal" | "unknown"
+    pub current_phase: String,
 }
 
 // ─── CycleSummary ────────────────────────────────────────────────────────────
