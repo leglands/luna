@@ -81,6 +81,7 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.macaron.luna.tests
+        GENERATE_INFOPLIST_FILE: YES
 
   LunaUITests:
     type: bundle.ui-testing
@@ -93,3 +94,4 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.macaron.luna.uitests
+        GENERATE_INFOPLIST_FILE: YES

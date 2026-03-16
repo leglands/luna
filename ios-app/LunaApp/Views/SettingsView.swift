@@ -72,6 +72,14 @@ struct SettingsView: View {
                         appState.lockEnabled = new
                     }
 
+                    NavigationLink {
+                        ChangePINView()
+                    } label: {
+                        Label("settings_change_pin", systemImage: "key")
+                    }
+                    .accessibilityIdentifier("settings_change_pin")
+                    .frame(minHeight: 44)
+
                     Toggle(isOn: $iCloudSyncEnabled) {
                         Label {
                             VStack(alignment: .leading, spacing: 2) {
@@ -221,6 +229,7 @@ struct SettingsView: View {
                 // ── Rappel contraception ──────────────────────────────
                 Section("settings_pill_reminder_section") {
                     Toggle("settings_pill_reminder_toggle", isOn: $pillReminderEnabled)
+                        .accessibilityIdentifier("pill_reminder_toggle")
                         .frame(minHeight: 44)
                         .onChange(of: pillReminderEnabled) { enabled in
                             if enabled {
@@ -437,6 +446,88 @@ struct HealthKitSettingsView: View {
             }
         }
         .navigationTitle("settings_health_label")
+    }
+}
+
+// MARK: - ChangePINView
+
+struct ChangePINView: View {
+    @EnvironmentObject var appState: AppState
+    @Environment(\.dismiss) private var dismiss
+    @State private var currentPIN: String = ""
+    @State private var newPIN: String = ""
+    @State private var confirmPIN: String = ""
+    @State private var errorMessage: String?
+    @State private var showSuccess: Bool = false
+
+    var body: some View {
+        Form {
+            Section {
+                SecureField("change_pin_current", text: $currentPIN)
+                    .accessibilityIdentifier("current_pin_field")
+                    .keyboardType(.numberPad)
+            } header: {
+                Text("change_pin_current_section")
+            }
+
+            Section {
+                SecureField("change_pin_new", text: $newPIN)
+                    .accessibilityIdentifier("new_pin_field")
+                    .keyboardType(.numberPad)
+                SecureField("change_pin_confirm", text: $confirmPIN)
+                    .accessibilityIdentifier("confirm_pin_field")
+                    .keyboardType(.numberPad)
+            } header: {
+                Text("change_pin_new_section")
+            }
+
+            if let error = errorMessage {
+                Section {
+                    Text(error)
+                        .foregroundStyle(.red)
+                        .accessibilityIdentifier("pin_error_message")
+                }
+            }
+
+            if showSuccess {
+                Section {
+                    Label("change_pin_success", systemImage: "checkmark.circle.fill")
+                        .foregroundStyle(.green)
+                        .accessibilityIdentifier("pin_success_message")
+                }
+            }
+        }
+        .navigationTitle("settings_change_pin")
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button("save_button") {
+                    changePIN()
+                }
+                .accessibilityIdentifier("save_pin_button")
+                .disabled(newPIN.count < 4 || newPIN != confirmPIN)
+            }
+        }
+    }
+
+    private func changePIN() {
+        guard newPIN == confirmPIN else {
+            errorMessage = NSLocalizedString("change_pin_mismatch", comment: "")
+            return
+        }
+        guard newPIN.count >= 4 else {
+            errorMessage = NSLocalizedString("change_pin_too_short", comment: "")
+            return
+        }
+        do {
+            try appState.engine?.changePin(oldPin: currentPIN, newPin: newPIN)
+            // Update keychain
+            let _ = KeychainService.shared.storePin(newPIN)
+            showSuccess = true
+            errorMessage = nil
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { dismiss() }
+        } catch {
+            errorMessage = NSLocalizedString("change_pin_wrong_current", comment: "")
+        }
     }
 }
 

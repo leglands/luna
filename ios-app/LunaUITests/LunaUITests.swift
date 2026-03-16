@@ -630,3 +630,293 @@ final class AccessibilityE2ETests: XCTestCase {
     }
 }
 
+// MARK: - E2E Change PIN Tests (F11 / US11)
+
+final class ChangePINE2ETests: XCTestCase {
+
+    var app: XCUIApplication!
+
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app = XCUIApplication()
+        app.launchArguments = ["-UITesting", "-AppleLanguages", "(en)"]
+        app.launch()
+    }
+
+    /// F11/US11: Change PIN view is accessible from Settings
+    func test_changePIN_viewAccessible() {
+        app.tabBars.firstMatch.buttons["Me"].tap()
+        sleep(1)
+
+        let changePIN = app.buttons["settings_change_pin"]
+        XCTAssertTrue(changePIN.waitForExistence(timeout: 5), "Change PIN button should exist in Settings")
+        changePIN.tap()
+        sleep(1)
+
+        let navBar = app.navigationBars["Change PIN"]
+        XCTAssertTrue(navBar.waitForExistence(timeout: 3), "Change PIN navigation should appear")
+    }
+
+    /// F11/US11: Change PIN form has all required fields
+    func test_changePIN_hasRequiredFields() {
+        app.tabBars.firstMatch.buttons["Me"].tap()
+        sleep(1)
+
+        app.buttons["settings_change_pin"].tap()
+        sleep(1)
+
+        let currentField = app.secureTextFields["current_pin_field"]
+        let newField = app.secureTextFields["new_pin_field"]
+        let confirmField = app.secureTextFields["confirm_pin_field"]
+
+        XCTAssertTrue(currentField.waitForExistence(timeout: 3), "Current PIN field should exist")
+        XCTAssertTrue(newField.exists, "New PIN field should exist")
+        XCTAssertTrue(confirmField.exists, "Confirm PIN field should exist")
+    }
+
+    /// F11/US11: Save button exists in toolbar
+    func test_changePIN_hasSaveButton() {
+        app.tabBars.firstMatch.buttons["Me"].tap()
+        sleep(1)
+
+        app.buttons["settings_change_pin"].tap()
+        sleep(1)
+
+        let saveButton = app.buttons["save_pin_button"]
+        XCTAssertTrue(saveButton.waitForExistence(timeout: 3), "Save button should exist")
+    }
+}
+
+// MARK: - E2E Pregnancy Mode Tests (F13 / US13)
+
+final class PregnancyModeE2ETests: XCTestCase {
+
+    var app: XCUIApplication!
+
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app = XCUIApplication()
+        app.launchArguments = ["-UITesting", "-AppleLanguages", "(en)"]
+        app.launch()
+    }
+
+    /// F13/US13: Navigate to tracking mode and select Pregnancy
+    func test_pregnancyMode_selectInTrackingMode() {
+        app.tabBars.firstMatch.buttons["Me"].tap()
+        sleep(1)
+
+        // Scroll and find tracking mode cell
+        let settingsList = app.collectionViews.firstMatch
+        settingsList.swipeUp()
+        sleep(1)
+
+        let trackingCell = settingsList.cells.staticTexts["Tracking mode"]
+        if !trackingCell.waitForExistence(timeout: 3) {
+            settingsList.swipeUp()
+            sleep(1)
+        }
+        XCTAssertTrue(trackingCell.waitForExistence(timeout: 3), "Tracking mode cell should exist")
+        trackingCell.tap()
+        sleep(1)
+
+        // Select Pregnancy mode
+        let pregnancyButton = app.buttons["tracking_mode_pregnant"]
+        XCTAssertTrue(pregnancyButton.waitForExistence(timeout: 3), "Pregnancy mode button should exist")
+        pregnancyButton.tap()
+        sleep(1)
+
+        // EDD section should appear when pregnancy is selected
+        let eddToggle = app.switches.firstMatch
+        XCTAssertTrue(eddToggle.waitForExistence(timeout: 3), "EDD toggle should appear for pregnancy mode")
+    }
+
+    /// F13/US13: Pregnancy mode can be saved
+    func test_pregnancyMode_saveSelection() {
+        app.tabBars.firstMatch.buttons["Me"].tap()
+        sleep(1)
+
+        let settingsList = app.collectionViews.firstMatch
+        settingsList.swipeUp()
+        sleep(1)
+
+        let trackingCell = settingsList.cells.staticTexts["Tracking mode"]
+        if !trackingCell.waitForExistence(timeout: 3) {
+            settingsList.swipeUp()
+            sleep(1)
+        }
+        trackingCell.tap()
+        sleep(1)
+
+        // Select pregnancy
+        app.buttons["tracking_mode_pregnant"].tap()
+        sleep(1)
+
+        // Save
+        let saveButton = app.buttons["Save"]
+        XCTAssertTrue(saveButton.waitForExistence(timeout: 3), "Save button should exist")
+        saveButton.tap()
+        sleep(1)
+
+        // Should return to Settings
+        let settingsNav = app.navigationBars["Me"]
+        XCTAssertTrue(settingsNav.waitForExistence(timeout: 3), "Should return to Settings after save")
+    }
+}
+
+// MARK: - E2E Perimenopause Mode Tests (F14 / US14)
+
+final class PerimenopauseModeE2ETests: XCTestCase {
+
+    var app: XCUIApplication!
+
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app = XCUIApplication()
+        app.launchArguments = ["-UITesting", "-AppleLanguages", "(en)"]
+        app.launch()
+    }
+
+    /// F14/US14: Navigate to tracking mode and select Perimenopause
+    func test_perimenopauseMode_selectInTrackingMode() {
+        app.tabBars.firstMatch.buttons["Me"].tap()
+        sleep(1)
+
+        let settingsList = app.collectionViews.firstMatch
+        settingsList.swipeUp()
+        sleep(1)
+
+        let trackingCell = settingsList.cells.staticTexts["Tracking mode"]
+        if !trackingCell.waitForExistence(timeout: 3) {
+            settingsList.swipeUp()
+            sleep(1)
+        }
+        XCTAssertTrue(trackingCell.waitForExistence(timeout: 3), "Tracking mode cell should exist")
+        trackingCell.tap()
+        sleep(1)
+
+        // Select Perimenopause mode
+        let periButton = app.buttons["tracking_mode_perimenopause"]
+        XCTAssertTrue(periButton.waitForExistence(timeout: 3), "Perimenopause mode button should exist")
+        periButton.tap()
+        sleep(1)
+
+        // Checkmark should appear (verify selected)
+        let checkmarks = app.images.matching(NSPredicate(format: "label == %@", "Selected"))
+        XCTAssertGreaterThan(checkmarks.count, 0, "Should show checkmark for selected mode")
+    }
+
+    /// F14/US14: Perimenopause mode can be saved
+    func test_perimenopauseMode_saveSelection() {
+        app.tabBars.firstMatch.buttons["Me"].tap()
+        sleep(1)
+
+        let settingsList = app.collectionViews.firstMatch
+        settingsList.swipeUp()
+        sleep(1)
+
+        let trackingCell = settingsList.cells.staticTexts["Tracking mode"]
+        if !trackingCell.waitForExistence(timeout: 3) {
+            settingsList.swipeUp()
+            sleep(1)
+        }
+        trackingCell.tap()
+        sleep(1)
+
+        app.buttons["tracking_mode_perimenopause"].tap()
+        sleep(1)
+
+        let saveButton = app.buttons["Save"]
+        XCTAssertTrue(saveButton.waitForExistence(timeout: 3))
+        saveButton.tap()
+        sleep(1)
+
+        let settingsNav = app.navigationBars["Me"]
+        XCTAssertTrue(settingsNav.waitForExistence(timeout: 3), "Should return to Settings after save")
+    }
+}
+
+// MARK: - E2E Pill Reminder Tests (F24 / US24)
+
+final class PillReminderE2ETests: XCTestCase {
+
+    var app: XCUIApplication!
+
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+        app = XCUIApplication()
+        app.launchArguments = ["-UITesting", "-AppleLanguages", "(en)"]
+        app.launch()
+    }
+
+    /// F24: Pill reminder toggle exists in Settings
+    func test_pillReminder_toggleExists() {
+        app.tabBars.firstMatch.buttons["Me"].tap()
+        sleep(1)
+
+        // Scroll to find pill reminder section
+        app.swipeUp()
+        sleep(1)
+
+        let pillToggle = app.switches["pill_reminder_toggle"]
+        XCTAssertTrue(pillToggle.waitForExistence(timeout: 5), "Pill reminder toggle should exist")
+    }
+
+    /// F24: Pill reminder toggle can be enabled
+    func test_pillReminder_toggleEnable() {
+        app.tabBars.firstMatch.buttons["Me"].tap()
+        sleep(1)
+
+        // Scroll until pill reminder toggle is visible and hittable
+        let pillToggle = app.switches["pill_reminder_toggle"]
+        for _ in 0..<6 {
+            if pillToggle.exists && pillToggle.isHittable { break }
+            app.swipeUp()
+            sleep(1)
+        }
+        XCTAssertTrue(pillToggle.waitForExistence(timeout: 5), "Pill reminder toggle should exist")
+        XCTAssertTrue(pillToggle.isHittable, "Pill reminder toggle should be hittable")
+
+        let valueBefore = pillToggle.value as? String ?? "nil"
+
+        // Force tap using coordinate if direct tap doesn't work
+        pillToggle.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
+        sleep(2)
+
+        // Handle notification permission alert if it appears
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let allowBtn = springboard.buttons["Allow"]
+        if allowBtn.waitForExistence(timeout: 3) {
+            allowBtn.tap()
+            sleep(1)
+        }
+
+        let valueAfter = pillToggle.value as? String ?? "nil"
+        XCTAssertNotEqual(valueBefore, valueAfter, "Toggle value should change after tap (was: \(valueBefore), now: \(valueAfter))")
+    }
+
+    /// F24: Pill reminder toggle can be disabled
+    func test_pillReminder_toggleDisable() {
+        app.tabBars.firstMatch.buttons["Me"].tap()
+        sleep(1)
+        app.swipeUp()
+        sleep(1)
+
+        let pillToggle = app.switches["pill_reminder_toggle"]
+        XCTAssertTrue(pillToggle.waitForExistence(timeout: 5))
+
+        // Enable first
+        if pillToggle.value as? String == "0" {
+            pillToggle.tap()
+            sleep(1)
+        }
+
+        // Now disable
+        pillToggle.tap()
+        sleep(1)
+
+        // Time picker should disappear
+        let timePicker = app.datePickers.firstMatch
+        XCTAssertFalse(timePicker.exists, "Time picker should disappear when pill reminder is disabled")
+    }
+}
+

@@ -75,6 +75,7 @@ struct TrackingModeView: View {
                                 }
                             }
                         }
+                        .accessibilityIdentifier("tracking_mode_\(mode.rawString)")
                         .frame(minHeight: 44)
                     }
                 } header: {
