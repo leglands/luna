@@ -28,23 +28,29 @@ struct InsightsView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
 
-                    // ── Stats cycle ─────────────────────────────────────
-                    CycleStatsSection()
-                        .padding(.horizontal)
+                    if !appState.calmMode {
+                        // ── Stats cycle ─────────────────────────────────────
+                        CycleStatsSection()
+                            .padding(.horizontal)
 
-                    // ── Symptômes les plus fréquents ─────────────────────
-                    SymptomFrequencySection()
-                        .padding(.horizontal)
+                        // ── Symptômes les plus fréquents ─────────────────────
+                        SymptomFrequencySection()
+                            .padding(.horizontal)
 
-                    // ── Graphiques de tendance ───────────────────────────
-                    TrendChartsSection()
-                        .padding(.horizontal)
+                        // ── Graphiques de tendance ───────────────────────────
+                        TrendChartsSection()
+                            .padding(.horizontal)
 
-                    // ── Insight auto-généré ──────────────────────────────
-                    InsightCardView()
-                        .padding(.horizontal)
+                        // ── Insight auto-généré ──────────────────────────────
+                        InsightCardView()
+                            .padding(.horizontal)
+                    } else {
+                        // Calm Mode — empathic message
+                        CalmModeInsightsBanner()
+                            .padding(.horizontal)
+                    }
 
-                    // ── Fiches éducatives ────────────────────────────────
+                    // ── Fiches éducatives (always visible) ───────────────
                     EducationSection(selectedArticle: $selectedArticle)
                         .padding(.horizontal)
 
@@ -426,5 +432,30 @@ struct EducationArticleView: View {
                 }
             }
         }
+    }
+}
+
+// MARK: - CalmModeInsightsBanner
+
+private struct CalmModeInsightsBanner: View {
+    var body: some View {
+        HStack(alignment: .top, spacing: 12) {
+            Image(systemName: "leaf.fill")
+                .foregroundStyle(Color("AccentSuccess"))
+                .font(.title3)
+                .accessibilityHidden(true)
+
+            VStack(alignment: .leading, spacing: 6) {
+                Text("insights_calm_title")
+                    .font(.subheadline.bold())
+                Text("insights_calm_body")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .padding(16)
+        .background(Color("AccentSuccess").opacity(0.08), in: RoundedRectangle(cornerRadius: 16))
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Text("insights_calm_a11y"))
     }
 }

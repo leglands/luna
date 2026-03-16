@@ -63,8 +63,12 @@ targets:
         LIBRARY_SEARCH_PATHS: "$(inherited) $(SRCROOT)/LunaApp/Generated"
         OTHER_LDFLAGS: "$(inherited) -lluna_core -lc++"
         HEADER_SEARCH_PATHS: "$(SRCROOT)/LunaApp/Generated"
+        CODE_SIGN_ENTITLEMENTS: LunaApp/LunaApp.entitlements
+    entitlements:
+      path: LunaApp/LunaApp.entitlements
     dependencies:
       - sdk: HealthKit.framework
+      - sdk: CloudKit.framework
 
   LunaTests:
     type: bundle.unit-test

@@ -35,6 +35,7 @@ struct SettingsView: View {
     @State private var healthKitEnabled: Bool = false
     @State private var showShareSheet: Bool = false
     @State private var shareItems: [Any] = []
+    @State private var iCloudSyncEnabled: Bool = UserDefaults.standard.bool(forKey: "icloud_sync_enabled")
 
     var body: some View {
         NavigationStack {
@@ -71,12 +72,52 @@ struct SettingsView: View {
                         appState.lockEnabled = new
                     }
 
-                    HStack {
-                        Label("settings_storage_label", systemImage: "internaldrive")
-                        Spacer()
-                        Text("settings_storage_local")
-                            .font(.callout)
-                            .foregroundStyle(.secondary)
+                    Toggle(isOn: $iCloudSyncEnabled) {
+                        Label {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("settings_icloud_toggle")
+                                Text("settings_icloud_description")
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                        } icon: {
+                            Image(systemName: "icloud.and.arrow.up")
+                        }
+                    }
+                    .accessibilityIdentifier("settings_icloud_toggle")
+                    .accessibilityHint(Text("settings_icloud_hint_a11y"))
+                    .onChange(of: iCloudSyncEnabled) { enabled in
+                        UserDefaults.standard.set(enabled, forKey: "icloud_sync_enabled")
+                        if enabled {
+                            Task {
+                                let available = await ICloudSyncService.shared.checkAccountStatus()
+                                if !available {
+                                    await MainActor.run { iCloudSyncEnabled = false }
+                                } else {
+                                    await ICloudSyncService.shared.performFullSync(engine: appState.engine, appState: appState)
+                                }
+                            }
+                        }
+                    }
+
+                    if iCloudSyncEnabled {
+                        HStack {
+                            Label("settings_icloud_status", systemImage: "arrow.triangle.2.circlepath")
+                            Spacer()
+                            Text(iCloudStatusText)
+                                .font(.callout)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+
+                    if !iCloudSyncEnabled {
+                        HStack {
+                            Label("settings_storage_label", systemImage: "internaldrive")
+                            Spacer()
+                            Text("settings_storage_local")
+                                .font(.callout)
+                                .foregroundStyle(.secondary)
+                        }
                     }
 
                     // Badge trust
@@ -271,6 +312,22 @@ struct SettingsView: View {
 
     private var appVersion: String {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0"
+    }
+
+    private var iCloudStatusText: String {
+        switch ICloudSyncService.shared.syncStatus {
+        case .idle: return NSLocalizedString("settings_icloud_status_idle", comment: "")
+        case .syncing: return NSLocalizedString("settings_icloud_status_syncing", comment: "")
+        case .success:
+            if let date = ICloudSyncService.shared.lastSyncDate {
+                let fmt = RelativeDateTimeFormatter()
+                fmt.unitsStyle = .short
+                return fmt.localizedString(for: date, relativeTo: Date())
+            }
+            return NSLocalizedString("settings_icloud_status_synced", comment: "")
+        case .error: return NSLocalizedString("settings_icloud_status_error", comment: "")
+        case .noAccount: return NSLocalizedString("settings_icloud_status_no_account", comment: "")
+        }
     }
 
     private func exportCSV() {

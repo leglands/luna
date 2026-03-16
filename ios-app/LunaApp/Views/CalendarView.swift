@@ -40,12 +40,16 @@ struct CalendarView: View {
                 MonthGridView(
                     month: displayedMonth,
                     selectedDate: $selectedDate,
-                    cycleEvents: appState.cycleEvents
+                    cycleEvents: appState.calmMode
+                        ? appState.cycleEvents.filter { $0.value != .fertile && $0.value != .ovulation }
+                        : appState.cycleEvents
                 )
                 .padding(.horizontal)
 
-                CalendarLegend()
-                    .padding()
+                if !appState.calmMode {
+                    CalendarLegend()
+                        .padding()
+                }
 
                 Spacer()
             }
