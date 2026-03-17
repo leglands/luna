@@ -106,7 +106,15 @@ final class AppState: ObservableObject {
                 engine = try LunaEngine.openVault(dbPath: dbPath, pin: "123456")
                 // Store PIN in Keychain so manual relaunch works too
                 KeychainService.shared.storePin("123456")
-                try? "OK: vault opened at \(dbPath)".write(to: debugFile, atomically: true, encoding: .utf8)
+
+                // Seed realistic data if requested
+                if ProcessInfo.processInfo.arguments.contains("-SeedData") {
+                    Self.seedRealisticData(engine: engine!)
+                    try? "OK: vault opened + SEEDED at \(dbPath)".write(to: debugFile, atomically: true, encoding: .utf8)
+                } else {
+                    try? "OK: vault opened at \(dbPath)".write(to: debugFile, atomically: true, encoding: .utf8)
+                }
+
                 Task { await refreshCycleData() }
             } catch {
                 try? "FAIL: \(error) at \(dbPath)".write(to: debugFile, atomically: true, encoding: .utf8)
@@ -216,4 +224,219 @@ final class AppState: ObservableObject {
         fmt.dateFormat = "yyyy-MM-dd"
         return fmt.date(from: str)
     }
+
+    // MARK: - Seed Realistic Data (DEBUG only)
+
+    #if DEBUG
+    /// Populates 6 months of realistic cycle data for UI testing.
+    /// Launch with: -UITesting -ResetState -SeedData
+    static func seedRealisticData(engine: LunaEngine) {
+        let cal = Calendar.current
+        let today = Date()
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+
+        // ── User profile ─────────────────────────────────────────────────
+        let profile = UserProfile(
+            trackingMode: .regular,
+            contraception: .none,
+            pillReminderTime: "08:00",
+            notifPeriod: true,
+            notifFertile: true,
+            notifPill: false,
+            edd: nil,
+            calmMode: false,
+            healthSync: false
+        )
+        try? engine.setUserProfile(profile: profile)
+
+        // ── 6 complete cycles (realistic variation) ──────────────────────
+        let cycleLengths = [28, 30, 27, 29, 31, 28]
+        let periodLengths = [5, 4, 5, 6, 4, 5]
+
+        var cycleStart = cal.date(byAdding: .day, value: -180, to: today)!
+        var cycles: [(id: String, start: Date, end: Date, periodLen: Int)] = []
+
+        for i in 0..<6 {
+            let cycleLen = cycleLengths[i]
+            let periodLen = periodLengths[i]
+            let cycleEnd = cal.date(byAdding: .day, value: cycleLen - 1, to: cycleStart)!
+
+            let startStr = fmt.string(from: cycleStart)
+            if let cycle = try? engine.startCycle(startDate: startStr) {
+                let endStr = fmt.string(from: cycleEnd)
+                try? engine.endCycle(cycleId: cycle.id, endDate: endStr)
+                cycles.append((cycle.id, cycleStart, cycleEnd, periodLen))
+            }
+
+            cycleStart = cal.date(byAdding: .day, value: cycleLen, to: cycleStart)!
+        }
+
+        // ── Daily logs for each cycle ────────────────────────────────────
+        let menstrualSymptoms = ["cramps", "fatigue", "bloating", "lower_back_pain", "headache"]
+        let pmsSymptoms = ["breast_tenderness", "irritability", "low_mood", "water_retention", "acne", "cravings_sweet"]
+        let ovulatorySymptoms = ["high_energy", "high_libido", "mittelschmerz", "glowing_skin"]
+        let follicularSymptoms = ["motivation", "high_energy"]
+        let generalSymptoms = ["poor_sleep", "high_stress", "dizziness"]
+
+        let flows = ["heavy", "heavy", "medium", "light", "spotting"]
+
+        for cycle in cycles {
+            let cycleLen = cal.dateComponents([.day], from: cycle.start, to: cycle.end).day! + 1
+
+            for dayOffset in 0..<cycleLen {
+                guard let date = cal.date(byAdding: .day, value: dayOffset, to: cycle.start) else { continue }
+                // Skip future dates
+                if date > today { break }
+
+                let dateStr = fmt.string(from: date)
+                let day1 = dayOffset + 1
+
+                // Phase-appropriate data
+                var symptoms: [String] = []
+                var flow: String? = nil
+                var mood: UInt8 = 3
+                var energy: UInt8 = 3
+                var sleepQuality: UInt8 = 3
+                var bbt: Double? = nil
+                var cervicalMucus: String? = nil
+                var lhTest: String? = nil
+
+                if day1 <= cycle.periodLen {
+                    // Menstrual phase
+                    flow = day1 <= flows.count ? flows[day1 - 1] : "spotting"
+                    symptoms = Array(menstrualSymptoms.prefix(Int.random(in: 2...4)))
+                    mood = UInt8.random(in: 2...3)
+                    energy = UInt8.random(in: 1...3)
+                    sleepQuality = UInt8.random(in: 2...4)
+                    bbt = 36.2 + Double.random(in: -0.1...0.15)
+                    cervicalMucus = "dry"
+
+                } else if day1 <= 13 {
+                    // Follicular phase
+                    symptoms = Array(follicularSymptoms.prefix(Int.random(in: 0...2)))
+                    mood = UInt8.random(in: 3...5)
+                    energy = UInt8.random(in: 3...5)
+                    sleepQuality = UInt8.random(in: 3...5)
+                    bbt = 36.3 + Double.random(in: -0.1...0.1)
+                    cervicalMucus = day1 < 10 ? "sticky" : "creamy"
+
+                } else if day1 <= 16 {
+                    // Ovulatory phase
+                    symptoms = Array(ovulatorySymptoms.prefix(Int.random(in: 1...3)))
+                    mood = UInt8.random(in: 4...5)
+                    energy = UInt8.random(in: 4...5)
+                    sleepQuality = UInt8.random(in: 3...5)
+                    bbt = 36.6 + Double.random(in: 0.1...0.4)
+                    cervicalMucus = "egg_white"
+                    lhTest = day1 == 14 ? "peak" : "positive"
+
+                } else {
+                    // Luteal phase
+                    let daysBeforePeriod = cycleLen - day1
+                    if daysBeforePeriod <= 5 {
+                        symptoms = Array(pmsSymptoms.prefix(Int.random(in: 2...4)))
+                    }
+                    if Int.random(in: 0...3) == 0 {
+                        symptoms.append(generalSymptoms.randomElement()!)
+                    }
+                    mood = UInt8.random(in: 2...4)
+                    energy = UInt8.random(in: 2...4)
+                    sleepQuality = UInt8.random(in: 2...4)
+                    bbt = 36.5 + Double.random(in: 0.1...0.4)
+                    cervicalMucus = "sticky"
+                }
+
+                // Round BBT to 1 decimal
+                if let b = bbt { bbt = (b * 10).rounded() / 10 }
+
+                // Weight with slight variation
+                let weight = 62.0 + Double.random(in: -1.5...1.5)
+
+                let log = DailyLog(
+                    id: UUID().uuidString,
+                    date: dateStr,
+                    symptoms: symptoms,
+                    mood: mood,
+                    energy: energy,
+                    bbt: bbt,
+                    lhTest: lhTest,
+                    cervicalMucus: cervicalMucus,
+                    sexualActivity: Int.random(in: 0...5) == 0 ? "protected" : nil,
+                    flow: flow,
+                    sleepQuality: sleepQuality,
+                    weightKg: (weight * 10).rounded() / 10,
+                    notes: nil
+                )
+                try? engine.logDay(log: log)
+            }
+        }
+
+        // ── 7th cycle: CURRENT (open, no end_date) ─────────────────────
+        // Starts right after cycle 6 ends, so today falls mid-cycle
+        let currentCycleStart = cycleStart // this is where cycle 7 would start
+        let currentStartStr = fmt.string(from: currentCycleStart)
+        let currentCycle = try? engine.startCycle(startDate: currentStartStr)
+        // Don't end it — this is the active cycle
+
+        // Log days for the current cycle up to today
+        if currentCycle != nil {
+            let daysSinceStart = cal.dateComponents([.day], from: currentCycleStart, to: today).day ?? 0
+            let currentPeriodLen = 5
+
+            for dayOffset in 0...daysSinceStart {
+                guard let date = cal.date(byAdding: .day, value: dayOffset, to: currentCycleStart) else { continue }
+                let dateStr = fmt.string(from: date)
+                let day1 = dayOffset + 1
+
+                var symptoms: [String] = []
+                var flow: String? = nil
+                var mood: UInt8 = 3
+                var energy: UInt8 = 3
+                var sleepQuality: UInt8 = 3
+                var bbt: Double? = nil
+
+                if day1 <= currentPeriodLen {
+                    flow = day1 <= flows.count ? flows[day1 - 1] : "spotting"
+                    symptoms = Array(menstrualSymptoms.prefix(Int.random(in: 2...4)))
+                    mood = UInt8.random(in: 2...3)
+                    energy = UInt8.random(in: 1...3)
+                    bbt = 36.2 + Double.random(in: -0.1...0.15)
+                } else if day1 <= 13 {
+                    symptoms = Array(follicularSymptoms.prefix(Int.random(in: 0...2)))
+                    mood = UInt8.random(in: 3...5)
+                    energy = UInt8.random(in: 3...5)
+                    bbt = 36.3 + Double.random(in: -0.1...0.1)
+                } else {
+                    symptoms = Array(ovulatorySymptoms.prefix(Int.random(in: 1...3)))
+                    mood = UInt8.random(in: 4...5)
+                    energy = UInt8.random(in: 4...5)
+                    bbt = 36.6 + Double.random(in: 0.1...0.4)
+                }
+
+                if let b = bbt { bbt = (b * 10).rounded() / 10 }
+
+                let log = DailyLog(
+                    id: UUID().uuidString,
+                    date: dateStr,
+                    symptoms: symptoms,
+                    mood: mood,
+                    energy: energy,
+                    bbt: bbt,
+                    lhTest: nil,
+                    cervicalMucus: nil,
+                    sexualActivity: nil,
+                    flow: flow,
+                    sleepQuality: sleepQuality,
+                    weightKg: (62.0 + Double.random(in: -1.0...1.0) * 10).rounded() / 10,
+                    notes: nil
+                )
+                try? engine.logDay(log: log)
+            }
+        }
+
+        let totalDays = cal.dateComponents([.day], from: cal.date(byAdding: .day, value: -180, to: today)!, to: today).day ?? 0
+        NSLog("[LUNA SEED] ✅ Seeded 6 complete cycles + 1 current cycle + ~\(totalDays) daily logs")
+    }
+    #endif
 }

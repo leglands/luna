@@ -385,7 +385,7 @@ struct ExpectedSymptomsCard: View {
         VStack(alignment: .leading, spacing: 8) {
             Text("expected_symptoms_title")
                 .font(.subheadline.bold())
-            Text("symptoms_for_phase_\(phase)")
+            Text(NSLocalizedString("symptoms_for_phase_\(phase)", comment: ""))
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
