@@ -33,14 +33,21 @@ struct LogSheetView: View {
     @State private var showSavedFeedback: Bool = false
     @State private var showSaveError: Bool = false
 
-    // Empathic UX: edit indicator + undo + discard
+    // Empathic UX: edit indicator + undo + discard + draft recovery
     @State private var isEditing: Bool = false
     @State private var previousLog: DailyLog? = nil
     @State private var isDirty: Bool = false
     @State private var showDiscardConfirm: Bool = false
+    @State private var showDraftRecovery: Bool = false
 
     // Undo callback — parent view shows UndoToast
     var onSaveWithUndo: ((_ undoAction: @escaping () -> Void) -> Void)? = nil
+
+    private var draftKey: String {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+        return "draft_log_\(fmt.string(from: date))"
+    }
 
     // Symptômes rapides affichés en surface (les plus courants)
     private let quickSymptoms = [
@@ -153,7 +160,7 @@ struct LogSheetView: View {
                 Text("log_save_error_message")
             }
             .confirmationDialog("discard_changes_title", isPresented: $showDiscardConfirm, titleVisibility: .visible) {
-                Button("discard_changes_confirm", role: .destructive) { dismiss() }
+                Button("discard_changes_confirm", role: .destructive) { clearDraft(); dismiss() }
                 Button("cancel_button", role: .cancel) { }
             } message: {
                 Text("discard_changes_message")
@@ -197,15 +204,21 @@ struct LogSheetView: View {
         }
         .animation(reduceMotion ? .none : .easeOut(duration: 0.3), value: showSavedFeedback)
         .onAppear { loadExistingLog() }
-        .onChange(of: selectedSymptoms) { _ in isDirty = true }
-        .onChange(of: mood) { _ in isDirty = true }
-        .onChange(of: energy) { _ in isDirty = true }
-        .onChange(of: flow) { _ in isDirty = true }
-        .onChange(of: notes) { _ in isDirty = true }
-        .onChange(of: bbt) { _ in isDirty = true }
+        .onChange(of: selectedSymptoms) { _ in isDirty = true; saveDraft() }
+        .onChange(of: mood) { _ in isDirty = true; saveDraft() }
+        .onChange(of: energy) { _ in isDirty = true; saveDraft() }
+        .onChange(of: flow) { _ in isDirty = true; saveDraft() }
+        .onChange(of: notes) { _ in isDirty = true; saveDraft() }
+        .onChange(of: bbt) { _ in isDirty = true; saveDraft() }
+        .alert("draft_recovery_title", isPresented: $showDraftRecovery) {
+            Button("draft_recovery_restore") { restoreDraft() }
+            Button("draft_recovery_discard", role: .destructive) { clearDraft() }
+        } message: {
+            Text("draft_recovery_message")
+        }
     }
 
-    /// Load existing log for this date (edit mode) or start fresh (create mode)
+    /// Load existing log for this date (edit mode), check for draft, or start fresh
     private func loadExistingLog() {
         guard let engine = appState.engine else { return }
         let fmt = DateFormatter()
@@ -221,8 +234,40 @@ struct LogSheetView: View {
             flow = existing.flow ?? "none"
             notes = existing.notes ?? ""
             if let b = existing.bbt { bbt = String(format: "%.2f", b) }
-            isDirty = false  // just loaded, not dirty yet
+            isDirty = false
+        } else if UserDefaults.standard.dictionary(forKey: draftKey) != nil {
+            // Draft exists for this date — ask user
+            showDraftRecovery = true
         }
+    }
+
+    // MARK: - Draft Recovery
+
+    private func saveDraft() {
+        let draft: [String: Any] = [
+            "symptoms": Array(selectedSymptoms),
+            "mood": mood,
+            "energy": energy,
+            "flow": flow,
+            "notes": notes,
+            "bbt": bbt
+        ]
+        UserDefaults.standard.set(draft, forKey: draftKey)
+    }
+
+    private func restoreDraft() {
+        guard let draft = UserDefaults.standard.dictionary(forKey: draftKey) else { return }
+        if let s = draft["symptoms"] as? [String] { selectedSymptoms = Set(s) }
+        if let m = draft["mood"] as? Int { mood = m }
+        if let e = draft["energy"] as? Int { energy = e }
+        if let f = draft["flow"] as? String { flow = f }
+        if let n = draft["notes"] as? String { notes = n }
+        if let b = draft["bbt"] as? String { bbt = b }
+        isDirty = true
+    }
+
+    private func clearDraft() {
+        UserDefaults.standard.removeObject(forKey: draftKey)
     }
 
     private func save() async {
@@ -252,6 +297,7 @@ struct LogSheetView: View {
 
         do {
             try engine.logDay(log: log)
+            clearDraft()
             let generator = UIImpactFeedbackGenerator(style: .medium)
             generator.impactOccurred()
             showSavedFeedback = true
