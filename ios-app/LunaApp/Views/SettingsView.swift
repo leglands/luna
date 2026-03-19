@@ -406,7 +406,7 @@ struct ShareSheet: UIViewControllerRepresentable {
     func updateUIViewController(_ uvc: UIActivityViewController, context: Context) {}
 }
 
-// MARK: - ProfileEditView (stub)
+// MARK: - ProfileEditView
 
 struct ProfileEditView: View {
     @EnvironmentObject var appState: AppState
@@ -432,15 +432,35 @@ struct ProfileEditView: View {
     }
 }
 
-// MARK: - HealthKitSettingsView (stub)
+// MARK: - HealthKitSettingsView
 
 struct HealthKitSettingsView: View {
-    @State private var syncEnabled: Bool = false
+    @EnvironmentObject var appState: AppState
 
     var body: some View {
         Form {
             Section {
-                Toggle("settings_health_sync_toggle", isOn: $syncEnabled)
+                Toggle("settings_health_sync_toggle", isOn: Binding(
+                    get: { appState.healthSyncEnabled },
+                    set: { newVal in
+                        appState.healthSyncEnabled = newVal
+                        if let engine = appState.engine,
+                           var profile = try? engine.getUserProfile() {
+                            profile = UserProfile(
+                                trackingMode: profile.trackingMode,
+                                contraception: profile.contraception,
+                                pillReminderTime: profile.pillReminderTime,
+                                notifPeriod: profile.notifPeriod,
+                                notifFertile: profile.notifFertile,
+                                notifPill: profile.notifPill,
+                                edd: profile.edd,
+                                calmMode: profile.calmMode,
+                                healthSync: newVal
+                            )
+                            try? engine.setUserProfile(profile: profile)
+                        }
+                    }
+                ))
             } footer: {
                 Text("settings_health_sync_footer")
             }

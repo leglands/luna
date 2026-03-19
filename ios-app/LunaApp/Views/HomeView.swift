@@ -34,7 +34,7 @@ struct HomeView: View {
                             .padding(.horizontal)
                     } else {
                         // ── Cycle progress donut ──────────────────────────
-                        CycleProgressWidget(prediction: vm.prediction, currentDay: vm.currentCycleDay, periodLength: Int(appState.averagePeriodLength ?? 5))
+                        CycleProgressWidget(prediction: vm.prediction, currentDay: vm.currentCycleDay, periodLength: appState.averagePeriodLength.map { Int($0) })
                             .padding(.horizontal)
                             .animation(reduceMotion ? .none : .spring(response: 0.5), value: vm.currentCycleDay)
 
@@ -230,7 +230,7 @@ struct SegmentedCycleRing: View {
 struct CycleProgressWidget: View {
     let prediction: Prediction?
     let currentDay: Int
-    var periodLength: Int = 5
+    var periodLength: Int?
 
     private static let isoFmt: ISO8601DateFormatter = {
         let f = ISO8601DateFormatter(); f.formatOptions = [.withFullDate]; return f
@@ -238,35 +238,45 @@ struct CycleProgressWidget: View {
 
     var body: some View {
         VStack(spacing: 12) {
-            ZStack {
-                // Anneau segmenté jours du cycle
-                SegmentedCycleRing(
-                    totalDays: cycleLength,
-                    currentDay: currentDay,
-                    menstrualEnd: periodLength,
-                    fertileStart: fertileStartDay,
-                    fertileEnd: fertileEndDay,
-                    ovulationCycleDay: ovulationCycleDay
-                )
-
-                // Texte central
-                VStack(spacing: 4) {
-                    Text("cycle_day_label \(currentDay)")
-                        .font(.title2.bold())
-                    Text(phaseLabel)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                }
-            }
-            .frame(width: 160, height: 160)
-            .accessibilityElement(children: .ignore)
-            .accessibilityLabel(accessibilityDescription)
-
             if let prediction {
+                ZStack {
+                    SegmentedCycleRing(
+                        totalDays: cycleLength(prediction),
+                        currentDay: currentDay,
+                        menstrualEnd: periodLength ?? Int(prediction.currentCycleDay),
+                        fertileStart: fertileStartDay(prediction),
+                        fertileEnd: fertileEndDay(prediction),
+                        ovulationCycleDay: ovulationCycleDay(prediction)
+                    )
+
+                    VStack(spacing: 4) {
+                        Text("cycle_day_label \(currentDay)")
+                            .font(.title2.bold())
+                        Text(phaseLabel(prediction))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .frame(width: 160, height: 160)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(accessibilityDescription)
+
                 Text("next_period_in \(daysUntilNext(prediction))")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
+            } else {
+                // No data yet — show empty state
+                VStack(spacing: 8) {
+                    Image(systemName: "circle.dashed")
+                        .font(.system(size: 48))
+                        .foregroundStyle(.secondary)
+                    Text("cycle_no_data")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+                .frame(width: 160, height: 160)
+                .accessibilityLabel(NSLocalizedString("cycle_no_data_a11y", comment: ""))
             }
         }
         .padding(20)
@@ -280,30 +290,25 @@ struct CycleProgressWidget: View {
         return Calendar.current.dateComponents([.day], from: .now, to: target).day ?? 0
     }
 
-    private var cycleLength: Int {
-        guard let p = prediction else { return 28 }
-        return max(currentDay + max(daysUntilNext(p), 1), 20)
+    private func cycleLength(_ p: Prediction) -> Int {
+        max(currentDay + max(daysUntilNext(p), 1), 20)
     }
 
-    private var fertileStartDay: Int {
-        guard let p = prediction else { return 10 }
-        return max(currentDay + daysDiff(to: p.fertileWindowStart), 1)
+    private func fertileStartDay(_ p: Prediction) -> Int {
+        max(currentDay + daysDiff(to: p.fertileWindowStart), 1)
     }
 
-    private var fertileEndDay: Int {
-        guard let p = prediction else { return 16 }
-        return max(currentDay + daysDiff(to: p.fertileWindowEnd), fertileStartDay)
+    private func fertileEndDay(_ p: Prediction) -> Int {
+        max(currentDay + daysDiff(to: p.fertileWindowEnd), fertileStartDay(p))
     }
 
-    private var ovulationCycleDay: Int? {
-        guard let p = prediction, let ov = p.ovulationDay else { return nil }
+    private func ovulationCycleDay(_ p: Prediction) -> Int? {
+        guard let ov = p.ovulationDay else { return nil }
         let d = currentDay + daysDiff(to: ov)
         return d > 0 ? d : nil
     }
 
-    private var phaseLabel: String {
-        guard let p = prediction else { return "" }
-        // Use Rust-computed phase (accurate, uses last_period_start + avg_cycle)
+    private func phaseLabel(_ p: Prediction) -> String {
         switch p.currentPhase {
         case "menstrual": return NSLocalizedString("phase_menstrual", comment: "")
         case "follicular": return NSLocalizedString("phase_follicular", comment: "")

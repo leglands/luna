@@ -55,6 +55,7 @@ final class AppState: ObservableObject {
     @Published var calmMode: Bool {
         didSet { defaults.set(calmMode, forKey: "calm_mode") }
     }
+    @Published var healthSyncEnabled: Bool = false
 
     // ── Données cycle (pour CalendarView) ──────────────────────────────────
     @Published var cycleEvents: [String: CycleEventType] = [:]
@@ -143,6 +144,11 @@ final class AppState: ObservableObject {
         if let summary = try? engine.getCycleSummary() {
             averageCycleLength = summary.averageCycleLength
             averagePeriodLength = summary.averagePeriodLength
+        }
+
+        // ── Profile-driven state ─────────────────────────────────────────
+        if let profile = try? engine.getUserProfile() {
+            healthSyncEnabled = profile.healthSync
         }
 
         // ── Cycle length history (for bar chart) ─────────────────────────
