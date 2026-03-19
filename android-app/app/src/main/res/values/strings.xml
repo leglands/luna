@@ -51,6 +51,7 @@
     <string name="symptom_migraine">Migraine</string>
     <string name="symptom_hot_flash">Hot flash</string>
     <string name="symptom_night_sweats">Night sweats</string>
+    <string name="symptom_vaginal_dryness">Vaginal dryness</string>
     <string name="bbt_label">Basal body temperature (BBT)</string>
     <string name="bbt_hint">Measured upon waking, before any movement</string>
     <string name="bbt_placeholder">36.7</string>
@@ -159,7 +160,6 @@
     <string name="nausea_label">Nausea level</string>
     <string name="nausea_slider_a11y">Nausea level from 0 to 5</string>
     <string name="weight_label">Weight</string>
-    <string name="notes_label">Notes</string>
     <string name="symptom_logged_a11y">Symptom logged</string>
 
     <!-- Perimenopause Dashboard -->
