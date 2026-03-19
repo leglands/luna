@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- LUNA launcher icon background — plum-600 circle -->
+<!-- LUNA launcher icon background — pink-600 circle (aligned with iOS) -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <solid android:color="#7B18C9"/>
+    <solid android:color="#D81B60"/>
 </shape>

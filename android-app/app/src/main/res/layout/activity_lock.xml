@@ -6,33 +6,44 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@color/luna_neutral_950"
     android:padding="32dp">
 
     <!-- Logo -->
     <ImageView
-        android:layout_width="72dp"
-        android:layout_height="72dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/ic_luna_moon"
+        android:tint="@color/luna_brand_primary"
         android:importantForAccessibility="no"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="12dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        android:textSize="32sp"
+        android:textSize="28sp"
         android:textStyle="bold"
-        android:layout_marginBottom="32dp"
+        android:textColor="@color/luna_neutral_50"
+        android:layout_marginBottom="8dp"
         android:importantForAccessibility="yes"
         android:accessibilityHeading="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lock_subtitle"
+        android:textSize="14sp"
+        android:textColor="@color/luna_neutral_400"
+        android:layout_marginBottom="32dp" />
 
     <!-- Message d'erreur -->
     <TextView
         android:id="@+id/error_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/holo_red_light"
+        android:textColor="@color/luna_rose_400"
         android:gravity="center"
         android:visibility="invisible"
         android:layout_marginBottom="16dp"
@@ -44,24 +55,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="24dp">
+        android:layout_marginBottom="32dp">
 
         <View android:id="@+id/dot1" android:layout_width="14dp" android:layout_height="14dp"
-            android:layout_margin="6dp" android:background="@android:color/darker_gray" />
+            android:layout_margin="6dp" android:background="@drawable/pin_dot_bg" />
         <View android:id="@+id/dot2" android:layout_width="14dp" android:layout_height="14dp"
-            android:layout_margin="6dp" android:background="@android:color/darker_gray" />
+            android:layout_margin="6dp" android:background="@drawable/pin_dot_bg" />
         <View android:id="@+id/dot3" android:layout_width="14dp" android:layout_height="14dp"
-            android:layout_margin="6dp" android:background="@android:color/darker_gray" />
+            android:layout_margin="6dp" android:background="@drawable/pin_dot_bg" />
         <View android:id="@+id/dot4" android:layout_width="14dp" android:layout_height="14dp"
-            android:layout_margin="6dp" android:background="@android:color/darker_gray" />
+            android:layout_margin="6dp" android:background="@drawable/pin_dot_bg" />
         <View android:id="@+id/dot5" android:layout_width="14dp" android:layout_height="14dp"
-            android:layout_margin="6dp" android:background="@android:color/darker_gray" />
+            android:layout_margin="6dp" android:background="@drawable/pin_dot_bg" />
         <View android:id="@+id/dot6" android:layout_width="14dp" android:layout_height="14dp"
-            android:layout_margin="6dp" android:background="@android:color/darker_gray" />
+            android:layout_margin="6dp" android:background="@drawable/pin_dot_bg" />
 
     </LinearLayout>
 
-    <!-- Section PIN (visible par défaut) -->
+    <!-- Section PIN -->
     <LinearLayout
         android:id="@+id/pin_section"
         android:layout_width="wrap_content"
@@ -70,27 +81,31 @@
 
         <!-- Rangée 1-2-3 -->
         <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
-            <Button android:id="@+id/btn1" android:layout_width="72dp" android:layout_height="72dp" android:text="1" android:textSize="22sp" android:layout_margin="4dp" />
-            <Button android:id="@+id/btn2" android:layout_width="72dp" android:layout_height="72dp" android:text="2" android:textSize="22sp" android:layout_margin="4dp" />
-            <Button android:id="@+id/btn3" android:layout_width="72dp" android:layout_height="72dp" android:text="3" android:textSize="22sp" android:layout_margin="4dp" />
+            <Button android:id="@+id/btn1" style="@style/Luna.PinButton" android:text="1" />
+            <Button android:id="@+id/btn2" style="@style/Luna.PinButton" android:text="2" />
+            <Button android:id="@+id/btn3" style="@style/Luna.PinButton" android:text="3" />
         </LinearLayout>
         <!-- Rangée 4-5-6 -->
         <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
-            <Button android:id="@+id/btn4" android:layout_width="72dp" android:layout_height="72dp" android:text="4" android:textSize="22sp" android:layout_margin="4dp" />
-            <Button android:id="@+id/btn5" android:layout_width="72dp" android:layout_height="72dp" android:text="5" android:textSize="22sp" android:layout_margin="4dp" />
-            <Button android:id="@+id/btn6" android:layout_width="72dp" android:layout_height="72dp" android:text="6" android:textSize="22sp" android:layout_margin="4dp" />
+            <Button android:id="@+id/btn4" style="@style/Luna.PinButton" android:text="4" />
+            <Button android:id="@+id/btn5" style="@style/Luna.PinButton" android:text="5" />
+            <Button android:id="@+id/btn6" style="@style/Luna.PinButton" android:text="6" />
         </LinearLayout>
         <!-- Rangée 7-8-9 -->
         <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
-            <Button android:id="@+id/btn7" android:layout_width="72dp" android:layout_height="72dp" android:text="7" android:textSize="22sp" android:layout_margin="4dp" />
-            <Button android:id="@+id/btn8" android:layout_width="72dp" android:layout_height="72dp" android:text="8" android:textSize="22sp" android:layout_margin="4dp" />
-            <Button android:id="@+id/btn9" android:layout_width="72dp" android:layout_height="72dp" android:text="9" android:textSize="22sp" android:layout_margin="4dp" />
+            <Button android:id="@+id/btn7" style="@style/Luna.PinButton" android:text="7" />
+            <Button android:id="@+id/btn8" style="@style/Luna.PinButton" android:text="8" />
+            <Button android:id="@+id/btn9" style="@style/Luna.PinButton" android:text="9" />
         </LinearLayout>
-        <!-- Rangée 0 -->
+        <!-- Rangée 0 + delete -->
         <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
             <View android:layout_width="72dp" android:layout_height="72dp" android:layout_margin="4dp" />
-            <Button android:id="@+id/btn0" android:layout_width="72dp" android:layout_height="72dp" android:text="0" android:textSize="22sp" android:layout_margin="4dp" />
-            <Button android:id="@+id/btnDelete" android:layout_width="72dp" android:layout_height="72dp" android:text="" android:textSize="22sp" android:layout_margin="4dp" />
+            <Button android:id="@+id/btn0" style="@style/Luna.PinButton" android:text="0" />
+            <ImageButton android:id="@+id/btnDelete" style="@style/Luna.PinButton"
+                android:src="@android:drawable/ic_input_delete"
+                android:tint="@color/luna_neutral_50"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/pin_delete_a11y" />
         </LinearLayout>
 
     </LinearLayout>

@@ -80,6 +80,7 @@
     <string name="panic_wipe_done_a11y">All data has been deleted</string>
     <string name="lock_biometric_title">Luna</string>
     <string name="lock_biometric_subtitle">Unlock to access your data</string>
+    <string name="lock_subtitle">Enter your PIN to unlock</string>
     <string name="lock_use_pin">Use PIN</string>
     <string name="lock_wrong_pin">Incorrect PIN</string>
     <string name="lock_max_attempts">Too many attempts. Please try again later.</string>

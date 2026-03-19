@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PIN dot — gray circle when empty, accent pink when filled (activated) -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_activated="true">
+        <shape android:shape="oval">
+            <solid android:color="@color/luna_brand_primary" />
+            <size android:width="14dp" android:height="14dp" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/luna_neutral_600" />
+            <size android:width="14dp" android:height="14dp" />
+        </shape>
+    </item>
+</selector>

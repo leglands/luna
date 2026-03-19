@@ -41,6 +41,7 @@
         <activity
             android:name=".ui.LockActivity"
             android:exported="true"
+            android:theme="@style/Theme.Luna.Lock"
             android:windowSoftInputMode="adjustResize"
             android:configChanges="locale|layoutDirection|fontScale">
             <intent-filter>

@@ -9,11 +9,11 @@
 
     <style name="Theme.Luna" parent="Theme.Material3.DayNight.NoActionBar">
 
-        <!-- Primary brand — plum-500 -->
-        <item name="colorPrimary">@color/luna_plum_500</item>
+        <!-- Primary brand — pink-500 (aligned with iOS #E91E63) -->
+        <item name="colorPrimary">@color/luna_pink_500</item>
         <item name="colorOnPrimary">@color/luna_neutral_0</item>
-        <item name="colorPrimaryContainer">@color/luna_plum_100</item>
-        <item name="colorOnPrimaryContainer">@color/luna_plum_900</item>
+        <item name="colorPrimaryContainer">@color/luna_pink_100</item>
+        <item name="colorOnPrimaryContainer">@color/luna_pink_900</item>
 
         <!-- Secondary — amber -->
         <item name="colorSecondary">@color/luna_amber_500</item>
@@ -53,8 +53,8 @@
         <!-- Typography — system default (no custom font dependency) -->
         <item name="android:fontFamily">sans-serif</item>
 
-        <!-- Touch ripple — plum tinted -->
-        <item name="colorControlHighlight">@color/luna_plum_100</item>
+        <!-- Touch ripple — pink tinted -->
+        <item name="colorControlHighlight">@color/luna_pink_100</item>
 
         <!-- Bottom navigation -->
         <item name="bottomNavigationStyle">@style/Luna.BottomNavigation</item>
@@ -74,6 +74,21 @@
         <item name="colorOnBackground">@color/luna_neutral_50</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:statusBarColor">@color/luna_neutral_950</item>
+    </style>
+
+    <!-- PIN pad circular buttons (lock screen) -->
+    <style name="Luna.PinButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:layout_width">72dp</item>
+        <item name="android:layout_height">72dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/luna_neutral_50</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="cornerRadius">36dp</item>
+        <item name="backgroundTint">@color/luna_neutral_800</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:minWidth">48dp</item>
     </style>
 
     <!-- Settings activity -->

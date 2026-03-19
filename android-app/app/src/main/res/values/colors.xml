@@ -13,7 +13,20 @@
 <resources>
 
     <!-- ── Primitive Palette ─────────────────────────────────────────────── -->
-    <!-- Plum (primary brand) -->
+    <!-- Pink (primary brand — aligned with iOS AccentPrimary) -->
+    <color name="luna_pink_50">#FCE4EC</color>
+    <color name="luna_pink_100">#F8BBD0</color>
+    <color name="luna_pink_200">#F48FB1</color>
+    <color name="luna_pink_300">#F06292</color>
+    <color name="luna_pink_400">#FF4081</color>
+    <color name="luna_pink_500">#E91E63</color>
+    <color name="luna_pink_600">#D81B60</color>
+    <color name="luna_pink_700">#C2185B</color>
+    <color name="luna_pink_800">#AD1457</color>
+    <color name="luna_pink_900">#880E4F</color>
+    <color name="luna_pink_950">#560027</color>
+
+    <!-- Plum (secondary, kept for accents) -->
     <color name="luna_plum_50">#F2E8FD</color>
     <color name="luna_plum_100">#E1CCFB</color>
     <color name="luna_plum_200">#C59CF7</color>
@@ -69,9 +82,9 @@
     <color name="luna_content_secondary">@color/luna_neutral_500</color>
     <color name="luna_content_inverse">@color/luna_neutral_0</color>
 
-    <color name="luna_brand_primary">@color/luna_plum_500</color>
+    <color name="luna_brand_primary">@color/luna_pink_500</color>
     <color name="luna_brand_secondary">@color/luna_amber_500</color>
-    <color name="luna_brand_accent">@color/luna_coral_500</color>
+    <color name="luna_brand_accent">@color/luna_plum_500</color>
     <color name="luna_brand_success">@color/luna_sage_500</color>
 
     <!-- Phase colors (light mode defaults) -->
@@ -86,15 +99,15 @@
     <color name="luna_status_warning">@color/luna_amber_600</color>
     <!-- Never use danger color in zh/ja/ko — use warning instead -->
     <color name="luna_status_danger">@color/luna_rose_500</color>
-    <color name="luna_status_info">@color/luna_plum_500</color>
+    <color name="luna_status_info">@color/luna_pink_500</color>
 
     <!-- Interactive -->
-    <color name="luna_interactive_default">@color/luna_plum_500</color>
-    <color name="luna_interactive_hover">@color/luna_plum_600</color>
+    <color name="luna_interactive_default">@color/luna_pink_500</color>
+    <color name="luna_interactive_hover">@color/luna_pink_600</color>
     <color name="luna_interactive_disabled">#33000000</color>
 
     <!-- Border -->
     <color name="luna_border_default">@color/luna_neutral_200</color>
-    <color name="luna_border_focus">@color/luna_plum_500</color>
+    <color name="luna_border_focus">@color/luna_pink_500</color>
 
 </resources>

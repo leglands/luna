@@ -46,6 +46,16 @@ class LockActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // First launch → redirect to onboarding (no PIN exists yet)
+        val prefs = getSharedPreferences("luna_prefs", Context.MODE_PRIVATE)
+        if (!prefs.getBoolean("onboarding_done", false)) {
+            startActivity(Intent(this, OnboardingActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
+            finish()
+            return
+        }
+
         binding = ActivityLockBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
