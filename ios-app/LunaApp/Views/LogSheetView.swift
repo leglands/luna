@@ -33,6 +33,15 @@ struct LogSheetView: View {
     @State private var showSavedFeedback: Bool = false
     @State private var showSaveError: Bool = false
 
+    // Empathic UX: edit indicator + undo + discard
+    @State private var isEditing: Bool = false
+    @State private var previousLog: DailyLog? = nil
+    @State private var isDirty: Bool = false
+    @State private var showDiscardConfirm: Bool = false
+
+    // Undo callback — parent view shows UndoToast
+    var onSaveWithUndo: ((_ undoAction: @escaping () -> Void) -> Void)? = nil
+
     // Symptômes rapides affichés en surface (les plus courants)
     private let quickSymptoms = [
         "cramps", "bloating", "fatigue", "headache",
@@ -136,19 +145,32 @@ struct LogSheetView: View {
                 }
                 .padding(.top, 20)
             }
-            .navigationTitle("log_sheet_title")
+            .navigationTitle(isEditing ? "log_editing_title" : "log_sheet_title")
             .navigationBarTitleDisplayMode(.inline)
             .alert("log_save_error_title", isPresented: $showSaveError) {
                 Button("ok_button", role: .cancel) { }
             } message: {
                 Text("log_save_error_message")
             }
+            .confirmationDialog("discard_changes_title", isPresented: $showDiscardConfirm, titleVisibility: .visible) {
+                Button("discard_changes_confirm", role: .destructive) { dismiss() }
+                Button("cancel_button", role: .cancel) { }
+            } message: {
+                Text("discard_changes_message")
+            }
+            .interactiveDismissDisabled(isDirty)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("cancel_button") { dismiss() }
+                    Button("cancel_button") {
+                        if isDirty {
+                            showDiscardConfirm = true
+                        } else {
+                            dismiss()
+                        }
+                    }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("save_button") {
+                    Button(isEditing ? "update_button" : "save_button") {
                         Task { await save() }
                     }
                     .disabled(isSaving)
@@ -174,6 +196,33 @@ struct LogSheetView: View {
             }
         }
         .animation(reduceMotion ? .none : .easeOut(duration: 0.3), value: showSavedFeedback)
+        .onAppear { loadExistingLog() }
+        .onChange(of: selectedSymptoms) { _ in isDirty = true }
+        .onChange(of: mood) { _ in isDirty = true }
+        .onChange(of: energy) { _ in isDirty = true }
+        .onChange(of: flow) { _ in isDirty = true }
+        .onChange(of: notes) { _ in isDirty = true }
+        .onChange(of: bbt) { _ in isDirty = true }
+    }
+
+    /// Load existing log for this date (edit mode) or start fresh (create mode)
+    private func loadExistingLog() {
+        guard let engine = appState.engine else { return }
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+        let dateStr = fmt.string(from: date)
+
+        if let existing = try? engine.getLog(date: dateStr) {
+            isEditing = true
+            previousLog = existing
+            selectedSymptoms = Set(existing.symptoms)
+            mood = existing.mood.map { Int($0) } ?? 0
+            energy = existing.energy.map { Int($0) } ?? 0
+            flow = existing.flow ?? "none"
+            notes = existing.notes ?? ""
+            if let b = existing.bbt { bbt = String(format: "%.2f", b) }
+            isDirty = false  // just loaded, not dirty yet
+        }
     }
 
     private func save() async {
@@ -185,7 +234,7 @@ struct LogSheetView: View {
         fmt.dateFormat = "yyyy-MM-dd"
         let dateStr = fmt.string(from: date)
 
-        var log = DailyLog(
+        let log = DailyLog(
             id: UUID().uuidString,
             date: dateStr,
             symptoms: Array(selectedSymptoms),
@@ -203,16 +252,26 @@ struct LogSheetView: View {
 
         do {
             try engine.logDay(log: log)
-            // Peak-End Rule : feedback positif après sauvegarde
             let generator = UIImpactFeedbackGenerator(style: .medium)
             generator.impactOccurred()
             showSavedFeedback = true
-            try? await Task.sleep(nanoseconds: 600_000_000) // 0.6s pour voir le feedback
-            // Annonce d'accessibilité après sauvegarde
+            try? await Task.sleep(nanoseconds: 600_000_000)
             UIAccessibility.post(
                 notification: .announcement,
                 argument: NSLocalizedString("log_saved_a11y", comment: "")
             )
+
+            // Provide undo capability to parent
+            let savedPreviousLog = previousLog
+            onSaveWithUndo?({
+                // Undo: restore previous log or delete if new
+                if let prev = savedPreviousLog {
+                    try? engine.logDay(log: prev)
+                }
+                // Refresh cycle data after undo
+                Task { await appState.refreshCycleData() }
+            })
+
             dismiss()
         } catch {
             await MainActor.run { showSaveError = true }

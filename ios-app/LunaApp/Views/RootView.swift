@@ -61,6 +61,9 @@ struct RootView: View {
 // MARK: - MainTabView
 
 struct MainTabView: View {
+    @EnvironmentObject var appState: AppState
+    @State private var showFeatureTour = false
+
     var body: some View {
         TabView {
             HomeView()
@@ -92,5 +95,15 @@ struct MainTabView: View {
                 .tag("settings")
         }
         .tint(Color("AccentPrimary"))
+        .onAppear {
+            if !appState.hasSeenFeatureTour {
+                showFeatureTour = true
+            }
+        }
+        .fullScreenCover(isPresented: $showFeatureTour) {
+            FeatureTourView {
+                appState.hasSeenFeatureTour = true
+            }
+        }
     }
 }

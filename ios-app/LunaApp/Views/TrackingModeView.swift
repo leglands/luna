@@ -40,8 +40,10 @@ extension TrackingMode {
 struct TrackingModeView: View {
     @EnvironmentObject var appState: AppState
     @State private var selectedMode: TrackingMode = .regular
+    @State private var initialMode: TrackingMode = .regular
     @State private var edd: Date = Date()
     @State private var showEDDPicker = false
+    @State private var showModeConfirm = false
     @Environment(\.dismiss) private var dismiss
 
     private let modes: [(TrackingMode, String, String)] = [
@@ -103,13 +105,29 @@ struct TrackingModeView: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("save_button") {
-                        saveProfile()
-                        dismiss()
+                        let isMajorChange = selectedMode != initialMode &&
+                            (selectedMode == .pregnant || selectedMode == .perimenopause ||
+                             initialMode == .pregnant || initialMode == .perimenopause)
+                        if isMajorChange {
+                            showModeConfirm = true
+                        } else {
+                            saveProfile()
+                            dismiss()
+                        }
                     }
                 }
                 ToolbarItem(placement: .cancellationAction) {
                     Button("cancel_button") { dismiss() }
                 }
+            }
+            .confirmationDialog("confirm_tracking_mode_title", isPresented: $showModeConfirm, titleVisibility: .visible) {
+                Button("confirm_tracking_mode_confirm") {
+                    saveProfile()
+                    dismiss()
+                }
+                Button("cancel_button", role: .cancel) {}
+            } message: {
+                Text("confirm_tracking_mode_message")
             }
             .onAppear(perform: loadProfile)
         }
@@ -121,6 +139,7 @@ struct TrackingModeView: View {
             if let profile = try? engine.getUserProfile() {
                 await MainActor.run {
                     selectedMode = profile.trackingMode
+                    initialMode = profile.trackingMode
                     if let eddStr = profile.edd,
                        let d = ISO8601DateFormatter().date(from: eddStr) {
                         edd = d

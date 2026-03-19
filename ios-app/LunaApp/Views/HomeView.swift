@@ -21,6 +21,8 @@ struct HomeView: View {
     @StateObject private var vm = HomeViewModel()
     @State private var showLogSheet = false
     @State private var showPregnancyLog = false
+    @State private var showUndoToast = false
+    @State private var undoAction: (() -> Void)? = nil
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
@@ -86,14 +88,26 @@ struct HomeView: View {
                     .padding(.bottom, 16)
             }
             .sheet(isPresented: $showLogSheet) {
-                LogSheetView(date: Date())
-                    .presentationDetents([.medium, .large])
-                    .presentationDragIndicator(.visible)
+                LogSheetView(date: Date()) { undo in
+                    undoAction = undo
+                    showUndoToast = true
+                    Task {
+                        await vm.load(engine: appState.engine)
+                        await appState.refreshCycleData()
+                    }
+                }
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
             }
             .sheet(isPresented: $showPregnancyLog) {
                 PregnancyLogSheet(date: Date())
                     .presentationDetents([.large])
                     .environmentObject(appState)
+            }
+            .undoToast(isPresented: $showUndoToast, message: NSLocalizedString("undo_log_saved", comment: "")) {
+                undoAction?()
+                undoAction = nil
+                Task { await vm.load(engine: appState.engine) }
             }
             .task {
                 await vm.load(engine: appState.engine)

@@ -19,8 +19,10 @@
 		897EC1321D8A8C1A21028649 /* LunaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821EEFEE52106EEBC82C298C /* LunaUITests.swift */; };
 		8C2BDD2F02B6E7C559F0C5FE /* LunaServicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FCE9EBD23B9D56B8DFE644 /* LunaServicesTests.swift */; };
 		9610DA0B56D5D5B5D73F3379 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52623540E048FE13A4563A21 /* CloudKit.framework */; };
+		9D1BBB89CC4BE2AA2030ACD2 /* UndoToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA0AA4B394293CD8D2B6BA /* UndoToastView.swift */; };
 		A6806A9554463F2FFF749AD2 /* PerimenopauseDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5531F47798E94DB5A1490A /* PerimenopauseDashboardView.swift */; };
 		A8B8B584B5F333932BA02D1F /* TrackingModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102837199580CE13899B1BFC /* TrackingModeView.swift */; };
+		B3E7F85069D53772BC88F29A /* FeatureTourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A80A3B8AB73A67872A3C703 /* FeatureTourView.swift */; };
 		B5EC0110677DE00248224FB3 /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F9EB795651E29F4D40C3CE /* InsightsView.swift */; };
 		B94F0E6543E63807049CFA2C /* LunaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914FFDD94F8F144CC9770FE4 /* LunaApp.swift */; };
 		C179029FC96E50E3A3461004 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BA8534C61AB308F4960CD5 /* HomeView.swift */; };
@@ -61,6 +63,7 @@
 		100A0AECDEFF3DEA7303F3BB /* LunaApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LunaApp.entitlements; sourceTree = "<group>"; };
 		102837199580CE13899B1BFC /* TrackingModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingModeView.swift; sourceTree = "<group>"; };
 		127D155598873B7D48A9E086 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		1A80A3B8AB73A67872A3C703 /* FeatureTourView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureTourView.swift; sourceTree = "<group>"; };
 		1C4D9E018FAAF1D3F9323FFB /* LunaTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = LunaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E5DCD7730FD99A282388E13 /* ICloudSyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudSyncService.swift; sourceTree = "<group>"; };
 		1FC92CA309F3E3E1B491B953 /* LunaIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LunaIcons.swift; sourceTree = "<group>"; };
@@ -84,6 +87,7 @@
 		971DBB1CE53C346B5E17EF54 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		9FE78934C1502AE1AE0A2986 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		A8908907B6731F42285BE505 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		B1FA0AA4B394293CD8D2B6BA /* UndoToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoToastView.swift; sourceTree = "<group>"; };
 		B7F9EB795651E29F4D40C3CE /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
 		BA17C955E1B7D2F645802165 /* LogSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSheetView.swift; sourceTree = "<group>"; };
 		CF4F1D530B13DF5FA2F7E06E /* UserJourneyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserJourneyTests.swift; sourceTree = "<group>"; };
@@ -138,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				971DBB1CE53C346B5E17EF54 /* CalendarView.swift */,
+				1A80A3B8AB73A67872A3C703 /* FeatureTourView.swift */,
 				74BA8534C61AB308F4960CD5 /* HomeView.swift */,
 				B7F9EB795651E29F4D40C3CE /* InsightsView.swift */,
 				6878AAC48B5D9B0BAEBC5063 /* LockView.swift */,
@@ -148,6 +153,7 @@
 				2806FD6C7B23C5339FE48E02 /* RootView.swift */,
 				127D155598873B7D48A9E086 /* SettingsView.swift */,
 				102837199580CE13899B1BFC /* TrackingModeView.swift */,
+				F79F7C5595A0220F73387DF1 /* Components */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -223,6 +229,14 @@
 				06D7F716B081BDC93C413177 /* LunaTests.swift */,
 			);
 			path = LunaTests;
+			sourceTree = "<group>";
+		};
+		F79F7C5595A0220F73387DF1 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				B1FA0AA4B394293CD8D2B6BA /* UndoToastView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		FA83959789E2C0959454512A /* Products */ = {
@@ -313,6 +327,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
+				af,
 				am,
 				ar,
 				bg,
@@ -324,8 +339,10 @@
 				el,
 				en,
 				es,
+				eu,
 				fa,
 				fi,
+				fil,
 				fr,
 				he,
 				hi,
@@ -339,6 +356,7 @@
 				nb,
 				nl,
 				pl,
+				pt,
 				"pt-BR",
 				"pt-PT",
 				ro,
@@ -346,6 +364,7 @@
 				sk,
 				sv,
 				sw,
+				ta,
 				th,
 				tl,
 				tr,
@@ -397,6 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				72792192F33427A6ABF0168B /* CalendarView.swift in Sources */,
+				B3E7F85069D53772BC88F29A /* FeatureTourView.swift in Sources */,
 				37E3A763ECFE346CF20F3E49 /* HealthKitManager.swift in Sources */,
 				C179029FC96E50E3A3461004 /* HomeView.swift in Sources */,
 				DD7CBEBC424703B537A1953C /* HomeViewModel.swift in Sources */,
@@ -415,6 +435,7 @@
 				08466D2DD3E6E3BE78018AF2 /* RootView.swift in Sources */,
 				DB7FA5B5C139EDFC23DB14C5 /* SettingsView.swift in Sources */,
 				A8B8B584B5F333932BA02D1F /* TrackingModeView.swift in Sources */,
+				9D1BBB89CC4BE2AA2030ACD2 /* UndoToastView.swift in Sources */,
 				D6CC536F200330490B3F82BD /* luna_core.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -56,6 +56,9 @@ final class AppState: ObservableObject {
         didSet { defaults.set(calmMode, forKey: "calm_mode") }
     }
     @Published var healthSyncEnabled: Bool = false
+    @Published var hasSeenFeatureTour: Bool {
+        didSet { defaults.set(hasSeenFeatureTour, forKey: "has_seen_feature_tour") }
+    }
 
     // ── Données cycle (pour CalendarView) ──────────────────────────────────
     @Published var cycleEvents: [String: CycleEventType] = [:]
@@ -94,12 +97,14 @@ final class AppState: ObservableObject {
         userName = defaults.string(forKey: "user_name")
         lockEnabled = defaults.bool(forKey: "lock_enabled")
         calmMode = defaults.bool(forKey: "calm_mode")
+        hasSeenFeatureTour = defaults.bool(forKey: "has_seen_feature_tour")
 
         #if DEBUG
         // UI testing bypass: -UITesting argument auto-opens vault with PIN "123456"
         if ProcessInfo.processInfo.arguments.contains("-UITesting") {
             isOnboardingDone = true
             lockEnabled = false
+            hasSeenFeatureTour = true // Skip tour in UI tests
             if userName == nil { userName = "Luna" }
             let dbPath = AppState.sharedDbPath
             let debugFile = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("luna_debug.txt")

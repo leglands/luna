@@ -37,6 +37,10 @@ struct SettingsView: View {
     @State private var shareItems: [Any] = []
     @State private var iCloudSyncEnabled: Bool = UserDefaults.standard.bool(forKey: "icloud_sync_enabled")
 
+    // Empathic UX: confirmation dialogs
+    @State private var showLockDisableConfirm: Bool = false
+    @State private var showICloudConfirm: Bool = false
+
     var body: some View {
         NavigationStack {
             List {
@@ -61,15 +65,17 @@ struct SettingsView: View {
                     .accessibilityIdentifier("settings_lock_toggle")
                     .onChange(of: lockEnabled) { new in
                         if new {
-                            // Verify device auth is available before enabling
                             let ctx = LAContext()
                             var error: NSError?
                             if !ctx.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
                                 lockEnabled = false
                                 return
                             }
+                            appState.lockEnabled = true
+                        } else {
+                            // Confirm before disabling lock
+                            showLockDisableConfirm = true
                         }
-                        appState.lockEnabled = new
                     }
 
                     NavigationLink {
@@ -95,16 +101,10 @@ struct SettingsView: View {
                     .accessibilityIdentifier("settings_icloud_toggle")
                     .accessibilityHint(Text("settings_icloud_hint_a11y"))
                     .onChange(of: iCloudSyncEnabled) { enabled in
-                        UserDefaults.standard.set(enabled, forKey: "icloud_sync_enabled")
                         if enabled {
-                            Task {
-                                let available = await ICloudSyncService.shared.checkAccountStatus()
-                                if !available {
-                                    await MainActor.run { iCloudSyncEnabled = false }
-                                } else {
-                                    await ICloudSyncService.shared.performFullSync(engine: appState.engine, appState: appState)
-                                }
-                            }
+                            showICloudConfirm = true
+                        } else {
+                            UserDefaults.standard.set(false, forKey: "icloud_sync_enabled")
                         }
                     }
 
@@ -296,6 +296,18 @@ struct SettingsView: View {
                         .font(.caption)
                 }
 
+                // ── Help ─────────────────────────────────────────────
+                Section {
+                    Button {
+                        appState.hasSeenFeatureTour = false
+                    } label: {
+                        Label("settings_replay_tour", systemImage: "sparkles")
+                    }
+                    .accessibilityIdentifier("settings_replay_tour")
+                } header: {
+                    Text("settings_section_help")
+                }
+
             }
             .navigationTitle("tab_settings")
             .confirmationDialog(
@@ -309,6 +321,34 @@ struct SettingsView: View {
                 Button("cancel_button", role: .cancel) {}
             } message: {
                 Text("panic_wipe_confirm_message")
+            }
+            .confirmationDialog("confirm_lock_disable_title", isPresented: $showLockDisableConfirm, titleVisibility: .visible) {
+                Button("confirm_lock_disable_confirm", role: .destructive) {
+                    appState.lockEnabled = false
+                }
+                Button("cancel_button", role: .cancel) {
+                    lockEnabled = true  // revert toggle
+                }
+            } message: {
+                Text("confirm_lock_disable_message")
+            }
+            .confirmationDialog("confirm_icloud_sync_title", isPresented: $showICloudConfirm, titleVisibility: .visible) {
+                Button("confirm_icloud_sync_confirm") {
+                    UserDefaults.standard.set(true, forKey: "icloud_sync_enabled")
+                    Task {
+                        let available = await ICloudSyncService.shared.checkAccountStatus()
+                        if !available {
+                            await MainActor.run { iCloudSyncEnabled = false }
+                        } else {
+                            await ICloudSyncService.shared.performFullSync(engine: appState.engine, appState: appState)
+                        }
+                    }
+                }
+                Button("cancel_button", role: .cancel) {
+                    iCloudSyncEnabled = false  // revert toggle
+                }
+            } message: {
+                Text("confirm_icloud_sync_message")
             }
             .sheet(isPresented: $showExportSheet) {
                 ExportSheetView()
@@ -479,6 +519,7 @@ struct ChangePINView: View {
     @State private var confirmPIN: String = ""
     @State private var errorMessage: String?
     @State private var showSuccess: Bool = false
+    @State private var showConfirmDialog: Bool = false
 
     var body: some View {
         Form {
@@ -521,11 +562,19 @@ struct ChangePINView: View {
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("save_button") {
-                    changePIN()
+                    showConfirmDialog = true
                 }
                 .accessibilityIdentifier("save_pin_button")
                 .disabled(newPIN.count < 4 || newPIN != confirmPIN)
             }
+        }
+        .confirmationDialog("confirm_pin_change_title", isPresented: $showConfirmDialog, titleVisibility: .visible) {
+            Button("confirm_pin_change_confirm") {
+                changePIN()
+            }
+            Button("cancel_button", role: .cancel) {}
+        } message: {
+            Text("confirm_pin_change_message")
         }
     }
 
@@ -540,7 +589,6 @@ struct ChangePINView: View {
         }
         do {
             try appState.engine?.changePin(oldPin: currentPIN, newPin: newPIN)
-            // Update keychain
             let _ = KeychainService.shared.storePin(newPIN)
             showSuccess = true
             errorMessage = nil

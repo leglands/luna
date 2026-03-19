@@ -757,6 +757,13 @@ final class PregnancyModeE2ETests: XCTestCase {
         saveButton.tap()
         sleep(1)
 
+        // Confirmation dialog appears for major mode changes — confirm it
+        let confirmButton = app.buttons["Change Mode"]
+        if confirmButton.waitForExistence(timeout: 3) {
+            confirmButton.tap()
+            sleep(1)
+        }
+
         // Should return to Settings
         let settingsNav = app.navigationBars["Me"]
         XCTAssertTrue(settingsNav.waitForExistence(timeout: 3), "Should return to Settings after save")
@@ -829,6 +836,13 @@ final class PerimenopauseModeE2ETests: XCTestCase {
         XCTAssertTrue(saveButton.waitForExistence(timeout: 3))
         saveButton.tap()
         sleep(1)
+
+        // Confirmation dialog appears for major mode changes — confirm it
+        let confirmButton = app.buttons["Change Mode"]
+        if confirmButton.waitForExistence(timeout: 3) {
+            confirmButton.tap()
+            sleep(1)
+        }
 
         let settingsNav = app.navigationBars["Me"]
         XCTAssertTrue(settingsNav.waitForExistence(timeout: 3), "Should return to Settings after save")
