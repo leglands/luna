@@ -106,11 +106,12 @@ luna-core/src/
 ios-app/
   project.yml               xcodegen — regenerate xcodeproj if modified
   LunaApp/Generated/        DO NOT EDIT (luna_core.swift, .a, .modulemap)
-  LunaApp/Views/            11 SwiftUI views: RootView, HomeView, OnboardingView, CalendarView,
+  LunaApp/Views/            13 SwiftUI views: RootView, HomeView, OnboardingView, CalendarView,
                             InsightsView, LogSheetView, PregnancyLogSheet, SettingsView,
-                            TrackingModeView, LockView, PerimenopauseDashboardView
+                            TrackingModeView, LockView, PerimenopauseDashboardView,
+                            FeatureTourView, Components/UndoToastView
   LunaApp/ViewModels/       HomeViewModel (hasLoggedToday, prediction, trackingMode)
-  LunaApp/Resources/        Localizable.xcstrings (100+ keys, 40 langs)
+  LunaApp/Resources/        Localizable.xcstrings (403 keys, 40 langs)
   LunaApp/Services/         KeychainService, NotificationManager, HealthKitManager
   LunaTests/                14 unit tests (XCTest) — 2 files
   LunaUITests/              55 UI tests (XCUITest) — 2 files
@@ -179,6 +180,15 @@ DR: RTO N/A (local) · RPO = last backup · panic_wipe = irrecoverable (by desig
 19 OK · 10 FIXED · 1 TODO
 - **FIXED**: Fitts (44pt targets) · Hick (5-cat symptoms) · Peak-End (save feedback) · Zeigarnik (log badge) · Jakob (bottom tabs) · Doherty (loading spinner) · Postel (comma→dot) · Flow (haptic) · Cognitive Load (BBT tooltip) · Choice Overload (grouped symptoms)
 - **TODO**: Von Restorff (ovulation marker needs visual distinction in calendar)
+
+## EMPATHIC UX (Forgiveness + Undo + Draft Recovery)
+
+- **Feature Tour**: 5-step spotlight onboarding (cycle ring, log, calendar, insights, calm mode) · skippable · replayable from Settings
+- **Undo Toast**: 5s undo window after log save · countdown progress bar · restores previous log
+- **Edit Indicator**: "Edit Log" title + "Update" button when modifying existing log
+- **Draft Recovery**: Auto-save form to UserDefaults on change · "Continue Editing?" prompt on reopen · clear on save/discard
+- **Discard Warning**: `interactiveDismissDisabled(isDirty)` + confirmation dialog on cancel with unsaved changes
+- **Confirmation Dialogs**: PIN change (re-encryption) · Lock disable · iCloud sync enable · Tracking mode switch (pregnancy/perimenopause)
 
 ---
 
