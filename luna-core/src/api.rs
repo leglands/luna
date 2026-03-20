@@ -44,7 +44,28 @@ impl LunaEngine {
 
     /// Enregistre ou met à jour le log du jour.
     pub fn log_day(&self, log: DailyLog) -> Result<(), LunaError> {
-        self.db.lock().unwrap().upsert_log(&log)
+        let db = self.db.lock().unwrap();
+        db.upsert_log(&log)?;
+
+        // Auto-create cycle when period flow is logged
+        if log.has_period() {
+            if let Some(date) = log.date() {
+                let cycles = db.get_cycles(50)?;
+                let already_in_cycle = cycles.iter().any(|c| {
+                    if let Some(start) = c.start() {
+                        let diff = (date - start).num_days();
+                        (0..=14).contains(&diff)
+                    } else {
+                        false
+                    }
+                });
+                if !already_in_cycle {
+                    let cycle = Cycle::new(date);
+                    let _ = db.insert_cycle(&cycle);
+                }
+            }
+        }
+        Ok(())
     }
 
     /// Récupère le log d'une date donnée (ISO-8601).
