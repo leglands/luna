@@ -119,6 +119,24 @@
     <string name="onboarding_pin_mismatch">PINs do not match</string>
     <string name="onboarding_pin_too_short">PIN must be 6–8 digits</string>
 
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">First name (optional)</string>
+    <string name="onboarding_skip">Skip</string>
+    <string name="onboarding_period_duration_label">How long does your period usually last?</string>
+    <string name="onboarding_regularity_label">How regular is your cycle?</string>
+    <string name="regularity_very_regular">Very regular</string>
+    <string name="regularity_regular">Regular</string>
+    <string name="regularity_irregular">Irregular</string>
+    <string name="regularity_unknown">I don\'t know</string>
+    <string name="day_abbr">d</string>
+    <string name="goal_track">Track my cycle</string>
+    <string name="goal_understand_symptoms">Understand my symptoms</string>
+    <string name="goal_avoid_pregnancy">Avoid pregnancy</string>
+    <string name="goal_try_to_conceive">Try to conceive</string>
+    <string name="goal_track_pregnancy">Track pregnancy</string>
+    <string name="goal_perimenopause">Perimenopause</string>
+    <string name="creating_vault_loading">Creating your secure vault…</string>
+
     <!-- Notifications -->
     <string name="notif_channel_period">Cycle reminder</string>
     <string name="notif_channel_fertile">Fertile window</string>

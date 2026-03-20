@@ -56,6 +56,12 @@
         <!-- Touch ripple — pink tinted -->
         <item name="colorControlHighlight">@color/luna_pink_100</item>
 
+        <!-- Force pink accent on legacy widgets (DatePicker, CheckBox, RadioButton) -->
+        <item name="colorAccent">@color/luna_pink_500</item>
+        <item name="colorControlActivated">@color/luna_pink_500</item>
+        <item name="android:datePickerStyle">@style/Luna.DatePicker</item>
+        <item name="chipStyle">@style/Luna.Chip</item>
+
         <!-- Bottom navigation -->
         <item name="bottomNavigationStyle">@style/Luna.BottomNavigation</item>
 
@@ -93,6 +99,20 @@
 
     <!-- Settings activity -->
     <style name="Theme.Luna.Settings" parent="Theme.Luna">
+    </style>
+
+    <!-- DatePicker — pink header instead of amber -->
+    <style name="Luna.DatePicker" parent="android:Widget.Material.DatePicker">
+        <item name="android:headerBackground">@color/luna_pink_500</item>
+    </style>
+
+    <!-- Chip — outlined with pink selected state -->
+    <style name="Luna.Chip" parent="Widget.Material3.Chip.Suggestion">
+        <item name="chipBackgroundColor">@color/luna_neutral_100</item>
+        <item name="checkedIconEnabled">false</item>
+        <item name="chipStrokeColor">@color/luna_pink_500</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="android:textColor">@color/luna_neutral_900</item>
     </style>
 
 </resources>

@@ -1,34 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="24dp">
 
-    <!-- Barre de progression -->
+    <!-- Progress bar -->
     <ProgressBar
         android:id="@+id/onboarding_progress"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="8dp"
+        android:layout_height="4dp"
         android:max="100"
-        android:progress="20"
+        android:progress="25"
         android:progressTint="@color/luna_pink_500"
         android:progressBackgroundTint="@color/luna_neutral_200"
-        android:layout_marginBottom="32dp" />
+        android:layout_marginBottom="24dp" />
 
-    <!-- Icône -->
+    <!-- Icon -->
     <ImageView
-        android:layout_width="72dp"
-        android:layout_height="72dp"
+        android:id="@+id/onboarding_icon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/ic_luna_moon"
         android:tint="@color/luna_pink_500"
         android:importantForAccessibility="no"
         android:layout_marginBottom="16dp" />
 
-    <!-- Titre -->
+    <!-- Title -->
     <TextView
         android:id="@+id/onboarding_title"
         android:layout_width="match_parent"
@@ -39,65 +41,142 @@
         android:accessibilityHeading="true"
         android:layout_marginBottom="8dp" />
 
-    <!-- Sous-titre -->
+    <!-- Subtitle -->
     <TextView
         android:id="@+id/onboarding_subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="14sp"
-        android:layout_marginBottom="32dp" />
+        android:textColor="@color/luna_neutral_500"
+        android:layout_marginBottom="24dp" />
 
-    <!-- Section PIN — visible uniquement à l'étape 4 -->
-    <LinearLayout
-        android:id="@+id/pin_section"
+    <!-- Dynamic content area -->
+    <FrameLayout
+        android:id="@+id/onboarding_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <!-- Step 0: Name input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/name_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/onboarding_name_placeholder"
+            android:visibility="gone"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusTopStart="12dp">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:autofillHints="givenName" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Step 1: Date picker -->
+        <DatePicker
+            android:id="@+id/date_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:calendarViewShown="true"
+            android:spinnersShown="false"
+            android:datePickerMode="calendar"
+            android:visibility="gone" />
+
+        <!-- Step 2: Cycle profile (duration + regularity) -->
+        <ScrollView
+            android:id="@+id/cycle_profile_section"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/onboarding_period_duration_label"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/duration_chips"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true"
+                    app:selectionRequired="true"
+                    android:layout_marginBottom="24dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/onboarding_regularity_label"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
+
+                <RadioGroup
+                    android:id="@+id/regularity_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <!-- Step 3: Goals (checkboxes) -->
+        <ScrollView
+            android:id="@+id/goals_section"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+            <LinearLayout
+                android:id="@+id/goals_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </ScrollView>
+
+    </FrameLayout>
+
+    <!-- Loading overlay -->
+    <FrameLayout
+        android:id="@+id/loading_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:visibility="gone"
-        android:layout_marginBottom="16dp">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/pin_input_layout"
-            android:layout_width="match_parent"
+        android:background="@color/luna_neutral_50"
+        android:elevation="10dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/onboarding_pin_hint"
-            android:layout_marginBottom="12dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/pin_input"
-                android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ProgressBar
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:indeterminateTint="@color/luna_pink_500"
+                android:layout_marginBottom="16dp" />
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="numberPassword"
-                android:maxLength="8"
-                android:minWidth="200dp"
-                android:contentDescription="@string/onboarding_pin_hint" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:text="@string/creating_vault_loading"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </FrameLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/pin_confirm_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/onboarding_pin_confirm_hint"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/pin_confirm_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="numberPassword"
-                android:maxLength="8"
-                android:contentDescription="@string/onboarding_pin_confirm_hint" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
-
-    <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
-
-    <!-- Boutons navigation -->
+    <!-- Navigation buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp">
 
         <Button
             android:id="@+id/back_button"
@@ -105,7 +184,8 @@
             android:layout_height="48dp"
             android:text="@string/onboarding_back"
             android:visibility="invisible"
-            style="?android:attr/borderlessButtonStyle" />
+            android:textColor="@color/luna_neutral_500"
+            style="@style/Widget.Material3.Button.TextButton" />
 
         <View android:layout_width="0dp" android:layout_height="0dp" android:layout_weight="1" />
 
@@ -114,7 +194,9 @@
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:paddingHorizontal="32dp"
-            android:text="@string/onboarding_next_button" />
+            android:text="@string/onboarding_next_button"
+            app:cornerRadius="24dp"
+            app:backgroundTint="@color/luna_pink_500" />
 
     </LinearLayout>
 
