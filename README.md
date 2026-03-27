@@ -31,6 +31,17 @@
 > LUNA works **100% without internet**. Your cycle data **never leaves your device**. 
 > No account. No server. No third-party service. Not now, not ever.
 
+## Repository scope
+
+This repository contains the **native mobile apps** and the shared Rust core:
+
+- `ios-app/` — SwiftUI iPhone app
+- `android-app/` — Kotlin Android app
+- `luna-core/` — shared Rust domain + storage logic
+- `docs/luna/index.html` — a **static privacy policy page**
+
+There is **no browser web app / SPA / PWA frontend** in this repository. If a production web application is required, that artifact is currently missing and cannot be shipped from this codebase alone.
+
 ### What LUNA guarantees — by design, not by promise
 
 | Guarantee | How it is enforced |
@@ -125,22 +136,22 @@ engine/
 prediction.rs # Cycle prediction algorithm
 types.rs # Cycle, DailyLog, Prediction, CycleSummary
 tests/
-behavior_tests.rs # 23 behavior tests (9 user journeys)
+tests/behavior_tests.rs # 40 behavior tests (J1-J18 user journeys)
 
 ios-app/ # SwiftUI (iOS 16+)
 LunaApp/
 LunaApp.swift # AppState, entry point
 Views/ # HomeView, CalendarView, InsightsView…
 ViewModels/ # HomeViewModel, InsightsViewModel
-Resources/ # Localizable.xcstrings (6 languages)
+Resources/ # Localizable.xcstrings (shipped and validated: EN/FR)
 
-android-app/ # Kotlin + Fragments (API 26+)
+android-app/ # Kotlin + Fragments (API 23+)
 app/src/main/
 kotlin/app/luna/
 ui/ # Activities + Fragments
 viewmodel/ # ViewModels (StateFlow)
 services/ # KeystoreService, VaultService
-res/ # Layouts + i18n strings (EN/FR/AR/HE)
+res/ # Layouts + i18n strings (shipped: EN; extra scaffolds retained)
 
 scripts/ # Build scripts + CI helpers
 build-ios.sh # Generates xcframework
@@ -193,11 +204,21 @@ rustup target add aarch64-linux-android armv7-linux-androideabi x86_64-linux-and
 cargo install cargo-ndk uniffi-bindgen-cli
 ```
 
+### Local Presidio commit guard
+
+This repo includes optional local git hooks in `.githooks/` which use **Microsoft Presidio Analyzer** to block commits when staged additions or the final commit message look like they contain sensitive data. The hook is local-only and does not send data anywhere.
+
+```bash
+./scripts/install_presidio_hooks.sh
+```
+
+If you need a local allowlist for known-safe matches, create `.git/info/presidio-allowlist.regex` with one regex per line. The hook prefers blocking with clear output over mutating your files or commit message.
+
 ### Rust core (tests)
 
 ```bash
 cd luna-core
-cargo test # 32 tests (9 unit + 23 behavior)
+cargo test # 68 tests (40 behavior + 28 unit)
 cargo clippy -- -D warnings
 ```
 
@@ -219,15 +240,16 @@ cargo clippy -- -D warnings
 
 ## Internationalization
 
-LUNA supports **40 languages**:
+Locale support is now intentionally limited to the subset that is truthful and fully validated in-repo.
 
-| Tier | Languages |
-|------|-----------|
-| Tier 1 (full) | EN, FR, DE, ES, AR, JA, ZH-Hans, PT-BR |
-| Tier 2 | IT, NL, PL, RU, UK, TR, KO, HI, SV, DA, NO, FI, CS, HU, RO, EL |
-| Tier 3 | ZH-Hant, VI, TH, ID, MS, FA, HE, HR, BG, SR, SK, CA, EU, GL, BN, ML |
+| Surface | Current shipped / uploaded locales | Audit result |
+|---------|------------------------------------|--------------|
+| iOS app | EN, FR | `Info.plist` declares the shipped iOS locales and `scripts/check_i18n.py` validates both as complete |
+| Android app | EN | `resourceConfigurations` is computed from complete Android locale files, which currently yields English only |
+| Docs READMEs | 41 translated files + main README | Documentation translations exist, but they are not evidence of app shipping support |
+| Store metadata | iOS: en-US, fr-FR · Android: en-US | Fastlane upload is constrained to reviewed storefront locales only |
 
-RTL languages (AR, HE, FA) are fully supported with mirrored layouts.
+Truthful claim today: **English is the only fully complete cross-platform product locale**. French is additionally complete on iOS. RTL layout infrastructure remains in the codebase, but RTL locales are not advertised as shipped until translation coverage is completed.
 
 ---
 

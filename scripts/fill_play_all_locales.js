@@ -2,11 +2,11 @@
 /**
  * fill_play_all_locales.js
  * 
- * Single-session script to fill all 39 Play Store translation listings.
+ * Single-session script to fill every configured Play Store translation listing.
  * 
  * Strategy:
  * 1. Navigate to /main-store-listing
- * 2. Open language selection dialog → select all 39 langs → Apply (client-side)
+ * 2. Open language selection dialog → select every configured translation locale → Apply (client-side)
  * 3. For each language: switch via dropdown → fill 3 fields → Save (server-persisted)
  * 
  * Usage: node scripts/fill_play_all_locales.js
@@ -158,7 +158,7 @@ async function addLanguages(page) {
     console.log(' Dialog did not open');
     return false;
   }
-  console.log(' Dialog open, selecting 39 languages...');
+  console.log(` Dialog open, selecting ${TARGET_GP_CODES.length} configured translation locales...`);
   
   let selected = 0;
   for (const code of TARGET_GP_CODES) {
@@ -248,7 +248,7 @@ async function switchToLanguage(page, gpCode, displayName) {
 
 (async () => {
   console.log('╔═══════════════════════════════════════════════════╗');
-  console.log('║ LUNA Play Store — Fill All 39 Translation Locales ║');
+  console.log(`║ LUNA Play Store — Fill ${TARGET_GP_CODES.length} Configured Translation Locales ║`);
   console.log('╚═══════════════════════════════════════════════════╝\n');
 
   const browser = await chromium.connectOverCDP(`http://localhost:${CDP_PORT}`);

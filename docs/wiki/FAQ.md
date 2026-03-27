@@ -90,10 +90,10 @@ Pas encore directement. Si tu exportes tes données depuis Flo/Clue en CSV, un o
 ## Accessibilité
 
 ### LUNA est-elle accessible aux personnes aveugles ?
-Oui. LUNA est conçue pour être entièrement utilisable avec VoiceOver (iOS) et TalkBack (Android). Tous les éléments interactifs ont des labels d'accessibilité. Le parcours principal (log du jour, consultation du cycle, paramètres) est entièrement navigable avec un lecteur d'écran.
+LUNA vise une utilisation complète avec VoiceOver (iOS) et TalkBack (Android), mais nous ne revendiquons pas encore une conformité “100% auditée”. Les parcours principaux sont balisés, les graphiques et jauges ont maintenant des résumés vocaux, et la navigation de base fonctionne au lecteur d’écran. Il reste toutefois un audit manuel complet à finir sur appareils réels.
 
 ### Les animations peuvent-elles être désactivées ?
-Oui. Si "Réduire les animations" est activé dans les paramètres système d'accessibilité (iOS : Paramètres > Accessibilité > Mouvement > Réduire le mouvement ; Android : Paramètres > Accessibilité > Enlever les animations), LUNA désactive automatiquement toutes les animations et transitions.
+Oui. Si "Réduire les animations" est activé dans les paramètres système d'accessibilité (iOS : Paramètres > Accessibilité > Mouvement > Réduire le mouvement ; Android : Paramètres > Accessibilité > Enlever les animations), LUNA supprime les animations sur les surfaces auditées (onboarding, verrouillage, accueil, insights, toasts). Les derniers écrans non revérifiés restent listés dans le wiki A11Y.
 
 ### Les textes sont-ils lisibles en grande taille ?
 LUNA supporte Dynamic Type sur iOS (toutes les tailles jusqu'à Accessibilité 5) et le grand texte sur Android (jusqu'à 200%). Aucun texte n'est tronqué sur les écrans principaux.

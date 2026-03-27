@@ -13,6 +13,7 @@ import LocalAuthentication
 
 struct LockView: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var errorMessage: String? = nil
     @State private var isUnlocking: Bool = false
 
@@ -70,7 +71,7 @@ struct LockView: View {
             .padding()
         }
         .onAppear { authenticateWithDevice() }
-        .animation(.easeInOut, value: errorMessage)
+        .animation(reduceMotion ? .none : .easeInOut, value: errorMessage)
     }
 
     private var authIcon: String {

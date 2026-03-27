@@ -228,10 +228,10 @@ LUNA is a **local-only mobile application** with **zero server infrastructure**.
 
 | Gap | Controls | Priority | Action |
 |-----|----------|----------|--------|
-| No `cargo audit` in CI | A.5.19, A.8.8 | High | Add to GitHub Actions pipeline |
-| No SECURITY.md | A.5.24 | High | Create vulnerability disclosure process |
+| ~~No `cargo audit` in CI~~ ✅ | A.5.19, A.8.8 | — | Already implemented (ci-rust.yml:48) |
+| ~~No SECURITY.md~~ ✅ | A.5.24 | — | Already exists at repo root |
 | No formal security policy | A.5.1 | Medium | Draft standalone security policy |
-| No SAST/DAST in CI | A.8.29 | Medium | Add clippy + audit gates |
+| ~~No SAST/DAST in CI~~ ✅ | A.8.29 | — | Already implemented (clippy at ci-rust.yml:42) |
 | No SBOM generation | A.5.19 | Low | Add CycloneDX to release pipeline |
-| No individual record deletion | A.8.10 | Medium | Implement `delete_log(date)` API |
-| No backup import/restore | A.8.14 | Medium | Implement `import_backup()` API |
+| ~~No individual record deletion~~ ✅ | A.8.10 | — | Already implemented (`delete_log` in api.rs:77) |
+| ~~No backup import/restore~~ ✅ | A.8.14 | — | Already implemented (`import_encrypted_backup` in api.rs:275) |

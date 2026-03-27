@@ -1,4 +1,3 @@
 • Anneau de cycle segmenté avec code couleur
-• Support de 40+ langues
 • Garanties de confidentialité renforcées
 • Stockage local chiffré AES-256-GCM

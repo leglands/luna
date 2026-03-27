@@ -274,6 +274,7 @@ struct CycleProgressWidget: View {
                 .frame(width: 160, height: 160)
                 .accessibilityElement(children: .ignore)
                 .accessibilityLabel(accessibilityDescription)
+                .accessibilityValue(progressAccessibilityValue)
 
                 Text("next_period_in \(daysUntilNext(prediction))")
                     .font(.subheadline)
@@ -338,6 +339,13 @@ struct CycleProgressWidget: View {
         }
         return String(format: NSLocalizedString("cycle_progress_a11y", comment: ""),
                       currentDay, daysUntilNext(p))
+    }
+
+    private var progressAccessibilityValue: Text {
+        guard let p = prediction else { return Text("") }
+        let total = max(cycleLength(p), 1)
+        let percent = Int((Double(currentDay) / Double(total) * 100).rounded())
+        return Text("\(percent)% \(phaseLabel(p))")
     }
 
     private func daysUntilNext(_ p: Prediction) -> Int {
@@ -475,8 +483,8 @@ struct WeekStripView: View {
     private func dotColor(for event: CycleEventType?) -> Color {
         switch event {
         case .period: return Color("AccentPrimary")
-        case .fertile: return Color("AccentAccent")
-        case .ovulation: return Color("AccentSecondary")
+        case .fertile: return Color("AccentSuccess")
+        case .ovulation: return Color("AccentAccent")
         case .logged: return .secondary
         case .none: return .clear
         }

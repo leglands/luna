@@ -37,6 +37,28 @@ cd luna-core && cargo test
 cargo clippy -- -D warnings
 ```
 
+## Local Presidio git guard
+
+LUNA now ships repo-managed local hooks in `.githooks/` for commit-time checks:
+
+- `pre-commit` scans **staged added lines** for likely secrets / sensitive data
+- `commit-msg` scans the **final commit message**
+- `post-commit` keeps the existing LUNA reminder/smoke-test behavior
+
+Bootstrap them locally with a supported Python runtime (Presidio supports Python 3.10-3.13):
+
+```bash
+./scripts/install_presidio_hooks.sh
+```
+
+Notes:
+
+- The hook is **local only**. It does not call any cloud service.
+- It uses **Microsoft Presidio Analyzer** pattern recognizers and blocks the commit with actionable output instead of rewriting data.
+- Safe local exceptions can be added in `.git/info/presidio-allowlist.regex` (one regex per line, never commit this file).
+- To wire the hooks without installing Presidio yet, run `./scripts/install_presidio_hooks.sh --skip-install`.
+- To bypass once, use `git commit --no-verify`.
+
 ## Translation Contributions
 
 1. Run `python3 scripts/check_i18n.py` to see which keys are missing
@@ -53,7 +75,7 @@ cargo clippy -- -D warnings
 ## Security Vulnerabilities
 
 Please **do not** open a public issue for security vulnerabilities.
-Email: security@luna-app.example (replace with actual contact).
+Email: security@macaron-software.com.
 
 ## Code of Conduct
 

@@ -73,6 +73,13 @@
     <color name="luna_neutral_900">#1A1A2E</color>
     <color name="luna_neutral_950">#0D0A14</color>
 
+    <!-- iOS-matched semantic accent -->
+    <color name="luna_accent_primary">#C2567A</color>
+    <color name="luna_accent_primary_50">#F8EEF2</color>
+    <color name="luna_accent_primary_100">#EFDDE4</color>
+    <color name="luna_accent_primary_700">#A84A69</color>
+    <color name="luna_accent_primary_900">#6E3146</color>
+
     <!-- ── Semantic Light Mode Tokens ────────────────────────────────────── -->
     <color name="luna_bg_base">@color/luna_neutral_50</color>
     <color name="luna_bg_surface">@color/luna_neutral_0</color>
@@ -82,7 +89,7 @@
     <color name="luna_content_secondary">@color/luna_neutral_500</color>
     <color name="luna_content_inverse">@color/luna_neutral_0</color>
 
-    <color name="luna_brand_primary">@color/luna_pink_500</color>
+    <color name="luna_brand_primary">@color/luna_accent_primary</color>
     <color name="luna_brand_secondary">@color/luna_amber_500</color>
     <color name="luna_brand_accent">@color/luna_plum_500</color>
     <color name="luna_brand_success">@color/luna_sage_500</color>
@@ -99,15 +106,15 @@
     <color name="luna_status_warning">@color/luna_amber_600</color>
     <!-- Never use danger color in zh/ja/ko — use warning instead -->
     <color name="luna_status_danger">@color/luna_rose_500</color>
-    <color name="luna_status_info">@color/luna_pink_500</color>
+    <color name="luna_status_info">@color/luna_accent_primary</color>
 
     <!-- Interactive -->
-    <color name="luna_interactive_default">@color/luna_pink_500</color>
-    <color name="luna_interactive_hover">@color/luna_pink_600</color>
+    <color name="luna_interactive_default">@color/luna_accent_primary</color>
+    <color name="luna_interactive_hover">@color/luna_accent_primary_700</color>
     <color name="luna_interactive_disabled">#33000000</color>
 
     <!-- Border -->
     <color name="luna_border_default">@color/luna_neutral_200</color>
-    <color name="luna_border_focus">@color/luna_pink_500</color>
+    <color name="luna_border_focus">@color/luna_accent_primary</color>
 
 </resources>

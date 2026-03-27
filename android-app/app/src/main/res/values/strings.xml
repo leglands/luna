@@ -8,6 +8,7 @@
     <string name="log_today_button">Log today</string>
     <string name="privacy_local_badge">Local data</string>
     <string name="privacy_badge_a11y">All your data is stored locally on this device</string>
+    <string name="toolbar_private_subtitle">Private · On this device</string>
     <string name="cycle_day_label">Day %d</string>
     <string name="next_period_in">In %d days</string>
     <string name="cycle_progress_a11y">Cycle day %1$d. Next period in %2$d days.</string>
@@ -21,6 +22,7 @@
     <string name="mood_great">Great</string>
     <string name="energy_label">Energy</string>
     <string name="flow_label">Flow</string>
+    <string name="flow_option_a11y">Flow: %1$s</string>
     <string name="flow_none">None</string>
     <string name="flow_spotting">Spotting</string>
     <string name="flow_light">Light</string>
@@ -33,6 +35,7 @@
     <string name="notes_a11y">Free text note, encrypted and stored locally</string>
     <string name="save_button">Save</string>
     <string name="cancel_button">Cancel</string>
+    <string name="open_button">Open</string>
     <string name="log_saved_a11y">Day logged</string>
     <string name="symptom_cramps">Cramps</string>
     <string name="symptom_bloating">Bloating</string>
@@ -72,8 +75,16 @@
     <string name="settings_delete_all_label">Delete all data</string>
     <string name="settings_delete_all_a11y">Delete all data from this device</string>
     <string name="settings_delete_all_hint_a11y">This action is irreversible and will permanently delete all your data</string>
+    <string name="settings_section_privacy">Privacy &amp; security</string>
+    <string name="settings_section_tracking">Tracking &amp; reminders</string>
+    <string name="settings_section_data">Exports &amp; recovery</string>
     <string name="export_csv_label">Export to CSV</string>
     <string name="export_encrypted_backup_label">Encrypted backup</string>
+    <string name="restore_encrypted_backup_label">Restore encrypted backup</string>
+    <string name="backup_pin_unavailable">PIN unavailable on this device</string>
+    <string name="backup_restore_success">Backup restored successfully</string>
+    <string name="backup_restore_error">Unable to restore backup</string>
+    <string name="backup_export_error">Unable to export backup</string>
     <string name="panic_wipe_confirm_title">Delete all data?</string>
     <string name="panic_wipe_confirm_message">This will permanently delete all your cycle data from this device. This action cannot be undone.</string>
     <string name="panic_wipe_confirm_button">Delete everything</string>
@@ -159,6 +170,8 @@
     <!-- Charts -->
     <string name="charts_cycle_lengths_a11y">Cycle lengths bar chart</string>
     <string name="charts_bbt_a11y">Basal body temperature chart</string>
+    <string name="stats_avg_cycle_a11y">Average cycle length: %1$s days</string>
+    <string name="stats_avg_period_a11y">Average period length: %1$s days</string>
 
     <!-- Pill reminder -->
     <string name="settings_pill_reminder">Daily pill reminder</string>

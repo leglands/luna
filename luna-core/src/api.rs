@@ -73,6 +73,11 @@ impl LunaEngine {
         self.db.lock().unwrap().get_log(&date)
     }
 
+    /// Supprime le log d'une date donnée.
+    pub fn delete_log(&self, date: String) -> Result<bool, LunaError> {
+        self.db.lock().unwrap().delete_log(&date)
+    }
+
     /// Récupère les N cycles les plus récents.
     pub fn get_cycles(&self, limit: u32) -> Result<Vec<Cycle>, LunaError> {
         self.db.lock().unwrap().get_cycles(limit)
@@ -86,6 +91,11 @@ impl LunaEngine {
         let cycle = Cycle::new(date);
         self.db.lock().unwrap().insert_cycle(&cycle)?;
         Ok(cycle)
+    }
+
+    /// Supprime un cycle par identifiant.
+    pub fn delete_cycle(&self, cycle_id: String) -> Result<bool, LunaError> {
+        self.db.lock().unwrap().delete_cycle(&cycle_id)
     }
 
     /// Clôture le cycle en cours avec une date de fin.
@@ -335,6 +345,11 @@ impl LunaEngine {
         self.db.lock().unwrap().get_pregnancy_log(&date)
     }
 
+    /// Supprime le log de grossesse d'une date donnée.
+    pub fn delete_pregnancy_log(&self, date: String) -> Result<bool, LunaError> {
+        self.db.lock().unwrap().delete_pregnancy_log(&date)
+    }
+
     /// Exporte les logs d'une plage de dates en CSV RFC 4180.
     pub fn export_logs_csv(&self, from: String, to: String) -> Result<String, LunaError> {
         let logs = self.db.lock().unwrap().get_logs_range(&from, &to)?;
@@ -371,5 +386,41 @@ impl LunaEngine {
         std::fs::write(salt_path, salt)
             .map_err(|e| LunaError::IoError(e.to_string()))?;
         Ok(salt)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use chrono::NaiveDate;
+    use tempfile::NamedTempFile;
+
+    #[test]
+    fn export_and_import_encrypted_backup_roundtrip() {
+        let source_db = NamedTempFile::new().unwrap();
+        let source_path = source_db.path().to_str().unwrap().to_string();
+        let source = LunaEngine::open_vault(source_path, "123456".to_string()).unwrap();
+
+        let mut log = DailyLog::new(NaiveDate::from_ymd_opt(2026, 3, 10).unwrap());
+        log.flow = Some("medium".to_string());
+        log.symptoms = vec!["cramps".to_string()];
+        source.log_day(log).unwrap();
+        source.start_cycle("2026-03-10".to_string()).unwrap();
+
+        let backup = source
+            .export_encrypted_backup("123456".to_string())
+            .unwrap();
+
+        let target_db = NamedTempFile::new().unwrap();
+        let target_path = target_db.path().to_str().unwrap().to_string();
+        let target = LunaEngine::open_vault(target_path, "123456".to_string()).unwrap();
+
+        let restored = target
+            .import_encrypted_backup(backup, "123456".to_string())
+            .unwrap();
+
+        assert!(restored >= 2);
+        assert!(target.get_log("2026-03-10".to_string()).unwrap().is_some());
+        assert!(!target.get_cycles(10).unwrap().is_empty());
     }
 }

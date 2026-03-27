@@ -97,7 +97,7 @@
 
 **Acceptance Criteria:**
 1. Settings screen lists: Change PIN, Export Backup, Panic Wipe, Calm Mode toggle, Tracking Mode selector
-2. Language selection follows system locale (40 languages)
+2. Language selection follows system locale for shipped locales only
 3. Dark/Light mode follows system preference
 4. Each destructive action (wipe, PIN change) requires confirmation dialog
 
@@ -212,9 +212,9 @@
 **As** Emma (P1), **I want** to use the app in my preferred language **so that** I understand all labels and instructions.
 
 **Acceptance Criteria:**
-1. App supports 40 languages (source: French)
-2. Language follows system locale automatically
-3. RTL layout for Arabic, Hebrew, Persian (mirrored UI)
+1. App only ships locales with complete translations (currently iOS: EN/FR; Android: EN)
+2. Language follows system locale automatically for shipped locales
+3. RTL layout remains an engineering capability, but RTL locales are not shipped until translated
 4. All strings externalized (iOS: `Localizable.xcstrings`, Android: `res/values-*/strings.xml`)
 5. Date and number formatting follow locale conventions
 

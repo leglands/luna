@@ -1,5 +1,19 @@
 # LUNA — Store Metadata v0.1.0
 
+## Truthful locale policy
+
+This repository contains many localized metadata folders, but automated uploads are intentionally restricted to the reviewed subset:
+
+| Surface | Uploaded locales | Why |
+|--------|------------------|-----|
+| App Store metadata | `en-US`, `fr-FR` | Matches the reviewed iOS locale set |
+| Google Play metadata | `en-US` | Matches the only fully complete Android app locale |
+
+**Do not claim 40 locales or 40+ locales in store copy.**
+Current truthful product claim: **English cross-platform, plus French on iOS**.
+
+---
+
 ## App Info
 
 | Field | Value |
@@ -18,7 +32,7 @@
 
 ## Short Description (80 chars max — Google Play)
 
-```
+```text
 Track your cycle privately. AES-256 encrypted. Zero cloud. 100% yours.
 ```
 
@@ -39,7 +53,6 @@ LUNA is a science-based menstrual cycle tracker that puts your privacy first.
 - **Pregnancy mode** — Week-by-week guidance with local notifications
 - **Export** — Encrypted backup or CSV export for your doctor
 - **Dark mode** — Automatic, follows system
-- **40 languages** — Full i18n including RTL (Arabic, Hebrew, Farsi)
 - **Accessibility** — Screen reader support, high contrast, reduced motion
 
 ### Privacy by design
@@ -50,10 +63,6 @@ LUNA is a science-based menstrual cycle tracker that puts your privacy first.
 - No account, no email, no tracking
 - No analytics SDK, no crash reporting to servers
 - Open source — audit the code yourself
-
-### Science-based
-
-Predictions use a personal Kalman-filter model updated with each cycle. Fertile window estimates follow ACOG and WHO guidelines. Perimenopause mode surfaces evidence-based symptom correlation patterns from peer-reviewed research.
 
 ---
 
@@ -69,9 +78,8 @@ LUNA est un suivi de cycle menstruel basé sur des preuves scientifiques, qui pl
 - **Prédictions** — Algorithme basé sur votre historique personnel
 - **Fenêtre fertile** — Calculée selon les méthodes fondées sur des preuves (ACOG/OMS)
 - **4 modes de suivi** — Cycles réguliers, TTC (désir de grossesse), grossesse, péri-ménopause
-- **40 langues** dont arabe, hébreu, farsi (RTL)
-- **Accessibilité** — VoiceOver/TalkBack, contraste élevé, mouvement réduit
 - **Export** — Sauvegarde chiffrée ou CSV pour votre médecin
+- **Accessibilité** — VoiceOver/TalkBack, contraste élevé, mouvement réduit
 
 ### Confidentialité totale
 
@@ -81,13 +89,13 @@ Aucune donnée n'est envoyée à un serveur. Base de données chiffrée AES-256,
 
 ## Keywords (iOS — 100 chars)
 
-```
+```text
 cycle tracker,period,fertility,ovulation,private,no cloud,encrypted,women health,TTC,menstrual
 ```
 
 ## Keywords (Google Play — tags)
 
-```
+```text
 period tracker, cycle tracking, fertility, ovulation, menstrual calendar, private health, encrypted, women's health, TTC, no account
 ```
 
@@ -140,5 +148,5 @@ Initial release of LUNA:
 - Cycle tracking with AES-256 local encryption
 - 4 tracking modes (regular, TTC, pregnancy, perimenopause)
 - Predictions and fertile window
-- 40 languages, dark mode, full accessibility
+- Dark mode and accessibility support
 - No account, no cloud, no tracking

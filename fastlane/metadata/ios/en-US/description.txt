@@ -22,4 +22,4 @@ PRIVACY GUARANTEES
 • Open source: github.com/macaron-software/luna
 
 ACCESSIBILITY
-Full VoiceOver support · Dynamic Type · 40+ languages
+Full VoiceOver support · Dynamic Type

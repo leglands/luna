@@ -1,5 +1,5 @@
-• Segmented cycle ring with phase color coding
-• 40+ language support with full i18n
-• Stronger privacy guarantees enforced at OS level
-• AES-256-GCM encrypted local storage
-• Improved accessibility (VoiceOver, Dynamic Type)
+• Segmented cycle ring with phase color-coding
+• Current iPhone release ships in English and French
+• Enhanced OS-level privacy guarantees
+• AES-256-GCM local encrypted storage
+• Improved accessibility

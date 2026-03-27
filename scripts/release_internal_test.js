@@ -5,7 +5,7 @@
  * Uploads AAB to Play Store internal testing track via CDP.
  * Navigates to the existing draft release and:
  * 1. Uploads app-release.aab
- * 2. Fills release name + release notes (all 40 langs)
+ * 2. Fills release name + localized release notes for the staged Play listing locales
  * 3. Saves and submits
  */
 
@@ -17,7 +17,8 @@ const CDP_PORT = 18800;
 const RELEASE_URL = 'https://play.google.com/console/u/0/developers/6295830866613067582/app/4973061748192418870/tracks/internal-testing';
 const AAB_PATH = path.join(__dirname, '..', 'android-app', 'app', 'build', 'outputs', 'bundle', 'release', 'app-release.aab');
 
-// Release notes per language (Play Console format: <lang-code>notes</lang-code>)
+// Release notes for the staged Play Store metadata locales.
+// These store-listing locales are broader than the currently shipped in-app locales.
 const NOTES = {
   'en-US': 'Initial release of LUNA - Cycle & Wellness. Track your cycle, symptoms, mood and energy. All data stays 100% private on your device — no account, no cloud, no tracking.',
   'fr-FR': 'Première version de LUNA - Cycle & Bien-être. Suivez votre cycle, symptômes, humeur et énergie. Toutes vos données restent 100% privées sur votre appareil.',
@@ -140,12 +141,12 @@ async function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
   }
 
   // 5. Fill release notes
-  console.log('5. Filling release notes (40 languages)...');
+  console.log('5. Filling release notes (localized store metadata)...');
   const notesInput = page.locator('[debug-id="whats-new"] textarea').first();
   if (await notesInput.count() > 0) {
     const notes = buildReleaseNotes();
     await notesInput.fill(notes);
-    console.log(` Release notes filled (${Object.keys(NOTES).length} languages)`);
+    console.log(` Release notes filled for the current Play listing`);
   } else {
     console.log(' Release notes textarea not found');
   }

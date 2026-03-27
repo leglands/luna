@@ -21,4 +21,4 @@ PRIVACIDADE POR DESIGN
 • Código aberto: https://github.com/macaron-software/luna
 
 ACESSIBILIDADE
-Suporte completo TalkBack, Texto dinâmico, 40+ idiomas
+Suporte completo TalkBack, Texto dinâmico

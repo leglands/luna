@@ -16,15 +16,15 @@ jobs:
     name: "Rust — Tests + Lint + Audit"
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
 
       - name: Install Rust stable
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@efa25f7f19611383d5b0ccf2d1c8914531636bf9
         with:
           components: clippy, rustfmt
 
       - name: Cache cargo
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
         with:
           path: |
             ~/.cargo/registry
@@ -56,14 +56,14 @@ jobs:
     runs-on: macos-latest
     needs: rust-tests
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
 
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@efa25f7f19611383d5b0ccf2d1c8914531636bf9
         with:
           targets: aarch64-apple-ios,aarch64-apple-ios-sim,x86_64-apple-ios
 
       - name: Cache cargo
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
         with:
           path: |
             ~/.cargo/registry
@@ -76,41 +76,38 @@ jobs:
       - name: Build iOS simulator (arm64)
         run: cargo build --manifest-path luna-core/Cargo.toml --release --target aarch64-apple-ios-sim
 
+      - name: Install xcodegen + xcpretty
+        run: brew install xcodegen xcpretty
+
+      - name: Generate Xcode project
+        working-directory: ios-app
+        run: xcodegen generate
+
       - name: Generate UniFFI Swift bindings
         run: |
           cargo install uniffi-bindgen-cli --locked
           uniffi-bindgen-cli generate \
             --library luna-core/target/aarch64-apple-ios-sim/release/libluna_core.dylib \
             --language swift \
-            --out-dir ios-app/LunaApp/Generated/ 2>/dev/null || true
-        # Graceful failure: if the lib isn't cdylib on this target, skip
-        continue-on-error: true
+            --out-dir ios-app/LunaApp/Generated/
 
       - name: XCTest — LunaTests
         run: |
-          if [ -f ios-app/LunaApp.xcodeproj/project.pbxproj ]; then
-            xcodebuild test \
-              -scheme LunaApp \
-              -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
-              -only-testing LunaTests \
-              | xcpretty --color
-          else
-            echo "⚠️  Xcode project not yet generated — skipping XCTest (run scripts/build-ios.sh first)"
-          fi
-        continue-on-error: true
+          xcodebuild test \
+            -project ios-app/LunaApp.xcodeproj \
+            -scheme LunaApp \
+            -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
+            -only-testing LunaTests \
+            | xcpretty --color
 
       - name: XCUITest — LunaUITests (User Journeys)
         run: |
-          if [ -f ios-app/LunaApp.xcodeproj/project.pbxproj ]; then
-            xcodebuild test \
-              -scheme LunaApp \
-              -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
-              -only-testing LunaUITests \
-              | xcpretty --color
-          else
-            echo "⚠️  Xcode project not yet generated — skipping XCUITest"
-          fi
-        continue-on-error: true
+          xcodebuild test \
+            -project ios-app/LunaApp.xcodeproj \
+            -scheme LunaApp \
+            -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
+            -only-testing LunaUITests \
+            | xcpretty --color
 
   # ─── 3. Android build + JUnit ──────────────────────────────────────────────
   android-build:
@@ -118,59 +115,60 @@ jobs:
     runs-on: ubuntu-latest
     needs: rust-tests
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
 
-      - uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@efa25f7f19611383d5b0ccf2d1c8914531636bf9
         with:
           targets: aarch64-linux-android,armv7-linux-androideabi,x86_64-linux-android
 
       - name: Setup Android NDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@9fc6c4e9069bf8d3d10b2204b1fb8f6ef7065407
 
       - name: Install cargo-ndk
         run: cargo install cargo-ndk --locked
 
       - name: Cache cargo
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830
         with:
           path: |
             ~/.cargo/registry
             luna-core/target
           key: ${{ runner.os }}-android-${{ hashFiles('**/Cargo.lock') }}
 
-      - name: Build Android arm64
+      - name: Build Android native libraries
         run: |
           cd luna-core
-          cargo ndk --target aarch64-linux-android --platform 26 -- build --release
+          cargo ndk \
+            --target aarch64-linux-android \
+            --target armv7-linux-androideabi \
+            --target x86_64-linux-android \
+            --platform 26 -- build --release
 
       - name: Android JUnit tests
         working-directory: android-app
-        run: ./gradlew :app:test --continue || true
-        # Graceful failure until Robolectric is fully configured
+        run: ./gradlew :app:testDebugUnitTest
 
       - name: Android Espresso tests (instrumented)
-        uses: reactivecircus/android-emulator-runner@v2
+        uses: ReactiveCircus/android-emulator-runner@e89f39f1abbbd05b1113a29cf4db69e7540cae5a
         with:
           api-level: 30
           arch: x86_64
           profile: Nexus 6
-          script: cd android-app && ./gradlew :app:connectedAndroidTest --continue || true
-        continue-on-error: true
+          script: cd android-app && ./gradlew :app:connectedAndroidTest
 
   # ─── 4. i18n completeness check ────────────────────────────────────────────
   i18n-check:
-    name: "i18n — Completeness check (40 languages)"
+    name: "i18n — Shipped locale completeness"
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: '3.12'
-      - name: Check README translations (must be 39 files + main)
+      - name: Check README translations (must be 41 files + main)
         run: |
           count=$(ls docs/i18n/README_*.md 2>/dev/null | wc -l | tr -d ' ')
           echo "Found $count language READMEs"
-          [ "$count" -ge 39 ] || (echo "FAIL: expected 39 translations, found $count" && exit 1)
+          [ "$count" -ge 41 ] || (echo "FAIL: expected 41 translations, found $count" && exit 1)
       - name: Run i18n key completeness checker
-        run: python3 scripts/check_i18n.py || true
-
+        run: python3 scripts/check_i18n.py

@@ -51,3 +51,25 @@ ios-app/LunaApp/Generated/libluna_core.a
 # Local deploy keys (symlinks — never commit)
 fastlane/google_play_key.json
 fastlane/app_store_connect_api_key.json
+
+# AI config personal overrides
+CLAUDE.local.md
+.claude/settings.local.json
+
+# Build artifacts
+build/
+dist/
+.venv/
+venv/
+node_modules/
+*.apk
+*.aab
+*.ipa
+fastlane/build/
+android-app/app/build/
+playwright-report/
+
+# Environment
+.env
+.env.*
+!.env.example

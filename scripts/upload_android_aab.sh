@@ -43,7 +43,7 @@ service.edits().tracks().update(
     packageName=PACKAGE, editId=edit_id, track="internal",
     body={"track": "internal", "releases": [{
         "name": "0.1.0", "versionCodes": [vc], "status": "draft",
-        "releaseNotes": [{"language": "en-US", "text": "Version 0.1.0 - First release\n\nPrivacy-first cycle tracking. AES-256 encrypted. 40+ languages."}]
+        "releaseNotes": [{"language": "en-US", "text": "Version 0.1.0 - First release\n\nPrivacy-first cycle tracking. AES-256 encrypted. Local-first by design."}]
     }]}
 ).execute()
 

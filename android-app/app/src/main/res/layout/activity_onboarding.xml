@@ -15,20 +15,20 @@
         android:layout_height="4dp"
         android:max="100"
         android:progress="25"
-        android:progressTint="@color/luna_pink_500"
+        android:progressTint="@color/luna_accent_primary"
         android:progressBackgroundTint="@color/luna_neutral_200"
         android:layout_marginBottom="24dp" />
 
     <!-- Icon -->
     <ImageView
         android:id="@+id/onboarding_icon"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/ic_luna_moon"
-        android:tint="@color/luna_pink_500"
+        android:tint="@color/luna_accent_primary"
         android:importantForAccessibility="no"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="20dp" />
 
     <!-- Title -->
     <TextView
@@ -36,8 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:textAppearance="@style/Luna.Text.H1"
         android:accessibilityHeading="true"
         android:layout_marginBottom="8dp" />
 
@@ -47,8 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="14sp"
-        android:textColor="@color/luna_neutral_500"
+        android:textAppearance="@style/Luna.Text.Body.Secondary"
         android:layout_marginBottom="24dp" />
 
     <!-- Dynamic content area -->
@@ -66,27 +64,47 @@
             android:hint="@string/onboarding_name_placeholder"
             android:visibility="gone"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxBackgroundColor="@color/luna_neutral_0"
             app:boxCornerRadiusBottomEnd="12dp"
             app:boxCornerRadiusBottomStart="12dp"
             app:boxCornerRadiusTopEnd="12dp"
-            app:boxCornerRadiusTopStart="12dp">
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxStrokeColor="@color/luna_neutral_200">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textAppearance="@style/Luna.Text.Body"
                 android:inputType="textPersonName"
                 android:autofillHints="givenName" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Step 1: Date picker -->
-        <DatePicker
-            android:id="@+id/date_picker"
+        <LinearLayout
+            android:id="@+id/date_step_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:calendarViewShown="true"
-            android:spinnersShown="false"
-            android:datePickerMode="calendar"
-            android:visibility="gone" />
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <DatePicker
+                android:id="@+id/date_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="true"
+                android:spinnersShown="false"
+                android:datePickerMode="calendar" />
+
+            <Button
+                android:id="@+id/skip_date_button"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/onboarding_skip"
+                android:textColor="@color/luna_neutral_500" />
+        </LinearLayout>
 
         <!-- Step 2: Cycle profile (duration + regularity) -->
         <ScrollView
@@ -102,8 +120,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textAppearance="@style/Luna.Text.Label"
                     android:text="@string/onboarding_period_duration_label"
-                    android:textStyle="bold"
                     android:layout_marginBottom="12dp" />
 
                 <com.google.android.material.chip.ChipGroup
@@ -117,14 +135,15 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textAppearance="@style/Luna.Text.Label"
                     android:text="@string/onboarding_regularity_label"
-                    android:textStyle="bold"
                     android:layout_marginBottom="12dp" />
 
-                <RadioGroup
+                <LinearLayout
                     android:id="@+id/regularity_group"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
 
             </LinearLayout>
         </ScrollView>
@@ -161,13 +180,13 @@
             <ProgressBar
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:indeterminateTint="@color/luna_pink_500"
+                android:indeterminateTint="@color/luna_accent_primary"
                 android:layout_marginBottom="16dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/creating_vault_loading"
-                android:textSize="16sp" />
+                android:textAppearance="@style/Luna.Text.Body" />
         </LinearLayout>
     </FrameLayout>
 
@@ -192,11 +211,11 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/next_button"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="44dp"
             android:paddingHorizontal="32dp"
             android:text="@string/onboarding_next_button"
-            app:cornerRadius="24dp"
-            app:backgroundTint="@color/luna_pink_500" />
+            app:cornerRadius="22dp"
+            app:backgroundTint="@color/luna_accent_primary" />
 
     </LinearLayout>
 

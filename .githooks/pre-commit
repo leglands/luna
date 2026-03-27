@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO_ROOT=$(git rev-parse --show-toplevel)
+GIT_DIR=$(git rev-parse --git-dir)
+LOCAL_HOOK="$GIT_DIR/local-hooks/pre-commit.local"
+
+if [ -x "$LOCAL_HOOK" ] && [ "${LUNA_SKIP_CHAINED_LOCAL_HOOKS:-0}" != "1" ]; then
+  "$LOCAL_HOOK"
+fi
+
+# Luna legacy rule: block commits during work hours (Mon-Fri 08:00-18:59).
+DAY=$(date +%u)   # 1=Mon … 7=Sun
+HOUR=$(date +%H) # 00-23
+
+if [ "$DAY" -le 5 ] && [ "$HOUR" -ge 8 ] && [ "$HOUR" -lt 19 ]; then
+  echo "❌ Commit bloqué — heures de bureau (lun-ven 8h-19h)." >&2
+  echo "   Reviens après 19h ou utilise: git commit --no-verify" >&2
+  exit 1
+fi
+
+"$REPO_ROOT/scripts/run_presidio_hook_scan.sh" --mode staged-diff

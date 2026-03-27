@@ -21,4 +21,4 @@ LUNA是一款注重隐私的月经周期与健康追踪应用。您的健康数�
 • 开源: https://github.com/macaron-software/luna
 
 无障碍功能
-完整TalkBack支持，动态文字，40+种语言
+完整TalkBack支持，动态文字

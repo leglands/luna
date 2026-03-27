@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-fill_i18n.py  — Fill missing xcstrings translations using Google Translate.
+fill_i18n.py  — Legacy scaffold filler for missing xcstrings translations.
 
 Usage:
     python3 scripts/fill_i18n.py [--dry-run] [--locale fr] [--force]
 
-Translates all English strings into all 40 locales that are missing translations.
+Fills missing scaffold locales for internal drafting only. Do not use generated text as production-ready translations.
 Preserves existing translations. Caches results to avoid re-translating.
 """
 

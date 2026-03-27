@@ -1,4 +1,3 @@
 • Szegmentált ciklusgyűrű színkódolással
-• 40+ nyelv támogatása
 • Javított adatvédelmi garanciák
 • Helyi titkosított tárolás AES-256-GCM

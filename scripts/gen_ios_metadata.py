@@ -2,10 +2,10 @@
 """
 gen_ios_metadata.py
 
-Generates iOS App Store Connect metadata for all supported locales.
-Sources content from existing Android metadata (already translated).
-Maps Android locale codes → iOS ASC locale codes.
-Also copies screenshots from en-US to all locale folders.
+Generates iOS App Store Connect metadata for the shipped App Store locales.
+Sources content from existing store metadata.
+Maps source locale codes → iOS ASC locale codes.
+Also copies screenshots from en-US to the shipped locale folders.
 """
 
 import os
@@ -17,45 +17,10 @@ AND_META = os.path.join(BASE, 'fastlane', 'metadata', 'android')
 IOS_SS = os.path.join(BASE, 'fastlane', 'screenshots', 'ios')
 EN_SS = os.path.join(IOS_SS, 'en-US')
 
-# Android locale → iOS ASC locale
-# Skipped (not supported in ASC): bn-BD, fa, ta-IN, ur
-LOCALE_MAP = {
-    'ar-SA': 'ar-SA',
-    'bg': 'bg',
-    'cs-CZ': 'cs',
-    'da-DK': 'da',
-    'de-DE': 'de-DE',
-    'el-GR': 'el',
+# Source metadata locale → shipped iOS ASC locale
+IOS_METADATA_SOURCES = {
     'en-US': 'en-US',
-    'es-419': 'es-MX',
-    'es-ES': 'es-ES',
-    'fi-FI': 'fi',
-    'fr-CA': 'fr-CA',
     'fr-FR': 'fr-FR',
-    'hi-IN': 'hi',
-    'hr': 'hr',
-    'hu-HU': 'hu',
-    'id': 'id',
-    'it-IT': 'it',
-    'iw-IL': 'he',
-    'ja-JP': 'ja',
-    'ko-KR': 'ko',
-    'ms-MY': 'ms',
-    'nl-NL': 'nl-NL',
-    'no-NO': 'no',
-    'pl-PL': 'pl',
-    'pt-BR': 'pt-BR',
-    'pt-PT': 'pt-PT',
-    'ro': 'ro',
-    'ru-RU': 'ru',
-    'sk': 'sk',
-    'sv-SE': 'sv',
-    'th': 'th',
-    'tr-TR': 'tr',
-    'uk': 'uk',
-    'vi': 'vi',
-    'zh-CN': 'zh-Hans',
-    'zh-TW': 'zh-Hant',
 }
 
 # Translated subtitles per iOS locale (max 30 chars)
@@ -178,44 +143,50 @@ PROMO_TEXT = {
     'zh-Hant':'您的經期數據。您的手機。加密。無伺服器。無需帳戶。永遠如此。',
 }
 
-# Release notes per locale (v0.1.0 - initial launch)
+# Release notes per iOS metadata locale (v0.1.0 - initial launch)
 RELEASE_NOTES = {
-    'ar-SA': '• حلقة دورة مجزأة ذات ترميز لوني\n• دعم أكثر من 40 لغة\n• ضمانات الخصوصية المحسّنة\n• تخزين محلي مشفر AES-256-GCM',
-    'bg': '• Сегментиран пръстен на цикъла с цветово кодиране\n• Поддръжка на 40+ езика\n• Подобрени гаранции за поверителност\n• Локално криптирано хранилище AES-256-GCM',
-    'cs': '• Segmentovaný cyklový prsten s barevným kódováním\n• Podpora 40+ jazyků\n• Vylepšené záruky soukromí\n• Místní šifrované úložiště AES-256-GCM',
-    'da': '• Segmenteret cyklus-ring med farvekodning\n• Understøttelse af 40+ sprog\n• Forbedrede privatlivsgarantier\n• Lokalt krypteret lager AES-256-GCM',
-    'de-DE': '• Segmentierter Zyklusring mit Farbcodierung\n• Unterstützung für 40+ Sprachen\n• Verbesserte Datenschutzgarantien\n• Lokaler verschlüsselter Speicher AES-256-GCM',
-    'el': '• Τμηματοποιημένος δακτύλιος κύκλου με χρωματική κωδικοποίηση\n• Υποστήριξη 40+ γλωσσών\n• Βελτιωμένες εγγυήσεις απορρήτου\n• Τοπικά κρυπτογραφημένη αποθήκευση AES-256-GCM',
-    'en-US': '• Segmented cycle ring with phase color-coding\n• 40+ language support\n• Enhanced OS-level privacy guarantees\n• AES-256-GCM local encrypted storage\n• Improved accessibility',
-    'es-MX': '• Anillo de ciclo segmentado con código de color\n• Soporte para 40+ idiomas\n• Garantías de privacidad mejoradas\n• Almacenamiento cifrado AES-256-GCM',
-    'es-ES': '• Anillo de ciclo segmentado con código de color\n• Soporte para 40+ idiomas\n• Garantías de privacidad mejoradas\n• Almacenamiento cifrado local AES-256-GCM',
-    'fi': '• Segmentoitu syklirengas värikoodauksella\n• Tuki 40+ kielelle\n• Parannetut tietosuojatakuut\n• Paikallinen salattu tallennus AES-256-GCM',
-    'fr-CA': '• Anneau de cycle segmenté avec code couleur\n• Support de 40+ langues\n• Garanties de confidentialité renforcées\n• Stockage local chiffré AES-256-GCM',
-    'fr-FR': '• Anneau de cycle segmenté avec code couleur par phase\n• Support de 40+ langues\n• Garanties de confidentialité renforcées au niveau OS\n• Stockage local chiffré AES-256-GCM\n• Accessibilité améliorée',
-    'he': '• טבעת מחזור מפולחת עם קידוד צבעים\n• תמיכה ב-40+ שפות\n• ערבויות פרטיות משופרות\n• אחסון מקומי מוצפן AES-256-GCM',
-    'hi': '• रंग-कोडित फेज के साथ सेगमेंटेड साइकिल रिंग\n• 40+ भाषाओं का समर्थन\n• बेहतर गोपनीयता गारंटी\n• AES-256-GCM स्थानीय एन्क्रिप्टेड स्टोरेज',
-    'hr': '• Segmentirani prsten ciklusa s kodiranjem boja\n• Podrška za 40+ jezika\n• Poboljšana jamstva privatnosti\n• Lokalna šifrirana pohrana AES-256-GCM',
-    'hu': '• Szegmentált ciklusgyűrű színkódolással\n• 40+ nyelv támogatása\n• Javított adatvédelmi garanciák\n• Helyi titkosított tárolás AES-256-GCM',
-    'id': '• Cincin siklus tersegmentasi dengan kode warna\n• Dukungan 40+ bahasa\n• Jaminan privasi yang ditingkatkan\n• Penyimpanan terenkripsi lokal AES-256-GCM',
-    'it': '• Anello ciclo segmentato con codice colore\n• Supporto per 40+ lingue\n• Garanzie di privacy migliorate\n• Archiviazione crittografata AES-256-GCM',
-    'ja': '• フェーズカラーコード付きセグメントサイクルリング\n• 40以上の言語サポート\n• プライバシー保証の強化\n• AES-256-GCMローカル暗号化ストレージ',
-    'ko': '• 페이즈 색상 코딩이 있는 분할 주기 링\n• 40+ 언어 지원\n• 향상된 개인정보 보호 보장\n• AES-256-GCM 로컬 암호화 스토리지',
-    'ms': '• Gelang kitaran tersegmen dengan pengekodan warna\n• Sokongan 40+ bahasa\n• Jaminan privasi yang dipertingkatkan\n• Storan tempatan yang disulitkan AES-256-GCM',
-    'nl-NL': '• Gesegmenteerde cyclusring met kleurcodering\n• Ondersteuning voor 40+ talen\n• Verbeterde privacygaranties\n• Lokale versleutelde opslag AES-256-GCM',
-    'no': '• Segmentert syklusring med fargekodig\n• Støtte for 40+ språk\n• Forbedrede personverngarantier\n• Lokalt kryptert lagring AES-256-GCM',
-    'pl': '• Segmentowany pierścień cyklu z kodowaniem kolorów\n• Obsługa 40+ języków\n• Ulepszone gwarancje prywatności\n• Lokalna zaszyfrowana pamięć AES-256-GCM',
-    'pt-BR': '• Anel de ciclo segmentado com codificação de cores\n• Suporte a 40+ idiomas\n• Garantias de privacidade aprimoradas\n• Armazenamento criptografado AES-256-GCM',
-    'pt-PT': '• Anel de ciclo segmentado com código de cores\n• Suporte para 40+ idiomas\n• Garantias de privacidade melhoradas\n• Armazenamento encriptado AES-256-GCM',
-    'ro': '• Inel de ciclu segmentat cu codificare prin culori\n• Suport pentru 40+ limbi\n• Garanții îmbunătățite de confidențialitate\n• Stocare locală criptată AES-256-GCM',
-    'ru': '• Сегментированное кольцо цикла с цветовым кодированием\n• Поддержка 40+ языков\n• Улучшенные гарантии конфиденциальности\n• Локальное зашифрованное хранилище AES-256-GCM',
-    'sk': '• Segmentovaný cyklový prsteň s farebným kódovaním\n• Podpora 40+ jazykov\n• Vylepšené záruky súkromia\n• Miestne šifrované úložisko AES-256-GCM',
-    'sv': '• Segmenterad cykelring med färgkodning\n• Stöd för 40+ språk\n• Förbättrade integritetskaarntier\n• Lokalt krypterat lagringsutrymme AES-256-GCM',
-    'th': '• วงแหวนรอบเดือนแบบแบ่งส่วนพร้อมการเข้ารหัสสี\n• รองรับ 40+ ภาษา\n• การรับประกันความเป็นส่วนตัวที่เพิ่มขึ้น\n• พื้นที่จัดเก็บแบบเข้ารหัสในเครื่อง AES-256-GCM',
-    'tr': '• Renk kodlamalı segmentli döngü halkası\n• 40+ dil desteği\n• Geliştirilmiş gizlilik garantileri\n• Yerel şifreli depolama AES-256-GCM',
-    'uk': '• Сегментоване кільце циклу з колірним кодуванням\n• Підтримка 40+ мов\n• Покращені гарантії конфіденційності\n• Локальне зашифроване сховище AES-256-GCM',
-    'vi': '• Vòng tròn chu kỳ phân đoạn có mã màu\n• Hỗ trợ 40+ ngôn ngữ\n• Đảm bảo quyền riêng tư nâng cao\n• Lưu trữ cục bộ được mã hóa AES-256-GCM',
-    'zh-Hans':'• 分段式周期环，带相位颜色编码\n• 支持40+种语言\n• 增强的操作系统级隐私保证\n• AES-256-GCM本地加密存储',
-    'zh-Hant':'• 分段式週期環，帶相位顏色編碼\n• 支援40+種語言\n• 增強的作業系統級隱私保證\n• AES-256-GCM本地加密儲存',
+    'am': '• የተከፋፈለ ዑደት ቀለበት ከደረጃ ቀለም ኮድ ጋር\n• ጠንካራ የግላዊነት ዋስትናዎች በስርዓተ ክወና ደረጃ ተፈጻሚ ይሆናሉ\n• AES-256-GCM የተመሰጠረ የአካባቢ ማከማቻ\n• የተሻሻለ ተደራሽነት (VoiceOver፣ Dynamic Type)',
+    'ar-SA': '• حلقة دورة مجزأة ذات ترميز لوني\n• ضمانات الخصوصية المحسّنة\n• تخزين محلي مشفر AES-256-GCM',
+    'bg': '• Сегментиран цикличен пръстен с фазово цветно кодиране\n• По-силни гаранции за поверителност, наложени на ниво ОС\n• AES-256-GCM криптирано локално хранилище\n• Подобрена достъпност (VoiceOver, Dynamic Type)',
+    'bn': '• ফেজ কালার কোডিং সহ সেগমেন্টেড সাইকেল রিং\n• শক্তিশালী গোপনীয়তা গ্যারান্টি OS স্তরে প্রয়োগ করা হয়েছে\n• AES-256-GCM এনক্রিপ্ট করা স্থানীয় স্টোরেজ\n• উন্নত অ্যাক্সেসযোগ্যতা (ভয়েসওভার, ডায়নামিক টাইপ)',
+    'ca': '• Anell de cicle segmentat amb codificació de color de fase\n• Garanties de privadesa més sòlides a nivell del sistema operatiu\n• Emmagatzematge local xifrat AES-256-GCM\n• Accessibilitat millorada (VoiceOver, tipus dinàmic)',
+    'cs': '• Segmentovaný cyklový prsten s barevným kódováním\n• Vylepšené záruky soukromí\n• Místní šifrované úložiště AES-256-GCM',
+    'da': '• Segmenteret cyklus-ring med farvekodning\n• Forbedrede privatlivsgarantier\n• Lokalt krypteret lager AES-256-GCM',
+    'de-DE': '• Segmentierter Zyklusring mit Phasenfarben\n• Verstärkter Datenschutz auf OS-Ebene\n• AES-256-GCM Verschlüsselung\n• Verbesserte Barrierefreiheit',
+    'el': '• Τμηματοποιημένος δακτύλιος κύκλου με χρωματική κωδικοποίηση\n• Βελτιωμένες εγγυήσεις απορρήτου\n• Τοπικά κρυπτογραφημένη αποθήκευση AES-256-GCM',
+    'en-US': '• Segmented cycle ring with phase color-coding\n• Current iPhone release ships in English and French\n• Enhanced OS-level privacy guarantees\n• AES-256-GCM local encrypted storage\n• Improved accessibility',
+    'es-ES': '• Anillo de ciclo segmentado con código de color por fase\n• Garantías de privacidad reforzadas\n• Cifrado AES-256-GCM\n• Accesibilidad mejorada',
+    'es-MX': '• Anillo de ciclo segmentado con código de color\n• Garantías de privacidad mejoradas\n• Almacenamiento cifrado AES-256-GCM',
+    'fa': '• حلقه چرخه قطعه بندی شده با کدگذاری رنگ فاز\n• ضمانت\u200cهای حفظ حریم خصوصی قوی\u200cتر در سطح سیستم\u200cعامل اجرا می\u200cشوند\n• ذخیره سازی محلی رمزگذاری شده AES-256-GCM\n• دسترسی بهبودیافته (VoiceOver، Dynamic Type)',
+    'fi': '• Segmentoitu syklirengas värikoodauksella\n• Parannetut tietosuojatakuut\n• Paikallinen salattu tallennus AES-256-GCM',
+    'fr-CA': '• Anneau de cycle segmenté avec code couleur\n• Garanties de confidentialité renforcées\n• Stockage local chiffré AES-256-GCM',
+    'fr-FR': '• Anneau de cycle segmenté avec code couleur par phase\n• Version iPhone actuellement disponible en anglais et en français\n• Garanties de confidentialité renforcées au niveau OS\n• Stockage local chiffré AES-256-GCM\n• Accessibilité améliorée',
+    'he': '• טבעת מחזור מפולחת עם קידוד צבעים\n• ערבויות פרטיות משופרות\n• אחסון מקומי מוצפן AES-256-GCM',
+    'hi': '• रंग-कोडित फेज के साथ सेगमेंटेड साइकिल रिंग\n• बेहतर गोपनीयता गारंटी\n• AES-256-GCM स्थानीय एन्क्रिप्टेड स्टोरेज',
+    'hr': '• Segmentirani prsten ciklusa s kodiranjem boja\n• Poboljšana jamstva privatnosti\n• Lokalna šifrirana pohrana AES-256-GCM',
+    'hu': '• Szegmentált ciklusgyűrű színkódolással\n• Javított adatvédelmi garanciák\n• Helyi titkosított tárolás AES-256-GCM',
+    'id': '• Cincin siklus tersegmentasi dengan kode warna\n• Jaminan privasi yang ditingkatkan\n• Penyimpanan terenkripsi lokal AES-256-GCM',
+    'it': '• Anello ciclo segmentato con codice colore\n• Garanzie di privacy migliorate\n• Archiviazione crittografata AES-256-GCM',
+    'it-IT': '• Anello ciclo segmentato con codice colore\n• Garanzie di privacy migliorate\n• Archiviazione crittografata AES-256-GCM',
+    'ja': '• 28セグメント周期リング（フェーズ別カラーコード）\n• OS レベルのプライバシー保護強化\n• AES-256-GCM 暗号化\n• アクセシビリティ改善',
+    'ko': '• 페이즈 색상 코딩이 있는 분할 주기 링\n• 향상된 개인정보 보호 보장\n• AES-256-GCM 로컬 암호화 스토리지',
+    'ms': '• Gelang kitaran tersegmen dengan pengekodan warna\n• Jaminan privasi yang dipertingkatkan\n• Storan tempatan yang disulitkan AES-256-GCM',
+    'nb': '• Segmentert syklusring med fasefargekoding\n• Sterkere personverngarantier håndhevet på OS-nivå\n• AES-256-GCM kryptert lokal lagring\n• Forbedret tilgjengelighet (VoiceOver, Dynamic Type)',
+    'nl-NL': '• Gesegmenteerde cyclusring met kleurcodering\n• Verbeterde privacygaranties\n• Lokale versleutelde opslag AES-256-GCM',
+    'no': '• Segmentert syklusring med fargekodig\n• Forbedrede personverngarantier\n• Lokalt kryptert lagring AES-256-GCM',
+    'pl': '• Segmentowany pierścień cyklu z kodowaniem kolorów\n• Ulepszone gwarancje prywatności\n• Lokalna zaszyfrowana pamięć AES-256-GCM',
+    'pt-BR': '• Anel de ciclo segmentado com codificação de cores\n• Garantias de privacidade aprimoradas\n• Armazenamento criptografado AES-256-GCM',
+    'pt-PT': '• Anel de ciclo segmentado com código de cores\n• Garantias de privacidade melhoradas\n• Armazenamento encriptado AES-256-GCM',
+    'ro': '• Inel de ciclu segmentat cu codificare prin culori\n• Garanții îmbunătățite de confidențialitate\n• Stocare locală criptată AES-256-GCM',
+    'ru': '• Сегментированное кольцо цикла с цветовым кодированием\n• Улучшенные гарантии конфиденциальности\n• Локальное зашифрованное хранилище AES-256-GCM',
+    'sk': '• Segmentovaný cyklový prsteň s farebným kódovaním\n• Vylepšené záruky súkromia\n• Miestne šifrované úložisko AES-256-GCM',
+    'sv': '• Segmenterad cykelring med färgkodning\n• Förbättrade integritetskaarntier\n• Lokalt krypterat lagringsutrymme AES-256-GCM',
+    'th': '• วงแหวนรอบเดือนแบบแบ่งส่วนพร้อมการเข้ารหัสสี\n• การรับประกันความเป็นส่วนตัวที่เพิ่มขึ้น\n• พื้นที่จัดเก็บแบบเข้ารหัสในเครื่อง AES-256-GCM',
+    'tr': '• Renk kodlamalı segmentli döngü halkası\n• Geliştirilmiş gizlilik garantileri\n• Yerel şifreli depolama AES-256-GCM',
+    'uk': '• Сегментоване кільце циклу з колірним кодуванням\n• Покращені гарантії конфіденційності\n• Локальне зашифроване сховище AES-256-GCM',
+    'vi': '• Vòng tròn chu kỳ phân đoạn có mã màu\n• Đảm bảo quyền riêng tư nâng cao\n• Lưu trữ cục bộ được mã hóa AES-256-GCM',
+    'zh-Hans': '• 分段式周期环，带相位颜色编码\n• 增强的操作系统级隐私保证\n• AES-256-GCM本地加密存储',
+    'zh-Hant': '• 分段式週期環，帶相位顏色編碼\n• 增強的作業系統級隱私保證\n• AES-256-GCM本地加密儲存',
 }
 
 
@@ -257,15 +228,15 @@ def truncate(s, max_len):
 
 
 def main():
-    print('Generating iOS metadata for all locales...\n')
+    print('Generating iOS metadata for shipped locales (en-US, fr-FR)...\n')
 
-    for android_locale, ios_locale in LOCALE_MAP.items():
-        print(f'[{android_locale} → {ios_locale}]')
+    for source_locale, ios_locale in IOS_METADATA_SOURCES.items():
+        print(f'[{source_locale} → {ios_locale}]')
 
         # Read Android content
-        android_title = read_android(android_locale, 'title.txt')
-        android_desc = read_android(android_locale, 'full_description.txt')
-        android_short = read_android(android_locale, 'short_description.txt')
+        android_title = read_android(source_locale, 'title.txt')
+        android_desc = read_android(source_locale, 'full_description.txt')
+        android_short = read_android(source_locale, 'short_description.txt')
 
         # Check existing iOS content
         ios_folder = os.path.join(IOS_META, ios_locale)
@@ -311,14 +282,14 @@ def main():
         write_ios(ios_locale, 'promotional_text.txt', promo)
 
         # release_notes.txt (max 4000 chars)
-        notes = existing_notes or RELEASE_NOTES.get(ios_locale, RELEASE_NOTES['en-US'])
+        notes = RELEASE_NOTES.get(ios_locale, existing_notes or RELEASE_NOTES['en-US'])
         write_ios(ios_locale, 'release_notes.txt', notes)
 
         # Screenshots: copy from en-US if missing
         copy_screenshots(ios_locale)
 
-    print('\nDone! iOS metadata generated for all locales.')
-    print(f'Locales: {sorted(LOCALE_MAP.values())}')
+    print('\nDone! iOS metadata generated for shipped locales.')
+    print(f'Locales: {sorted(IOS_METADATA_SOURCES.values())}')
     print('\nRun: fastlane ios upload_metadata')
 
 

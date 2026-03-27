@@ -13,6 +13,7 @@ import SwiftUI
 /// Entry point — routes: onboarding → lock (optional) → main tabs
 struct RootView: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var autoUnlockFailed = false
 
     var body: some View {
@@ -37,7 +38,7 @@ struct RootView: View {
                 .task { await autoUnlock() }
             }
         }
-        .animation(.easeInOut(duration: 0.25), value: appState.isVaultOpen)
+        .animation(reduceMotion ? .none : .easeInOut(duration: 0.25), value: appState.isVaultOpen)
     }
 
     private func autoUnlock() async {

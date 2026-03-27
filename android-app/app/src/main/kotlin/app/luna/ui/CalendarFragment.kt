@@ -142,12 +142,16 @@ class CalendarDayAdapter(
             )
             holder.itemView.importantForAccessibility =
                 View.IMPORTANT_FOR_ACCESSIBILITY_YES
-            // Fond coloré selon type d'événement
+            // Fond coloré selon type d'événement — utilise les tokens LUNA (design system)
+            // Period: rose (luna_phase_menstrual)
+            // Fertile: sage (luna_brand_success)
+            // Ovulation: coral (luna_phase_ovulation) — Visuellement distinct (Von Restorff)
+            // Logged: secondary (luna_content_secondary)
             val colorRes = when (day.eventType) {
-                CalendarEventType.PERIOD -> android.R.color.holo_red_light
-                CalendarEventType.FERTILE -> android.R.color.holo_green_light
-                CalendarEventType.OVULATION -> android.R.color.holo_orange_light
-                CalendarEventType.LOGGED -> android.R.color.darker_gray
+                CalendarEventType.PERIOD -> R.color.luna_phase_menstrual
+                CalendarEventType.FERTILE -> R.color.luna_brand_success
+                CalendarEventType.OVULATION -> R.color.luna_phase_ovulation
+                CalendarEventType.LOGGED -> R.color.luna_content_secondary
                 CalendarEventType.NONE -> android.R.color.transparent
             }
             holder.itemView.setBackgroundColor(

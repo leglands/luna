@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO_ROOT=$(git rev-parse --show-toplevel)
+GIT_DIR=$(git rev-parse --git-dir)
+LOCAL_HOOK="$GIT_DIR/local-hooks/post-commit.local"
+
+BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "detached")
+COMMIT=$(git log -1 --format='%h %s')
+CHANGED=$(git diff-tree --no-commit-id -r --name-only HEAD 2>/dev/null || true)
+
+RUST_CHANGED=$(echo "$CHANGED" | { grep -cE '^(luna-core|uniffi-bindgen|Cargo)' || true; })
+IOS_CHANGED=$(echo "$CHANGED" | { grep -cE '^ios-app/' || true; })
+ANDROID_CHANGED=$(echo "$CHANGED" | { grep -cE '^android-app/' || true; })
+FASTLANE_CHANGED=$(echo "$CHANGED" | { grep -cE '^fastlane/' || true; })
+
+if [ "$RUST_CHANGED" -gt 0 ] || [ "$IOS_CHANGED" -gt 0 ] || [ "$ANDROID_CHANGED" -gt 0 ] || [ "$FASTLANE_CHANGED" -gt 0 ]; then
+  echo "[luna] Commit: $COMMIT"
+
+  if [ "$RUST_CHANGED" -gt 0 ]; then
+    echo "[luna] Rust core changed — running smoke tests..."
+    if cargo test --quiet --lib 2>/dev/null; then
+      echo "[luna] ✅ Rust tests passed"
+    else
+      echo "[luna] ⚠️  Rust tests failed — check before releasing"
+    fi
+    echo "[luna] Bindings may need regeneration (cargo run -p uniffi-bindgen)"
+  fi
+
+  [ "$IOS_CHANGED" -gt 0 ] && echo "[luna] iOS app changed."
+  [ "$ANDROID_CHANGED" -gt 0 ] && echo "[luna] Android app changed."
+  [ "$FASTLANE_CHANGED" -gt 0 ] && echo "[luna] Fastlane config changed."
+
+  if [ "$BRANCH" = "main" ]; then
+    LATEST=$(git describe --tags --abbrev=0 2>/dev/null || echo "none")
+    echo ""
+    echo "[luna] On main — latest tag: $LATEST"
+    echo "[luna] To release: git tag v1.x.x && git push --tags"
+    echo "[luna] → Triggers .github/workflows/release.yml (TestFlight + Play internal)"
+  fi
+fi
+
+if [ -x "$LOCAL_HOOK" ] && [ "${LUNA_SKIP_CHAINED_LOCAL_HOOKS:-0}" != "1" ]; then
+  "$LOCAL_HOOK"
+fi

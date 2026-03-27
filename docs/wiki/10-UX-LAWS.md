@@ -45,7 +45,7 @@
 | 25 | **Selective Attention** | Users focus on task-relevant information and filter the rest. | ✅ OK | Log sheet shows only relevant fields. Calm Mode removes prediction noise. Non-essential info hidden behind expandable sections. | — |
 | 26 | **Serial Position Effect** | Users best remember first and last items in a series. | ✅ OK | Most important tabs (Home, Settings) placed at first and last positions in tab bar. Calendar and Insights in middle positions. | — |
 | 27 | **Tesler's Law** | Every system has irreducible complexity; it should be borne by the system, not the user. | ✅ OK | Cycle prediction algorithm runs automatically. Date formatting handled by system locale. Encryption/decryption transparent to user (PIN only). | — |
-| 28 | **Von Restorff Effect** | Distinctive items are more likely to be remembered. | ⚠️ WARNING | Ovulation day marker on calendar not visually distinct enough from fertile window markers. Both use similar green tones. | **Planned**: increase ovulation marker contrast — use filled circle + different shade or accent color. Add subtle pulsing indicator (respects reduceMotion). |
+| 28 | **Von Restorff Effect** | Distinctive items are more likely to be remembered. | 🔧 FIXED | Ovulation day marker now uses coral/orange (AccentAccent) vs fertile window green (AccentSuccess). iOS CalendarView and HomeView WeekStripView aligned. Android CalendarFragment uses luna_phase_ovulation (coral) vs luna_brand_success (sage green). | Ovulation marker uses AccentAccent (coral #F5601A) — visually distinct from fertile AccentSuccess (sage #4AA26E). Both platforms now use consistent semantic colors. |
 | 29 | **Working Memory** | Information in working memory decays rapidly without rehearsal. | ✅ OK | All context stays visible during log entry (no hidden state). Calendar shows full month with all markers visible. Inline validation on form fields. | — |
 | 30 | **Zeigarnik Effect** | Incomplete tasks are remembered better than completed ones. | 🔧 FIXED | No indication when user hadn't logged for the current day. | Added red dot badge on Home tab and calendar when today has no log entry. Subtle "Not logged today" banner on Home screen. |
 
@@ -56,11 +56,11 @@
 | Status | Count |
 |--------|-------|
 | ✅ OK | 19 |
-| 🔧 FIXED | 10 |
-| ⚠️ WARNING | 1 |
-| **Total** | **30** |
+| 🔧 FIXED | 11 |
+| ⚠️ WARNING | 0 |
+| **Total** | 30 |
 
-**Compliance: 97%** (29/30 resolved) · 1 warning tracked for next release.
+**Compliance: 100%** (30/30 resolved) · All UX laws now compliant.
 
 ---
 
@@ -68,4 +68,4 @@
 
 | Priority | Action | Law | Target |
 |----------|--------|-----|--------|
-| Medium | Improve ovulation marker distinctiveness | Von Restorff (#28) | v0.2.0 |
+| — | All UX law issues resolved | — | — |

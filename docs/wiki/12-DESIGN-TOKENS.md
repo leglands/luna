@@ -12,7 +12,7 @@
 |-------|-------|------|-------|-----|---------|
 | `AppBackground` | `#FAFAFA` | `#0D0A14` | Main app background | `Color("AppBackground")` | `@color/app_background` |
 | `LockBackground` | `#0D0A14` | `#0D0A14` | Lock screen (always dark) | `Color("LockBackground")` | `@color/lock_background` |
-| `AccentPrimary` | `#E91E63` | `#FF4081` | Primary actions, selected states, period markers | `Color.accentColor` | `@color/accent_primary` |
+| `AccentPrimary` | `#C2567A` | `#D66A8C` | Primary actions, selected states, period markers | `Color("AccentPrimary")` | `@color/luna_accent_primary` |
 | `AccentSecondary` | `#7C4DFF` | `#B388FF` | Secondary actions, accents | `Color("AccentSecondary")` | `@color/accent_secondary` |
 | `TextPrimary` | `#1A1A1A` | `#F5F5F5` | Primary text, headings | `Color.primary` | `@color/text_primary` |
 | `TextSecondary` | `#757575` | `#BDBDBD` | Secondary text, captions, placeholders | `Color.secondary` | `@color/text_secondary` |
@@ -21,7 +21,7 @@
 | `Error` | `#F44336` | `#EF5350` | Errors, destructive actions, alert badge | `Color("Error")` | `@color/error` |
 | `Surface` | `#FFFFFF` | `#1A1625` | Cards, sheets, elevated containers | `Color("Surface")` | `@color/surface` |
 | `FertileWindow` | `#81C784` | `#A5D6A7` | Fertile window days on calendar | `Color("FertileWindow")` | `@color/fertile_window` |
-| `PeriodDay` | `#E91E63` | `#FF4081` | Period days on calendar | `Color("PeriodDay")` | `@color/period_day` |
+| `PeriodDay` | `#C2567A` | `#D66A8C` | Period days on calendar | `Color("AccentPrimary")` | `@color/luna_accent_primary` |
 
 ### Color Rules
 

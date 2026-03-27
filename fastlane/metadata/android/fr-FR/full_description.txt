@@ -21,4 +21,4 @@ CONFIDENTIALITÉ BY DESIGN
 • Open source : https://github.com/macaron-software/luna
 
 ACCESSIBILITÉ
-Support TalkBack complet, Texte dynamique, 40+ langues
+Support TalkBack complet, Texte dynamique

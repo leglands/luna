@@ -271,6 +271,21 @@ void*_Nonnull uniffi_luna_core_fn_constructor_lunaengine_open_vault(RustBuffer d
 void uniffi_luna_core_fn_method_lunaengine_change_pin(void*_Nonnull ptr, RustBuffer old_pin, RustBuffer new_pin, RustCallStatus *_Nonnull out_status
 );
 #endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_FN_METHOD_LUNAENGINE_DELETE_CYCLE
+#define UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_FN_METHOD_LUNAENGINE_DELETE_CYCLE
+int8_t uniffi_luna_core_fn_method_lunaengine_delete_cycle(void*_Nonnull ptr, RustBuffer cycle_id, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_FN_METHOD_LUNAENGINE_DELETE_LOG
+#define UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_FN_METHOD_LUNAENGINE_DELETE_LOG
+int8_t uniffi_luna_core_fn_method_lunaengine_delete_log(void*_Nonnull ptr, RustBuffer date, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_FN_METHOD_LUNAENGINE_DELETE_PREGNANCY_LOG
+#define UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_FN_METHOD_LUNAENGINE_DELETE_PREGNANCY_LOG
+int8_t uniffi_luna_core_fn_method_lunaengine_delete_pregnancy_log(void*_Nonnull ptr, RustBuffer date, RustCallStatus *_Nonnull out_status
+);
+#endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_FN_METHOD_LUNAENGINE_END_CYCLE
 #define UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_FN_METHOD_LUNAENGINE_END_CYCLE
 void uniffi_luna_core_fn_method_lunaengine_end_cycle(void*_Nonnull ptr, RustBuffer cycle_id, RustBuffer end_date, RustCallStatus *_Nonnull out_status
@@ -645,6 +660,24 @@ uint16_t uniffi_luna_core_checksum_func_vault_exists(void
 #ifndef UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_CHECKSUM_METHOD_LUNAENGINE_CHANGE_PIN
 #define UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_CHECKSUM_METHOD_LUNAENGINE_CHANGE_PIN
 uint16_t uniffi_luna_core_checksum_method_lunaengine_change_pin(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_CHECKSUM_METHOD_LUNAENGINE_DELETE_CYCLE
+#define UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_CHECKSUM_METHOD_LUNAENGINE_DELETE_CYCLE
+uint16_t uniffi_luna_core_checksum_method_lunaengine_delete_cycle(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_CHECKSUM_METHOD_LUNAENGINE_DELETE_LOG
+#define UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_CHECKSUM_METHOD_LUNAENGINE_DELETE_LOG
+uint16_t uniffi_luna_core_checksum_method_lunaengine_delete_log(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_CHECKSUM_METHOD_LUNAENGINE_DELETE_PREGNANCY_LOG
+#define UNIFFI_FFIDEF_UNIFFI_LUNA_CORE_CHECKSUM_METHOD_LUNAENGINE_DELETE_PREGNANCY_LOG
+uint16_t uniffi_luna_core_checksum_method_lunaengine_delete_pregnancy_log(void
     
 );
 #endif

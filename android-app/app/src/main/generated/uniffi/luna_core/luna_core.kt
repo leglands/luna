@@ -752,6 +752,12 @@ internal interface UniffiForeignFutureCompleteVoid : com.sun.jna.Callback {
 
 
 
+
+
+
+
+
+
 // A JNA Library to expose the extern-C FFI definitions.
 // This is an implementation detail which will be called internally by the public API.
 
@@ -779,6 +785,12 @@ internal interface UniffiLib : Library {
     ): Pointer
     fun uniffi_luna_core_fn_method_lunaengine_change_pin(`ptr`: Pointer,`oldPin`: RustBuffer.ByValue,`newPin`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
+    fun uniffi_luna_core_fn_method_lunaengine_delete_cycle(`ptr`: Pointer,`cycleId`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Byte
+    fun uniffi_luna_core_fn_method_lunaengine_delete_log(`ptr`: Pointer,`date`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Byte
+    fun uniffi_luna_core_fn_method_lunaengine_delete_pregnancy_log(`ptr`: Pointer,`date`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
+    ): Byte
     fun uniffi_luna_core_fn_method_lunaengine_end_cycle(`ptr`: Pointer,`cycleId`: RustBuffer.ByValue,`endDate`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Unit
     fun uniffi_luna_core_fn_method_lunaengine_export_encrypted_backup(`ptr`: Pointer,`pin`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
@@ -929,6 +941,12 @@ internal interface UniffiLib : Library {
     ): Short
     fun uniffi_luna_core_checksum_method_lunaengine_change_pin(
     ): Short
+    fun uniffi_luna_core_checksum_method_lunaengine_delete_cycle(
+    ): Short
+    fun uniffi_luna_core_checksum_method_lunaengine_delete_log(
+    ): Short
+    fun uniffi_luna_core_checksum_method_lunaengine_delete_pregnancy_log(
+    ): Short
     fun uniffi_luna_core_checksum_method_lunaengine_end_cycle(
     ): Short
     fun uniffi_luna_core_checksum_method_lunaengine_export_encrypted_backup(
@@ -984,6 +1002,15 @@ private fun uniffiCheckApiChecksums(lib: UniffiLib) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_luna_core_checksum_method_lunaengine_change_pin() != 37046.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_luna_core_checksum_method_lunaengine_delete_cycle() != 44214.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_luna_core_checksum_method_lunaengine_delete_log() != 43301.toShort()) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if (lib.uniffi_luna_core_checksum_method_lunaengine_delete_pregnancy_log() != 51340.toShort()) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if (lib.uniffi_luna_core_checksum_method_lunaengine_end_cycle() != 55936.toShort()) {
@@ -1428,6 +1455,21 @@ public interface LunaEngineInterface {
     fun `changePin`(`oldPin`: kotlin.String, `newPin`: kotlin.String)
     
     /**
+     * Supprime un cycle par identifiant.
+     */
+    fun `deleteCycle`(`cycleId`: kotlin.String): kotlin.Boolean
+    
+    /**
+     * Supprime le log d'une date donnée.
+     */
+    fun `deleteLog`(`date`: kotlin.String): kotlin.Boolean
+    
+    /**
+     * Supprime le log de grossesse d'une date donnée.
+     */
+    fun `deletePregnancyLog`(`date`: kotlin.String): kotlin.Boolean
+    
+    /**
      * Clôture le cycle en cours avec une date de fin.
      */
     fun `endCycle`(`cycleId`: kotlin.String, `endDate`: kotlin.String)
@@ -1626,6 +1668,54 @@ open class LunaEngine: Disposable, AutoCloseable, LunaEngineInterface {
 }
     }
     
+    
+
+    
+    /**
+     * Supprime un cycle par identifiant.
+     */
+    @Throws(LunaException::class)override fun `deleteCycle`(`cycleId`: kotlin.String): kotlin.Boolean {
+            return FfiConverterBoolean.lift(
+    callWithPointer {
+    uniffiRustCallWithError(LunaException) { _status ->
+    UniffiLib.INSTANCE.uniffi_luna_core_fn_method_lunaengine_delete_cycle(
+        it, FfiConverterString.lower(`cycleId`),_status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Supprime le log d'une date donnée.
+     */
+    @Throws(LunaException::class)override fun `deleteLog`(`date`: kotlin.String): kotlin.Boolean {
+            return FfiConverterBoolean.lift(
+    callWithPointer {
+    uniffiRustCallWithError(LunaException) { _status ->
+    UniffiLib.INSTANCE.uniffi_luna_core_fn_method_lunaengine_delete_log(
+        it, FfiConverterString.lower(`date`),_status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Supprime le log de grossesse d'une date donnée.
+     */
+    @Throws(LunaException::class)override fun `deletePregnancyLog`(`date`: kotlin.String): kotlin.Boolean {
+            return FfiConverterBoolean.lift(
+    callWithPointer {
+    uniffiRustCallWithError(LunaException) { _status ->
+    UniffiLib.INSTANCE.uniffi_luna_core_fn_method_lunaengine_delete_pregnancy_log(
+        it, FfiConverterString.lower(`date`),_status)
+}
+    }
+    )
+    }
     
 
     

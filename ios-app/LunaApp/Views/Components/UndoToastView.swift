@@ -52,12 +52,17 @@ struct UndoToastView: View {
                 }
                 .frame(height: 2)
                 .padding(.horizontal, 8)
+                .opacity(reduceMotion ? 0 : 1)
             }
             .padding(.horizontal, 20)
             .transition(reduceMotion ? .opacity : .move(edge: .bottom).combined(with: .opacity))
             .onAppear {
-                withAnimation(.linear(duration: duration)) {
-                    progress = 0
+                if reduceMotion {
+                    progress = 1
+                } else {
+                    withAnimation(.linear(duration: duration)) {
+                        progress = 0
+                    }
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
                     withAnimation(reduceMotion ? .none : .easeOut(duration: 0.2)) {
@@ -79,6 +84,7 @@ struct UndoToastModifier: ViewModifier {
     @Binding var isPresented: Bool
     let message: String
     let onUndo: () -> Void
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     func body(content: Content) -> some View {
         ZStack(alignment: .bottom) {
@@ -97,7 +103,7 @@ struct UndoToastModifier: ViewModifier {
                 .padding(.bottom, 16)
             }
         }
-        .animation(.easeInOut(duration: 0.25), value: isPresented)
+        .animation(reduceMotion ? .none : .easeInOut(duration: 0.25), value: isPresented)
     }
 }
 

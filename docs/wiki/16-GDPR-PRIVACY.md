@@ -82,15 +82,13 @@
 | **Account deletion** | N/A (no accounts) | — | N/A |
 | **App uninstall** | All data (app sandbox) | OS-level | ✅ OS handles |
 
-> **Gap**: No `delete_log(date)` API. User can overwrite via `log_day()` upsert (set all fields to None) but cannot remove the record entirely. `panic_wipe()` deletes everything. Individual deletion should be added for full Art. 17 compliance.
-
 ### 6. Portability
 
 | Method | Format | API | Status |
 |--------|--------|-----|--------|
 | Encrypted backup | AES-256-GCM binary blob | `export_encrypted_backup(pin)` | ✅ Implemented |
 | CSV export | Plain-text CSV | `export_logs_csv()` | ✅ Implemented |
-| Backup import/restore | — | `import_backup()` | ⚠️ **Gap** — not yet implemented |
+| Backup import/restore | AES-256-GCM binary blob | `import_encrypted_backup(backup, pin)` | ✅ Implemented (api.rs:275) |
 
 ---
 
@@ -151,8 +149,8 @@
 
 | Gap | GDPR Article | Priority | Action |
 |-----|-------------|----------|--------|
-| No individual record deletion | Art. 17 | **Medium** | Add `delete_log(date)` to Rust API + UI |
-| No backup import/restore | Art. 20 | **Medium** | Add `import_backup()` to Rust API + UI |
+| ~~No individual record deletion~~ ✅ | Art. 17 | — | Already implemented (`delete_log` api.rs:77) |
+| ~~No backup import/restore~~ ✅ | Art. 20 | — | Already implemented (`import_encrypted_backup` api.rs:275) |
 | No retention policy UI | Art. 5.1.e | **Low** | Optional: auto-delete logs older than N months |
 | No explicit consent screen | Art. 7 | **Low** | Consider adding first-launch consent dialog for health data processing |
 | No DPO designated | Art. 37 | **N/A** | Not required for single-developer, local-only app |

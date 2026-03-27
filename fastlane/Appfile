@@ -1,5 +1,5 @@
 app_identifier "com.macaron.luna"
-apple_id "legland_s@hotmail.com"
+apple_id "contact@macaron-software.com"
 team_id "P36X572LL9"
 
 for_platform :ios do

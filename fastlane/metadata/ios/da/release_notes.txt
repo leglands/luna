@@ -1,4 +1,3 @@
 • Segmenteret cyklus-ring med farvekodning
-• Understøttelse af 40+ sprog
 • Forbedrede privatlivsgarantier
 • Lokalt krypteret lager AES-256-GCM

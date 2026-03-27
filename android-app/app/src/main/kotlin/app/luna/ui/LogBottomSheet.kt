@@ -125,6 +125,7 @@ class LogBottomSheet : BottomSheetDialogFragment() {
             val resId = resources.getIdentifier("flow_$flow", "string", requireContext().packageName)
             RadioButton(requireContext()).apply {
                 text = getString(resId)
+                contentDescription = getString(R.string.flow_option_a11y, getString(resId))
                 id = View.generateViewId()
                 minHeight = dpToPx(48)
                 setOnCheckedChangeListener { _, isChecked -> if (isChecked) selectedFlow = flow }

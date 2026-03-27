@@ -1,0 +1,73 @@
+appId: com.macaron.luna
+name: "08 - Backup & Export"
+tags:
+  - critical
+  - security
+  - data
+---
+# Test backup export and CSV export flows
+
+# Pré-condition : sur Home (déverrouillé)
+- assertVisible:
+    id: "bottom_navigation"
+    timeout: 5000
+
+# Naviguer vers Settings
+- tapOn: "Me"
+
+# Vérifier que Settings est affiché
+- assertVisible:
+    id: "tracking_mode_button"
+    timeout: 3000
+
+# Vérifier que le bouton Export CSV existe
+- assertVisible:
+    id: "export_csv_button"
+    timeout: 3000
+
+# Taper sur Export CSV
+- tapOn:
+    id: "export_csv_button"
+
+# Attendre que le share sheet ou la sheet de partage apparaisse
+# (Sur iOS un share sheet apparait, sur Android c'est similaire)
+- waitForAnimationToEnd:
+    timeout: 3000
+
+# Annuler le share sheet en appuyant sur back/close si présent
+- pressKey: back
+- waitForAnimationToEnd:
+    timeout: 1000
+
+# Retour à Settings - vérifier que le bouton panic wipe est toujours visible (confirmation de navigation)
+- assertVisible:
+    id: "panic_wipe_button"
+    timeout: 3000
+
+# Naviguer vers le mode de tracking pour vérifier le changement
+- tapOn:
+    id: "tracking_mode_button"
+
+# Vérifier que le selector de mode apparait
+- assertVisible:
+    timeout: 3000
+
+# Revenir aux settings
+- pressKey: back
+
+# Scroll jusqu'au bouton backup encrypted
+- scrollUntilVisible:
+    element:
+      id: "backup_button"
+    direction: DOWN
+
+# Vérifier que le bouton backup existe
+- assertVisible:
+    id: "backup_button"
+    timeout: 3000
+
+# Retour à Home
+- pressKey: back
+- assertVisible:
+    id: "log_today_button"
+    timeout: 3000

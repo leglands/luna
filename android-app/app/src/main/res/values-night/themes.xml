@@ -7,17 +7,17 @@
 <resources>
 
     <style name="Theme.Luna" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/luna_pink_400</item>
+        <item name="colorPrimary">@color/luna_accent_primary</item>
         <item name="colorOnPrimary">@color/luna_neutral_0</item>
-        <item name="colorPrimaryContainer">@color/luna_pink_800</item>
-        <item name="colorOnPrimaryContainer">@color/luna_pink_100</item>
+        <item name="colorPrimaryContainer">@color/luna_accent_primary_100</item>
+        <item name="colorOnPrimaryContainer">@color/luna_accent_primary_900</item>
 
-        <item name="colorSecondary">@color/luna_amber_400</item>
-        <item name="colorOnSecondary">@color/luna_neutral_900</item>
-        <item name="colorSecondaryContainer">@color/luna_amber_500</item>
-        <item name="colorOnSecondaryContainer">@color/luna_neutral_900</item>
+        <item name="colorSecondary">@color/luna_accent_primary</item>
+        <item name="colorOnSecondary">@color/luna_neutral_0</item>
+        <item name="colorSecondaryContainer">@color/luna_accent_primary_100</item>
+        <item name="colorOnSecondaryContainer">@color/luna_accent_primary_900</item>
 
-        <item name="colorTertiary">@color/luna_coral_400</item>
+        <item name="colorTertiary">@color/luna_accent_primary</item>
         <item name="colorOnTertiary">@color/luna_neutral_0</item>
 
         <item name="colorError">@color/luna_rose_400</item>
@@ -39,7 +39,7 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
 
-        <item name="colorControlHighlight">@color/luna_pink_900</item>
+        <item name="colorControlHighlight">@color/luna_accent_primary_100</item>
         <item name="bottomNavigationStyle">@style/Luna.BottomNavigation.Dark</item>
     </style>
 

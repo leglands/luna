@@ -134,6 +134,7 @@ class PerimenopauseFragment : Fragment() {
 
                     // Bar chart
                     val chart = CycleChartView(requireContext())
+                    chart.chartLabel = getString(R.string.perimenopause_variability_title)
                     chart.dataPoints = lengths.mapIndexed { i, v -> "C${i+1}" to v.toFloat() }
                     chart.layoutParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,

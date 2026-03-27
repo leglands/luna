@@ -16,7 +16,7 @@ No advertising, no trackers, no analytics
 Open source: https://github.com/macaron-software/luna
 
 ACCESSIBILITY
-Full TalkBack support, Dynamic Text, 40+ languages
+Full TalkBack support, Dynamic Text, current Android release in English
 
 SCIENCE-BACKED
 Predictions based on peer-reviewed research on cycle variability.

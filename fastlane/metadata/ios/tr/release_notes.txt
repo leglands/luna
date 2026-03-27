@@ -1,4 +1,3 @@
 • Renk kodlamalı segmentli döngü halkası
-• 40+ dil desteği
 • Geliştirilmiş gizlilik garantileri
 • Yerel şifreli depolama AES-256-GCM

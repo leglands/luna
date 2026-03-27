@@ -22,7 +22,7 @@
 | F16 | Calm Mode | P6, P4 | Medium | ✅ Implemented | — (client-side toggle) | `SettingsView` | `SettingsActivity` |
 | F17 | i18n (40 Languages) | P1, P5 | High | ✅ Implemented | — | `Localizable.xcstrings` | `res/values-*/strings.xml` |
 | F18 | Dark Mode (Auto) | P1, P6 | Medium | ✅ Implemented | — | System auto | System auto |
-| F19 | Accessibility (WCAG 2.2 AA) | P6 | High | ✅ Implemented | — | VoiceOver + reduceMotion | TalkBack |
+| F19 | Accessibility (WCAG 2.2 AA) | P6 | High | ⚠️ In audit | — | VoiceOver + reduceMotion | TalkBack |
 | F20 | Local Notifications | P1, P2 | High | 🔲 Backlog | — | — | — |
 | F21 | Biometric Auth (FaceID/Fingerprint) | P5 | Medium | 🔲 Backlog | — | — | — |
 | F22 | HealthKit / HealthConnect Bridge | P1 | Medium | 🔲 Backlog | — | — | — |

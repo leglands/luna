@@ -544,6 +544,21 @@ public protocol LunaEngineProtocol : AnyObject {
     func changePin(oldPin: String, newPin: String) throws 
     
     /**
+     * Supprime un cycle par identifiant.
+     */
+    func deleteCycle(cycleId: String) throws  -> Bool
+    
+    /**
+     * Supprime le log d'une date donnée.
+     */
+    func deleteLog(date: String) throws  -> Bool
+    
+    /**
+     * Supprime le log de grossesse d'une date donnée.
+     */
+    func deletePregnancyLog(date: String) throws  -> Bool
+    
+    /**
      * Clôture le cycle en cours avec une date de fin.
      */
     func endCycle(cycleId: String, endDate: String) throws 
@@ -723,6 +738,39 @@ open func changePin(oldPin: String, newPin: String)throws  {try rustCallWithErro
         FfiConverterString.lower(newPin),$0
     )
 }
+}
+    
+    /**
+     * Supprime un cycle par identifiant.
+     */
+open func deleteCycle(cycleId: String)throws  -> Bool {
+    return try  FfiConverterBool.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
+    uniffi_luna_core_fn_method_lunaengine_delete_cycle(self.uniffiClonePointer(),
+        FfiConverterString.lower(cycleId),$0
+    )
+})
+}
+    
+    /**
+     * Supprime le log d'une date donnée.
+     */
+open func deleteLog(date: String)throws  -> Bool {
+    return try  FfiConverterBool.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
+    uniffi_luna_core_fn_method_lunaengine_delete_log(self.uniffiClonePointer(),
+        FfiConverterString.lower(date),$0
+    )
+})
+}
+    
+    /**
+     * Supprime le log de grossesse d'une date donnée.
+     */
+open func deletePregnancyLog(date: String)throws  -> Bool {
+    return try  FfiConverterBool.lift(try rustCallWithError(FfiConverterTypeLunaError.lift) {
+    uniffi_luna_core_fn_method_lunaengine_delete_pregnancy_log(self.uniffiClonePointer(),
+        FfiConverterString.lower(date),$0
+    )
+})
 }
     
     /**
@@ -2472,6 +2520,15 @@ private var initializationResult: InitializationResult = {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_luna_core_checksum_method_lunaengine_change_pin() != 37046) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_luna_core_checksum_method_lunaengine_delete_cycle() != 44214) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_luna_core_checksum_method_lunaengine_delete_log() != 43301) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_luna_core_checksum_method_lunaengine_delete_pregnancy_log() != 51340) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_luna_core_checksum_method_lunaengine_end_cycle() != 55936) {

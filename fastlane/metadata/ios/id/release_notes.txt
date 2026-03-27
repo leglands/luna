@@ -1,4 +1,3 @@
 • Cincin siklus tersegmentasi dengan kode warna
-• Dukungan 40+ bahasa
 • Jaminan privasi yang ditingkatkan
 • Penyimpanan terenkripsi lokal AES-256-GCM

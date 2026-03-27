@@ -21,4 +21,4 @@ LUNAはプライバシー重視の生理周期・ウェルネス追跡アプリ�
 • オープンソース: https://github.com/macaron-software/luna
 
 アクセシビリティ
-TalkBack完全対応、ダイナミックテキスト、40以上の言語
+TalkBack完全対応、ダイナミックテキスト、

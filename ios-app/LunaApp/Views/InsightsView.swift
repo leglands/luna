@@ -70,6 +70,7 @@ struct InsightsView: View {
 
 struct CycleStatsSection: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var appeared = false
 
     var body: some View {
@@ -99,6 +100,10 @@ struct CycleStatsSection: View {
             }
         }
         .onAppear {
+            guard !reduceMotion else {
+                appeared = true
+                return
+            }
             withAnimation(.easeOut(duration: 0.5).delay(0.1)) {
                 appeared = true
             }
@@ -175,6 +180,7 @@ struct TrendChartsSection: View {
                         }
                     }
                     .accessibilityLabel(Text("charts_cycle_lengths_a11y"))
+                    .accessibilityValue(Text(cycleLengthsAccessibilityValue))
                 }
                 .padding(16)
                 .background(Color("CardBackground"), in: RoundedRectangle(cornerRadius: 16))
@@ -205,6 +211,7 @@ struct TrendChartsSection: View {
                     .chartYScale(domain: 36.0...37.5)
                     .chartXAxis(.hidden)
                     .accessibilityLabel(Text("charts_bbt_a11y"))
+                    .accessibilityValue(Text(bbtAccessibilityValue))
                 }
                 .padding(16)
                 .background(Color("CardBackground"), in: RoundedRectangle(cornerRadius: 16))
@@ -219,6 +226,21 @@ struct TrendChartsSection: View {
                 animateCharts = true
             }
         }
+    }
+
+    private var cycleLengthsAccessibilityValue: String {
+        appState.cycleLengthHistory
+            .map { "C\($0.0) \($0.1.formatted(.number.precision(.fractionLength(0))))" }
+            .joined(separator: ", ")
+    }
+
+    private var bbtAccessibilityValue: String {
+        appState.bbtHistory
+            .map { item in
+                let value = item.1.formatted(.number.precision(.fractionLength(1)))
+                return "\(item.0) \(value)"
+            }
+            .joined(separator: ", ")
     }
 }
 
@@ -262,6 +284,7 @@ struct SymptomFrequencyRow: View {
     let frequency: Double
     var animate: Bool = true
     var delay: Double = 0
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         HStack(spacing: 12) {
@@ -275,7 +298,7 @@ struct SymptomFrequencyRow: View {
                     Capsule()
                         .fill(Color("AccentPrimary").opacity(0.7))
                         .frame(width: geo.size.width * (animate ? frequency : 0))
-                        .animation(.easeOut(duration: 0.6).delay(delay), value: animate)
+                        .animation(reduceMotion ? .none : .easeOut(duration: 0.6).delay(delay), value: animate)
                 }
             }
             .frame(height: 8)
@@ -298,6 +321,7 @@ struct SymptomFrequencyRow: View {
 
 struct InsightCardView: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var appeared = false
 
     private var insightKey: String {
@@ -325,6 +349,10 @@ struct InsightCardView: View {
         .scaleEffect(appeared ? 1 : 0.95)
         .opacity(appeared ? 1 : 0)
         .onAppear {
+            guard !reduceMotion else {
+                appeared = true
+                return
+            }
             withAnimation(.easeOut(duration: 0.4).delay(0.5)) {
                 appeared = true
             }

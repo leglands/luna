@@ -22,4 +22,4 @@ PERSONVERN GARANTIER
 • Åpen kildekode: github.com/macaron-software/luna
 
 TILGJENGELIGHET
-Full VoiceOver-støtte · Dynamic Type · 40+ språk
+Full VoiceOver-støtte · Dynamic Type

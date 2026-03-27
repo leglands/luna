@@ -19,7 +19,7 @@
 | 11 | [UI Components](11-UI-COMPONENTS.md) | Atomic Design hierarchy, component gallery |
 | 12 | [Design Tokens](12-DESIGN-TOKENS.md) | Colors, spacing, fonts, radius, icons |
 | 13 | [A11Y](13-A11Y.md) | WCAG 2.2 AA, ARIA patterns, VoiceOver/TalkBack |
-| 14 | [i18n](14-I18N.md) | 40 languages, RTL support, locale testing |
+| 14 | [i18n](14-I18N.md) | Shipped locale audit, scaffold backlog, RTL foundation |
 | 15 | [Testing](15-TESTING.md) | Unit tests, UI tests, E2E tests, coverage |
 | 16 | [GDPR & Privacy](16-GDPR-PRIVACY.md) | Data lifecycle, rights, zero-collection model |
 | 17 | [Observability](17-OBSERVABILITY.md) | Local-only metrics, crash reporting strategy |

@@ -11,14 +11,19 @@ package app.luna.ui
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.widget.CompoundButton
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import app.luna.R
 import app.luna.databinding.ActivitySettingsBinding
+import app.luna.services.KeystoreService
 import app.luna.services.VaultService
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * SettingsActivity — paramètres vie privée, notifications, export, panic wipe.
@@ -27,6 +32,21 @@ import kotlinx.coroutines.launch
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingsBinding
+    private val createBackupLauncher = registerForActivityResult(
+        ActivityResultContracts.CreateDocument("application/octet-stream")
+    ) { uri ->
+        if (uri != null) {
+            exportBackupTo(uri)
+        }
+    }
+
+    private val restoreBackupLauncher = registerForActivityResult(
+        ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        if (uri != null) {
+            restoreBackupFrom(uri)
+        }
+    }
 
     companion object {
         fun start(context: Context) =
@@ -37,11 +57,8 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        supportActionBar?.apply {
-            title = getString(R.string.tab_settings)
-            setDisplayHomeAsUpEnabled(true)
-        }
+        setSupportActionBar(binding.topAppBar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setupToggles()
         setupButtons()
@@ -94,8 +111,13 @@ class SettingsActivity : AppCompatActivity() {
 
         // Export backup chiffré
         binding.exportBackupButton.apply {
-            setOnClickListener { exportData("backup") }
+            setOnClickListener { createBackupLauncher.launch("luna_backup.enc") }
             contentDescription = getString(R.string.export_encrypted_backup_label)
+        }
+
+        binding.restoreBackupButton.apply {
+            setOnClickListener { restoreBackupLauncher.launch(arrayOf("*/*")) }
+            contentDescription = getString(R.string.restore_encrypted_backup_label)
         }
 
         // Mode de suivi
@@ -131,24 +153,65 @@ class SettingsActivity : AppCompatActivity() {
                 startActivity(android.content.Intent.createChooser(
                     intent, getString(R.string.export_csv_label)))
             } catch (e: Exception) {
-                // Engine not available or no data
+                Toast.makeText(
+                    this@SettingsActivity,
+                    e.localizedMessage ?: getString(R.string.backup_export_error),
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }
 
-    private fun exportData(format: String) {
+    private fun exportBackupTo(uri: Uri) {
         val engine = VaultService.engine ?: return
         lifecycleScope.launch {
             try {
-                when (format) {
-                    "backup" -> {
-                        val backup = engine.exportEncryptedBackup("")
-                        // TODO: proposer le partage via Android ShareSheet
-                        @Suppress("UNUSED_VARIABLE") val ignored = backup
-                    }
+                val pin = KeystoreService.readPin(this@SettingsActivity)
+                    ?: throw IllegalStateException(getString(R.string.backup_pin_unavailable))
+                val backup = withContext(Dispatchers.IO) { engine.exportEncryptedBackup(pin) }
+                withContext(Dispatchers.IO) {
+                    contentResolver.openOutputStream(uri)?.use { stream ->
+                        stream.write(backup)
+                    } ?: error("Unable to open backup destination")
                 }
+                Toast.makeText(
+                    this@SettingsActivity,
+                    getString(R.string.export_encrypted_backup_label),
+                    Toast.LENGTH_SHORT
+                ).show()
             } catch (e: Exception) {
-                // TODO: SnackBar erreur
+                Toast.makeText(
+                    this@SettingsActivity,
+                    e.localizedMessage ?: getString(R.string.backup_export_error),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
+
+    private fun restoreBackupFrom(uri: Uri) {
+        val engine = VaultService.engine ?: return
+        lifecycleScope.launch {
+            try {
+                val pin = KeystoreService.readPin(this@SettingsActivity)
+                    ?: throw IllegalStateException(getString(R.string.backup_pin_unavailable))
+                val restored = withContext(Dispatchers.IO) {
+                    val backup = contentResolver.openInputStream(uri)?.use { it.readBytes() }
+                        ?: error("Unable to read backup file")
+                    engine.importEncryptedBackup(backup, pin)
+                }
+                Toast.makeText(
+                    this@SettingsActivity,
+                    "${getString(R.string.backup_restore_success)} ($restored)",
+                    Toast.LENGTH_LONG
+                ).show()
+                binding.root.announceForAccessibility(getString(R.string.backup_restore_success))
+            } catch (e: Exception) {
+                Toast.makeText(
+                    this@SettingsActivity,
+                    e.localizedMessage ?: getString(R.string.backup_restore_error),
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }

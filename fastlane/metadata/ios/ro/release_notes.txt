@@ -1,4 +1,3 @@
 • Inel de ciclu segmentat cu codificare prin culori
-• Suport pentru 40+ limbi
 • Garanții îmbunătățite de confidențialitate
 • Stocare locală criptată AES-256-GCM

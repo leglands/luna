@@ -20,3 +20,6 @@ GARANTIES DE CONFIDENTIALITÉ
 • Effacement d'urgence : supprimez tout en 3 taps
 • Sauvegarde iCloud/locale chiffrée (optionnel)
 • Open source : github.com/macaron-software/luna
+
+ACCESSIBILITÉ
+Support VoiceOver complet · Taille de texte dynamique

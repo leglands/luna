@@ -13,8 +13,10 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import app.luna.R
+import java.text.NumberFormat
 
 /**
  * CycleChartView — graphique de tendance des cycles.
@@ -28,11 +30,26 @@ class CycleChartView @JvmOverloads constructor(
     enum class ChartType { BAR, LINE }
 
     var chartType: ChartType = ChartType.BAR
+        set(value) {
+            field = value
+            updateAccessibilitySummary()
+            invalidate()
+        }
     var dataPoints: List<Pair<String, Float>> = emptyList()
-        set(value) { field = value; invalidate() }
+        set(value) {
+            field = value
+            updateAccessibilitySummary()
+            invalidate()
+        }
     var yMin: Float = 0f
     var yMax: Float = 40f
     var labelY: String = ""
+    var chartLabel: String = ""
+        set(value) {
+            field = value
+            updateAccessibilitySummary()
+        }
+    private val numberFormatter: NumberFormat = NumberFormat.getNumberInstance()
 
     private val barPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
@@ -67,6 +84,7 @@ class CycleChartView @JvmOverloads constructor(
         labelPaint.color = try {
             ContextCompat.getColor(context, android.R.color.secondary_text_dark)
         } catch (e: Exception) { Color.DKGRAY }
+        updateAccessibilitySummary()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -125,5 +143,32 @@ class CycleChartView @JvmOverloads constructor(
         val desiredW = MeasureSpec.getSize(widthMeasureSpec)
         val desiredH = 300
         setMeasuredDimension(desiredW, resolveSize(desiredH, heightMeasureSpec))
+    }
+
+    private fun updateAccessibilitySummary() {
+        importantForAccessibility =
+            if (dataPoints.isEmpty()) IMPORTANT_FOR_ACCESSIBILITY_NO
+            else IMPORTANT_FOR_ACCESSIBILITY_YES
+        contentDescription = buildAccessibilitySummary()
+    }
+
+    private fun buildAccessibilitySummary(): String {
+        val label = chartLabel.ifBlank {
+            when (chartType) {
+                ChartType.BAR -> context.getString(R.string.charts_cycle_lengths_a11y)
+                ChartType.LINE -> context.getString(R.string.charts_bbt_a11y)
+            }
+        }
+        if (dataPoints.isEmpty()) return label
+        val values = dataPoints.joinToString(", ") { (pointLabel, value) ->
+            "$pointLabel ${numberFormatter.format(value)}"
+        }
+        return "$label. $values"
+    }
+
+    override fun onInitializeAccessibilityNodeInfo(info: android.view.accessibility.AccessibilityNodeInfo) {
+        super.onInitializeAccessibilityNodeInfo(info)
+        info.className = ImageView::class.java.name
+        info.contentDescription = buildAccessibilitySummary()
     }
 }

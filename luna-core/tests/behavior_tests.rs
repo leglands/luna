@@ -23,13 +23,17 @@
 use std::sync::Arc;
 
 use luna_core::api::{vault_exists, LunaEngine};
-use luna_core::engine::types::{DailyLog, PregnancyLog, UserProfile, TrackingMode, symptoms};
+use luna_core::engine::types::{symptoms, DailyLog, PregnancyLog, TrackingMode, UserProfile};
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 fn tmp_db() -> (tempfile::TempDir, String) {
     let dir = tempfile::tempdir().expect("tempdir");
-    let path = dir.path().join("luna_test.db").to_string_lossy().to_string();
+    let path = dir
+        .path()
+        .join("luna_test.db")
+        .to_string_lossy()
+        .to_string();
     (dir, path)
 }
 
@@ -63,9 +67,8 @@ fn seed_cycles(engine: &Arc<LunaEngine>, n: usize) {
             let log_date = (chrono::NaiveDate::parse_from_str(&start, "%Y-%m-%d").unwrap()
                 + chrono::Duration::days(day))
             .to_string();
-            let mut log = DailyLog::new(
-                chrono::NaiveDate::parse_from_str(&log_date, "%Y-%m-%d").unwrap(),
-            );
+            let mut log =
+                DailyLog::new(chrono::NaiveDate::parse_from_str(&log_date, "%Y-%m-%d").unwrap());
             log.flow = Some("medium".to_string());
             log.mood = Some(3);
             log.symptoms = vec![symptoms::CRAMPS.to_string()];
@@ -199,12 +202,8 @@ fn j3_end_cycle_closes_it() {
     let (_dir, db_path) = tmp_db();
     let engine = open_fresh(&db_path);
 
-    let cycle = engine
-        .start_cycle(date_ago(28))
-        .expect("start_cycle");
-    engine
-        .end_cycle(cycle.id, date_ago(0))
-        .expect("end_cycle");
+    let cycle = engine.start_cycle(date_ago(28)).expect("start_cycle");
+    engine.end_cycle(cycle.id, date_ago(0)).expect("end_cycle");
 
     let cycles = engine.get_cycles(10).expect("get_cycles");
     assert_eq!(cycles.len(), 1);
@@ -356,7 +355,10 @@ fn j6_correct_pin_after_wrong_attempt_succeeds() {
 
     let _ = LunaEngine::open_vault(db_path.clone(), "000000".to_string()); // bad attempt
     let result = LunaEngine::open_vault(db_path, "111111".to_string()); // correct
-    assert!(result.is_ok(), "Correct PIN should work after wrong attempt");
+    assert!(
+        result.is_ok(),
+        "Correct PIN should work after wrong attempt"
+    );
 }
 
 // ─── Journey 7 : Mode panique (wipe) ─────────────────────────────────────────
@@ -393,7 +395,10 @@ fn j7_fresh_start_after_wipe() {
 
     // Re-créer un vault
     let engine2 = LunaEngine::open_vault(db_path.clone(), "222222".to_string());
-    assert!(engine2.is_ok(), "Should be able to create new vault after wipe");
+    assert!(
+        engine2.is_ok(),
+        "Should be able to create new vault after wipe"
+    );
     assert!(vault_exists(db_path));
 }
 
@@ -462,11 +467,12 @@ fn j9_concurrent_log_day_is_safe() {
             let engine = Arc::clone(&engine);
             let date = date_ago(i);
             std::thread::spawn(move || {
-                let mut log = DailyLog::new(
-                    chrono::NaiveDate::parse_from_str(&date, "%Y-%m-%d").unwrap(),
-                );
+                let mut log =
+                    DailyLog::new(chrono::NaiveDate::parse_from_str(&date, "%Y-%m-%d").unwrap());
                 log.mood = Some((i % 5 + 1) as u8);
-                engine.log_day(log).expect("concurrent log_day should succeed")
+                engine
+                    .log_day(log)
+                    .expect("concurrent log_day should succeed")
             })
         })
         .collect();
@@ -508,15 +514,19 @@ fn j10_profile_roundtrip() {
     let (_dir, db_path) = tmp_db();
     let engine = open_fresh(&db_path);
 
-    let mut p = UserProfile::default();
-    p.tracking_mode = TrackingMode::Ttc;
-    p.contraception = ContraceptionType::Pill;
-    p.pill_reminder_time = Some("08:30".to_string());
-    p.notif_period = true;
-    p.notif_fertile = true;
-    p.calm_mode = true;
+    let p = UserProfile {
+        tracking_mode: TrackingMode::Ttc,
+        contraception: ContraceptionType::Pill,
+        pill_reminder_time: Some("08:30".to_string()),
+        notif_period: true,
+        notif_fertile: true,
+        calm_mode: true,
+        ..Default::default()
+    };
 
-    engine.set_user_profile(p.clone()).expect("set_user_profile");
+    engine
+        .set_user_profile(p.clone())
+        .expect("set_user_profile");
 
     let loaded = engine.get_user_profile().expect("reload profile");
     assert_eq!(loaded.tracking_mode, TrackingMode::Ttc);
@@ -532,12 +542,16 @@ fn j10_profile_upsert_overwrites() {
     let (_dir, db_path) = tmp_db();
     let engine = open_fresh(&db_path);
 
-    let mut p1 = UserProfile::default();
-    p1.tracking_mode = TrackingMode::Pregnant;
+    let p1 = UserProfile {
+        tracking_mode: TrackingMode::Pregnant,
+        ..Default::default()
+    };
     engine.set_user_profile(p1).expect("set 1");
 
-    let mut p2 = UserProfile::default();
-    p2.tracking_mode = TrackingMode::Postpartum;
+    let p2 = UserProfile {
+        tracking_mode: TrackingMode::Postpartum,
+        ..Default::default()
+    };
     engine.set_user_profile(p2).expect("set 2");
 
     let loaded = engine.get_user_profile().expect("reload");
@@ -553,16 +567,16 @@ fn j11_pregnancy_log_roundtrip() {
     let engine = open_fresh(&db_path);
 
     let date = today();
-    let mut log = PregnancyLog::new(
-        chrono::NaiveDate::parse_from_str(&date, "%Y-%m-%d").unwrap()
-    );
+    let mut log = PregnancyLog::new(chrono::NaiveDate::parse_from_str(&date, "%Y-%m-%d").unwrap());
     log.hcg_positive = Some(true);
     log.kicks = Some(12);
     log.nausea_level = Some(3);
     log.weight_kg = Some(62.5);
     log.notes = Some("Bonne journée".to_string());
 
-    engine.log_pregnancy_day(log.clone()).expect("log_pregnancy_day");
+    engine
+        .log_pregnancy_day(log.clone())
+        .expect("log_pregnancy_day");
 
     let loaded = engine.get_pregnancy_log(date).expect("get_pregnancy_log");
     assert!(loaded.is_some(), "Pregnancy log should exist");
@@ -580,15 +594,11 @@ fn j11_pregnancy_log_upsert() {
     let engine = open_fresh(&db_path);
 
     let date = today();
-    let mut log1 = PregnancyLog::new(
-        chrono::NaiveDate::parse_from_str(&date, "%Y-%m-%d").unwrap()
-    );
+    let mut log1 = PregnancyLog::new(chrono::NaiveDate::parse_from_str(&date, "%Y-%m-%d").unwrap());
     log1.kicks = Some(5);
     engine.log_pregnancy_day(log1).expect("first log");
 
-    let mut log2 = PregnancyLog::new(
-        chrono::NaiveDate::parse_from_str(&date, "%Y-%m-%d").unwrap()
-    );
+    let mut log2 = PregnancyLog::new(chrono::NaiveDate::parse_from_str(&date, "%Y-%m-%d").unwrap());
     log2.kicks = Some(15);
     engine.log_pregnancy_day(log2).expect("upsert log");
 
@@ -643,7 +653,10 @@ fn j12_export_csv_escapes_commas() {
         .export_logs_csv(date_ago(1), today())
         .expect("export_logs_csv");
     // RFC 4180 : les guillemets doivent être doublés
-    assert!(csv.contains("\"\"") || csv.contains(","), "Special chars should be RFC-4180 escaped");
+    assert!(
+        csv.contains("\"\"") || csv.contains(","),
+        "Special chars should be RFC-4180 escaped"
+    );
 }
 
 // ─── Journey 13 : Changement de PIN ─────────────────────────────────────────
@@ -655,9 +668,10 @@ fn j13_change_pin_success() {
     let _engine = open_fresh(&db_path);
 
     // Rouvrir pour changer le PIN (open_fresh utilise "111111")
-    let engine = LunaEngine::open_vault(db_path.clone(), "111111".to_string())
-        .expect("open with old pin");
-    engine.change_pin("111111".to_string(), "222222".to_string())
+    let engine =
+        LunaEngine::open_vault(db_path.clone(), "111111".to_string()).expect("open with old pin");
+    engine
+        .change_pin("111111".to_string(), "222222".to_string())
         .expect("change_pin should succeed");
 }
 
@@ -677,7 +691,8 @@ fn j13_reopen_with_new_pin_after_change() {
     let (_dir, db_path) = tmp_db();
     let engine = open_fresh(&db_path);
 
-    engine.change_pin("111111".to_string(), "333333".to_string())
+    engine
+        .change_pin("111111".to_string(), "333333".to_string())
         .expect("change_pin");
 
     // L'ancien PIN ne doit plus fonctionner
@@ -704,13 +719,19 @@ fn j14_perimenopause_symptoms_logged() {
         symptoms::VAGINAL_DRYNESS.to_string(),
     ];
     log.mood = Some(3);
-    engine.log_day(log).expect("log_day with perimenopause symptoms");
+    engine
+        .log_day(log)
+        .expect("log_day with perimenopause symptoms");
 
     let loaded = engine.get_log(today()).unwrap().unwrap();
     assert_eq!(loaded.symptoms.len(), 3);
     assert!(loaded.symptoms.contains(&symptoms::HOT_FLASH.to_string()));
-    assert!(loaded.symptoms.contains(&symptoms::NIGHT_SWEATS.to_string()));
-    assert!(loaded.symptoms.contains(&symptoms::VAGINAL_DRYNESS.to_string()));
+    assert!(loaded
+        .symptoms
+        .contains(&symptoms::NIGHT_SWEATS.to_string()));
+    assert!(loaded
+        .symptoms
+        .contains(&symptoms::VAGINAL_DRYNESS.to_string()));
 }
 
 /// J14-2 : Profil en mode Perimenopause persiste
@@ -719,9 +740,13 @@ fn j14_tracking_mode_perimenopause_roundtrip() {
     let (_dir, db_path) = tmp_db();
     let engine = open_fresh(&db_path);
 
-    let mut profile = UserProfile::default();
-    profile.tracking_mode = TrackingMode::Perimenopause;
-    engine.set_user_profile(profile).expect("set profile perimenopause");
+    let profile = UserProfile {
+        tracking_mode: TrackingMode::Perimenopause,
+        ..Default::default()
+    };
+    engine
+        .set_user_profile(profile)
+        .expect("set profile perimenopause");
 
     let loaded = engine.get_user_profile().expect("get profile");
     assert_eq!(loaded.tracking_mode, TrackingMode::Perimenopause);
@@ -765,8 +790,10 @@ fn j15_calm_mode_toggle_on() {
     let (_dir, db_path) = tmp_db();
     let engine = open_fresh(&db_path);
 
-    let mut profile = UserProfile::default();
-    profile.calm_mode = true;
+    let profile = UserProfile {
+        calm_mode: true,
+        ..Default::default()
+    };
     engine.set_user_profile(profile).expect("set calm mode on");
 
     let loaded = engine.get_user_profile().expect("get profile");
@@ -781,13 +808,20 @@ fn j15_calm_mode_prediction_still_works() {
     seed_cycles(&engine, 3);
 
     // Activer calm mode
-    let mut profile = UserProfile::default();
-    profile.calm_mode = true;
+    let profile = UserProfile {
+        calm_mode: true,
+        ..Default::default()
+    };
     engine.set_user_profile(profile).expect("set calm mode");
 
     // predict_next fonctionne toujours (c'est l'UI qui masque, pas le core)
-    let prediction = engine.predict_next().expect("predict should still work in calm mode");
-    assert!(!prediction.next_period_start.is_empty(), "Prediction available even in calm mode");
+    let prediction = engine
+        .predict_next()
+        .expect("predict should still work in calm mode");
+    assert!(
+        !prediction.next_period_start.is_empty(),
+        "Prediction available even in calm mode"
+    );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -814,16 +848,22 @@ fn j16_import_backup_roundtrip() {
     engine.log_day(log2).unwrap();
 
     // Export
-    let backup = engine.export_encrypted_backup("111111".to_string())
+    let backup = engine
+        .export_encrypted_backup("111111".to_string())
         .expect("export should succeed");
     assert!(!backup.is_empty(), "Backup should not be empty");
 
     // Import into a new vault
     let (_dir2, db_path2) = tmp_db();
     let engine2 = open_fresh(&db_path2);
-    let restored = engine2.import_encrypted_backup(backup, "111111".to_string())
+    let restored = engine2
+        .import_encrypted_backup(backup, "111111".to_string())
         .expect("import should succeed");
-    assert!(restored >= 5, "Should restore at least 5 records (3 cycles + 2 logs), got {}", restored);
+    assert!(
+        restored >= 5,
+        "Should restore at least 5 records (3 cycles + 2 logs), got {}",
+        restored
+    );
 
     // Verify cycles restored
     let cycles = engine2.get_cycles(10).unwrap();
@@ -845,13 +885,18 @@ fn j16_import_backup_wrong_pin_fails() {
     let engine = open_fresh(&db_path);
     seed_cycles(&engine, 1);
 
-    let backup = engine.export_encrypted_backup("111111".to_string()).unwrap();
+    let backup = engine
+        .export_encrypted_backup("111111".to_string())
+        .unwrap();
 
     // Try to import with wrong PIN — salt is embedded, but wrong PIN → wrong key → decrypt fails
     let (_dir2, db_path2) = tmp_db();
     let engine2 = open_fresh(&db_path2);
     let result = engine2.import_encrypted_backup(backup, "999999".to_string());
-    assert!(result.is_err(), "Import with wrong PIN should fail decryption");
+    assert!(
+        result.is_err(),
+        "Import with wrong PIN should fail decryption"
+    );
 }
 
 /// J16-3 : Import invalid data fails gracefully
@@ -871,10 +916,14 @@ fn j16_import_backup_empty_vault() {
     let engine = open_fresh(&db_path);
 
     // Export from empty vault
-    let backup = engine.export_encrypted_backup("111111".to_string()).unwrap();
+    let backup = engine
+        .export_encrypted_backup("111111".to_string())
+        .unwrap();
 
     // Re-import into same vault
-    let restored = engine.import_encrypted_backup(backup, "111111".to_string()).unwrap();
+    let restored = engine
+        .import_encrypted_backup(backup, "111111".to_string())
+        .unwrap();
     assert_eq!(restored, 0, "Empty backup should restore 0 records");
 }
 
@@ -886,28 +935,66 @@ fn j16_import_backup_empty_vault() {
 #[test]
 fn j17_symptom_constants_are_locale_safe() {
     let all_symptoms = vec![
-        symptoms::CRAMPS, symptoms::FLOW_LIGHT, symptoms::FLOW_MEDIUM, symptoms::FLOW_HEAVY,
-        symptoms::CLOTS, symptoms::LOWER_BACK_PAIN, symptoms::BLOATING, symptoms::NAUSEA,
-        symptoms::HEADACHE, symptoms::FATIGUE, symptoms::DIARRHEA, symptoms::BREAST_TENDERNESS,
-        symptoms::BREAST_SWELLING, symptoms::WATER_RETENTION, symptoms::ACNE,
-        symptoms::IRRITABILITY, symptoms::ANXIETY, symptoms::LOW_MOOD,
-        symptoms::FOOD_CRAVINGS_SWEET, symptoms::FOOD_CRAVINGS_SALTY,
-        symptoms::INSOMNIA, symptoms::MIGRAINE, symptoms::CONSTIPATION,
-        symptoms::LOW_LIBIDO, symptoms::HIGH_LIBIDO, symptoms::MITTELSCHMERZ,
-        symptoms::LIGHT_SPOTTING, symptoms::HIGH_ENERGY, symptoms::GLOWING_SKIN,
-        symptoms::MOTIVATION, symptoms::DIZZINESS, symptoms::FEVER, symptoms::COLD,
-        symptoms::HIGH_STRESS, symptoms::POOR_SLEEP, symptoms::INTENSE_EXERCISE,
-        symptoms::TRAVEL, symptoms::HOT_FLASH, symptoms::NIGHT_SWEATS,
+        symptoms::CRAMPS,
+        symptoms::FLOW_LIGHT,
+        symptoms::FLOW_MEDIUM,
+        symptoms::FLOW_HEAVY,
+        symptoms::CLOTS,
+        symptoms::LOWER_BACK_PAIN,
+        symptoms::BLOATING,
+        symptoms::NAUSEA,
+        symptoms::HEADACHE,
+        symptoms::FATIGUE,
+        symptoms::DIARRHEA,
+        symptoms::BREAST_TENDERNESS,
+        symptoms::BREAST_SWELLING,
+        symptoms::WATER_RETENTION,
+        symptoms::ACNE,
+        symptoms::IRRITABILITY,
+        symptoms::ANXIETY,
+        symptoms::LOW_MOOD,
+        symptoms::FOOD_CRAVINGS_SWEET,
+        symptoms::FOOD_CRAVINGS_SALTY,
+        symptoms::INSOMNIA,
+        symptoms::MIGRAINE,
+        symptoms::CONSTIPATION,
+        symptoms::LOW_LIBIDO,
+        symptoms::HIGH_LIBIDO,
+        symptoms::MITTELSCHMERZ,
+        symptoms::LIGHT_SPOTTING,
+        symptoms::HIGH_ENERGY,
+        symptoms::GLOWING_SKIN,
+        symptoms::MOTIVATION,
+        symptoms::DIZZINESS,
+        symptoms::FEVER,
+        symptoms::COLD,
+        symptoms::HIGH_STRESS,
+        symptoms::POOR_SLEEP,
+        symptoms::INTENSE_EXERCISE,
+        symptoms::TRAVEL,
+        symptoms::HOT_FLASH,
+        symptoms::NIGHT_SWEATS,
         symptoms::VAGINAL_DRYNESS,
     ];
 
-    assert!(all_symptoms.len() >= 40, "Should have at least 40 symptom constants, got {}", all_symptoms.len());
+    assert!(
+        all_symptoms.len() >= 40,
+        "Should have at least 40 symptom constants, got {}",
+        all_symptoms.len()
+    );
 
     for s in &all_symptoms {
-        assert!(s.is_ascii(), "Symptom '{}' should be pure ASCII (locale-safe)", s);
+        assert!(
+            s.is_ascii(),
+            "Symptom '{}' should be pure ASCII (locale-safe)",
+            s
+        );
         assert!(!s.is_empty(), "Symptom constant should not be empty");
-        assert!(s.chars().all(|c| c.is_ascii_lowercase() || c == '_'),
-            "Symptom '{}' should be snake_case", s);
+        assert!(
+            s.chars().all(|c| c.is_ascii_lowercase() || c == '_'),
+            "Symptom '{}' should be snake_case",
+            s
+        );
     }
 }
 
@@ -922,14 +1009,23 @@ fn j17_csv_export_dates_are_iso8601() {
     log.flow = Some("light".to_string());
     engine.log_day(log).unwrap();
 
-    let csv = engine.export_logs_csv("2026-01-01".to_string(), "2026-12-31".to_string()).unwrap();
-    assert!(csv.contains("2026-01-15"), "CSV should contain ISO-8601 date");
+    let csv = engine
+        .export_logs_csv("2026-01-01".to_string(), "2026-12-31".to_string())
+        .unwrap();
+    assert!(
+        csv.contains("2026-01-15"),
+        "CSV should contain ISO-8601 date"
+    );
     // Verify date format is YYYY-MM-DD (not locale-dependent DD/MM/YYYY or MM/DD/YYYY)
     let lines: Vec<&str> = csv.lines().collect();
     assert!(lines.len() >= 2, "CSV should have header + data row");
     let data_line = lines[1];
     let date_field = data_line.split(',').next().unwrap();
-    assert!(date_field.len() == 10, "Date should be 10 chars (YYYY-MM-DD), got '{}'", date_field);
+    assert!(
+        date_field.len() == 10,
+        "Date should be 10 chars (YYYY-MM-DD), got '{}'",
+        date_field
+    );
     assert_eq!(&date_field[4..5], "-", "Date separator should be hyphen");
     assert_eq!(&date_field[7..8], "-", "Date separator should be hyphen");
 }
@@ -946,7 +1042,10 @@ fn j17_daily_log_dates_roundtrip_iso8601() {
     engine.log_day(log).unwrap();
 
     let loaded = engine.get_log("2026-12-31".to_string()).unwrap();
-    assert!(loaded.is_some(), "Log should be retrievable by ISO-8601 date");
+    assert!(
+        loaded.is_some(),
+        "Log should be retrievable by ISO-8601 date"
+    );
     assert_eq!(loaded.unwrap().date, "2026-12-31");
 }
 
@@ -959,7 +1058,9 @@ fn j17_cycle_dates_locale_independent() {
     let cycle = engine.start_cycle("2026-03-01".to_string()).unwrap();
     assert_eq!(cycle.start_date, "2026-03-01");
 
-    engine.end_cycle(cycle.id.clone(), "2026-03-28".to_string()).unwrap();
+    engine
+        .end_cycle(cycle.id.clone(), "2026-03-28".to_string())
+        .unwrap();
 
     let cycles = engine.get_cycles(1).unwrap();
     assert_eq!(cycles[0].start_date, "2026-03-01");
@@ -972,9 +1073,14 @@ fn j17_backup_date_is_iso8601() {
     let (_dir, db_path) = tmp_db();
     let engine = open_fresh(&db_path);
 
-    let backup = engine.export_encrypted_backup("111111".to_string()).unwrap();
+    let backup = engine
+        .export_encrypted_backup("111111".to_string())
+        .unwrap();
     // We can't decrypt here (different test), but we verify the backup is not empty
-    assert!(backup.len() > 12, "Backup should contain nonce + encrypted data");
+    assert!(
+        backup.len() > 12,
+        "Backup should contain nonce + encrypted data"
+    );
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -1013,4 +1119,159 @@ fn j18_data_roundtrip_appearance_independent() {
     assert_eq!(loaded.mood, Some(4));
     assert_eq!(loaded.energy, Some(3));
     // No appearance data stored in DailyLog (Clean Architecture — UI concern separated)
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// J19 — Delete Operations (delete_log, delete_cycle) — CRUD coverage
+// ═══════════════════════════════════════════════════════════════════════════════
+
+/// J19-1 : delete_log removes a daily log and subsequent get_log returns None
+#[test]
+fn j19_delete_log_removes_log() {
+    let (_dir, db_path) = tmp_db();
+    let engine = open_fresh(&db_path);
+
+    // Create a log
+    let mut log = DailyLog::new(chrono::Local::now().date_naive());
+    log.mood = Some(4);
+    log.flow = Some("light".to_string());
+    engine.log_day(log).unwrap();
+
+    // Verify log exists
+    let loaded = engine.get_log(today()).unwrap();
+    assert!(loaded.is_some(), "Log should exist before delete");
+
+    // Delete the log
+    let deleted = engine
+        .delete_log(today())
+        .expect("delete_log should succeed");
+    assert!(deleted, "delete_log should return true for existing log");
+
+    // Verify log is gone
+    let loaded = engine.get_log(today()).unwrap();
+    assert!(loaded.is_none(), "Log should not exist after delete");
+}
+
+/// J19-2 : delete_log returns false for non-existent date
+#[test]
+fn j19_delete_log_nonexistent_returns_false() {
+    let (_dir, db_path) = tmp_db();
+    let engine = open_fresh(&db_path);
+
+    let deleted = engine
+        .delete_log("2000-01-01".to_string())
+        .expect("delete_log should succeed");
+    assert!(
+        !deleted,
+        "delete_log should return false for non-existent log"
+    );
+}
+
+/// J19-3 : delete_cycle removes a cycle
+#[test]
+fn j19_delete_cycle_removes_cycle() {
+    let (_dir, db_path) = tmp_db();
+    let engine = open_fresh(&db_path);
+
+    // Start a cycle
+    let cycle = engine
+        .start_cycle(date_ago(10))
+        .expect("start_cycle should succeed");
+
+    // Verify cycle exists
+    let cycles = engine.get_cycles(10).unwrap();
+    assert_eq!(cycles.len(), 1, "Cycle should exist before delete");
+
+    // Delete the cycle
+    let deleted = engine
+        .delete_cycle(cycle.id.clone())
+        .expect("delete_cycle should succeed");
+    assert!(
+        deleted,
+        "delete_cycle should return true for existing cycle"
+    );
+
+    // Verify cycle is gone
+    let cycles = engine.get_cycles(10).unwrap();
+    assert!(cycles.is_empty(), "Cycle should not exist after delete");
+}
+
+/// J19-4 : delete_cycle returns false for non-existent ID
+#[test]
+fn j19_delete_cycle_nonexistent_returns_false() {
+    let (_dir, db_path) = tmp_db();
+    let engine = open_fresh(&db_path);
+
+    let deleted = engine
+        .delete_cycle("non-existent-id".to_string())
+        .expect("delete_cycle should succeed");
+    assert!(
+        !deleted,
+        "delete_cycle should return false for non-existent cycle"
+    );
+}
+
+/// J19-5 : delete_log does not affect other days
+#[test]
+fn j19_delete_log_only_affects_target_date() {
+    let (_dir, db_path) = tmp_db();
+    let engine = open_fresh(&db_path);
+
+    // Create logs for two different days
+    let date1 = date_ago(5);
+    let date2 = date_ago(3);
+
+    let mut log1 = DailyLog::new(chrono::NaiveDate::parse_from_str(&date1, "%Y-%m-%d").unwrap());
+    log1.mood = Some(3);
+    engine.log_day(log1).unwrap();
+
+    let mut log2 = DailyLog::new(chrono::NaiveDate::parse_from_str(&date2, "%Y-%m-%d").unwrap());
+    log2.mood = Some(5);
+    engine.log_day(log2).unwrap();
+
+    // Delete only the first day
+    engine.delete_log(date1.clone()).unwrap();
+
+    // Verify first day is gone but second day remains
+    assert!(
+        engine.get_log(date1).unwrap().is_none(),
+        "First day log should be deleted"
+    );
+    assert!(
+        engine.get_log(date2.clone()).unwrap().is_some(),
+        "Second day log should remain"
+    );
+    assert_eq!(engine.get_log(date2).unwrap().unwrap().mood, Some(5));
+}
+
+/// J19-6 : Deleting a cycle does not delete associated logs
+#[test]
+fn j19_delete_cycle_preserves_logs() {
+    let (_dir, db_path) = tmp_db();
+    let engine = open_fresh(&db_path);
+
+    // Create a cycle with logs
+    let start = date_ago(10);
+    let cycle = engine
+        .start_cycle(start.clone())
+        .expect("start_cycle should succeed");
+
+    // Log a day during the cycle
+    let log_date = date_ago(5);
+    let mut log = DailyLog::new(chrono::NaiveDate::parse_from_str(&log_date, "%Y-%m-%d").unwrap());
+    log.flow = Some("medium".to_string());
+    engine.log_day(log).unwrap();
+
+    // Delete the cycle
+    engine.delete_cycle(cycle.id).unwrap();
+
+    // Verify cycle is gone but log remains
+    assert!(
+        engine.get_cycles(10).unwrap().is_empty(),
+        "Cycle should be deleted"
+    );
+    assert!(
+        engine.get_log(log_date).unwrap().is_some(),
+        "Log should remain after cycle deletion"
+    );
 }

@@ -66,31 +66,33 @@ LunaEngine::export_encrypted_backup(pin)
 
 ## Restore Mechanism
 
-### Current Status: ⚠️ NOT IMPLEMENTED
+### Current Status: ⚠️ PARTIAL (API exists, UI not implemented)
 
 | Component | Status |
 |-----------|--------|
-| `import_backup(data, pin)` | **Gap** — API not yet implemented |
+| `import_backup(data, pin)` | ✅ Implemented (api.rs:275) |
 | iOS restore UI | **Gap** — no file picker for backup import |
 | Android restore UI | **Gap** — no file picker for backup import |
-| Backup format versioning | **Gap** — no version header in backup format |
+| Backup format versioning | ⚠️ Version 1 exists, no forward compatibility plan |
 
-### Planned Restore Flow
+### Restore Flow
 
 ```
 User selects backup file
         │
         ▼
-import_backup(encrypted_blob, pin)
+import_encrypted_backup(encrypted_blob, pin)
         │
-        ├── Decrypt (AES-256-GCM, key from Argon2id(pin))
+        ├── Extract salt from first 16 bytes
+        ├── Derive key via Argon2id(pin, salt)
+        ├── Decrypt (AES-256-GCM)
         ├── Decompress (zstd)
-        ├── Deserialize (serde)
-        ├── Validate schema version
-        ├── Write to SQLCipher (merge or replace)
+        ├── Deserialize (serde JSON)
+        ├── Validate version (must be 1)
+        ├── Upsert cycles and logs (merge by date/id)
         │
         ▼
-  Vault restored → user continues
+  Vault restored → returns count of restored records
 ```
 
 ---
@@ -165,9 +167,9 @@ import_backup(encrypted_blob, pin)
 
 | Gap | Priority | Effort | Description |
 |-----|----------|--------|-------------|
-| **No restore API** | **High** | 2–3 days | Implement `import_backup(data, pin)` in Rust core |
+| ~~**No restore API**~~ ✅ | — | — | Already implemented at api.rs:275 |
 | **No restore UI** | **High** | 2 days | File picker + restore flow in iOS/Android |
-| **No backup versioning** | **High** | 1 day | Add version header to backup format for forward compatibility |
+| **No backup versioning** | **Medium** | 1 day | Add version header to backup format for forward compatibility |
 | **No backup reminders** | **Medium** | 1 day | Local notification if no backup in N days |
 | **No backup integrity check** | **Medium** | 0.5 day | HMAC or checksum in backup blob |
 | **No individual record restore** | **Low** | 2 days | Merge strategy for partial restore |

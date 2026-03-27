@@ -31,18 +31,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.topAppBar)
 
         val navHost = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHost.navController
 
         binding.bottomNavigation.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            binding.topAppBar.title = destination.label ?: getString(R.string.app_name)
+            binding.topAppBar.subtitle = getString(R.string.toolbar_private_subtitle)
+        }
 
-        // a11y : décrire la navigation pour TalkBack
-        binding.bottomNavigation.setOnItemSelectedListener { item ->
-            navController.navigate(item.itemId)
+        // a11y : annoncer le changement de section sans casser la navigation native.
+        binding.bottomNavigation.setOnItemReselectedListener {
             binding.bottomNavigation.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
-            true
         }
     }
 

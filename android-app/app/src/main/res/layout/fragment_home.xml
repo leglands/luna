@@ -1,160 +1,238 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/luna_neutral_50"
     android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingStart="20dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="28dp">
 
-        <!-- Badge vie privée -->
-        <TextView
-            android:id="@+id/privacy_badge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:text="@string/privacy_local_badge"
-            android:drawableStart="@android:drawable/ic_lock_idle_lock"
-            android:drawablePadding="4dp"
-            android:textSize="12sp"
-            android:padding="8dp" />
-
-        <!-- Widget cycle (jour + phase) -->
-        <FrameLayout
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/cycle_widget"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="16dp"
-            android:background="@android:color/holo_red_light"
-            android:importantForAccessibility="yes">
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="yes"
+            app:cardBackgroundColor="@color/luna_accent_primary_50"
+            app:cardCornerRadius="28dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/luna_accent_primary_100"
+            app:strokeWidth="1dp">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:gravity="center">
+                android:padding="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/privacy_badge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_luna_chip"
+                        android:drawableStart="@drawable/ic_luna_lock"
+                        android:drawablePadding="6dp"
+                        android:gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:paddingTop="6dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="6dp"
+                        android:text="@string/privacy_local_badge"
+                        android:textColor="@color/luna_accent_primary_700"
+                        android:textSize="12sp" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_luna_moon"
+                        app:tint="@color/luna_accent_primary" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/cycle_day_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Day 1"
-                    android:textSize="36sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/white" />
+                    android:layout_marginTop="24dp"
+                    android:textAppearance="@style/Luna.Text.Display"
+                    tools:text="Day 14" />
 
                 <TextView
                     android:id="@+id/phase_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp" />
+                    android:layout_marginTop="8dp"
+                    android:textAppearance="@style/Luna.Text.H4"
+                    android:textColor="@color/luna_neutral_700"
+                    tools:text="Ovulation window" />
 
                 <TextView
                     android:id="@+id/next_period_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    android:layout_marginTop="8dp" />
-
+                    android:layout_marginTop="18dp"
+                    android:textAppearance="@style/Luna.Text.Body"
+                    android:textColor="@color/luna_neutral_900"
+                    android:textStyle="bold"
+                    tools:text="In 12 days" />
             </LinearLayout>
-        </FrameLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        <!-- Bannière mode péri-ménopause -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/perimenopause_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:visibility="gone"
-            app:cardCornerRadius="12dp"
-            xmlns:app="http://schemas.android.com/apk/res-auto">
+            app:cardBackgroundColor="@color/luna_neutral_0"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/luna_neutral_200"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="12dp"
-                android:gravity="center_vertical">
+                android:padding="18dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_luna_activity"
+                    app:tint="@color/luna_accent_primary" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
                     android:layout_weight="1"
-                    android:layout_marginStart="8dp"
                     android:text="@string/perimeno_banner_title"
-                    android:textStyle="bold"
-                    android:textSize="14sp" />
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:textColor="@color/luna_neutral_900"
+                    android:textStyle="bold" />
 
-                <ImageButton
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/perimenopause_banner_arrow"
+                    style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_more"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/perimeno_banner_a11y" />
-
+                    android:minWidth="0dp"
+                    android:text="@string/open_button"
+                    android:textColor="@color/luna_accent_primary" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Bannière mode TTC -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/ttc_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:visibility="gone"
-            app:cardCornerRadius="12dp"
-            xmlns:app="http://schemas.android.com/apk/res-auto">
+            app:cardBackgroundColor="@color/luna_neutral_0"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/luna_neutral_200"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="12dp"
-                android:gravity="center_vertical">
+                android:padding="18dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_luna_droplet"
+                    app:tint="@color/luna_accent_primary" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
                     android:layout_weight="1"
-                    android:layout_marginStart="8dp"
                     android:text="@string/ttc_banner_title"
-                    android:textStyle="bold"
-                    android:textSize="14sp" />
-
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:textColor="@color/luna_neutral_900"
+                    android:textStyle="bold" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Bouton log -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/log_today_button"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             android:text="@string/log_today_button"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            app:cornerRadius="20dp"
+            app:icon="@drawable/ic_luna_plus"
+            app:iconGravity="textStart"
+            app:iconPadding="10dp" />
 
-        <!-- Carte insight -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/insight_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:visibility="gone">
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/luna_neutral_0"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/luna_neutral_200"
+            app:strokeWidth="1dp">
 
-            <TextView
-                android:id="@+id/insight_text"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="18dp">
 
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_luna_activity"
+                    app:tint="@color/luna_accent_primary" />
+
+                <TextView
+                    android:id="@+id/insight_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                    android:textColor="@color/luna_neutral_800" />
+            </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>

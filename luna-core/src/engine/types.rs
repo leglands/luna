@@ -145,8 +145,9 @@ pub struct CycleSummary {
 // ─── TrackingMode ────────────────────────────────────────────────────────────
 
 /// Mode de suivi de la santé reproductive
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, uniffi::Enum)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, uniffi::Enum, Default)]
 pub enum TrackingMode {
+    #[default]
     Regular,
     Ttc,
     Pregnant,
@@ -154,27 +155,24 @@ pub enum TrackingMode {
     Perimenopause,
 }
 
-impl Default for TrackingMode {
-    fn default() -> Self { TrackingMode::Regular }
-}
-
 impl TrackingMode {
     pub fn as_str(&self) -> &'static str {
         match self {
-            TrackingMode::Regular       => "regular",
-            TrackingMode::Ttc           => "ttc",
-            TrackingMode::Pregnant      => "pregnant",
-            TrackingMode::Postpartum    => "postpartum",
+            TrackingMode::Regular => "regular",
+            TrackingMode::Ttc => "ttc",
+            TrackingMode::Pregnant => "pregnant",
+            TrackingMode::Postpartum => "postpartum",
             TrackingMode::Perimenopause => "perimenopause",
         }
     }
+    #[allow(clippy::should_implement_trait)]
     pub fn from_str(s: &str) -> Self {
         match s {
-            "ttc"           => TrackingMode::Ttc,
-            "pregnant"      => TrackingMode::Pregnant,
-            "postpartum"    => TrackingMode::Postpartum,
+            "ttc" => TrackingMode::Ttc,
+            "pregnant" => TrackingMode::Pregnant,
+            "postpartum" => TrackingMode::Postpartum,
             "perimenopause" => TrackingMode::Perimenopause,
-            _               => TrackingMode::Regular,
+            _ => TrackingMode::Regular,
         }
     }
 }
@@ -182,8 +180,9 @@ impl TrackingMode {
 // ─── ContraceptionType ───────────────────────────────────────────────────────
 
 /// Type de contraception
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, uniffi::Enum)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize, uniffi::Enum, Default)]
 pub enum ContraceptionType {
+    #[default]
     None,
     Pill,
     Patch,
@@ -195,35 +194,32 @@ pub enum ContraceptionType {
     Other,
 }
 
-impl Default for ContraceptionType {
-    fn default() -> Self { ContraceptionType::None }
-}
-
 impl ContraceptionType {
     pub fn as_str(&self) -> &'static str {
         match self {
-            ContraceptionType::None      => "none",
-            ContraceptionType::Pill      => "pill",
-            ContraceptionType::Patch     => "patch",
-            ContraceptionType::Ring      => "ring",
+            ContraceptionType::None => "none",
+            ContraceptionType::Pill => "pill",
+            ContraceptionType::Patch => "patch",
+            ContraceptionType::Ring => "ring",
             ContraceptionType::Injection => "injection",
-            ContraceptionType::Iud       => "iud",
-            ContraceptionType::Implant   => "implant",
-            ContraceptionType::Condom    => "condom",
-            ContraceptionType::Other     => "other",
+            ContraceptionType::Iud => "iud",
+            ContraceptionType::Implant => "implant",
+            ContraceptionType::Condom => "condom",
+            ContraceptionType::Other => "other",
         }
     }
+    #[allow(clippy::should_implement_trait)]
     pub fn from_str(s: &str) -> Self {
         match s {
-            "pill"      => ContraceptionType::Pill,
-            "patch"     => ContraceptionType::Patch,
-            "ring"      => ContraceptionType::Ring,
+            "pill" => ContraceptionType::Pill,
+            "patch" => ContraceptionType::Patch,
+            "ring" => ContraceptionType::Ring,
             "injection" => ContraceptionType::Injection,
-            "iud"       => ContraceptionType::Iud,
-            "implant"   => ContraceptionType::Implant,
-            "condom"    => ContraceptionType::Condom,
-            "other"     => ContraceptionType::Other,
-            _           => ContraceptionType::None,
+            "iud" => ContraceptionType::Iud,
+            "implant" => ContraceptionType::Implant,
+            "condom" => ContraceptionType::Condom,
+            "other" => ContraceptionType::Other,
+            _ => ContraceptionType::None,
         }
     }
 }

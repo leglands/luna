@@ -1,7 +1,9 @@
 use rusqlite::{params, Connection};
 use secrecy::{ExposeSecret, SecretVec};
 
-use crate::engine::types::{Cycle, DailyLog, UserProfile, PregnancyLog, TrackingMode, ContraceptionType};
+use crate::engine::types::{
+    ContraceptionType, Cycle, DailyLog, PregnancyLog, TrackingMode, UserProfile,
+};
 use crate::error::LunaError;
 use crate::vault::crypto::{compress_blob, decompress_blob, key_to_sqlcipher_pragma};
 
@@ -18,8 +20,8 @@ impl LunaDb {
     ///
     /// `db_key` : clé 32 bytes dérivée par HKDF depuis la clé maître.
     pub fn open(path: &str, db_key: &SecretVec<u8>) -> Result<Self, LunaError> {
-        let conn = Connection::open(path)
-            .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
+        let conn =
+            Connection::open(path).map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
 
         // Déverrouillage SQLCipher — doit être la PREMIÈRE opération
         let pragma = key_to_sqlcipher_pragma(db_key);
@@ -40,7 +42,9 @@ impl LunaDb {
 
     /// Migrations versionnées — toujours additive, jamais destructive.
     fn run_migrations(&self) -> Result<(), LunaError> {
-        self.conn.execute_batch("
+        self.conn
+            .execute_batch(
+                "
             PRAGMA journal_mode = WAL;
             PRAGMA foreign_keys = ON;
             PRAGMA secure_delete = ON;
@@ -113,14 +117,17 @@ impl LunaDb {
             );
 
             CREATE INDEX IF NOT EXISTS idx_pregnancy_date ON pregnancy_logs(date);
-        ")
-        .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
+        ",
+            )
+            .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
 
         // Insérer la version si absente
-        self.conn.execute(
-            "INSERT OR IGNORE INTO schema_version (version) VALUES (1)",
-            [],
-        ).map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
+        self.conn
+            .execute(
+                "INSERT OR IGNORE INTO schema_version (version) VALUES (1)",
+                [],
+            )
+            .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
 
         Ok(())
     }
@@ -147,20 +154,29 @@ impl LunaDb {
             .prepare("SELECT id, start_date, end_date, period_length, notes FROM cycles ORDER BY start_date DESC LIMIT ?1")
             .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
 
-        let cycles = stmt.query_map(params![limit], |row| {
-            Ok(Cycle {
-                id: row.get(0)?,
-                start_date: row.get(1)?,
-                end_date: row.get(2)?,
-                period_length: row.get::<_, Option<i64>>(3)?.map(|v| v as u8),
-                notes: row.get(4)?,
+        let cycles = stmt
+            .query_map(params![limit], |row| {
+                Ok(Cycle {
+                    id: row.get(0)?,
+                    start_date: row.get(1)?,
+                    end_date: row.get(2)?,
+                    period_length: row.get::<_, Option<i64>>(3)?.map(|v| v as u8),
+                    notes: row.get(4)?,
+                })
             })
-        })
-        .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?
-        .collect::<Result<Vec<_>, _>>()
-        .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
+            .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?
+            .collect::<Result<Vec<_>, _>>()
+            .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
 
         Ok(cycles)
+    }
+
+    pub fn delete_cycle(&self, cycle_id: &str) -> Result<bool, LunaError> {
+        let deleted = self
+            .conn
+            .execute("DELETE FROM cycles WHERE id = ?1", params![cycle_id])
+            .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
+        Ok(deleted > 0)
     }
 
     // ─── DailyLogs ───────────────────────────────────────────────────────────
@@ -195,22 +211,58 @@ impl LunaDb {
             .prepare("SELECT id, date, symptoms, mood, energy, bbt, lh_test, cervical_mucus, sexual_activity, flow, sleep_quality, weight_kg, notes FROM daily_logs WHERE date = ?1")
             .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
 
-        let mut rows = stmt.query_map(params![date], |row| {
-            let symptoms_blob: Vec<u8> = row.get(2)?;
-            Ok((row.get(0)?, row.get(1)?, symptoms_blob,
-                row.get(3)?, row.get(4)?, row.get(5)?,
-                row.get(6)?, row.get(7)?, row.get(8)?,
-                row.get(9)?, row.get(10)?, row.get(11)?, row.get(12)?))
-        }).map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
+        let mut rows = stmt
+            .query_map(params![date], |row| {
+                let symptoms_blob: Vec<u8> = row.get(2)?;
+                Ok((
+                    row.get(0)?,
+                    row.get(1)?,
+                    symptoms_blob,
+                    row.get(3)?,
+                    row.get(4)?,
+                    row.get(5)?,
+                    row.get(6)?,
+                    row.get(7)?,
+                    row.get(8)?,
+                    row.get(9)?,
+                    row.get(10)?,
+                    row.get(11)?,
+                    row.get(12)?,
+                ))
+            })
+            .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
 
         if let Some(row) = rows.next() {
-            type LogRow = (String, String, Vec<u8>,
-                Option<i64>, Option<i64>, Option<f64>,
-                Option<String>, Option<String>, Option<String>,
-                Option<String>, Option<i64>, Option<f64>, Option<String>);
-            let (id, date, symptoms_blob, mood, energy, bbt, lh_test,
-                 cervical_mucus, sexual_activity, flow, sleep_quality, weight_kg, notes): LogRow
-                = row.map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
+            type LogRow = (
+                String,
+                String,
+                Vec<u8>,
+                Option<i64>,
+                Option<i64>,
+                Option<f64>,
+                Option<String>,
+                Option<String>,
+                Option<String>,
+                Option<String>,
+                Option<i64>,
+                Option<f64>,
+                Option<String>,
+            );
+            let (
+                id,
+                date,
+                symptoms_blob,
+                mood,
+                energy,
+                bbt,
+                lh_test,
+                cervical_mucus,
+                sexual_activity,
+                flow,
+                sleep_quality,
+                weight_kg,
+                notes,
+            ): LogRow = row.map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
 
             let symptoms: Vec<String> = decompress_blob(&symptoms_blob)
                 .ok()
@@ -242,49 +294,96 @@ impl LunaDb {
             .prepare("SELECT id, date, symptoms, mood, energy, bbt, lh_test, cervical_mucus, sexual_activity, flow, sleep_quality, weight_kg, notes FROM daily_logs WHERE date BETWEEN ?1 AND ?2 ORDER BY date")
             .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
 
-        let logs = stmt.query_map(params![from, to], |row| {
-            let symptoms_blob: Vec<u8> = row.get(2)?;
-            Ok((row.get::<_, String>(0)?, row.get::<_, String>(1)?, symptoms_blob,
-                row.get::<_, Option<i64>>(3)?, row.get::<_, Option<i64>>(4)?,
-                row.get::<_, Option<f64>>(5)?, row.get::<_, Option<String>>(6)?,
-                row.get::<_, Option<String>>(7)?, row.get::<_, Option<String>>(8)?,
-                row.get::<_, Option<String>>(9)?,
-                row.get::<_, Option<i64>>(10)?, row.get::<_, Option<f64>>(11)?,
-                row.get::<_, Option<String>>(12)?))
-        })
-        .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?
-        .filter_map(|r| r.ok())
-        .map(|(id, date, symptoms_blob, mood, energy, bbt, lh_test,
-               cervical_mucus, sexual_activity, flow, sleep_quality, weight_kg, notes)| {
-            let symptoms = decompress_blob(&symptoms_blob)
-                .ok()
-                .and_then(|b| serde_json::from_slice(&b).ok())
-                .unwrap_or_default();
-            DailyLog { id, date, symptoms, mood: mood.map(|v| v as u8),
-                       energy: energy.map(|v| v as u8), bbt, lh_test,
-                       cervical_mucus, sexual_activity, flow,
-                       sleep_quality: sleep_quality.map(|v| v as u8), weight_kg, notes }
-        })
-        .collect();
+        let logs = stmt
+            .query_map(params![from, to], |row| {
+                let symptoms_blob: Vec<u8> = row.get(2)?;
+                Ok((
+                    row.get::<_, String>(0)?,
+                    row.get::<_, String>(1)?,
+                    symptoms_blob,
+                    row.get::<_, Option<i64>>(3)?,
+                    row.get::<_, Option<i64>>(4)?,
+                    row.get::<_, Option<f64>>(5)?,
+                    row.get::<_, Option<String>>(6)?,
+                    row.get::<_, Option<String>>(7)?,
+                    row.get::<_, Option<String>>(8)?,
+                    row.get::<_, Option<String>>(9)?,
+                    row.get::<_, Option<i64>>(10)?,
+                    row.get::<_, Option<f64>>(11)?,
+                    row.get::<_, Option<String>>(12)?,
+                ))
+            })
+            .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?
+            .filter_map(|r| r.ok())
+            .map(
+                |(
+                    id,
+                    date,
+                    symptoms_blob,
+                    mood,
+                    energy,
+                    bbt,
+                    lh_test,
+                    cervical_mucus,
+                    sexual_activity,
+                    flow,
+                    sleep_quality,
+                    weight_kg,
+                    notes,
+                )| {
+                    let symptoms = decompress_blob(&symptoms_blob)
+                        .ok()
+                        .and_then(|b| serde_json::from_slice(&b).ok())
+                        .unwrap_or_default();
+                    DailyLog {
+                        id,
+                        date,
+                        symptoms,
+                        mood: mood.map(|v| v as u8),
+                        energy: energy.map(|v| v as u8),
+                        bbt,
+                        lh_test,
+                        cervical_mucus,
+                        sexual_activity,
+                        flow,
+                        sleep_quality: sleep_quality.map(|v| v as u8),
+                        weight_kg,
+                        notes,
+                    }
+                },
+            )
+            .collect();
 
         Ok(logs)
+    }
+
+    pub fn delete_log(&self, date: &str) -> Result<bool, LunaError> {
+        let deleted = self
+            .conn
+            .execute("DELETE FROM daily_logs WHERE date = ?1", params![date])
+            .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
+        Ok(deleted > 0)
     }
 
     // ─── Meta ─────────────────────────────────────────────────────────────────
 
     pub fn set_meta(&self, key: &str, value: &str) -> Result<(), LunaError> {
-        self.conn.execute(
-            "INSERT OR REPLACE INTO meta (key, value) VALUES (?1, ?2)",
-            params![key, value],
-        ).map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
+        self.conn
+            .execute(
+                "INSERT OR REPLACE INTO meta (key, value) VALUES (?1, ?2)",
+                params![key, value],
+            )
+            .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
         Ok(())
     }
 
     pub fn get_meta(&self, key: &str) -> Result<Option<String>, LunaError> {
-        let mut stmt = self.conn
+        let mut stmt = self
+            .conn
             .prepare("SELECT value FROM meta WHERE key = ?1")
             .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
-        let mut rows = stmt.query_map(params![key], |r| r.get(0))
+        let mut rows = stmt
+            .query_map(params![key], |r| r.get(0))
             .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
         Ok(rows.next().and_then(|r| r.ok()))
     }
@@ -294,14 +393,17 @@ impl LunaDb {
     /// Supprime toutes les données de façon sécurisée.
     /// VACUUM réécrit le fichier — aucun résidu en clair sur le disque.
     pub fn wipe(&self) -> Result<(), LunaError> {
-        self.conn.execute_batch("
+        self.conn
+            .execute_batch(
+                "
             DELETE FROM daily_logs;
             DELETE FROM cycles;
             DELETE FROM meta;
             DELETE FROM schema_version;
             VACUUM;
-        ")
-        .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
+        ",
+            )
+            .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
         Ok(())
     }
 
@@ -318,7 +420,9 @@ impl LunaDb {
         // Vérification : la DB doit rester lisible après rekey
         self.conn
             .execute_batch("SELECT count(*) FROM sqlite_master;")
-            .map_err(|e| LunaError::CryptoError(format!("Post-rekey verification failed: {}", e)))?;
+            .map_err(|e| {
+                LunaError::CryptoError(format!("Post-rekey verification failed: {}", e))
+            })?;
 
         Ok(())
     }
@@ -330,19 +434,21 @@ impl LunaDb {
             .prepare("SELECT tracking_mode, contraception, pill_reminder, notif_period, notif_fertile, notif_pill, edd, calm_mode, health_sync FROM user_profile WHERE id = 1")
             .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
 
-        let mut rows = stmt.query_map([], |row| {
-            Ok((
-                row.get::<_, String>(0)?,
-                row.get::<_, String>(1)?,
-                row.get::<_, Option<String>>(2)?,
-                row.get::<_, i64>(3)?,
-                row.get::<_, i64>(4)?,
-                row.get::<_, i64>(5)?,
-                row.get::<_, Option<String>>(6)?,
-                row.get::<_, i64>(7)?,
-                row.get::<_, i64>(8)?,
-            ))
-        }).map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
+        let mut rows = stmt
+            .query_map([], |row| {
+                Ok((
+                    row.get::<_, String>(0)?,
+                    row.get::<_, String>(1)?,
+                    row.get::<_, Option<String>>(2)?,
+                    row.get::<_, i64>(3)?,
+                    row.get::<_, i64>(4)?,
+                    row.get::<_, i64>(5)?,
+                    row.get::<_, Option<String>>(6)?,
+                    row.get::<_, i64>(7)?,
+                    row.get::<_, i64>(8)?,
+                ))
+            })
+            .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
 
         if let Some(Ok((tm, ct, pill_reminder, np, nf, npill, edd, calm, health))) = rows.next() {
             Ok(UserProfile {
@@ -415,26 +521,30 @@ impl LunaDb {
             .prepare("SELECT id, date, hcg_positive, kicks, nausea_level, weight_kg, symptoms, notes FROM pregnancy_logs WHERE date = ?1")
             .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
 
-        let mut rows = stmt.query_map(params![date], |row| {
-            Ok((
-                row.get::<_, String>(0)?,
-                row.get::<_, String>(1)?,
-                row.get::<_, Option<i64>>(2)?,
-                row.get::<_, Option<i64>>(3)?,
-                row.get::<_, Option<i64>>(4)?,
-                row.get::<_, Option<f64>>(5)?,
-                row.get::<_, Vec<u8>>(6)?,
-                row.get::<_, Option<String>>(7)?,
-            ))
-        }).map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
+        let mut rows = stmt
+            .query_map(params![date], |row| {
+                Ok((
+                    row.get::<_, String>(0)?,
+                    row.get::<_, String>(1)?,
+                    row.get::<_, Option<i64>>(2)?,
+                    row.get::<_, Option<i64>>(3)?,
+                    row.get::<_, Option<i64>>(4)?,
+                    row.get::<_, Option<f64>>(5)?,
+                    row.get::<_, Vec<u8>>(6)?,
+                    row.get::<_, Option<String>>(7)?,
+                ))
+            })
+            .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
 
-        if let Some(Ok((id, date, hcg, kicks, nausea, weight, symptoms_blob, notes))) = rows.next() {
+        if let Some(Ok((id, date, hcg, kicks, nausea, weight, symptoms_blob, notes))) = rows.next()
+        {
             let symptoms: Vec<String> = decompress_blob(&symptoms_blob)
                 .ok()
                 .and_then(|b| serde_json::from_slice(&b).ok())
                 .unwrap_or_default();
             Ok(Some(PregnancyLog {
-                id, date,
+                id,
+                date,
                 hcg_positive: hcg.map(|v| v != 0),
                 kicks: kicks.map(|v| v as u8),
                 nausea_level: nausea.map(|v| v as u8),
@@ -445,6 +555,14 @@ impl LunaDb {
         } else {
             Ok(None)
         }
+    }
+
+    pub fn delete_pregnancy_log(&self, date: &str) -> Result<bool, LunaError> {
+        let deleted = self
+            .conn
+            .execute("DELETE FROM pregnancy_logs WHERE date = ?1", params![date])
+            .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
+        Ok(deleted > 0)
     }
 }
 
@@ -465,24 +583,35 @@ mod tests {
     fn test_user_profile_default() {
         let (db, _tmp) = test_db();
         let profile = db.get_user_profile().unwrap();
-        assert!(matches!(profile.tracking_mode, crate::engine::types::TrackingMode::Regular));
+        assert!(matches!(
+            profile.tracking_mode,
+            crate::engine::types::TrackingMode::Regular
+        ));
         assert!(!profile.calm_mode);
     }
 
     #[test]
     fn test_user_profile_roundtrip() {
         let (db, _tmp) = test_db();
-        let mut profile = crate::engine::types::UserProfile::default();
-        profile.tracking_mode = crate::engine::types::TrackingMode::Ttc;
-        profile.contraception = crate::engine::types::ContraceptionType::Pill;
-        profile.pill_reminder_time = Some("08:00".to_string());
-        profile.notif_period = true;
-        profile.calm_mode = true;
+        let profile = crate::engine::types::UserProfile {
+            tracking_mode: crate::engine::types::TrackingMode::Ttc,
+            contraception: crate::engine::types::ContraceptionType::Pill,
+            pill_reminder_time: Some("08:00".to_string()),
+            notif_period: true,
+            calm_mode: true,
+            ..Default::default()
+        };
         db.set_user_profile(&profile).unwrap();
 
         let loaded = db.get_user_profile().unwrap();
-        assert!(matches!(loaded.tracking_mode, crate::engine::types::TrackingMode::Ttc));
-        assert!(matches!(loaded.contraception, crate::engine::types::ContraceptionType::Pill));
+        assert!(matches!(
+            loaded.tracking_mode,
+            crate::engine::types::TrackingMode::Ttc
+        ));
+        assert!(matches!(
+            loaded.contraception,
+            crate::engine::types::ContraceptionType::Pill
+        ));
         assert_eq!(loaded.pill_reminder_time, Some("08:00".to_string()));
         assert!(loaded.calm_mode);
     }
@@ -491,9 +620,8 @@ mod tests {
     fn test_pregnancy_log_roundtrip() {
         let (db, _tmp) = test_db();
         use chrono::NaiveDate;
-        let mut log = crate::engine::types::PregnancyLog::new(
-            NaiveDate::from_ymd_opt(2026, 3, 15).unwrap()
-        );
+        let mut log =
+            crate::engine::types::PregnancyLog::new(NaiveDate::from_ymd_opt(2026, 3, 15).unwrap());
         log.hcg_positive = Some(true);
         log.kicks = Some(10);
         log.nausea_level = Some(3);
@@ -506,5 +634,29 @@ mod tests {
         assert_eq!(loaded.kicks, Some(10));
         assert_eq!(loaded.weight_kg, Some(68.5));
         assert_eq!(loaded.symptoms, vec!["nausea", "fatigue"]);
+    }
+
+    #[test]
+    fn test_delete_cycle_log_and_pregnancy_log() {
+        let (db, _tmp) = test_db();
+        use chrono::NaiveDate;
+
+        let cycle = crate::engine::types::Cycle::new(NaiveDate::from_ymd_opt(2026, 3, 1).unwrap());
+        db.insert_cycle(&cycle).unwrap();
+        assert!(db.delete_cycle(&cycle.id).unwrap());
+        assert!(!db.delete_cycle(&cycle.id).unwrap());
+
+        let log = crate::engine::types::DailyLog::new(NaiveDate::from_ymd_opt(2026, 3, 2).unwrap());
+        db.upsert_log(&log).unwrap();
+        assert!(db.delete_log("2026-03-02").unwrap());
+        assert!(db.get_log("2026-03-02").unwrap().is_none());
+        assert!(!db.delete_log("2026-03-02").unwrap());
+
+        let pregnancy_log =
+            crate::engine::types::PregnancyLog::new(NaiveDate::from_ymd_opt(2026, 3, 3).unwrap());
+        db.upsert_pregnancy_log(&pregnancy_log).unwrap();
+        assert!(db.delete_pregnancy_log("2026-03-03").unwrap());
+        assert!(db.get_pregnancy_log("2026-03-03").unwrap().is_none());
+        assert!(!db.delete_pregnancy_log("2026-03-03").unwrap());
     }
 }

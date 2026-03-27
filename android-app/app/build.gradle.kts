@@ -10,6 +10,38 @@ val keyProps = Properties()
 val keyPropsFile = rootProject.file("key.properties")
 if (keyPropsFile.exists()) keyProps.load(keyPropsFile.inputStream())
 
+fun shippedAndroidLocaleConfigurations(): List<String> {
+    val sourceKeys = Regex("""name="([^"]+)"""")
+        .findAll(projectDir.resolve("src/main/res/values/strings.xml").readText())
+        .map { it.groupValues[1] }
+        .filterNot { it.startsWith("article_") }
+        .toSet()
+
+    val localeDirs = projectDir
+        .resolve("src/main/res")
+        .listFiles()
+        ?.asSequence()
+        ?.filter { it.isDirectory && it.name.startsWith("values-") }
+        ?.mapNotNull { dir ->
+            val qualifier = dir.name.removePrefix("values-")
+            val stringsFile = dir.resolve("strings.xml")
+            if (qualifier == "night" || !stringsFile.exists()) {
+                null
+            } else {
+                val localeKeys = Regex("""name="([^"]+)"""")
+                    .findAll(stringsFile.readText())
+                    .map { it.groupValues[1] }
+                    .toSet()
+                qualifier.takeIf { sourceKeys.all(localeKeys::contains) }
+            }
+        }
+        ?.sorted()
+        ?.toList()
+        .orEmpty()
+
+    return listOf("en") + localeDirs
+}
+
 android {
     namespace = "app.luna"
     compileSdk = 35
@@ -19,14 +51,11 @@ android {
         minSdk = 23      // Android 6.0 Marshmallow — Keystore AES-GCM disponible, couvre ~98% des appareils actifs
         targetSdk = 35
         versionCode = 2
-        versionName = "0.1.1"
+        versionName = "1.0.0"
 
-        // i18n : inclure toutes les locales configurées
-        resourceConfigurations += listOf(
-            "fr", "en", "es", "pt-rBR", "de", "it", "nl", "pl",
-            "ru", "uk", "tr", "ja", "ko", "zh-rCN", "zh-rTW",
-            "ar", "he", "fa"
-        )
+        // i18n : expédier la locale par défaut + chaque locale Android réellement complète.
+        // Conserver ce comportement synchronisé avec scripts/check_i18n.py.
+        resourceConfigurations += shippedAndroidLocaleConfigurations()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

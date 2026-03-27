@@ -184,7 +184,7 @@ struct CalendarDayCell: View {
         .aspectRatio(1, contentMode: .fit)
         .clipShape(Circle())
         .accessibilityLabel(accessibilityDescription)
-        .accessibilityAddTraits(isToday ? .isSelected : [])
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
     @ViewBuilder
@@ -211,7 +211,12 @@ struct CalendarDayCell: View {
         if let ev = eventType {
             desc += ". \(ev.accessibilityLabel)"
         }
-        if isToday { desc += ". Aujourd'hui" }
+        if isToday {
+            desc += ". \(NSLocalizedString("tab_today", comment: ""))"
+        }
+        if isSelected {
+            desc += ". \(NSLocalizedString("selected_a11y", comment: ""))"
+        }
         return Text(desc)
     }
 }

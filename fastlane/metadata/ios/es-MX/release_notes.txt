@@ -1,4 +1,3 @@
 • Anillo de ciclo segmentado con código de color
-• Soporte para 40+ idiomas
 • Garantías de privacidad mejoradas
 • Almacenamiento cifrado AES-256-GCM

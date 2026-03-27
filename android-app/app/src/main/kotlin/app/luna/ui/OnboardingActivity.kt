@@ -13,14 +13,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.children
 import androidx.lifecycle.lifecycleScope
 import app.luna.R
 import app.luna.services.KeystoreService
 import app.luna.services.VaultService
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.textfield.TextInputEditText
@@ -44,6 +47,7 @@ class OnboardingActivity : AppCompatActivity() {
     private var periodDuration = 5
     private var regularity = "regular"
     private val selectedGoals = mutableSetOf("track")
+    private var skipLastPeriod = false
 
     companion object {
         fun start(context: Context) =
@@ -53,9 +57,10 @@ class OnboardingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
+        setupDateStep()
         setupDurationChips()
-        setupRegularityRadios()
-        setupGoalCheckboxes()
+        setupRegularityOptions()
+        setupGoalOptions()
         renderStep()
     }
 
@@ -70,7 +75,7 @@ class OnboardingActivity : AppCompatActivity() {
 
         // Hide all content sections
         findViewById<View>(R.id.name_input_layout).visibility = View.GONE
-        findViewById<View>(R.id.date_picker).visibility = View.GONE
+        findViewById<View>(R.id.date_step_container).visibility = View.GONE
         findViewById<View>(R.id.cycle_profile_section).visibility = View.GONE
         findViewById<View>(R.id.goals_section).visibility = View.GONE
 
@@ -86,7 +91,7 @@ class OnboardingActivity : AppCompatActivity() {
                 subtitle.setText(R.string.onboarding_last_period_subtitle)
                 icon.setImageResource(R.drawable.ic_luna_droplet)
                 val datePicker = findViewById<DatePicker>(R.id.date_picker)
-                datePicker.visibility = View.VISIBLE
+                findViewById<View>(R.id.date_step_container).visibility = View.VISIBLE
                 datePicker.maxDate = System.currentTimeMillis()
             }
             2 -> {
@@ -119,16 +124,23 @@ class OnboardingActivity : AppCompatActivity() {
 
     private fun setupDurationChips() {
         val chipGroup = findViewById<ChipGroup>(R.id.duration_chips)
+        chipGroup.removeAllViews()
         val durations = listOf(3, 4, 5, 6, 7)
-        val accent = ContextCompat.getColorStateList(this, R.color.luna_pink_500)
+        val backgroundColors = ContextCompat.getColorStateList(this, R.color.luna_duration_chip_bg)
+        val textColors = ContextCompat.getColorStateList(this, R.color.luna_duration_chip_text)
+        val strokeColors = ContextCompat.getColorStateList(this, R.color.luna_duration_chip_stroke)
 
         for (d in durations) {
+            val selected = d == periodDuration
             val chip = Chip(this).apply {
-                text = "${d}${getString(R.string.day_abbr)}"
+                id = View.generateViewId()
+                text = durationChipLabel(d, selected)
                 isCheckable = true
-                isChecked = d == periodDuration
-                chipBackgroundColor = ContextCompat.getColorStateList(this@OnboardingActivity, R.color.luna_neutral_100)
-                setTextColor(ContextCompat.getColor(this@OnboardingActivity, R.color.luna_neutral_900))
+                isChecked = selected
+                chipBackgroundColor = backgroundColors
+                setTextColor(textColors)
+                chipStrokeColor = strokeColors
+                chipStrokeWidth = 1f
                 minHeight = 48
                 tag = d
             }
@@ -136,49 +148,86 @@ class OnboardingActivity : AppCompatActivity() {
         }
         // 7+ chip
         val plusChip = Chip(this).apply {
-            text = "7+${getString(R.string.day_abbr)}"
+            val selected = periodDuration >= 8
+            id = View.generateViewId()
+            text = if (selected) "\u2713 7+${getString(R.string.day_abbr)}" else "7+${getString(R.string.day_abbr)}"
             isCheckable = true
-            chipBackgroundColor = ContextCompat.getColorStateList(this@OnboardingActivity, R.color.luna_neutral_100)
-            setTextColor(ContextCompat.getColor(this@OnboardingActivity, R.color.luna_neutral_900))
+            isChecked = selected
+            chipBackgroundColor = backgroundColors
+            setTextColor(textColors)
+            chipStrokeColor = strokeColors
+            chipStrokeWidth = 1f
             minHeight = 48
             tag = 8
         }
         chipGroup.addView(plusChip)
 
+        chipGroup.check(
+            chipGroup.children
+                .filterIsInstance<Chip>()
+                .firstOrNull { (it.tag as? Int ?: 5) == periodDuration || ((it.tag as? Int) == 8 && periodDuration >= 8) }
+                ?.id ?: View.NO_ID
+        )
+
         chipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
             if (checkedIds.isNotEmpty()) {
                 val chip = chipGroup.findViewById<Chip>(checkedIds[0])
                 periodDuration = chip?.tag as? Int ?: 5
+                syncDurationChipLabels(chipGroup)
             }
         }
     }
 
-    private fun setupRegularityRadios() {
-        val group = findViewById<RadioGroup>(R.id.regularity_group)
+    private fun durationChipLabel(days: Int, selected: Boolean): String =
+        if (selected) "\u2713 ${days}${getString(R.string.day_abbr)}" else "${days}${getString(R.string.day_abbr)}"
+
+    private fun syncDurationChipLabels(chipGroup: ChipGroup) {
+        chipGroup.children.filterIsInstance<Chip>().forEach { chip ->
+            val value = chip.tag as? Int ?: return@forEach
+            val selected = if (value >= 8) periodDuration >= 8 else periodDuration == value
+            chip.text = if (value >= 8) {
+                if (selected) "\u2713 7+${getString(R.string.day_abbr)}" else "7+${getString(R.string.day_abbr)}"
+            } else {
+                durationChipLabel(value, selected)
+            }
+        }
+    }
+
+    private fun setupDateStep() {
+        val datePicker = findViewById<DatePicker>(R.id.date_picker)
+        datePicker.setOnDateChangedListener { _, _, _, _ ->
+            skipLastPeriod = false
+        }
+        findViewById<Button>(R.id.skip_date_button).setOnClickListener {
+            skipLastPeriod = true
+            nextStep()
+        }
+    }
+
+    private fun setupRegularityOptions() {
+        val group = findViewById<LinearLayout>(R.id.regularity_group)
         val options = listOf(
             "very_regular" to R.string.regularity_very_regular,
             "regular" to R.string.regularity_regular,
             "irregular" to R.string.regularity_irregular,
             "unknown" to R.string.regularity_unknown
         )
+        group.removeAllViews()
         for ((key, labelRes) in options) {
-            val rb = RadioButton(this).apply {
-                text = getString(labelRes)
+            group.addView(buildSelectableCard(
+                label = getString(labelRes),
+                selected = key == regularity,
+                showCheck = key == regularity
+            ) {
+                regularity = key
+                setupRegularityOptions()
+            }.apply {
                 tag = key
-                isChecked = key == regularity
-                minHeight = 48
-                setPadding(16, 14, 16, 14)
-                textSize = 16f
-            }
-            group.addView(rb)
-        }
-        group.setOnCheckedChangeListener { grp, id ->
-            val rb = grp.findViewById<RadioButton>(id)
-            regularity = rb?.tag as? String ?: "regular"
+            })
         }
     }
 
-    private fun setupGoalCheckboxes() {
+    private fun setupGoalOptions() {
         val container = findViewById<LinearLayout>(R.id.goals_container)
         val goals = listOf(
             "track" to R.string.goal_track,
@@ -188,21 +237,84 @@ class OnboardingActivity : AppCompatActivity() {
             "track_pregnancy" to R.string.goal_track_pregnancy,
             "perimenopause" to R.string.goal_perimenopause
         )
+        container.removeAllViews()
         for ((key, labelRes) in goals) {
-            val cb = CheckBox(this).apply {
-                text = getString(labelRes)
+            val selected = selectedGoals.contains(key)
+            container.addView(buildSelectableCard(
+                label = getString(labelRes),
+                selected = selected,
+                showCheck = selected
+            ) {
+                if (selectedGoals.contains(key)) {
+                    selectedGoals.remove(key)
+                } else {
+                    selectedGoals.add(key)
+                }
+                setupGoalOptions()
+            }.apply {
                 tag = key
-                isChecked = selectedGoals.contains(key)
-                minHeight = 48
-                setPadding(16, 14, 16, 14)
-                textSize = 16f
-            }
-            cb.setOnCheckedChangeListener { _, checked ->
-                if (checked) selectedGoals.add(key) else selectedGoals.remove(key)
-            }
-            container.addView(cb)
+            })
         }
     }
+
+    private fun buildSelectableCard(
+        label: String,
+        selected: Boolean,
+        showCheck: Boolean,
+        onClick: () -> Unit
+    ): MaterialCardView {
+        val accent = ContextCompat.getColor(this, R.color.luna_accent_primary)
+        val selectedBg = ContextCompat.getColor(this, R.color.luna_accent_primary_100)
+        val defaultBg = ContextCompat.getColor(this, R.color.luna_neutral_0)
+        val stroke = ContextCompat.getColor(this, if (selected) R.color.luna_accent_primary else R.color.luna_neutral_200)
+        return MaterialCardView(this).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            ).apply {
+                bottomMargin = dp(8)
+            }
+            radius = dp(12).toFloat()
+            strokeWidth = dp(1)
+            strokeColor = stroke
+            cardElevation = 0f
+            setCardBackgroundColor(if (selected) selectedBg else defaultBg)
+            isClickable = true
+            isFocusable = true
+            minimumHeight = dp(44)
+            contentDescription = label
+            isSelected = selected
+            setOnClickListener { onClick() }
+
+            addView(LinearLayout(context).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = android.view.Gravity.CENTER_VERTICAL
+                setPadding(dp(14), dp(14), dp(14), dp(14))
+                layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+
+                addView(TextView(context).apply {
+                    text = label
+                    setTextColor(ContextCompat.getColor(context, R.color.luna_neutral_900))
+                    textSize = 16f
+                    layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
+                })
+
+                if (showCheck) {
+                    addView(ImageView(context).apply {
+                        setImageResource(R.drawable.ic_check_20)
+                        imageTintList = ContextCompat.getColorStateList(context, R.color.luna_accent_primary)
+                        contentDescription = null
+                    })
+                }
+            })
+        }
+    }
+
+    private fun dp(value: Int): Int =
+        (value * resources.displayMetrics.density).toInt()
 
     private fun nextStep() {
         // Save current step data
@@ -226,13 +338,6 @@ class OnboardingActivity : AppCompatActivity() {
         val pin = String.format("%06d", (0..999999).random())
 
         // Get last period date from picker
-        val datePicker = findViewById<DatePicker>(R.id.date_picker)
-        val cal = Calendar.getInstance().apply {
-            set(datePicker.year, datePicker.month, datePicker.dayOfMonth)
-        }
-        val lastPeriodDate = String.format("%04d-%02d-%02d",
-            cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH))
-
         val dbPath = VaultService.getDbPath(this)
         lifecycleScope.launch {
             try {
@@ -244,7 +349,19 @@ class OnboardingActivity : AppCompatActivity() {
 
                 // Auto-create first cycle from last period date
                 withContext(Dispatchers.IO) {
-                    try { engine.startCycle(lastPeriodDate) } catch (_: Exception) { }
+                    if (!skipLastPeriod) {
+                        val datePicker = findViewById<DatePicker>(R.id.date_picker)
+                        val cal = Calendar.getInstance().apply {
+                            set(datePicker.year, datePicker.month, datePicker.dayOfMonth)
+                        }
+                        val lastPeriodDate = String.format(
+                            "%04d-%02d-%02d",
+                            cal.get(Calendar.YEAR),
+                            cal.get(Calendar.MONTH) + 1,
+                            cal.get(Calendar.DAY_OF_MONTH)
+                        )
+                        try { engine.startCycle(lastPeriodDate) } catch (_: Exception) { }
+                    }
                 }
 
                 // Store onboarding state

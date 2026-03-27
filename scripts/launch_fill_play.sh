@@ -2,7 +2,7 @@
 # launch_fill_play.sh — Launch Chrome with debugging + fill Play Console listings
 #
 # Usage:
-# ./scripts/launch_fill_play.sh # fill all 40 locales
+# ./scripts/launch_fill_play.sh # fill all configured storefront locales
 # ./scripts/launch_fill_play.sh --locale en-US # single locale
 # ./scripts/launch_fill_play.sh --dry-run # navigate only
 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="luna_accent_primary">#D66A8C</color>
+    <color name="luna_accent_primary_50">#2B1820</color>
+    <color name="luna_accent_primary_100">#3A202B</color>
+    <color name="luna_accent_primary_700">#E38CA8</color>
+    <color name="luna_accent_primary_900">#F5D3E0</color>
+</resources>

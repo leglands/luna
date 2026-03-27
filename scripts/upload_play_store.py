@@ -27,6 +27,7 @@ import mimetypes
 
 PACKAGE = "app.luna"
 METADATA_DIR = "fastlane/metadata/android"
+SUPPORTED_LOCALES = ("en-US",)
 
 # Google Play locale codes that differ from our folder names
 LOCALE_MAP = {
@@ -77,20 +78,24 @@ def build_service(key_file: str = None, access_token: str = None):
 
 
 def upload(key_file: str = None, access_token: str = None, dry_run: bool = False,
-           only_locale: str = None, only_text: bool = False):
+           only_locale: str = None, only_text: bool = False, all_locales: bool = False):
     service = build_service(key_file=key_file, access_token=access_token)
     edits = service.edits()
+    locales = sorted(
+        folder for folder in os.listdir(METADATA_DIR)
+        if os.path.isdir(os.path.join(METADATA_DIR, folder))
+        and (all_locales or folder in SUPPORTED_LOCALES)
+    )
 
     # ── Open edit ────────────────────────────────────────────────────────────
     if dry_run:
-        print(f"[DRY RUN] Would open edit for {PACKAGE} and update {len(os.listdir(METADATA_DIR))} locales")
-        print(f" Locales: {', '.join(sorted(os.listdir(METADATA_DIR)))}")
+        print(f"[DRY RUN] Would open edit for {PACKAGE} and update {len(locales)} locales")
+        print(f" Locales: {', '.join(locales)}")
         return
     edit = edits.insert(packageName=PACKAGE, body={}).execute()
     edit_id = edit["id"]
     print(f"Opened edit: {edit_id}")
 
-    locales = sorted(os.listdir(METADATA_DIR))
     errors = []
 
     for folder in locales:
@@ -228,6 +233,7 @@ Examples:
   python3 scripts/upload_play_store.py --token ya29.xxx
   python3 scripts/upload_play_store.py --token ya29.xxx --locale en-US
   python3 scripts/upload_play_store.py --token ya29.xxx --text-only
+  python3 scripts/upload_play_store.py --token ya29.xxx --all-locales
   python3 scripts/upload_play_store.py --key fastlane/google-play-key.json
 """)
     parser.add_argument("--key", default="fastlane/google-play-key.json",
@@ -238,6 +244,8 @@ Examples:
     parser.add_argument("--locale", default=None, help="Upload only this locale (e.g. en-US)")
     parser.add_argument("--text-only", action="store_true",
                         help="Upload only text (title/desc), skip screenshots")
+    parser.add_argument("--all-locales", action="store_true",
+                        help="Override the production-safe filter and upload every locale folder")
     args = parser.parse_args()
 
     # Validate auth
@@ -267,4 +275,5 @@ Examples:
         dry_run=args.dry_run,
         only_locale=args.locale,
         only_text=args.text_only,
+        all_locales=args.all_locales,
     )

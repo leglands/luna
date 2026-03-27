@@ -4,15 +4,28 @@
 
 | Layer | Framework | Count | Status |
 |-------|-----------|-------|--------|
-| Rust unit + behavior | `cargo test` | 40 | ✅ All pass |
-| iOS unit | XCTest | ~16 | ✅ |
-| iOS UI | XCUITest | 7 | ✅ |
-| Android unit | JUnit | 27 | ✅ |
-| Android instrumented | Espresso | 5+ | ✅ |
-| E2E cross-platform | Maestro | 7 flows | ⚠️ Created, not in CI |
-| **Total** | | **~102** | |
+| Rust unit | `cargo test --lib` | 30 | ✅ All pass |
+| Rust behavior | `cargo test` | 57 | ✅ All pass (J1-J19) |
+| iOS unit | XCTest | ~14 | ✅ |
+| iOS UI | XCUITest | ~59 | ✅ |
+| Android unit | JUnit | 23 | ✅ |
+| Android instrumented | Espresso | ~16 | ✅ |
+| E2E cross-platform | Maestro | 8 flows | ⚠️ Created, not in CI |
+| **Total** | | **~200** | |
 
-## Rust Tests (40)
+## Rust Tests (87 total)
+
+### Unit Tests (30) — in source files
+
+| Module | Tests | Description |
+|--------|-------|-------------|
+| prediction.rs | 14 | Calendar-based cycle prediction |
+| export.rs | 6 | CSV export RFC 4180 |
+| crypto.rs | 5 | Argon2id, AES-256-GCM, HKDF |
+| database.rs | 4 | UserProfile, PregnancyLog roundtrips |
+| api.rs | 1 | Backup export/import roundtrip |
+
+### Behavior Tests (57) — J journeys
 
 | Journey | Feature | Tests | Description |
 |---------|---------|-------|-------------|
@@ -31,9 +44,12 @@
 | J13 | F11 Change PIN | 3 | change, reopen_new, reopen_old_fails |
 | J14 | F14 Perimenopause | 3 | profile, symptoms, tracking_mode |
 | J15 | F16 Calm Mode | 3 | enable, predictions_hidden, toggle |
-| Unit crypto | F02 | 5 | derive_key, encrypt/decrypt, compress/decompress |
+| J16 | F10 Import Backup | 4 | roundtrip, wrong_pin, invalid_data, empty |
+| J17 | F17 i18n | 5 | locale-safety, ISO-8601 dates |
+| J18 | F18 Dark Mode | 2 | appearance-agnostic core |
+| J19 | F04/F03 Delete | 6 | delete_log, delete_cycle CRUD |
 
-## Maestro E2E Flows (7)
+## Maestro E2E Flows (8)
 
 | Flow | File | Steps |
 |------|------|-------|
@@ -44,21 +60,22 @@
 | 05 Insights | `.maestro/05-insights.yaml` | View stats → cycle averages → graphs |
 | 06 Settings | `.maestro/06-settings.yaml` | Toggle calm mode → change tracking → export |
 | 07 Panic Wipe | `.maestro/07-panic-wipe.yaml` | Settings → panic wipe → confirm → re-onboarding |
+| 08 Backup | `.maestro/08-backup-export.yaml` | Settings → export CSV → encrypted backup |
 
 ## CI Pipeline
 
 | Workflow | Rust | iOS Unit | iOS UI | Android Unit | Android UI |
 |----------|------|----------|--------|-------------|------------|
-| `ci-rust.yml` | ✅ 40 tests | ✅ XCTest | ⚠️ Step added | ✅ JUnit | ⚠️ Step added |
+| `ci-rust.yml` | ✅ 87 tests | ✅ XCTest | ⚠️ Step added | ✅ JUnit | ⚠️ Step added |
 | `release.yml` | ✅ | ❌ | ❌ | ❌ | ❌ |
 
-## Coverage Gaps
+## Coverage Gaps (Remaining)
 
 | Gap | Priority | Status |
 |-----|----------|--------|
-| No `delete_log()` test (API doesn't exist) | Medium | Gap |
-| Calendar UI interaction tests | Medium | Missing |
-| Home dashboard rendering tests | Low | Missing |
+| Calendar UI tap day → log sheet | Medium | Partial - navigation only in Maestro |
+| Prediction display on Dashboard | Low | Partial - Rust behavior tests logic |
+| Backup share sheet verification | Medium | Partial - iOS test exists |
 | A11y automated tests | Medium | Missing |
 | Multi-ABI regression (arm64, armv7, x86_64) | Medium | Missing |
 | Maestro not in CI yet | High | Created but not wired |
@@ -66,8 +83,14 @@
 ## Running Tests
 
 ```bash
-# Rust (all platforms)
-cargo test --all                    # 40 tests
+# Rust (all tests)
+cargo test --all                    # 87 tests (57 behavior + 30 unit)
+
+# Rust behavior only
+cargo test --test behavior_tests    # 57 J-journey tests
+
+# Rust unit only
+cargo test --lib                    # 30 unit tests
 
 # iOS Simulator
 cd ios-app && xcodebuild test -scheme LunaApp \

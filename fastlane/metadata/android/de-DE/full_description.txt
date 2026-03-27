@@ -21,4 +21,4 @@ DATENSCHUTZ BY DESIGN
 • Open Source: https://github.com/macaron-software/luna
 
 BARRIEREFREIHEIT
-Volle TalkBack-Unterstützung, Dynamischer Text, 40+ Sprachen
+Volle TalkBack-Unterstützung, Dynamischer Text

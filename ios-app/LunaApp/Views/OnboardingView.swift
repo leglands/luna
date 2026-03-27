@@ -388,6 +388,7 @@ struct SelectableButtonStyle: ButtonStyle {
 struct ProgressBar: View {
     let current: Int
     let total: Int
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         GeometryReader { geo in
@@ -396,7 +397,7 @@ struct ProgressBar: View {
                 Capsule()
                     .fill(Color("AccentPrimary"))
                     .frame(width: geo.size.width * CGFloat(current + 1) / CGFloat(total), height: 4)
-                    .animation(.easeInOut, value: current)
+                    .animation(reduceMotion ? .none : .easeInOut, value: current)
             }
         }
         .frame(height: 4)

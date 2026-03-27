@@ -11,6 +11,7 @@
 import SwiftUI
 import LocalAuthentication
 import UIKit
+import UniformTypeIdentifiers
 
 // ┌──────────────────────────────────────────────────────────────┐
 // │ Screen: SettingsView · Personas: P1,P5,P6 · Features: F08-F11,F16
@@ -605,6 +606,8 @@ struct ExportSheetView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.dismiss) private var dismiss
     @State private var isExporting: Bool = false
+    @State private var showBackupImporter: Bool = false
+    @State private var backupAlertMessage: String?
 
     var body: some View {
         NavigationStack {
@@ -629,12 +632,34 @@ struct ExportSheetView: View {
                     Label("export_encrypted_backup_label", systemImage: "lock.doc")
                 }
                 .frame(minHeight: 44)
+
+                Button {
+                    showBackupImporter = true
+                } label: {
+                    Label("Restore encrypted backup", systemImage: "square.and.arrow.down")
+                }
+                .frame(minHeight: 44)
             }
             .navigationTitle("settings_export_label")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("cancel_button") { dismiss() }
                 }
+            }
+            .fileImporter(
+                isPresented: $showBackupImporter,
+                allowedContentTypes: [.data],
+                allowsMultipleSelection: false
+            ) { result in
+                restoreBackup(from: result)
+            }
+            .alert("Encrypted backup", isPresented: Binding(
+                get: { backupAlertMessage != nil },
+                set: { if !$0 { backupAlertMessage = nil } }
+            )) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(backupAlertMessage ?? "")
             }
         }
     }
@@ -681,6 +706,34 @@ struct ExportSheetView: View {
                 break
             }
             await MainActor.run { dismiss() }
+        }
+    }
+
+    private func restoreBackup(from result: Result<[URL], Error>) {
+        guard let engine = appState.engine else { return }
+        guard let pin = KeychainService.shared.readPin() else {
+            backupAlertMessage = "PIN unavailable on this device."
+            return
+        }
+
+        Task {
+            do {
+                let urls = try result.get()
+                guard let url = urls.first else { return }
+                let granted = url.startAccessingSecurityScopedResource()
+                defer {
+                    if granted { url.stopAccessingSecurityScopedResource() }
+                }
+                let data = try Data(contentsOf: url)
+                let restored = try engine.importEncryptedBackup(backup: data, pin: pin)
+                await MainActor.run {
+                    backupAlertMessage = "Backup restored successfully (\(restored))"
+                }
+            } catch {
+                await MainActor.run {
+                    backupAlertMessage = error.localizedDescription
+                }
+            }
         }
     }
 }

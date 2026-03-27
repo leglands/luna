@@ -10,6 +10,7 @@
 package app.luna.ui
 
 import android.os.Bundle
+import android.os.Build
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -70,9 +71,14 @@ class HomeFragment : Fragment() {
                         state.cycleDay,
                         state.daysUntilNextPeriod
                     )
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        info.stateDescription = state.phaseName
+                    }
                 }
             }
         }
+
+        binding.perimenopauseBannerArrow.contentDescription = getString(R.string.perimeno_banner_a11y)
     }
 
     // ── Bouton Log ─────────────────────────────────────────────────────────

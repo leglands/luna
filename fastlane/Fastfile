@@ -1,4 +1,21 @@
+require "fileutils"
+require "tmpdir"
+
 default_platform(:ios)
+
+IOS_STORE_LOCALES = ["en-US", "fr-FR"].freeze
+ANDROID_STORE_LOCALES = ["en-US"].freeze
+
+def stage_store_locales(source_dir, locales)
+  staged_dir = Dir.mktmpdir("luna-store-locales-")
+  locales.each do |locale|
+    source = File.join(source_dir, locale)
+    next unless Dir.exist?(source)
+
+    FileUtils.cp_r(source, staged_dir)
+  end
+  staged_dir
+end
 
 # ASC API key (no password needed)
 def asc_api_key
@@ -58,25 +75,32 @@ platform :ios do
   desc "Upload metadata and screenshots to App Store Connect"
   lane :upload_metadata do
     api_key = asc_api_key
+    staged_metadata = stage_store_locales("./fastlane/metadata/ios", IOS_STORE_LOCALES)
+    staged_screenshots = stage_store_locales("./fastlane/screenshots/ios", IOS_STORE_LOCALES)
 
-    deliver(
-      api_key: api_key,
-      app_version: "0.1.0",
-      ipa: "/tmp/LunaApp_export/LUNA.ipa",
-      submit_for_review: false,
-      automatic_release: false,
-      force: true,
-      skip_binary_upload: true,
-      metadata_path: "./fastlane/metadata/ios",
-      screenshots_path: "./fastlane/screenshots/ios",
-      precheck_include_in_app_purchases: false,
-      ignore_language_directory_validation: true,
-      overwrite_screenshots: true,
-      privacy_url: {
-        'default' => 'https://privacy.macaron-software.com/luna'
-      },
-      primary_category: 'HEALTH_AND_FITNESS',
-    )
+    begin
+      deliver(
+        api_key: api_key,
+        app_version: "0.1.0",
+        ipa: "/tmp/LunaApp_export/LUNA.ipa",
+        submit_for_review: false,
+        automatic_release: false,
+        force: true,
+        skip_binary_upload: true,
+        metadata_path: staged_metadata,
+        screenshots_path: staged_screenshots,
+        precheck_include_in_app_purchases: false,
+        ignore_language_directory_validation: true,
+        overwrite_screenshots: true,
+        privacy_url: {
+          'default' => 'https://privacy.macaron-software.com/luna'
+        },
+        primary_category: 'HEALTH_AND_FITNESS',
+      )
+    ensure
+      FileUtils.remove_entry(staged_metadata) if staged_metadata && Dir.exist?(staged_metadata)
+      FileUtils.remove_entry(staged_screenshots) if staged_screenshots && Dir.exist?(staged_screenshots)
+    end
   end
 
   desc "Full release: build + upload to TestFlight"
@@ -160,33 +184,38 @@ platform :android do
       track: "internal",
       json_key: ENV["GOOGLE_PLAY_JSON_KEY"] || "fastlane/google-play-key.json",
       release_status: "draft",
-      skip_upload_metadata: false,
-      skip_upload_images: false,
-      skip_upload_screenshots: false,
-      metadata_path: "fastlane/metadata/android"
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
     )
   end
 
   desc "Upload only metadata + screenshots (no binary)"
   lane :upload_store_assets do
-    supply(
-      package_name: "app.luna",
-      track: "internal",
-      json_key: ENV["GOOGLE_PLAY_JSON_KEY"] || "fastlane/google-play-key.json",
-      skip_upload_aab: true,
-      skip_upload_apk: true,
-      skip_upload_metadata: false,
-      skip_upload_images: false,
-      skip_upload_screenshots: false,
-      metadata_path: "fastlane/metadata/android"
-    )
+    staged_metadata = stage_store_locales("fastlane/metadata/android", ANDROID_STORE_LOCALES)
+
+    begin
+      supply(
+        package_name: "app.luna",
+        track: "internal",
+        json_key: ENV["GOOGLE_PLAY_JSON_KEY"] || "fastlane/google-play-key.json",
+        skip_upload_aab: true,
+        skip_upload_apk: true,
+        skip_upload_metadata: false,
+        skip_upload_images: false,
+        skip_upload_screenshots: false,
+        metadata_path: staged_metadata
+      )
+    ensure
+      FileUtils.remove_entry(staged_metadata) if staged_metadata && Dir.exist?(staged_metadata)
+    end
   end
 
-  desc "Full release: build + upload AAB + metadata + screenshots to internal track"
+  desc "Full release: build + upload AAB to internal track"
   lane :release do
     build
     upload_internal
-    UI.success "Android AAB + store assets uploaded to Play Store internal track!"
+    UI.success "Android AAB uploaded to Play Store internal track!"
   end
 
   desc "Upload already-built AAB to Play Store (shortcut)"
@@ -197,7 +226,9 @@ platform :android do
       track: "internal",
       json_key: ENV["GOOGLE_PLAY_JSON_KEY"] || "fastlane/google-play-key.json",
       release_status: "draft",
-      metadata_path: "fastlane/metadata/android"
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
     )
   end
 

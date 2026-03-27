@@ -22,4 +22,4 @@ GARANTIES DE PRIVACITAT
 • Codi obert: github.com/macaron-software/luna
 
 ACCESSIBILITAT
-Suport complet de VoiceOver · Tipus dinàmic · Més de 40 idiomes
+Suport complet de VoiceOver · Tipus dinàmic

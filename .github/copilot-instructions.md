@@ -1,172 +1,88 @@
 # LUNA — Copilot Instructions
 
-> Menstrual cycle tracker · Privacy-first · Zero network · Rust + iOS + Android
-
 ## Project
+Privacy-first menstrual cycle tracker · iOS + Android · Rust shared core
+Code: LUNA · Repo: macaron-software/luna
+ZERO network · ZERO emoji · WCAG 2.2 AA · 43 symptoms across 6 categories
 
-- **Core**: Rust + UniFFI 0.28 (proc-macros, no .udl) → iOS (SwiftUI) + Android (Kotlin Views)
-- **DB**: SQLCipher (AES-256-GCM, Argon2id KDF)
-- **Privacy**: ZERO network, ZERO analytics, ZERO permissions
-- **Tests**: 79 Rust + 69 iOS + 39 Android + 7 Maestro E2E = **194 total**
-- **i18n**: 40 languages, full RTL (ar, he, fa, ur)
-- **a11y**: WCAG 2.2 AA, Calm Mode, reduceMotion, VoiceOver/TalkBack
-
-## Rules
-
-1. **ZERO emoji in UI** — use SF Symbols (iOS) / Material + SVG Feather (Android)
-2. **ZERO network** — no HTTP, no URLSession, no reqwest, no Firebase
-3. **DO NOT EDIT** generated files: `LunaApp/Generated/*`, `generated/uniffi/*`
-4. **iOS 16+ min** — use `onChange(of:) { new in }` (one param, not two)
-5. **Android minSdk 23** — no API 24+ features without version check
-6. **Encrypt first** — all data goes through SQLCipher, never plaintext
-7. **Zeroize secrets** — use `secrecy::SecretVec`, zeroize after use
-8. **Touch targets ≥44pt** (iOS) / **≥48dp** (Android)
-9. **Always check** `@Environment(\.accessibilityReduceMotion)` before animations
-10. **Calm Mode aware** — respect `appState.calmMode`, hide predictions when active
+## Stack
+| Layer | Tech |
+|-------|------|
+| Core | Rust + UniFFI 0.28 (proc-macros, no .udl) |
+| DB | SQLCipher (rusqlite bundled-sqlcipher-vendored-openssl) |
+| Crypto | Argon2id(64MB/3iter/4t) → AES-256-GCM · HKDF-SHA256 · zstd |
+| iOS | SwiftUI iOS 16+ · Keychain ThisDeviceOnly |
+| Android | Kotlin Views · Android Keystore AES-256-GCM · minSdk 23 |
+| Icons | SF Symbols (iOS) · Material + SVG Feather (Android) |
 
 ## Architecture
+SwiftUI/Kotlin ←→ UniFFI ←→ Rust ←→ SQLCipher
+Clean Arch · MVVM · Repository · Strategy · Zero Trust · Privacy by Design
+RUBICON: 22 LunaEngine methods + vault_exists()
+NON-RUBICON: KeychainService, NotificationManager, HealthKitManager (iOS); VaultService, KeystoreService, HealthConnectManager (Android)
 
-```
-Presentation (SwiftUI / Kotlin) ←→ UniFFI boundary ←→ Domain (Rust) ←→ SQLCipher
+## Commands
+```bash
+cargo test --all
+cd ios-app && xcodegen generate
+xcodebuild build -scheme LunaApp CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+cd android-app && ./gradlew bundleRelease
 ```
 
-- Patterns: Clean Arch, Repository, MVVM, Strategy, Zero Trust, Fail Secure
-- Single owner model — PIN gates all access, no RBAC needed
+## Invariants
+1. vault_open required before any of 22 API calls
+2. PIN gates all ops · single owner · no RBAC
+3. Delete APIs: DailyLog, Cycle, PregnancyLog
+4. panic_wipe() irrecoverable — DB + salt + Keychain/Keystore destroyed
+5. ZERO network permissions both platforms (ATS + networkSecurityConfig)
+6. All data encrypted at rest SQLCipher AES-256-GCM
+7. iOS Keychain: kSecAttrAccessibleWhenUnlockedThisDeviceOnly
+8. Android Keystore: hardware-backed AES-256-GCM when available
+9. Secrets zeroized via secrecy::SecretVec after use
+10. Schema migrations tracked in schema_version table
+11. IHM headers present on all 23 view files
+12. Schema: schema_version · cycles · daily_logs · meta · user_profile · pregnancy_logs
 
-## API (UniFFI — 18 public functions)
+## Forbidden
+- Emoji in UI, code, docs
+- Network calls (HTTP, URLSession, reqwest, Firebase)
+- Hardcoded strings (use i18n)
+- API 24+ without version check (Android)
+- .udl files (UniFFI proc-macros only)
+- Editing Generated/ or generated/ directories
+- Alpha channel on App Store icons
+- Spring animations without @Environment(\.accessibilityReduceMotion) check
 
-```
-LunaEngine::open_vault(db_path, pin) → constructor
-.log_day(DailyLog) · .get_log(date) · .get_logs_range(from, to)
-.start_cycle(date) · .end_cycle(id, date) · .get_cycles(limit)
-.predict_next() · .get_cycle_summary()
-.get_user_profile() · .set_user_profile(profile)
-.log_pregnancy_day(PregnancyLog) · .get_pregnancy_log(date)
-.export_logs_csv(from, to) · .export_encrypted_backup(pin)
-.change_pin(old, new) · .panic_wipe()
-vault_exists(db_path) — standalone
-```
+## Active Milestones
+| Platform | Status |
+|---------|--------|
+| iOS | TestFlight v0.1.0 build 1 — awaiting App Privacy publish |
+| Android | Production review pending · 1.0.0 (versionCode 2) |
+
+Open Gaps (5): login rate limit (SBD-11) · cargo audit CI (SBD-14) · GH Actions SHA-pinning (SBD-15) · Urdu Android i18n · Von Restorff ovulation marker
+
+## Key Decisions
+- Argon2id(64MB/3iter/4t) over scrypt/bcrypt — mobile battery balance
+- SQLCipher bundled (not system) — consistent crypto across OS versions
+- UniFFI proc-macros — compile-time FFI generation
+- ZERO network from day 1 — ATS + networkSecurityConfig + no networking crates
+- panic_wipe irrecoverable — protects against coercion/physical threat
+- Encrypted backup: AES-256-GCM blob · key from PIN via HKDF
+- iOS Keychain ThisDeviceOnly — prevents key sync to new device
+- Android Keystore hardware-backed — Titan M / Secure World when available
+- Calm Mode — hide predictions · respects dignity over feature completeness
+- 43 symptoms (not fewer) — 6 categories · Hick's law · 8-10 per category max
+
+## API (22 functions)
+open_vault · log_day · get_log · start_cycle · end_cycle · get_cycles · get_cycle_summary · predict_next · export_logs_csv · change_pin · panic_wipe · export_encrypted_backup · import_encrypted_backup
 
 ## Key Files
+luna-core/src/api.rs · engine/types.rs · prediction.rs · vault/crypto.rs
+ios-app/LunaApp/Views/ (13 SwiftUI views)
+android-app/app/src/main/kotlin/app/luna/ui/
 
-```
-luna-core/src/
-  api.rs                     18 public UniFFI methods (LunaEngine)
-  engine/types.rs            DailyLog, Cycle, Prediction, CycleSummary, UserProfile, PregnancyLog
-  engine/prediction.rs       PredictionEngine (calendar|bbt|lh|combined) — 14 unit tests
-  engine/export.rs           CSV export (RFC 4180) — 6 unit tests
-  vault/crypto.rs            AES-256-GCM, Argon2id, HKDF — 5 unit tests
-  vault/database.rs          SQLCipher, upsert, rekey — 3 unit tests
-  error.rs                   LunaError (8 variants)
-  tests/behavior_tests.rs    40 behavior tests (J1-J15)
-
-ios-app/LunaApp/
-  Views/                     11 SwiftUI views (Root, Home, Onboarding, Calendar, Insights, LogSheet, PregnancyLogSheet, Settings, TrackingMode, Lock, PerimenopauseDashboard)
-  ViewModels/                HomeViewModel
-  Services/                  KeychainService, NotificationManager, HealthKitManager
-
-android-app/app/src/main/kotlin/app/luna/
-  ui/                        5 Activities + 4 Fragments + 2 BottomSheets + 1 CustomView
-  services/                  VaultService, KeystoreService, NotificationWorker, HealthConnectManager
-
-.maestro/                    7 E2E flows (YAML)
-docs/wiki/                   21 wiki docs (security, compliance, UX, traceability...)
-```
-
-## Build
-
-```bash
-cargo test --all                      # 68 Rust tests (40 behavior + 28 unit)
-fastlane ios release                  # build + TestFlight
-cd android-app && ./gradlew bundleRelease
-maestro test .maestro/                # 7 E2E flows
-```
-
-## Security (SBD v1.1 — 25 controls)
-
-- **PASS**: SBD-01,04,05,06,07,08,09,13,21,23,24,25 (12 controls)
-- **PARTIAL**: SBD-11 (no login rate limit), SBD-14 (no audit in CI), SBD-15 (actions not SHA-pinned), SBD-22 (no DoD checklist)
-- **N/A**: SBD-02,03,10,12,16,17,18,19,20 (9 controls — zero network/LLM)
-- CVE: `cargo audit` clean — 2 low (bincode, paste via UniFFI transitive)
-- Threat model: physical access, IPV, data seizure → Argon2id + panic_wipe
-
-## Compliance
-
-| Framework | Score | Notes |
-|-----------|-------|-------|
-| SOC2 TSC | 8/9 | CC7 N/A (no server) |
-| ISO 27001 | 13/15 | A.5.19, A.8.8 ⚠️ (dep scanning) |
-| GDPR Art.9 | 6/6 | Health data, local-only, zero transfer |
-| OWASP Mobile | 8/10 | M8, M9 partial (no RASP) |
-
-## UX Laws (30 audited)
-
-- **OK**: 19 · **FIXED**: 10 · **TODO**: 1 (Von Restorff ovulation marker)
-- Key: Fitts (44pt targets) · Hick (symptom categories) · Peak-End (save feedback) · Zeigarnik (log badge) · Cognitive Load (BBT tooltip) · Postel (comma→dot)
-
-## Design Tokens
-
-| Category | Tokens | Key Values |
-|----------|--------|------------|
-| Colors | 12 | AppBg #FAFAFA/#0D0A14 · Accent #E91E63/#FF4081 · Period/Fertile |
-| Spacing | 6 | 4/8/12/16/24/32pt |
-| Radii | 4 | 8/12/16/9999pt |
-| Fonts | 6 | SF Pro Display/Text · title 28B · body 17R · caption 13R |
-| Icons | 2 | 20pt sm · 24pt md · SF Symbols (iOS) · Feather SVG (Android) |
-| Touch | 2 | ≥44pt iOS · ≥48dp Android |
-
-## Atomic Design (32 components)
-
-- **Atoms** (10): PINDot, NumberCircle, FlowChip, SymptomChip, CalendarDayCell, TabBarItem, StatCard, ToggleSwitch, ActionButton, SectionHeader
-- **Molecules** (7): PINKeypad, MoodPicker, FlowPicker, SymptomGrid, WeekStrip, CycleGauge, StatRow
-- **Organisms** (7): LogSheet, CalendarGrid, DashboardCard, SettingsList, InsightsPanel, PINEntry, CalmModeBanner
-- **Templates** (4): Dashboard, FormSheet, Grid, List
-- **Pages** (4): Onboarding, Lock, Home, Calendar
-
-## A11Y (WCAG 2.2 AA — 20 patterns audited)
-
-- **OK**: 15 · **PARTIAL**: 4 (grid labels, meter value, landmarks, focus order) · **FIXED**: 1 (slider)
-- VoiceOver + TalkBack: labels on all interactive elements
-- reduceMotion: spring animations disabled · Calm Mode: predictions hidden
-- Touch targets: ≥44pt/48dp · Color contrast: AA ratio ≥4.5:1 text · Dynamic Type: supported
-
-## i18n (40 languages)
-
-- iOS: 40 langs via Localizable.xcstrings (FR source)
-- Android: 40 langs via res/values-*/strings.xml
-- RTL: ar, he, fa ✅ · ur ⚠️ (iOS only, missing Android)
-- Zero hardcoded strings in code
-
-## Traceability (UDID — live data, 20 SQLite tables)
-
-| Layer | Traced | Total | Rate |
-|-------|--------|-------|------|
-| Persona → Feature | 6/6 | 6 | 100% |
-| Feature → US | 20/20 | 20 | 100% |
-| US → AC | 20/20 | 20 | 100% |
-| AC → IHM | 20/20 | 20 | 100% |
-| IHM → API | 17/20 | 20 | 85% |
-| API → Tests | 19/19 | 19 | 100% |
-| Feature → Tests | 20/20 | 20 | 100% |
-| CRUD ops | 21/24 | 24 | 88% |
-| RBAC enforced | 20/20 | 20 | 100% |
-
-- **194 tests**: 79 Rust (51 behavior J1-J18 + 28 unit) · 69 iOS (14 XCTest + 55 XCUITest) · 39 Android (23 JUnit + 16 Espresso) · 7 Maestro E2E
-- **CRUD gaps**: 3 Delete (DailyLog, Cycle, PregnancyLog — intentional, privacy-first)
-- **IHM headers**: Added to all 23 view files (11 iOS + 12 Android) with persona/feature/RBAC/CRUD/US
-
-## Patterns (8/8 verified) · Anti-patterns (0 found)
-
-- Clean Arch · Repository · MVVM · Strategy · Singleton · Zero Trust · Privacy by Design · Fail Secure
-- LEAN: ~1800 LOC Rust core · 8 deps · 5 layers · no over-engineering
-- DB migrations exist (schema_version table)
-
-## Gaps (priority order)
-
-| # | Finding | Priority |
-|---|---------|----------|
-| 1 | No login rate limit (SBD-11) | Medium |
-| 2 | GH Actions not SHA-pinned (SBD-15) | Medium |
-| 3 | No cargo audit in CI (SBD-14) | Medium |
-| 4 | Urdu missing from Android | Medium |
-| 5 | Von Restorff ovulation marker | Low |
+## Gotchas
+- UniFFI: library not binary → uniffi-bindgen wrapper required
+- iOS onChange(of:): 1-param=iOS16, 2-param=iOS17+
+- SQLCipher Android: bundled-sqlcipher-vendored-openssl · NDK 27.2
+- Pre-commit hook: blocks commits Mon-Fri 8h-19h

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO_ROOT=$(git rev-parse --show-toplevel)
+GIT_DIR=$(git rev-parse --git-dir)
+LOCAL_HOOK="$GIT_DIR/local-hooks/commit-msg.local"
+
+if [ -x "$LOCAL_HOOK" ] && [ "${LUNA_SKIP_CHAINED_LOCAL_HOOKS:-0}" != "1" ]; then
+  "$LOCAL_HOOK" "$@"
+fi
+
+"$REPO_ROOT/scripts/run_presidio_hook_scan.sh" --mode commit-msg --message-file "$1"

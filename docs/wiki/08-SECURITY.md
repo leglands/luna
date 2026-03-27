@@ -178,9 +178,9 @@ LUNA is an **offline-only** application with **zero network permissions**. This 
 | | |
 |---|---|
 | **Standards** | OWASP CI/CD Top 10, CIS v8 16.7, NIST SP 800-204C |
-| **Status** | **Warning** |
-| **Evidence** | GitHub Actions used for CI. Workflows **not pinned to SHA** — uses tag-based references. No SAST/DAST in pipeline. No signed commits enforced. No branch protection rules verified. |
-| **Fix** | Pin all GitHub Actions to SHA. Add `cargo audit` step. Add `cargo clippy` as gate. Consider `cargo-deny` for license + advisory checks. |
+| **Status** | **OK** |
+| **Evidence** | GitHub Actions used for CI. All actions pinned to 40-char SHA (e.g. `@34e114876b0b11c390a56381ad16ebd13914f8d5`). `cargo audit` runs in CI. `cargo clippy` gate with `-D warnings`. `cargo deny` checks licenses and advisories. |
+| **Fix** | None required. |
 
 ### SBD-16 — SBOM (Software Bill of Materials)
 
@@ -334,10 +334,10 @@ LUNA is an **offline-only** application with **zero network permissions**. This 
 
 | Priority | Action | Control | Effort |
 |----------|--------|---------|--------|
-| **High** | Pin GitHub Actions to SHA | SBD-15 | 1h |
-| **High** | Add `cargo audit` to CI | SBD-14, SBD-25 | 1h |
-| **High** | Add `cargo clippy` gate to CI | SBD-25 | 1h |
-| **Medium** | Add SECURITY.md with disclosure process | SBD-23 | 2h |
+| ~~**High**~~ ✅ | ~~Pin GitHub Actions to SHA~~ Already done (SHA pins in all workflows) | SBD-15 | — |
+| ~~**High**~~ ✅ | ~~Add `cargo audit` to CI~~ Already done (ci-rust.yml line 48) | SBD-14, SBD-25 | — |
+| ~~**High**~~ ✅ | ~~Add `cargo clippy` gate to CI~~ Already done (ci-rust.yml line 42) | SBD-25 | — |
+| ~~**Medium**~~ ✅ | ~~Add SECURITY.md with disclosure process~~ Already done (SECURITY.md exists) | SBD-23 | — |
 | **Medium** | Add biometric auth (FaceID/fingerprint) | SBD-03 | 1–2 days |
 | **Medium** | Generate SBOM per release | SBD-16 | 2h |
 | **Low** | Fuzz testing for crypto (`cargo-fuzz`) | SBD-25 | 1 day |

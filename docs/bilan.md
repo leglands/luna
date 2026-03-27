@@ -363,7 +363,7 @@ PIN utilisateur (6–8 chiffres)
 | 0 partage avec tiers | Manifest/Info.plist : INTERNET absent | |
 | Panic wipe < 500ms | test_07 + mesure manuelle | |
 | Données compressées binaires | zstd BLOB + SQLCipher → taille 3–5× inférieure à JSON | |
-| 40 langues | xcstrings 100+ clés × 40 locales | |
+| Locales expédiées | iOS : EN/FR · Android : EN · autres locales conservées comme scaffolds | |
 | Zéro emoji UI | grep `"\|\|"` → 0 occurrences | |
 | minSdk 23 Android | build.gradle.kts `minSdk = 23` | |
 | iOS 16+ | project.yml `deployment_target: "16.0"` | |
