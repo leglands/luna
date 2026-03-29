@@ -1,10 +1,1 @@
-LUNA — privatlivsfokuseret app til menstruationscyklus. Dine data forlader aldrig enheden, krypteret med AES-256.
-
-FUNKTIONER
-Menstruations- og symptomsporing, BBT-diagram, humørsporing
-4 tilstande: Regelmæssig, TTC, Graviditet, Perimenopause
-Fertilitetsvindue og ægløsning
-
-PRIVATLIV
-AES-256, ingen konto, ingen sky, ingen reklamer, ingen sporere
-Åben kildekode: https://github.com/macaron-software/luna
+[da] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.

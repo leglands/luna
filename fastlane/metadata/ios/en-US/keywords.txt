@@ -1,1 +1,1 @@
-period tracker,cycle,fertility,ovulation,BBT,privacy,offline,encrypted,menstrual,health
+period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

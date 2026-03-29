@@ -39,3 +39,20 @@ impl From<serde_json::Error> for LunaError {
         LunaError::InvalidData(e.to_string())
     }
 }
+
+impl From<life_crypto::CryptoError> for LunaError {
+    fn from(e: life_crypto::CryptoError) -> Self {
+        LunaError::CryptoError(e.to_string())
+    }
+}
+
+impl From<life_storage::StorageError> for LunaError {
+    fn from(e: life_storage::StorageError) -> Self {
+        match e {
+            life_storage::StorageError::WrongPin => LunaError::WrongPin,
+            life_storage::StorageError::DatabaseCorrupted(s) => LunaError::DatabaseCorrupted(s),
+            life_storage::StorageError::CryptoError(s) => LunaError::CryptoError(s),
+            life_storage::StorageError::MigrationFailed(s) => LunaError::DatabaseCorrupted(s),
+        }
+    }
+}

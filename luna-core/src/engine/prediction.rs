@@ -8,10 +8,23 @@ use crate::engine::types::{Cycle, DailyLog, Prediction};
 ///   v1 — moyenne mobile pondérée (calendrier)
 ///   v2 — ajustement BBT si données disponibles  [TODO Phase 2]
 ///   v3 — ajustement LH                          [TODO Phase 2]
+
+// ─── Evidence & Safety Notices ─────────────────────────────────────────────────
+// WARNING: This prediction is for informational purposes ONLY.
+// It must NOT be used as contraception. Accuracy varies significantly by individual.
+// Users must be informed of the confidence interval and limitations.
+// Evidence: Bull JR et al. 2019, npj Digital Medicine — weighted average approach
+// Evidence: Wilcox AJ et al. 2000, NEJM — fertile window 6-day estimate
+// Evidence: Lenton EA et al. 1984, BJOG — luteal phase length (14 days average)
+// ─────────────────────────────────────────────────────────────────────────────
+
 pub struct PredictionEngine;
 
 impl PredictionEngine {
     /// Calcule la prochaine prédiction à partir des cycles historiques + logs.
+    /// Evidence: Bull JR et al. 2019, npj Digital Medicine — real-world cycle data, weighted EMA
+    /// Evidence: Wilcox AJ et al. 2000, NEJM — fertile window 6-day model (ovulation -5 to +1)
+    /// WARNING: This prediction is for informational purposes ONLY. Not contraception.
     pub fn predict(cycles: &[Cycle], logs: &[DailyLog]) -> Prediction {
         let cycle_lengths = Self::compute_cycle_lengths(cycles);
         let period_lengths = Self::compute_period_lengths(cycles, logs);
@@ -50,7 +63,11 @@ impl PredictionEngine {
         // Current cycle day (1-based) and phase
         let today = chrono::Local::now().date_naive();
         let day_of_cycle = (today - last_start).num_days();
-        let current_cycle_day = if day_of_cycle >= 0 { (day_of_cycle + 1) as u32 } else { 1 };
+        let current_cycle_day = if day_of_cycle >= 0 {
+            (day_of_cycle + 1) as u32
+        } else {
+            1
+        };
         let current_phase = Self::phase_for_date(today, last_start, avg_cycle, None);
         let phase_str = match current_phase {
             CyclePhase::Menstrual => "menstrual",
@@ -82,7 +99,7 @@ impl PredictionEngine {
             .windows(2)
             .map(|w| (w[1] - w[0]).num_days() as f64)
             // Filtrer les valeurs aberrantes (< 15j ou > 60j)
-        .filter(|&d| (15.0..=60.0).contains(&d))
+            .filter(|&d| (15.0..=60.0).contains(&d))
             .collect()
     }
 
@@ -116,6 +133,7 @@ impl PredictionEngine {
 
     /// Moyenne pondérée exponentielle (cycles récents = poids plus élevé).
     /// Retourne (moyenne, écart-type, score_confiance 0-100).
+    /// Evidence: Bull JR et al. 2019, npj Digital Medicine — weighted average methodology
     fn weighted_average(values: &[f64]) -> (f64, f64, u8) {
         if values.is_empty() {
             return (28.0, 3.0, 30); // Défaut scientifique si aucune donnée
@@ -127,9 +145,7 @@ impl PredictionEngine {
         // Poids exponentiels : le plus récent a le poids le plus élevé
         let n = values.len();
         let decay = 0.8_f64;
-        let weights: Vec<f64> = (0..n)
-            .map(|i| decay.powi((n - 1 - i) as i32))
-            .collect();
+        let weights: Vec<f64> = (0..n).map(|i| decay.powi((n - 1 - i) as i32)).collect();
         let total_weight: f64 = weights.iter().sum();
 
         let mean: f64 = values
@@ -165,6 +181,8 @@ impl PredictionEngine {
 
     /// Détermine la phase du cycle pour une date donnée.
     /// `period_length_days` : durée réelle des règles (None → valeur par défaut 5j).
+    /// Evidence: Lenton EA et al. 1984, BJOG — luteal phase averaging 14 days
+    /// Evidence: Barron ML et al. 2005, MCN — BBT shift detection for ovulation
     pub fn phase_for_date(
         date: NaiveDate,
         last_period_start: NaiveDate,
@@ -217,7 +235,10 @@ mod tests {
         // Tolérance ±2 jours pour un cycle régulier de 28j
         let diff = (next - expected).num_days().abs();
         assert!(diff <= 2, "Prédiction trop éloignée : diff={diff}j");
-        assert!(pred.confidence_score >= 60, "Confiance trop faible pour cycle régulier");
+        assert!(
+            pred.confidence_score >= 60,
+            "Confiance trop faible pour cycle régulier"
+        );
     }
 
     #[test]
@@ -251,8 +272,13 @@ mod tests {
             .map(|d| Cycle::new(d.parse().unwrap()))
             .collect();
         let many: Vec<Cycle> = vec![
-            "2025-07-01", "2025-07-29", "2025-08-26", "2025-09-23",
-            "2025-10-21", "2025-11-18", "2025-12-16",
+            "2025-07-01",
+            "2025-07-29",
+            "2025-08-26",
+            "2025-09-23",
+            "2025-10-21",
+            "2025-11-18",
+            "2025-12-16",
         ]
         .into_iter()
         .map(|d| Cycle::new(d.parse().unwrap()))
@@ -279,26 +305,39 @@ mod tests {
         // Reconstitution depuis les screenshots : débuts consécutifs
         // Longueurs: 16, 50, 16, 18, 44, 28 → std_dev ≈ 12.5j
         let starts = [
-            "2025-01-01", "2025-01-17", "2025-03-08",
-            "2025-03-24", "2025-04-11", "2025-05-25", "2025-06-22",
+            "2025-01-01",
+            "2025-01-17",
+            "2025-03-08",
+            "2025-03-24",
+            "2025-04-11",
+            "2025-05-25",
+            "2025-06-22",
         ];
-        let cycles: Vec<Cycle> = starts.iter()
+        let cycles: Vec<Cycle> = starts
+            .iter()
             .map(|d| Cycle::new(d.parse().unwrap()))
             .collect();
 
         let pred = PredictionEngine::predict(&cycles, &[]);
 
-        assert_eq!(pred.algorithm, "calendar_irregular",
-            "Cycle irrégulier (std_dev≈12.5j) doit être étiqueté calendar_irregular");
-        assert!(pred.confidence_score < 50,
-            "Confiance doit être faible pour cycles très irréguliers, got {}", pred.confidence_score);
+        assert_eq!(
+            pred.algorithm, "calendar_irregular",
+            "Cycle irrégulier (std_dev≈12.5j) doit être étiqueté calendar_irregular"
+        );
+        assert!(
+            pred.confidence_score < 50,
+            "Confiance doit être faible pour cycles très irréguliers, got {}",
+            pred.confidence_score
+        );
 
         // La prédiction doit rester dans une plage sensée (15–60j depuis le dernier début)
         let last: NaiveDate = "2025-06-22".parse().unwrap();
         let next: NaiveDate = pred.next_period_start.parse().unwrap();
         let delta = (next - last).num_days();
-        assert!((15..=60).contains(&delta),
-            "Prédiction hors plage valide : {delta}j depuis le dernier début");
+        assert!(
+            (15..=60).contains(&delta),
+            "Prédiction hors plage valide : {delta}j depuis le dernier début"
+        );
     }
 
     /// Cycle court de 16 jours : polyménorrhée — doit passer le filtre (≥ 15j).
@@ -314,8 +353,10 @@ mod tests {
         let next: NaiveDate = pred.next_period_start.parse().unwrap();
         let delta = (next - last).num_days();
 
-        assert!((14..=20).contains(&delta),
-            "Prédiction doit être proche de 16j pour cycle court, got {delta}j");
+        assert!(
+            (14..=20).contains(&delta),
+            "Prédiction doit être proche de 16j pour cycle court, got {delta}j"
+        );
     }
 
     /// Cycle long de 50 jours : oligoménorrhée — doit passer le filtre (≤ 60j).
@@ -331,16 +372,23 @@ mod tests {
         let next: NaiveDate = pred.next_period_start.parse().unwrap();
         let delta = (next - last).num_days();
 
-        assert!((45..=55).contains(&delta),
-            "Prédiction doit être proche de 50j pour cycle long, got {delta}j");
+        assert!(
+            (45..=55).contains(&delta),
+            "Prédiction doit être proche de 50j pour cycle long, got {delta}j"
+        );
     }
 
     /// Alternance court/long (16j, 50j, 16j) : volatilité max → calendar_irregular.
     #[test]
     fn test_alternating_short_long_cycles() {
         let cycles: Vec<Cycle> = vec![
-            "2025-04-05", "2025-04-21", "2025-06-10",
-            "2025-06-26", "2026-01-07", "2026-02-20", "2026-03-20",
+            "2025-04-05",
+            "2025-04-21",
+            "2025-06-10",
+            "2025-06-26",
+            "2026-01-07",
+            "2026-02-20",
+            "2026-03-20",
         ]
         .into_iter()
         .map(|d| Cycle::new(d.parse().unwrap()))
@@ -350,8 +398,11 @@ mod tests {
         // (le long gap janv est filtré car 195j > 60j)
         let pred = PredictionEngine::predict(&cycles, &[]);
         // Avec le gap filtré, on obtient cycles courts/moyens → std_dev élevé
-        assert!(pred.confidence_score <= 60,
-            "Alternance court/long doit avoir une confiance ≤60, got {}", pred.confidence_score);
+        assert!(
+            pred.confidence_score <= 60,
+            "Alternance court/long doit avoir une confiance ≤60, got {}",
+            pred.confidence_score
+        );
     }
 
     /// Règles de 9-10 jours : phase menstruelle doit couvrir les jours réels.
@@ -361,27 +412,21 @@ mod tests {
 
         // Jour 8 avec règles de 9j → encore en phase menstruelle
         assert_eq!(
-            PredictionEngine::phase_for_date(
-                "2026-01-09".parse().unwrap(), start, 28.0, Some(9)
-            ),
+            PredictionEngine::phase_for_date("2026-01-09".parse().unwrap(), start, 28.0, Some(9)),
             CyclePhase::Menstrual,
             "Jour 8 avec règles de 9j doit être Menstrual"
         );
 
         // Jour 10 avec règles de 9j → phase folliculaire
         assert_eq!(
-            PredictionEngine::phase_for_date(
-                "2026-01-11".parse().unwrap(), start, 28.0, Some(9)
-            ),
+            PredictionEngine::phase_for_date("2026-01-11".parse().unwrap(), start, 28.0, Some(9)),
             CyclePhase::Follicular,
             "Jour 10 avec règles de 9j doit être Follicular"
         );
 
         // Sans paramètre (défaut 5j) : jour 8 → Follicular (ancien comportement préservé)
         assert_eq!(
-            PredictionEngine::phase_for_date(
-                "2026-01-09".parse().unwrap(), start, 28.0, None
-            ),
+            PredictionEngine::phase_for_date("2026-01-09".parse().unwrap(), start, 28.0, None),
             CyclePhase::Follicular,
             "Jour 8 sans period_length (défaut 5j) doit être Follicular"
         );
@@ -394,19 +439,18 @@ mod tests {
 
         // Jour 9 → Menstrual (encore dans les règles)
         assert_eq!(
-            PredictionEngine::phase_for_date(
-                "2026-01-10".parse().unwrap(), start, 16.0, Some(10)
-            ),
+            PredictionEngine::phase_for_date("2026-01-10".parse().unwrap(), start, 16.0, Some(10)),
             CyclePhase::Menstrual
         );
 
         // Jour 11 → Follicular (ovulation ≈ J2, donc on est en Luteal)
         // Avec cycle 16j : ovulation = 16-14 = 2, donc tout ≥ J3 est Luteal
-        let phase = PredictionEngine::phase_for_date(
-            "2026-01-12".parse().unwrap(), start, 16.0, Some(10)
-        );
+        let phase =
+            PredictionEngine::phase_for_date("2026-01-12".parse().unwrap(), start, 16.0, Some(10));
         assert!(
-            phase == CyclePhase::Follicular || phase == CyclePhase::Luteal || phase == CyclePhase::Ovulatory,
+            phase == CyclePhase::Follicular
+                || phase == CyclePhase::Luteal
+                || phase == CyclePhase::Ovulatory,
             "Jour 11 d'un cycle 16j doit être Follicular/Ovulatory/Luteal, got {phase:?}"
         );
     }
@@ -423,7 +467,10 @@ mod tests {
         let last: NaiveDate = "2025-05-01".parse().unwrap();
         let next: NaiveDate = pred.next_period_start.parse().unwrap();
         let delta = (next - last).num_days();
-        assert!((58..=62).contains(&delta), "Cycle 60j doit être inclus, delta={delta}j");
+        assert!(
+            (58..=62).contains(&delta),
+            "Cycle 60j doit être inclus, delta={delta}j"
+        );
     }
 
     /// Cycle de 61 jours (hors limites) : doit être FILTRÉ → fallback sur valeur par défaut.
@@ -436,8 +483,10 @@ mod tests {
             .collect();
         let pred = PredictionEngine::predict(&cycles, &[]);
         // Avec 1 cycle (61j) filtré → 0 valeurs → weighted_average retourne (28.0, 3.0, 30)
-        assert_eq!(pred.algorithm, "calendar_low_data",
-            "Cycle filtré doit donner calendar_low_data");
+        assert_eq!(
+            pred.algorithm, "calendar_low_data",
+            "Cycle filtré doit donner calendar_low_data"
+        );
     }
 
     /// Cycle de 14 jours (hors limites basse) : doit être FILTRÉ.
@@ -449,8 +498,10 @@ mod tests {
             .collect();
         // Intervalles : 14j, 14j → tous filtrés (< 15)
         let pred = PredictionEngine::predict(&cycles, &[]);
-        assert_eq!(pred.algorithm, "calendar_low_data",
-            "Cycles < 15j doivent être filtrés → calendar_low_data");
+        assert_eq!(
+            pred.algorithm, "calendar_low_data",
+            "Cycles < 15j doivent être filtrés → calendar_low_data"
+        );
     }
 
     /// Phase "inconnue" pour une date avant le début du cycle.

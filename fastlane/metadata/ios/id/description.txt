@@ -1,10 +1,1 @@
-LUNA — aplikasi pelacak siklus menstruasi dengan privasi penuh. Data Anda tidak pernah meninggalkan perangkat, dienkripsi AES-256.
-
-FITUR
-Pelacakan menstruasi dan gejala, grafik BBT, suasana hati
-4 mode: Reguler, TTC, Kehamilan, Perimenopause
-Jendela subur dan ovulasi
-
-PRIVASI
-AES-256, tanpa akun, tanpa cloud, tanpa iklan
-Kode terbuka: https://github.com/macaron-software/luna
+[id] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.

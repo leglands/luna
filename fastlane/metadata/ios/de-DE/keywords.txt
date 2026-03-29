@@ -1,1 +1,1 @@
-Zyklus-Tracker,Menstruation,Fruchtbarkeit,Eisprung,BBT,Datenschutz,offline,verschlüsselt,Gesundheit
+[de-DE] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

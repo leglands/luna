@@ -1,1 +1,1 @@
-cyklus,menstruation,fertilitet,ægløsning,privatliv,offline
+[da] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

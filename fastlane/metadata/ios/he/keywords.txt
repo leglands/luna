@@ -1,1 +1,1 @@
-מחזור,פוריות,ביוץ,פרטיות,מוצפן,בלי אינטרנט,בריאות
+[he] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

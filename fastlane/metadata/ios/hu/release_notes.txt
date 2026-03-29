@@ -1,3 +1,1 @@
-• Szegmentált ciklusgyűrű színkódolással
-• Javított adatvédelmi garanciák
-• Helyi titkosított tárolás AES-256-GCM
+[hu] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

@@ -1,5 +1,1 @@
-• Segmented cycle ring with phase color-coding
-• Current iPhone release ships in English and French
-• Enhanced OS-level privacy guarantees
-• AES-256-GCM local encrypted storage
-• Improved accessibility
+Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

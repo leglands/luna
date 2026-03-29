@@ -1,4 +1,1 @@
-• حلقه چرخه قطعه بندی شده با کدگذاری رنگ فاز
-• ضمانت‌های حفظ حریم خصوصی قوی‌تر در سطح سیستم‌عامل اجرا می‌شوند
-• ذخیره سازی محلی رمزگذاری شده AES-256-GCM
-• دسترسی بهبودیافته (VoiceOver، Dynamic Type)
+[fa] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

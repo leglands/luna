@@ -1,1 +1,1 @@
-цикл,менструация,фертильность,овуляция,конфиденциальность,офлайн,шифрование
+[ru] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

@@ -1,3 +1,1 @@
-• Segmenterad cykelring med färgkodning
-• Förbättrade integritetskaarntier
-• Lokalt krypterat lagringsutrymme AES-256-GCM
+[sv] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

@@ -10,25 +10,21 @@ name = "luna_core"
 crate-type = ["staticlib", "cdylib", "lib"]
 
 [dependencies]
-# Cryptographie — aucun appel réseau, tout on-device
-ring           = "0.17"
-aes-gcm        = "0.10"
-argon2         = "0.5"
-zeroize        = { version = "1.8", features = ["derive"] }
-secrecy        = "0.8"
-rand           = "0.8"
+# Shared cryptographic vault
+life-crypto = { path = "../../life-sdk/rust/life-crypto" }
+life-storage = { path = "../../life-sdk/rust/life-storage" }
 
-# Base de données chiffrée (SQLCipher compilé statiquement + OpenSSL vendorisé pour cross-compilation Android)
+# Database (rusqlite re-exported via life-storage but needed directly for params! macro)
 rusqlite = { version = "0.31", features = ["bundled-sqlcipher-vendored-openssl"] }
+
+# HKDF for Luna's derive_subkey (life-crypto uses different salt)
+ring = "0.17"
 
 # Sérialisation
 serde      = { version = "1", features = ["derive"] }
 serde_json = "1"
 uuid       = { version = "1", features = ["v4", "serde"] }
 chrono     = { version = "0.4", features = ["serde"] }
-
-# Compression — données binaires compressées avant chiffrement AES-GCM
-zstd = { version = "0.13", default-features = false }
 
 # Bindings cross-platform iOS + Android
 uniffi = "0.28"

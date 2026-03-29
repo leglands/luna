@@ -1,3 +1,1 @@
-• 페이즈 색상 코딩이 있는 분할 주기 링
-• 향상된 개인정보 보호 보장
-• AES-256-GCM 로컬 암호화 스토리지
+[ko] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

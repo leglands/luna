@@ -1,1 +1,1 @@
-κύκλος,εμμηνόρρυση,γονιμότητα,ωορρηξία,απόρρητο,εκτός σύνδεσης
+[el] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

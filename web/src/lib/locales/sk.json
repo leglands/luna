@@ -1,0 +1,6 @@
+{
+  "app": { "name": "Luna", "tagline": "Tvoj cyklus, pochopený" },
+  "phases": { "menstrual": "Menštruácia", "follicular": "Folikulárna", "ovulation": "Ovulácia", "luteal": "Luteálna" },
+  "privacy": { "badge": "Súkromné a šifrované", "disclaimer": "Táto informácia nenahrádza odbornú lekársku pomoc. Vždy sa konzultujte s kvalifikovaným poskytovateľom zdravotnej starostlivosti pre akékoľvek zdravotné otázky." },
+  "settings": { "title": "Nastavenia", "cycleLength": "Dĺžka cyklu", "periodLength": "Dĺžka menštruácie", "lastPeriod": "Dátum poslednej menštruácie", "save": "Uložiť", "saved": "Nastavenia uložené" }
+}

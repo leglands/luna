@@ -1,1 +1,1 @@
-cycle menstruel,règles,fertilité,ovulation,TTB,confidentialité,hors ligne,chiffré,santé féminine
+règles,cycle,tracker,ménstruel,fertilité,ovulation,TCB,confidentialité,chiffré

@@ -1,1 +1,1 @@
-rastreador ciclo,reglas,fertilidad,ovulación,temperatura basal,privacidad,offline,cifrado,salud
+[es-ES] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

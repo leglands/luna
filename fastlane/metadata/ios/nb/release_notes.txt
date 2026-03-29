@@ -1,4 +1,1 @@
-• Segmentert syklusring med fasefargekoding
-• Sterkere personverngarantier håndhevet på OS-nivå
-• AES-256-GCM kryptert lokal lagring
-• Forbedret tilgjengelighet (VoiceOver, Dynamic Type)
+[nb] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

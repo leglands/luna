@@ -1,0 +1,6 @@
+{
+  "app": { "name": "Luna", "tagline": "Vaš ciklus, razumljiv" },
+  "phases": { "menstrual": "Menstrualna", "follicular": "Folikularna", "ovulation": "Ovulacija", "luteal": "Lutealna" },
+  "privacy": { "badge": "Privatno i šifrirano", "disclaimer": "Ove informacije ne zamjenjuju profesionalni medicinski savjet. Uvijek se konzultirajte s kvalificiranim pružateljem zdravstvenih usluga za medicinska pitanja." },
+  "settings": { "title": "Postavke", "cycleLength": "Dužina ciklusa", "periodLength": "Dužina menstruacije", "lastPeriod": "Datum zadnje menstruacije", "save": "Spremi", "saved": "Postavke spremljene" }
+}

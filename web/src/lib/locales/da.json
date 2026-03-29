@@ -1,0 +1,6 @@
+{
+  "app": { "name": "Luna", "tagline": "Din cyklus, forstået" },
+  "phases": { "menstrual": "Menstruation", "follicular": "Folikulær", "ovulation": "Ægløsning", "luteal": "Luteal" },
+  "privacy": { "badge": "Privat og krypteret", "disclaimer": "Denne information erstatter ikke professionel medicinsk rådgivning. Konsulter altid en kvalificeret sundhedsudbyder for medicinske bekymringer." },
+  "settings": { "title": "Indstillinger", "cycleLength": "Cykluslængde", "periodLength": "Periodelængde", "lastPeriod": "Sidste menstruationsdato", "save": "Gem", "saved": "Indstillinger gemt" }
+}

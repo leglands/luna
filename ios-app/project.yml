@@ -12,11 +12,9 @@ settings:
     IPHONEOS_DEPLOYMENT_TARGET: "16.0"
     ENABLE_BITCODE: NO
     SWIFT_OPTIMIZATION_LEVEL: "-Onone"
-    # Module map for UniFFI C FFI header
     SWIFT_INCLUDE_PATHS: "$(SRCROOT)/LunaApp/Generated"
     LIBRARY_SEARCH_PATHS: "$(SRCROOT)/LunaApp/Generated"
     OTHER_LDFLAGS: "-lluna_core -lc++"
-    # Privacy / security
     ENABLE_HARDENED_RUNTIME: YES
 
 targets:
@@ -72,6 +70,7 @@ targets:
     dependencies:
       - sdk: HealthKit.framework
       - sdk: CloudKit.framework
+      - package: LifeDS
 
   LunaTests:
     type: bundle.unit-test
@@ -98,3 +97,7 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.macaron.luna.uitests
         GENERATE_INFOPLIST_FILE: YES
+
+packages:
+  LifeDS:
+    path: ../../life-sdk

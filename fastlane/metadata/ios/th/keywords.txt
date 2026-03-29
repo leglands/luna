@@ -1,1 +1,1 @@
-รอบเดือน,ประจำเดือน,การตกไข่,ความเป็นส่วนตัว,ออฟไลน์,เข้ารหัส
+[th] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

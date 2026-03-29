@@ -1,3 +1,1 @@
-• Segmentirani prsten ciklusa s kodiranjem boja
-• Poboljšana jamstva privatnosti
-• Lokalna šifrirana pohrana AES-256-GCM
+[hr] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

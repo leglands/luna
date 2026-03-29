@@ -1,3 +1,1 @@
-• Segmentowany pierścień cyklu z kodowaniem kolorów
-• Ulepszone gwarancje prywatności
-• Lokalna zaszyfrowana pamięć AES-256-GCM
+[pl] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

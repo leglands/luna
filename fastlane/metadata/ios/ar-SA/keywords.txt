@@ -1,1 +1,1 @@
-تتبع الدورة,الخصوبة,الإباضة,الخصوصية,مشفر,غير متصل,صحة المرأة
+[ar-SA] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

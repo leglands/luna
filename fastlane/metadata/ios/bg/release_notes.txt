@@ -1,4 +1,1 @@
-• Сегментиран цикличен пръстен с фазово цветно кодиране
-• По-силни гаранции за поверителност, наложени на ниво ОС
-• AES-256-GCM криптирано локално хранилище
-• Подобрена достъпност (VoiceOver, Dynamic Type)
+[bg] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

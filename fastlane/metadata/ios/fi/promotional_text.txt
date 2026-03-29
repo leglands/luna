@@ -1,1 +1,1 @@
-Seuraa sykliäsi yksityisesti. AES-256 salattu. Ei pilveä. Ei seurantaa. Tietosi pysyvät puhelimessasi.
+[fi] Track your cycle with military-grade privacy. Zero internet. Zero data collection.

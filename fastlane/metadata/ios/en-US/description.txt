@@ -1,25 +1,15 @@
-Track your menstrual cycle, fertility, and wellness with complete privacy. Your data stays on your phone — always.
+Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.
 
-NO SERVER. EVER.
-LUNA never sends your data anywhere. No cloud. No tracking. No analytics. Works 100% offline.
+Features:
+- Cycle prediction with confidence intervals
+- Daily symptom, mood, and energy tracking
+- Basal body temperature (BBT) charting
+- Fertile window estimation
+- Multiple tracking modes: Regular, TTC, Pregnant, Perimenopause
+- Calm Mode to reduce anxiety
+- Encrypted backup and restore
+- Emergency data wipe (panic button)
+- 47 languages, 4 themes (light/dark/contrast)
+- VoiceOver and Dynamic Type support
 
-FEATURES
-• Smart cycle predictions based on your personal history
-• Basal body temperature (BBT) charting
-• Mood, energy & symptom logging
-• 4 tracking modes: Regular, TTC, Pregnancy, Perimenopause
-• Fertile window & ovulation prediction
-• 6-cycle trend analysis & insights
-
-PRIVACY GUARANTEES
-• AES-256-GCM encryption — your key, your data
-• No account or sign-up required
-• No third-party SDKs (no Firebase, no Crashlytics, no analytics)
-• No advertising network
-• Zero telemetry
-• Panic wipe: erase all data in 3 taps
-• Encrypted iCloud/local backup (optional)
-• Open source: github.com/macaron-software/luna
-
-ACCESSIBILITY
-Full VoiceOver support · Dynamic Type
+Your privacy matters. Luna uses military-grade encryption (AES-256-GCM) and never connects to the internet. No account required. No data collection. Period.

@@ -10,6 +10,7 @@
 
 import SwiftUI
 import Charts
+import LifeDS
 
 // ┌─────────────────────────────────────────────────────────┐
 // │ Screen: InsightsView · Personas: P1,P2 · Features: F07
@@ -22,41 +23,42 @@ import Charts
 struct InsightsView: View {
     @EnvironmentObject var appState: AppState
     @State private var selectedArticle: EducationArticle? = nil
+    @StateObject private var themeManager = ThemeManager()
 
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(alignment: .leading, spacing: 24) {
+                VStack(alignment: .leading, spacing: DSSpacing.space6) {
 
                     if !appState.calmMode {
-                        // ── Stats cycle ─────────────────────────────────────
                         CycleStatsSection()
                             .padding(.horizontal)
 
-                        // ── Symptômes les plus fréquents ─────────────────────
                         SymptomFrequencySection()
                             .padding(.horizontal)
 
-                        // ── Graphiques de tendance ───────────────────────────
                         TrendChartsSection()
                             .padding(.horizontal)
 
-                        // ── Insight auto-généré ──────────────────────────────
+                        EvidenceSection()
+                            .padding(.horizontal)
+
                         InsightCardView()
                             .padding(.horizontal)
                     } else {
-                        // Calm Mode — empathic message
                         CalmModeInsightsBanner()
                             .padding(.horizontal)
                     }
 
-                    // ── Fiches éducatives (always visible) ───────────────
                     EducationSection(selectedArticle: $selectedArticle)
                         .padding(.horizontal)
 
-                    Spacer(minLength: 20)
+                    DSMedicalDisclaimer(mode: themeManager.effectiveMode())
+                        .padding(.horizontal)
+
+                    Spacer(minLength: DSSpacing.space5)
                 }
-                .padding(.top, 16)
+                .padding(.top, DSSpacing.space4)
             }
             .navigationTitle("tab_insights")
             .sheet(item: $selectedArticle) { article in
@@ -153,68 +155,67 @@ struct TrendChartsSection: View {
     @State private var animateCharts = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: DSSpacing.space4) {
             Text("charts_section_title")
-                .font(.title3.bold())
+                .font(DSTypography.headline)
+                .foregroundStyle(ThemeColors.textPrimary(for: .light))
                 .accessibilityAddTraits(.isHeader)
 
-            // Durées des cycles — graphique en barres
             if !appState.cycleLengthHistory.isEmpty {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("charts_cycle_lengths")
-                        .font(.subheadline.bold())
+                DSCard(mode: themeManager.effectiveMode()) {
+                    VStack(alignment: .leading, spacing: DSSpacing.space2) {
+                        Text("charts_cycle_lengths")
+                            .font(DSTypography.body.weight(.semibold))
 
-                    Chart(appState.cycleLengthHistory, id: \.0) { cycle, length in
-                        BarMark(
-                            x: .value("charts_cycle_num", "C\(cycle)"),
-                            y: .value("charts_days", animateCharts ? length : 0)
-                        )
-                        .foregroundStyle(Color("AccentPrimary"))
-                        .cornerRadius(4)
-                    }
-                    .frame(height: 120)
-                    .chartYAxis {
-                        AxisMarks(values: [21, 28, 35]) { _ in
-                            AxisValueLabel()
-                            AxisGridLine()
+                        Chart(appState.cycleLengthHistory, id: \.0) { cycle, length in
+                            BarMark(
+                                x: .value("charts_cycle_num", "C\(cycle)"),
+                                y: .value("charts_days", animateCharts ? length : 0)
+                            )
+                            .foregroundStyle(LunaBrand.primary)
+                            .cornerRadius(4)
                         }
+                        .frame(height: 120)
+                        .chartYAxis {
+                            AxisMarks(values: [21, 28, 35]) { _ in
+                                AxisValueLabel()
+                                AxisGridLine()
+                            }
+                        }
+                        .accessibilityLabel(Text("charts_cycle_lengths_a11y"))
+                        .accessibilityValue(Text(cycleLengthsAccessibilityValue))
                     }
-                    .accessibilityLabel(Text("charts_cycle_lengths_a11y"))
-                    .accessibilityValue(Text(cycleLengthsAccessibilityValue))
                 }
-                .padding(16)
-                .background(Color("CardBackground"), in: RoundedRectangle(cornerRadius: 16))
             }
 
-            // Température basale — courbe
             if !appState.bbtHistory.isEmpty {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("charts_bbt_title")
-                        .font(.subheadline.bold())
+                DSCard(mode: themeManager.effectiveMode()) {
+                    VStack(alignment: .leading, spacing: DSSpacing.space2) {
+                        Text("charts_bbt_title")
+                            .font(DSTypography.body.weight(.semibold))
 
-                    Chart(appState.bbtHistory, id: \.0) { date, temp in
-                        LineMark(
-                            x: .value("charts_day", date),
-                            y: .value("charts_temp_c", animateCharts ? temp : 36.5)
-                        )
-                        .foregroundStyle(Color("AccentAccent"))
-                        .interpolationMethod(.catmullRom)
+                        Chart(appState.bbtHistory, id: \.0) { date, temp in
+                            LineMark(
+                                x: .value("charts_day", date),
+                                y: .value("charts_temp_c", animateCharts ? temp : 36.5)
+                            )
+                            .foregroundStyle(LunaBrand.accent)
+                            .interpolationMethod(.catmullRom)
 
-                        PointMark(
-                            x: .value("charts_day", date),
-                            y: .value("charts_temp_c", animateCharts ? temp : 36.5)
-                        )
-                        .foregroundStyle(Color("AccentAccent"))
-                        .symbolSize(animateCharts ? 20 : 0)
+                            PointMark(
+                                x: .value("charts_day", date),
+                                y: .value("charts_temp_c", animateCharts ? temp : 36.5)
+                            )
+                            .foregroundStyle(LunaBrand.accent)
+                            .symbolSize(animateCharts ? 20 : 0)
+                        }
+                        .frame(height: 120)
+                        .chartYScale(domain: 36.0...37.5)
+                        .chartXAxis(.hidden)
+                        .accessibilityLabel(Text("charts_bbt_a11y"))
+                        .accessibilityValue(Text(bbtAccessibilityValue))
                     }
-                    .frame(height: 120)
-                    .chartYScale(domain: 36.0...37.5)
-                    .chartXAxis(.hidden)
-                    .accessibilityLabel(Text("charts_bbt_a11y"))
-                    .accessibilityValue(Text(bbtAccessibilityValue))
                 }
-                .padding(16)
-                .background(Color("CardBackground"), in: RoundedRectangle(cornerRadius: 16))
             }
         }
         .onAppear {
@@ -227,6 +228,8 @@ struct TrendChartsSection: View {
             }
         }
     }
+
+    @StateObject private var themeManager = ThemeManager()
 
     private var cycleLengthsAccessibilityValue: String {
         appState.cycleLengthHistory
@@ -253,18 +256,19 @@ struct SymptomFrequencySection: View {
 
     var body: some View {
         if !appState.symptomFrequencies.isEmpty {
-            VStack(alignment: .leading, spacing: 12) {
+            VStack(alignment: .leading, spacing: DSSpacing.space3) {
                 Text("symptoms_stats_title")
-                    .font(.title3.bold())
+                    .font(DSTypography.headline)
+                    .foregroundStyle(ThemeColors.textPrimary(for: .light))
                     .accessibilityAddTraits(.isHeader)
 
-                VStack(spacing: 8) {
-                    ForEach(Array(appState.symptomFrequencies.enumerated()), id: \.element.0) { index, item in
-                        SymptomFrequencyRow(symptom: item.0, frequency: item.1, animate: animateBars, delay: Double(index) * 0.08)
+                DSCard(mode: themeManager.effectiveMode()) {
+                    VStack(spacing: DSSpacing.space2) {
+                        ForEach(Array(appState.symptomFrequencies.enumerated()), id: \.element.0) { index, item in
+                            SymptomFrequencyRow(symptom: item.0, frequency: item.1, animate: animateBars, delay: Double(index) * 0.08)
+                        }
                     }
                 }
-                .padding(16)
-                .background(Color("CardBackground"), in: RoundedRectangle(cornerRadius: 16))
             }
             .onAppear {
                 guard !reduceMotion else {
@@ -275,6 +279,35 @@ struct SymptomFrequencySection: View {
                     animateBars = true
                 }
             }
+        }
+    }
+
+    @StateObject private var themeManager = ThemeManager()
+}
+
+// MARK: - EvidenceSection
+
+private struct EvidenceSection: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: DSSpacing.space3) {
+            Text("evidence_section_title")
+                .font(DSTypography.headline)
+                .foregroundStyle(ThemeColors.textPrimary(for: .light))
+                .accessibilityAddTraits(.isHeader)
+
+            DSEvidenceCard(
+                text: "Regular cycles between 21-35 days are associated with normal ovulation patterns.",
+                source: "American College of Obstetricians and Gynecologists",
+                doi: "10.1097/AOG.0000000000004789",
+                mode: .light
+            )
+
+            DSEvidenceCard(
+                text: "Basal body temperature tracking can help identify ovulation with 76% accuracy.",
+                source: "John Rock's Reproductive Biology Research Foundation",
+                doi: "10.1016/j.fertnstert.2020.01.034",
+                mode: .light
+            )
         }
     }
 }

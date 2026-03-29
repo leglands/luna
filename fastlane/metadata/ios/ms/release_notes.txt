@@ -1,3 +1,1 @@
-• Gelang kitaran tersegmen dengan pengekodan warna
-• Jaminan privasi yang dipertingkatkan
-• Storan tempatan yang disulitkan AES-256-GCM
+[ms] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

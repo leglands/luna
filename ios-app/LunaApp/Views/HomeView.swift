@@ -9,6 +9,7 @@
 // └──────────────────────────────────────────────────────────────┘
 
 import SwiftUI
+import LifeDS
 
 // ┌─────────────────────────────────────────────────────────┐
 // │ Screen: HomeView · Personas: P1,P2,P4 · Features: F03,F06
@@ -24,68 +25,88 @@ struct HomeView: View {
     @State private var showUndoToast = false
     @State private var undoAction: (() -> Void)? = nil
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @StateObject private var themeManager = ThemeManager()
+
+    private var phaseAwareMessage: String {
+        guard let phase = vm.currentPhase else { return "" }
+        return DSEmpathicMessages.greeting(hour: Calendar.current.component(.hour, from: Date()))
+    }
 
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 24) {
-
+                VStack(spacing: DSSpacing.space6) {
                     if appState.calmMode {
-                        // ── Mode calme — bannière empathique ─────────────
                         CalmModeBanner()
                             .padding(.horizontal)
                     } else {
-                        // ── Cycle progress donut ──────────────────────────
-                        CycleProgressWidget(prediction: vm.prediction, currentDay: vm.currentCycleDay, periodLength: appState.averagePeriodLength.map { Int($0) })
+                        CycleProgressRing(prediction: vm.prediction, currentDay: vm.currentCycleDay, periodLength: appState.averagePeriodLength.map { Int($0) })
                             .padding(.horizontal)
-                            .animation(reduceMotion ? .none : .spring(response: 0.5), value: vm.currentCycleDay)
 
-                        // ── Mini calendrier 7 jours ───────────────────────
                         WeekStripView(prediction: vm.prediction)
                             .padding(.horizontal)
                     }
 
-                    // ── Bannière mode grossesse ─────────────────────────────
-                    if vm.trackingMode == "pregnant" {
-                        PregnancyBanner { showPregnancyLog = true }
-                            .padding(.horizontal)
-                    }
-                    // ── Bannière mode TTC ──────────────────────────────────
-                    if vm.trackingMode == "ttc" {
-                        TTCBanner()
-                            .padding(.horizontal)
-                    }
-                    // ── Bannière mode péri-ménopause ───────────────────────
-                    if vm.trackingMode == "perimenopause" {
-                        PerimenopauseBanner()
-                            .padding(.horizontal)
-                    }
-
-                    // ── Symptômes attendus (science-based) ────────────
                     if let phase = vm.currentPhase {
-                        ExpectedSymptomsCard(phase: phase)
-                            .padding(.horizontal)
+                        DSEmpathyBanner(
+                            message: phaseAwareMessage.isEmpty ? NSLocalizedString("phase_\(phase)", comment: "") : phaseAwareMessage,
+                            category: empathyCategory(for: phase),
+                            accentColor: phaseColor(for: phase)
+                        ) { }
+                        .padding(.horizontal)
                     }
 
-                    // ── Insight du jour ───────────────────────────────
+                    if vm.trackingMode == "ttc" {
+                        DSCrossPromoCard<LunaBrand>(
+                            targetAppName: "Aura",
+                            targetBrandColor: Color(hex: 0xC86B5A),
+                            icon: "heart.circle",
+                            title: String(localized: "cross_promo.luna_to_aura_ttc.title"),
+                            message: String(localized: "cross_promo.luna_to_aura_ttc.body"),
+                            ctaLabel: String(localized: "cross_promo.luna_to_aura_ttc.cta"),
+                            mode: themeManager.effectiveMode(),
+                            onAction: { },
+                            onDismiss: { }
+                        )
+                        .padding(.horizontal)
+                    }
+
+                    QuickLogActions(
+                        onLogPeriod: { showLogSheet = true },
+                        onLogSymptoms: { showLogSheet = true },
+                        onLogTemp: { showLogSheet = true },
+                        onLogMood: { showLogSheet = true }
+                    )
+                    .padding(.horizontal)
+
                     if let insight = vm.dailyInsight {
                         InsightCard(text: insight)
                             .padding(.horizontal)
                     }
 
+                    DSMedicalDisclaimer(mode: themeManager.effectiveMode())
+                        .padding(.horizontal)
+
                     Spacer(minLength: 80)
                 }
-                .padding(.top, 16)
+                .padding(.top, DSSpacing.space4)
             }
             .navigationTitle("nav_today")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    PrivacyBadge()
+                    DSPrivacyBadge(mode: themeManager.effectiveMode())
                 }
             }
             .overlay(alignment: .bottom) {
-                LogButton(action: { showLogSheet = true }, hasLoggedToday: vm.hasLoggedToday)
-                    .padding(.bottom, 16)
+                DSPebbleButton<LunaBrand>(
+                    "log_today_button",
+                    icon: "plus.circle.fill",
+                    style: .primary
+                ) {
+                    showLogSheet = true
+                }
+                .padding(.horizontal, DSSpacing.space6)
+                .padding(.bottom, DSSpacing.space4)
             }
             .sheet(isPresented: $showLogSheet) {
                 LogSheetView(date: Date()) { undo in
@@ -114,6 +135,26 @@ struct HomeView: View {
             }
         }
     }
+
+    private func empathyCategory(for phase: String) -> EmpathyCategory {
+        switch phase {
+        case "menstrual": return .encouragement
+        case "follicular": return .tip
+        case "ovulatory": return .celebration
+        case "luteal": return .milestone
+        default: return .encouragement
+        }
+    }
+
+    private func phaseColor(for phase: String) -> Color {
+        switch phase {
+        case "menstrual": return LunaBrand.phaseMenstruation
+        case "follicular": return LunaBrand.phaseFollicular
+        case "ovulatory": return LunaBrand.phaseOvulation
+        case "luteal": return LunaBrand.phaseLuteal
+        default: return LunaBrand.primary
+        }
+    }
 }
 
 // MARK: - CalmModeBanner
@@ -137,111 +178,60 @@ private struct CalmModeBanner: View {
     }
 }
 
-// MARK: - Tracking Mode Banners
+// MARK: - Quick Log Actions
 
-private struct PregnancyBanner: View {
-    let onLog: () -> Void
-    var body: some View {
-        HStack(spacing: 12) {
-            Image(systemName: "figure.maternity")
-                .foregroundStyle(Color("AccentPrimary"))
-                .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: 2) {
-                Text("home_pregnant_title").font(.subheadline.bold())
-                Text("home_pregnant_subtitle").font(.caption).foregroundStyle(.secondary)
-            }
-            Spacer()
-            Button("home_log_button", action: onLog)
-                .font(.caption.bold())
-                .foregroundStyle(Color("AccentPrimary"))
-                .frame(minWidth: 44, minHeight: 44)
-        }
-        .padding(14)
-        .background(Color("AccentPrimary").opacity(0.08), in: RoundedRectangle(cornerRadius: 16))
-    }
-}
-
-private struct TTCBanner: View {
-    var body: some View {
-        HStack(spacing: 12) {
-            Image(systemName: "heart.fill")
-                .foregroundStyle(Color("AccentAccent"))
-                .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: 2) {
-                Text("home_ttc_title").font(.subheadline.bold())
-                Text("home_ttc_subtitle").font(.caption).foregroundStyle(.secondary)
-            }
-            Spacer()
-        }
-        .padding(14)
-        .background(Color("AccentAccent").opacity(0.08), in: RoundedRectangle(cornerRadius: 16))
-    }
-}
-
-// MARK: - SegmentedCycleRing
-
-/// Anneau segmenté : un arc par jour du cycle, coloré par phase.
-struct SegmentedCycleRing: View {
-    let totalDays: Int        // durée totale du cycle (ex. 28)
-    let currentDay: Int       // jour actuel dans le cycle
-    let menstrualEnd: Int     // dernier jour des règles (ex. 5)
-    let fertileStart: Int     // premier jour fenêtre fertile
-    let fertileEnd: Int       // dernier jour fenêtre fertile
-    let ovulationCycleDay: Int? // numéro de jour de l'ovulation
-
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
-    private let lineWidth: CGFloat = 13
-    private let gapDeg: Double = 2.5  // espace entre segments en degrés
-
-    // Couleurs par phase (correspond à la palette LUNA)
-    private let colorMenstrual   = Color(red: 0.761, green: 0.337, blue: 0.478) // #C2567A rose
-    private let colorFollicular  = Color(red: 0.910, green: 0.647, blue: 0.596) // #E8A598 pêche
-    private let colorFertile     = Color(red: 0.478, green: 0.722, blue: 0.569) // #7AB891 sauge
-    private let colorLuteal      = Color(red: 0.420, green: 0.306, blue: 0.443) // #6B4E71 prune
+private struct QuickLogActions: View {
+    let onLogPeriod: () -> Void
+    let onLogSymptoms: () -> Void
+    let onLogTemp: () -> Void
+    let onLogMood: () -> Void
 
     var body: some View {
-        Canvas { ctx, size in
-            let cx = size.width / 2
-            let cy = size.height / 2
-            let center = CGPoint(x: cx, y: cy)
-            let radius = (min(size.width, size.height) - lineWidth) / 2
-            let segDeg = 360.0 / Double(max(totalDays, 1))
-            let arcDeg = segDeg - gapDeg
+        VStack(alignment: .leading, spacing: DSSpacing.space3) {
+            Text("quick_log_title")
+                .font(DSTypography.headline)
+                .foregroundStyle(ThemeColors.textPrimary(for: .light))
 
-            for day in 1...max(totalDays, 1) {
-                let startDeg = Double(day - 1) * segDeg - 90.0 + gapDeg / 2
-                var path = Path()
-                path.addArc(
-                    center: center,
-                    radius: radius,
-                    startAngle: .degrees(startDeg),
-                    endAngle: .degrees(startDeg + arcDeg),
-                    clockwise: false
+            HStack(spacing: DSSpacing.space4) {
+                DSPebbleAction(
+                    icon: "drop.fill",
+                    label: NSLocalizedString("log_period", comment: ""),
+                    color: LunaBrand.phaseMenstruation,
+                    isActive: false,
+                    action: onLogPeriod
                 )
-                let isPast  = day <= currentDay
-                let isToday = day == currentDay
-                let width: CGFloat = isToday ? lineWidth + 3 : lineWidth
-                let color = segmentColor(day: day, past: isPast)
-                ctx.stroke(path, with: .color(color),
-                           style: StrokeStyle(lineWidth: width, lineCap: .butt))
+
+                DSPebbleAction(
+                    icon: "list.bullet.clipboard",
+                    label: NSLocalizedString("log_symptoms", comment: ""),
+                    color: LunaBrand.phaseFollicular,
+                    isActive: false,
+                    action: onLogSymptoms
+                )
+
+                DSPebbleAction(
+                    icon: "thermometer",
+                    label: NSLocalizedString("log_temp", comment: ""),
+                    color: LunaBrand.phaseLuteal,
+                    isActive: false,
+                    action: onLogTemp
+                )
+
+                DSPebbleAction(
+                    icon: "face.smiling",
+                    label: NSLocalizedString("log_mood", comment: ""),
+                    color: LunaBrand.accent,
+                    isActive: false,
+                    action: onLogMood
+                )
             }
         }
-        .animation(reduceMotion ? .none : .easeInOut(duration: 0.4), value: currentDay)
-    }
-
-    private func segmentColor(day: Int, past: Bool) -> Color {
-        let alpha: Double = past ? 1.0 : 0.15
-        if day <= menstrualEnd { return colorMenstrual.opacity(alpha) }
-        if day >= fertileStart && day <= fertileEnd { return colorFertile.opacity(alpha) }
-        if let ov = ovulationCycleDay, day > ov { return colorLuteal.opacity(alpha) }
-        return colorFollicular.opacity(alpha)
     }
 }
 
-// MARK: - CycleProgressWidget
+// MARK: - Cycle Progress Ring (DS SegmentedRing)
 
-struct CycleProgressWidget: View {
+struct CycleProgressRing: View {
     let prediction: Prediction?
     let currentDay: Int
     var periodLength: Int?
@@ -250,55 +240,73 @@ struct CycleProgressWidget: View {
         let f = ISO8601DateFormatter(); f.formatOptions = [.withFullDate]; return f
     }()
 
-    var body: some View {
-        VStack(spacing: 12) {
-            if let prediction {
-                ZStack {
-                    SegmentedCycleRing(
-                        totalDays: cycleLength(prediction),
-                        currentDay: currentDay,
-                        menstrualEnd: periodLength ?? Int(prediction.currentCycleDay),
-                        fertileStart: fertileStartDay(prediction),
-                        fertileEnd: fertileEndDay(prediction),
-                        ovulationCycleDay: ovulationCycleDay(prediction)
-                    )
-
-                    VStack(spacing: 4) {
-                        Text("cycle_day_label \(currentDay)")
-                            .font(.title2.bold())
-                        Text(phaseLabel(prediction))
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                .frame(width: 160, height: 160)
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel(accessibilityDescription)
-                .accessibilityValue(progressAccessibilityValue)
-
-                Text("next_period_in \(daysUntilNext(prediction))")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                    .multilineTextAlignment(.center)
-            } else {
-                // No data yet — show empty state
-                VStack(spacing: 8) {
-                    Image(systemName: "circle.dashed")
-                        .font(.system(size: 48))
-                        .foregroundStyle(.secondary)
-                    Text("cycle_no_data")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                }
-                .frame(width: 160, height: 160)
-                .accessibilityLabel(NSLocalizedString("cycle_no_data_a11y", comment: ""))
-            }
-        }
-        .padding(20)
-        .background(Color("CardBackground"), in: RoundedRectangle(cornerRadius: 20))
+    private var segments: [(value: Double, color: Color, label: String)] {
+        guard let p = prediction else { return [] }
+        let cycleLen = max(cycleLength(p), 20)
+        let menEnd = min(Double(periodLength ?? Int(p.currentCycleDay)) / Double(cycleLen), 1.0)
+        let folEnd = min(Double(fertileStartDay(p)) / Double(cycleLen), 1.0)
+        let ferEnd = min(Double(fertileEndDay(p)) / Double(cycleLen), 1.0)
+        return [
+            (menEnd, LunaBrand.phaseMenstruation, NSLocalizedString("phase_menstrual", comment: "")),
+            (folEnd - menEnd, LunaBrand.phaseFollicular, NSLocalizedString("phase_follicular", comment: "")),
+            (ferEnd - folEnd, LunaBrand.phaseOvulation, NSLocalizedString("phase_ovulatory", comment: "")),
+            (1.0 - ferEnd, LunaBrand.phaseLuteal, NSLocalizedString("phase_luteal", comment: ""))
+        ]
     }
 
-    // MARK: Helpers
+    private var centerText: String {
+        "\(currentDay)"
+    }
+
+    private var centerSubtext: String {
+        guard let p = prediction else { return "" }
+        return phaseLabel(p)
+    }
+
+    var body: some View {
+        DSCard(mode: .light) {
+            VStack(spacing: DSSpacing.space3) {
+                if let prediction {
+                    DSSegmentedRing(
+                        segments: segments,
+                        currentIndex: currentSegmentIndex,
+                        centerText: centerText,
+                        centerSubtext: centerSubtext,
+                        size: 180
+                    )
+
+                    Text("next_period_in \(daysUntilNext(prediction))")
+                        .font(DSTypography.body)
+                        .foregroundStyle(ThemeColors.textSecondary(for: .light))
+                } else {
+                    VStack(spacing: DSSpacing.space2) {
+                        Image(systemName: "circle.dashed")
+                            .font(.system(size: 48))
+                            .foregroundStyle(ThemeColors.textSecondary(for: .light))
+                        Text("cycle_no_data")
+                            .font(DSTypography.body)
+                            .foregroundStyle(ThemeColors.textSecondary(for: .light))
+                    }
+                    .frame(height: 180)
+                }
+            }
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    private var currentSegmentIndex: Int {
+        guard let p = prediction else { return 0 }
+        let cycleLen = max(cycleLength(p), 20)
+        let dayRatio = Double(currentDay) / Double(cycleLen)
+        var cumulative: Double = 0
+        for (index, segment) in segments.enumerated() {
+            cumulative += segment.value
+            if dayRatio <= cumulative {
+                return index
+            }
+        }
+        return 0
+    }
 
     private func daysDiff(to isoString: String) -> Int {
         guard let target = Self.isoFmt.date(from: isoString) else { return 0 }
@@ -317,10 +325,10 @@ struct CycleProgressWidget: View {
         max(currentDay + daysDiff(to: p.fertileWindowEnd), fertileStartDay(p))
     }
 
-    private func ovulationCycleDay(_ p: Prediction) -> Int? {
+    private func ovulationCycleDay(_ p: Prediction) -> Double? {
         guard let ov = p.ovulationDay else { return nil }
-        let d = currentDay + daysDiff(to: ov)
-        return d > 0 ? d : nil
+        let d = Double(currentDay + daysDiff(to: ov))
+        return d > 0 ? d / Double(cycleLength(p)) : nil
     }
 
     private func phaseLabel(_ p: Prediction) -> String {
@@ -333,94 +341,12 @@ struct CycleProgressWidget: View {
         }
     }
 
-    private var accessibilityDescription: String {
-        guard let p = prediction else {
-            return NSLocalizedString("cycle_no_data_a11y", comment: "")
-        }
-        return String(format: NSLocalizedString("cycle_progress_a11y", comment: ""),
-                      currentDay, daysUntilNext(p))
-    }
-
-    private var progressAccessibilityValue: Text {
-        guard let p = prediction else { return Text("") }
-        let total = max(cycleLength(p), 1)
-        let percent = Int((Double(currentDay) / Double(total) * 100).rounded())
-        return Text("\(percent)% \(phaseLabel(p))")
-    }
-
     private func daysUntilNext(_ p: Prediction) -> Int {
         daysDiff(to: p.nextPeriodStart)
     }
 }
 
-// MARK: - LogButton
-
-struct LogButton: View {
-    let action: () -> Void
-    var hasLoggedToday: Bool = false
-
-    var body: some View {
-        Button(action: action) {
-            HStack(spacing: 8) {
-                Label("log_today_button", systemImage: "plus.circle.fill")
-                    .font(.headline)
-                // Zeigarnik Effect : badge si pas encore loggé aujourd'hui
-                if !hasLoggedToday {
-                    Circle()
-                        .fill(Color.red)
-                        .frame(width: 8, height: 8)
-                        .accessibilityLabel(Text("not_logged_today_a11y"))
-                }
-            }
-            .padding(.horizontal, 32)
-            .padding(.vertical, 16)
-            .background(Color("AccentPrimary"), in: Capsule())
-            .foregroundStyle(.white)
-        }
-        .accessibilityIdentifier("log_today_button")
-        .accessibilityLabel(Text("log_today_a11y"))
-        .accessibilityHint(Text("log_today_hint_a11y"))
-    }
-}
-
-// MARK: - PrivacyBadge
-
-struct PrivacyBadge: View {
-    var body: some View {
-        HStack(spacing: 4) {
-            Image(systemName: "lock.fill")
-                .imageScale(.small)
-            Text("privacy_local_badge")
-                .font(.caption2)
-        }
-        .foregroundStyle(Color("AccentPrimary"))
-        .padding(.horizontal, 8)
-        .padding(.vertical, 4)
-        .background(Color("AccentPrimary").opacity(0.12), in: Capsule())
-        // Fitts's Law : cible tactile minimale 44×44pt
-        .frame(minWidth: 44, minHeight: 44)
-        .contentShape(Rectangle())
-        .accessibilityLabel(Text("privacy_badge_a11y"))
-    }
-}
-
-// MARK: - Placeholder views
-
-struct ExpectedSymptomsCard: View {
-    let phase: String
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("expected_symptoms_title")
-                .font(.subheadline.bold())
-            Text(NSLocalizedString("symptoms_for_phase_\(phase)", comment: ""))
-                .font(.caption)
-                .foregroundStyle(.secondary)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(16)
-        .background(Color("CardBackground"), in: RoundedRectangle(cornerRadius: 16))
-    }
-}
+// MARK: - WeekStripView
 
 struct WeekStripView: View {
     let prediction: Prediction?

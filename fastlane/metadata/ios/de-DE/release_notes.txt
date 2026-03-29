@@ -1,4 +1,1 @@
-• Segmentierter Zyklusring mit Phasenfarben
-• Verstärkter Datenschutz auf OS-Ebene
-• AES-256-GCM Verschlüsselung
-• Verbesserte Barrierefreiheit
+[de-DE] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

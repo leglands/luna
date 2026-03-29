@@ -1,4 +1,1 @@
-• Anell de cicle segmentat amb codificació de color de fase
-• Garanties de privadesa més sòlides a nivell del sistema operatiu
-• Emmagatzematge local xifrat AES-256-GCM
-• Accessibilitat millorada (VoiceOver, tipus dinàmic)
+[ca] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

@@ -1,3 +1,1 @@
-• טבעת מחזור מפולחת עם קידוד צבעים
-• ערבויות פרטיות משופרות
-• אחסון מקומי מוצפן AES-256-GCM
+[he] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

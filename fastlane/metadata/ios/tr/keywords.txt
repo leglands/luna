@@ -1,1 +1,1 @@
-döngü,adet,doğurganlık,yumurtlama,gizlilik,çevrimdışı,şifreli
+[tr] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

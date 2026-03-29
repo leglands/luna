@@ -1,1 +1,1 @@
-chu kỳ,kinh nguyệt,sinh sản,rụng trứng,quyền riêng tư,ngoại tuyến
+[vi] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

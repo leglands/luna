@@ -1,3 +1,1 @@
-• Сегментоване кільце циклу з колірним кодуванням
-• Покращені гарантії конфіденційності
-• Локальне зашифроване сховище AES-256-GCM
+[uk] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

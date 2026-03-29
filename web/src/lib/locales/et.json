@@ -1,0 +1,6 @@
+{
+  "app": { "name": "Luna", "tagline": "Teie tsükkel, mõistetud" },
+  "phases": { "menstrual": "Menstruaalne", "follicular": "Folliikulaarne", "ovulation": "Ovulatsioon", "luteal": "Luteaalne" },
+  "privacy": { "badge": "Privaatne ja krüpteeritud", "disclaimer": "See teave ei asenda professionaalset meditsiinilist nõu. Meditsiiniliste probleemide korral konsulteerige alati kvalifitseeritud tervishoiuteenuse osutajaga." },
+  "settings": { "title": "Seaded", "cycleLength": "Tsükli pikkus", "periodLength": "Perioodi pikkus", "lastPeriod": "Viimase perioodi kuupäev", "save": "Salvesta", "saved": "Seaded salvestatud" }
+}

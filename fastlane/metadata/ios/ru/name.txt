@@ -1,1 +1,1 @@
-LUNA - Трекер цикла
+[ru] Luna - Period & Cycle Tracker

@@ -1,9 +1,1 @@
-LUNA — εφαρμογή παρακολούθησης εμμηνορροϊκού κύκλου με πλήρες απόρρητο. Τα δεδομένα σας παραμένουν στη συσκευή, κρυπτογραφημένα με AES-256.
-
-ΧΑΡΑΚΤΗΡΙΣΤΙΚΑ
-Παρακολούθηση περιόδου και συμπτωμάτων, γράφημα ΒΣΘ, διάθεση
-4 λειτουργίες: Κανονική, TTC, Εγκυμοσύνη, Περιεμμηνόπαυση
-
-ΑΠΟΡΡΗΤΟ
-AES-256, χωρίς λογαριασμό, χωρίς cloud, χωρίς διαφημίσεις
-Ανοιχτός κώδικας: https://github.com/macaron-software/luna
+[el] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.

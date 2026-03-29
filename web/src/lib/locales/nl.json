@@ -1,0 +1,6 @@
+{
+  "app": { "name": "Luna", "tagline": "Jouw cyclus, begrepen" },
+  "phases": { "menstrual": "Menstruatie", "follicular": "Folliculaire fase", "ovulation": "Ovulatie", "luteal": "Luteale fase" },
+  "privacy": { "badge": "Privé en versleuteld", "disclaimer": "Deze informatie vervangt geen professioneel medisch advies. Raadpleeg altijd een gekwalificeerde zorgverlener." },
+  "settings": { "title": "Instellingen", "cycleLength": "Cycluslengte", "periodLength": "Menstruatieduur", "lastPeriod": "Datum laatste menstruatie", "save": "Opslaan", "saved": "Instellingen opgeslagen" }
+}

@@ -21,7 +21,9 @@ pub fn export_csv(logs: &[DailyLog]) -> Result<String, LunaError> {
             log.cervical_mucus.as_deref().unwrap_or(""),
             log.sexual_activity.as_deref().unwrap_or(""),
             log.sleep_quality.map(|v| v.to_string()).unwrap_or_default(),
-            log.weight_kg.map(|v| format!("{:.1}", v)).unwrap_or_default(),
+            log.weight_kg
+                .map(|v| format!("{:.1}", v))
+                .unwrap_or_default(),
             csv_escape(&symptoms),
             csv_escape(log.notes.as_deref().unwrap_or("")),
         );

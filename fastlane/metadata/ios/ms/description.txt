@@ -1,10 +1,1 @@
-LUNA — aplikasi penjejakan kitaran haid dengan privasi penuh. Data anda tidak pernah meninggalkan peranti, disulitkan AES-256.
-
-CIRI-CIRI
-Penjejakan haid dan gejala, graf BBT, mood
-4 mod: Biasa, TTC, Kehamilan, Perimenopaus
-Tetingkap subur dan ovulasi
-
-PRIVASI
-AES-256, tiada akaun, tiada awan, tiada iklan
-Kod sumber terbuka: https://github.com/macaron-software/luna
+[ms] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.

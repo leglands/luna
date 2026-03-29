@@ -9,6 +9,7 @@
 // └──────────────────────────────────────────────────────────────┘
 
 import SwiftUI
+import LifeDS
 
 // ┌─────────────────────────────────────────────────────────┐
 // │ Screen: CalendarView · Personas: P1,P2 · Features: F05
@@ -23,35 +24,45 @@ struct CalendarView: View {
     @State private var displayedMonth: Date = Date()
     @State private var selectedDate: Date? = nil
     @State private var showLogSheet: Bool = false
+    @StateObject private var themeManager = ThemeManager()
 
     private var calendar: Calendar { .current }
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
-                MonthHeader(displayedMonth: $displayedMonth)
+            ScrollView {
+                VStack(spacing: DSSpacing.space4) {
+                    CycleOverviewRing()
+                        .padding(.horizontal)
+
+                    DSCard(mode: themeManager.effectiveMode()) {
+                        VStack(spacing: 0) {
+                            MonthHeader(displayedMonth: $displayedMonth)
+                                .padding(.horizontal, DSSpacing.space4)
+                                .padding(.top, DSSpacing.space2)
+
+                            WeekdayHeader()
+                                .padding(.horizontal, DSSpacing.space4)
+                                .padding(.top, DSSpacing.space1)
+
+                            MonthGridView(
+                                month: displayedMonth,
+                                selectedDate: $selectedDate,
+                                cycleEvents: appState.calmMode
+                                    ? appState.cycleEvents.filter { $0.value != .fertile && $0.value != .ovulation }
+                                    : appState.cycleEvents
+                            )
+                            .padding(.horizontal, DSSpacing.space4)
+
+                            if !appState.calmMode {
+                                CalendarLegend()
+                                    .padding(DSSpacing.space4)
+                            }
+                        }
+                    }
                     .padding(.horizontal)
-                    .padding(.top, 8)
-
-                WeekdayHeader()
-                    .padding(.horizontal)
-                    .padding(.top, 4)
-
-                MonthGridView(
-                    month: displayedMonth,
-                    selectedDate: $selectedDate,
-                    cycleEvents: appState.calmMode
-                        ? appState.cycleEvents.filter { $0.value != .fertile && $0.value != .ovulation }
-                        : appState.cycleEvents
-                )
-                .padding(.horizontal)
-
-                if !appState.calmMode {
-                    CalendarLegend()
-                        .padding()
                 }
-
-                Spacer()
+                .padding(.top, DSSpacing.space2)
             }
             .navigationTitle("tab_calendar")
             .navigationBarTitleDisplayMode(.large)
@@ -59,6 +70,76 @@ struct CalendarView: View {
                 LogSheetView(date: date)
             }
         }
+    }
+}
+
+// MARK: - Cycle Overview Ring
+
+private struct CycleOverviewRing: View {
+    @EnvironmentObject var appState: AppState
+    @StateObject private var vm = HomeViewModel()
+
+    private var segments: [(value: Double, color: Color, label: String)] {
+        let cycleLen = 28.0
+        let currentDay = Double(vm.currentCycleDay)
+        let menEnd = min(Double(appState.averagePeriodLength ?? 5) / cycleLen, 1.0)
+        let folEnd = 0.4
+        let ferEnd = 0.5
+        return [
+            (menEnd, LunaBrand.phaseMenstruation, NSLocalizedString("phase_menstrual", comment: "")),
+            (folEnd - menEnd, LunaBrand.phaseFollicular, NSLocalizedString("phase_follicular", comment: "")),
+            (ferEnd - folEnd, LunaBrand.phaseOvulation, NSLocalizedString("phase_ovulatory", comment: "")),
+            (1.0 - ferEnd, LunaBrand.phaseLuteal, NSLocalizedString("phase_luteal", comment: ""))
+        ]
+    }
+
+    private var currentPhaseIndex: Int {
+        let cycleLen = 28.0
+        let dayRatio = Double(vm.currentCycleDay) / cycleLen
+        var cumulative: Double = 0
+        for (index, segment) in segments.enumerated() {
+            cumulative += segment.value
+            if dayRatio <= cumulative {
+                return index
+            }
+        }
+        return 0
+    }
+
+    var body: some View {
+        DSCard(mode: .light) {
+            HStack(spacing: DSSpacing.space4) {
+                DSSegmentedRing(
+                    segments: segments,
+                    currentIndex: currentPhaseIndex,
+                    centerText: "\(vm.currentCycleDay)",
+                    centerSubtext: NSLocalizedString("cycle_day_label", comment: ""),
+                    size: 100
+                )
+
+                VStack(alignment: .leading, spacing: DSSpacing.space2) {
+                    Text("cycle_overview_title")
+                        .font(DSTypography.headline)
+                        .foregroundStyle(ThemeColors.textPrimary(for: .light))
+
+                    Text(phaseDescription)
+                        .font(DSTypography.caption)
+                        .foregroundStyle(ThemeColors.textSecondary(for: .light))
+
+                    Spacer()
+                }
+
+                Spacer()
+            }
+            .padding(DSSpacing.space4)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Cycle overview: Day \(vm.currentCycleDay)")
+    }
+
+    private var phaseDescription: String {
+        guard let phase = vm.currentPhase else { return "" }
+        return NSLocalizedString("phase_\(phase)", comment: "")
     }
 }
 

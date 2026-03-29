@@ -1,1 +1,1 @@
-cykel,menstruation,fertilitet,ägglossning,integritet,offline
+[sv] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

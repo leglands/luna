@@ -1,5 +1,1 @@
-• Anneau de cycle segmenté avec code couleur par phase
-• Version iPhone actuellement disponible en anglais et en français
-• Garanties de confidentialité renforcées au niveau OS
-• Stockage local chiffré AES-256-GCM
-• Accessibilité améliorée
+Suivi de cycle axé sur la confidentialité. Chiffrement AES-256. Pas de cloud. Pas de pistage.

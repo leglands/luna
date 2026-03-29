@@ -1,1 +1,1 @@
-siklus,menstruasi,kesuburan,ovulasi,privasi,offline,terenkripsi
+[id] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

@@ -1,3 +1,1 @@
-• Anello ciclo segmentato con codice colore
-• Garanzie di privacy migliorate
-• Archiviazione crittografata AES-256-GCM
+[it] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

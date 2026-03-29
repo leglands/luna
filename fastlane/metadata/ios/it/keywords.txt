@@ -1,1 +1,1 @@
-ciclo,mestruazione,fertilità,ovulazione,BBT,privacy,offline,crittografato
+[it] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

@@ -1,3 +1,1 @@
-• Vòng tròn chu kỳ phân đoạn có mã màu
-• Đảm bảo quyền riêng tư nâng cao
-• Lưu trữ cục bộ được mã hóa AES-256-GCM
+[vi] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

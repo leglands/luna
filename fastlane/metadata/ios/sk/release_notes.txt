@@ -1,3 +1,1 @@
-• Segmentovaný cyklový prsteň s farebným kódovaním
-• Vylepšené záruky súkromia
-• Miestne šifrované úložisko AES-256-GCM
+[sk] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

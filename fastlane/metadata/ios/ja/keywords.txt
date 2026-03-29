@@ -1,1 +1,1 @@
-生理周期,月経,排卵,基礎体温,妊活,プライバシー,オフライン,暗号化,健康
+[ja] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

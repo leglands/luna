@@ -1,0 +1,6 @@
+{
+  "app": { "name": "Luna", "tagline": "A ciklusod, megértve" },
+  "phases": { "menstrual": "Menstruációs", "follicular": "Follikuláris", "ovulation": "Ovuláció", "luteal": "Luteális" },
+  "privacy": { "badge": "Privát és titkosított", "disclaimer": "Ez az információ nem helyettesíti a szakmai orvosi tanácsadást. Orvosi kérdésekkel mindig forduljon képzett egészségügyi szolgáltatóhoz." },
+  "settings": { "title": "Beállítások", "cycleLength": "Ciklus hossza", "periodLength": "Menstruáció hossza", "lastPeriod": "Utolsó menstruáció dátuma", "save": "Mentés", "saved": "Beállítások mentve" }
+}

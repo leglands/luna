@@ -1,1 +1,1 @@
-ciclu,menstruație,fertilitate,ovulație,confidențialitate,offline
+[ro] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

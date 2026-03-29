@@ -1,3 +1,1 @@
-• Segmenteret cyklus-ring med farvekodning
-• Forbedrede privatlivsgarantier
-• Lokalt krypteret lager AES-256-GCM
+[da] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

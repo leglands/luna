@@ -1,1 +1,1 @@
-kitaran,haid,kesuburan,ovulasi,privasi,offline,terenkripsi
+[ms] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

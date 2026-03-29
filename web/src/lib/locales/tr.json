@@ -1,0 +1,6 @@
+{
+  "app": { "name": "Luna", "tagline": "Adet döngünüzü anlayın" },
+  "phases": { "menstrual": "Menstrüasyon", "follicular": "Foliküler", "ovulation": "Ovülasyon", "luteal": "Luteal" },
+  "privacy": { "badge": "Gizli ve şifreli", "disclaimer": "Bu bilgiler profesyonel tıbbi tavsiyenin yerini tutmaz. Her zaman nitelikli bir sağlık uzmanına danışın." },
+  "settings": { "title": "Ayarlar", "cycleLength": "Döngü uzunluğu", "periodLength": "Regl süresi", "lastPeriod": "Son regl tarihi", "save": "Kaydet", "saved": "Ayarlar kaydedildi" }
+}

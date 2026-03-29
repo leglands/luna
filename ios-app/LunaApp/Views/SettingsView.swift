@@ -12,6 +12,7 @@ import SwiftUI
 import LocalAuthentication
 import UIKit
 import UniformTypeIdentifiers
+import LifeDS
 
 // ┌──────────────────────────────────────────────────────────────┐
 // │ Screen: SettingsView · Personas: P1,P5,P6 · Features: F08-F11,F16
@@ -38,15 +39,14 @@ struct SettingsView: View {
     @State private var shareItems: [Any] = []
     @State private var iCloudSyncEnabled: Bool = UserDefaults.standard.bool(forKey: "icloud_sync_enabled")
 
-    // Empathic UX: confirmation dialogs
     @State private var showLockDisableConfirm: Bool = false
     @State private var showICloudConfirm: Bool = false
+    @StateObject private var themeManager = ThemeManager()
 
     var body: some View {
         NavigationStack {
             List {
 
-                // ── Profil ────────────────────────────────────────────
                 Section {
                     NavigationLink {
                         ProfileEditView()
@@ -58,7 +58,6 @@ struct SettingsView: View {
                     Text("settings_section_profile")
                 }
 
-                // ── Vie privée & Sécurité ─────────────────────────────
                 Section {
                     Toggle(isOn: $lockEnabled) {
                         Label("settings_lock_label", systemImage: "faceid")
@@ -74,7 +73,6 @@ struct SettingsView: View {
                             }
                             appState.lockEnabled = true
                         } else {
-                            // Confirm before disabling lock
                             showLockDisableConfirm = true
                         }
                     }
@@ -92,8 +90,8 @@ struct SettingsView: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("settings_icloud_toggle")
                                 Text("settings_icloud_description")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
+                                    .font(DSTypography.caption)
+                                    .foregroundStyle(ThemeColors.textSecondary(for: themeManager.effectiveMode()))
                             }
                         } icon: {
                             Image(systemName: "icloud.and.arrow.up")
@@ -114,8 +112,8 @@ struct SettingsView: View {
                             Label("settings_icloud_status", systemImage: "arrow.triangle.2.circlepath")
                             Spacer()
                             Text(iCloudStatusText)
-                                .font(.callout)
-                                .foregroundStyle(.secondary)
+                                .font(DSTypography.body)
+                                .foregroundStyle(ThemeColors.textSecondary(for: themeManager.effectiveMode()))
                         }
                     }
 
@@ -124,19 +122,12 @@ struct SettingsView: View {
                             Label("settings_storage_label", systemImage: "internaldrive")
                             Spacer()
                             Text("settings_storage_local")
-                                .font(.callout)
-                                .foregroundStyle(.secondary)
+                                .font(DSTypography.body)
+                                .foregroundStyle(ThemeColors.textSecondary(for: themeManager.effectiveMode()))
                         }
                     }
 
-                    // Badge trust
-                    HStack(spacing: 6) {
-                        Circle().fill(Color.green).frame(width: 8, height: 8)
-                        Text("settings_trust_badge")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                    .accessibilityLabel(Text("privacy_badge_a11y"))
+                    DSPrivacyBadge(mode: themeManager.effectiveMode())
 
                     Button(role: .destructive) {
                         showPanicWipeConfirmation = true
@@ -150,7 +141,6 @@ struct SettingsView: View {
                     Text("settings_section_privacy")
                 }
 
-                // ── Bien-être & Accessibilité (a11y psy) ─────────────
                 Section {
                     Toggle(isOn: Binding(
                         get: { appState.calmMode },
@@ -160,8 +150,8 @@ struct SettingsView: View {
                             VStack(alignment: .leading, spacing: 2) {
                                 Text("settings_calm_mode")
                                 Text("settings_calm_mode_description")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
+                                    .font(DSTypography.caption)
+                                    .foregroundStyle(ThemeColors.textSecondary(for: themeManager.effectiveMode()))
                             }
                         } icon: {
                             Image(systemName: "leaf")
@@ -172,7 +162,6 @@ struct SettingsView: View {
                     Text("settings_section_wellbeing")
                 }
 
-                // ── Notifications ─────────────────────────────────────
                 Section {
                     Toggle(isOn: $notifDailyLog) {
                         Text("notif_daily_log_label")
@@ -191,7 +180,6 @@ struct SettingsView: View {
                     }
                     .onChange(of: notifPeriodReminder) { enabled in
                         handleNotifToggle(enabled: enabled) {
-                            // Scheduled dynamically when prediction is computed
                         } onDisable: {
                             NotificationManager.shared.cancelAll(ofCategory: "period_reminder")
                         }
@@ -202,7 +190,6 @@ struct SettingsView: View {
                     }
                     .onChange(of: notifFertileWindow) { enabled in
                         handleNotifToggle(enabled: enabled) {
-                            // Scheduled dynamically when prediction is computed
                         } onDisable: {
                             NotificationManager.shared.cancelAll(ofCategory: "fertile_alert")
                         }
@@ -227,7 +214,6 @@ struct SettingsView: View {
                     Text("settings_section_notifications")
                 }
 
-                // ── Rappel contraception ──────────────────────────────
                 Section("settings_pill_reminder_section") {
                     Toggle("settings_pill_reminder_toggle", isOn: $pillReminderEnabled)
                         .accessibilityIdentifier("pill_reminder_toggle")
@@ -253,7 +239,6 @@ struct SettingsView: View {
                     }
                 }
 
-                // ── Santé (HealthKit) ─────────────────────────────────
                 Section("settings_healthkit_section") {
                     Toggle("settings_healthkit_toggle", isOn: $healthKitEnabled)
                         .frame(minHeight: 44)
@@ -262,7 +247,6 @@ struct SettingsView: View {
                         }
                 }
 
-                // ── Intégrations ──────────────────────────────────────
                 Section {
                     NavigationLink {
                         HealthKitSettingsView()
@@ -283,10 +267,12 @@ struct SettingsView: View {
                     Text("settings_section_integrations")
                 }
 
-                // ── À propos ──────────────────────────────────────────
+                CrossPromoSection()
+                    .padding(.vertical, DSSpacing.space2)
+
                 Section {
                     LabeledContent("settings_version_label", value: appVersion)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(ThemeColors.textSecondary(for: themeManager.effectiveMode()))
                     Link(destination: URL(string: "https://luna-app.privacy")!) {
                         Label("settings_privacy_policy_label", systemImage: "lock.shield")
                     }
@@ -294,10 +280,9 @@ struct SettingsView: View {
                     Text("settings_section_about")
                 } footer: {
                     Text("settings_footer_no_server")
-                        .font(.caption)
+                        .font(DSTypography.caption)
                 }
 
-                // ── Help ─────────────────────────────────────────────
                 Section {
                     Button {
                         appState.hasSeenFeatureTour = false
@@ -328,7 +313,7 @@ struct SettingsView: View {
                     appState.lockEnabled = false
                 }
                 Button("cancel_button", role: .cancel) {
-                    lockEnabled = true  // revert toggle
+                    lockEnabled = true
                 }
             } message: {
                 Text("confirm_lock_disable_message")
@@ -346,7 +331,7 @@ struct SettingsView: View {
                     }
                 }
                 Button("cancel_button", role: .cancel) {
-                    iCloudSyncEnabled = false  // revert toggle
+                    iCloudSyncEnabled = false
                 }
             } message: {
                 Text("confirm_icloud_sync_message")
@@ -424,7 +409,6 @@ struct SettingsView: View {
                 do {
                     try appState.engine?.panicWipe()
                 } catch {
-                    // Erreur attendue WipedSuccessfully — reset UI
                 }
                 appState.isVaultOpen = false
                 appState.engine = nil
@@ -434,6 +418,25 @@ struct SettingsView: View {
                 )
             }
         }
+    }
+}
+
+// MARK: - CrossPromoSection
+
+private struct CrossPromoSection: View {
+    var body: some View {
+        DSCrossPromoCard<LunaBrand>(
+            targetAppName: "Aura",
+            targetBrandColor: Color(hex: 0xC86B5A),
+            icon: "heart.circle",
+            title: String(localized: "cross_promo.luna_to_aura.title"),
+            message: String(localized: "cross_promo.luna_to_aura.body"),
+            ctaLabel: String(localized: "cross_promo.luna_to_aura.cta"),
+            mode: .light,
+            onAction: { },
+            onDismiss: { }
+        )
+        .padding(.horizontal)
     }
 }
 

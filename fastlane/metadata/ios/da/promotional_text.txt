@@ -1,1 +1,1 @@
-Spor din cyklus privat. AES-256 krypteret. Ingen cloud. Ingen sporing. Dine data forbliver på din telefon.
+[da] Track your cycle with military-grade privacy. Zero internet. Zero data collection.

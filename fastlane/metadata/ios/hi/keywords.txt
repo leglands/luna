@@ -1,1 +1,1 @@
-मासिक धर्म,चक्र,प्रजनन,ओवुलेशन,गोपनीयता,ऑफलाइन,स्वास्थ्य
+[hi] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

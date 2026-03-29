@@ -1,3 +1,1 @@
-• Segmentoitu syklirengas värikoodauksella
-• Parannetut tietosuojatakuut
-• Paikallinen salattu tallennus AES-256-GCM
+[fi] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

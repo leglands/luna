@@ -1,1 +1,1 @@
-sykli,kuukautiset,hedelmällisyys,ovulaatio,yksityisyys,offline
+[fi] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

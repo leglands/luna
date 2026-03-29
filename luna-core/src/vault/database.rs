@@ -1,141 +1,115 @@
-use rusqlite::{params, Connection};
-use secrecy::{ExposeSecret, SecretVec};
+use life_crypto::{compress_blob, decompress_blob, SecretVec};
+use life_storage::{params, VaultDb};
 
 use crate::engine::types::{
     ContraceptionType, Cycle, DailyLog, PregnancyLog, TrackingMode, UserProfile,
 };
 use crate::error::LunaError;
-use crate::vault::crypto::{compress_blob, decompress_blob, key_to_sqlcipher_pragma};
 
-/// Couche base de données — SQLite chiffrée via SQLCipher.
-///
-/// La clé est injectée via PRAGMA key immédiatement après l'ouverture
-/// de la connexion — avant toute autre opération.
+const LUNA_MIGRATIONS: &str = r#"
+    CREATE TABLE IF NOT EXISTS cycles (
+        id            TEXT PRIMARY KEY,
+        start_date    TEXT NOT NULL,
+        end_date      TEXT,
+        period_length INTEGER,
+        notes         TEXT,
+        created_at    TEXT NOT NULL DEFAULT (datetime('now')),
+        updated_at    TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS daily_logs (
+        id              TEXT PRIMARY KEY,
+        date            TEXT NOT NULL UNIQUE,
+        symptoms        BLOB NOT NULL DEFAULT X'',
+        mood            INTEGER,
+        energy          INTEGER,
+        bbt             REAL,
+        lh_test         TEXT,
+        cervical_mucus  TEXT,
+        sexual_activity TEXT,
+        flow            TEXT,
+        sleep_quality   INTEGER,
+        weight_kg       REAL,
+        notes           TEXT,
+        created_at      TEXT NOT NULL DEFAULT (datetime('now')),
+        updated_at      TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS meta (
+        key   TEXT PRIMARY KEY,
+        value TEXT NOT NULL
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_cycles_start ON cycles(start_date);
+    CREATE INDEX IF NOT EXISTS idx_logs_date    ON daily_logs(date);
+
+    CREATE TABLE IF NOT EXISTS user_profile (
+        id              INTEGER PRIMARY KEY CHECK (id = 1),
+        tracking_mode   TEXT NOT NULL DEFAULT 'regular',
+        contraception   TEXT NOT NULL DEFAULT 'none',
+        pill_reminder   TEXT,
+        notif_period    INTEGER NOT NULL DEFAULT 1,
+        notif_fertile   INTEGER NOT NULL DEFAULT 0,
+        notif_pill      INTEGER NOT NULL DEFAULT 0,
+        edd             TEXT,
+        calm_mode       INTEGER NOT NULL DEFAULT 0,
+        health_sync     INTEGER NOT NULL DEFAULT 0,
+        updated_at      TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS pregnancy_logs (
+        id           TEXT PRIMARY KEY,
+        date         TEXT NOT NULL UNIQUE,
+        hcg_positive INTEGER,
+        kicks        INTEGER,
+        nausea_level INTEGER,
+        weight_kg    REAL,
+        symptoms     BLOB NOT NULL DEFAULT X'',
+        notes        TEXT,
+        created_at   TEXT NOT NULL DEFAULT (datetime('now')),
+        updated_at   TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_pregnancy_date ON pregnancy_logs(date);
+"#;
+
 pub struct LunaDb {
-    conn: Connection,
+    db: VaultDb,
 }
 
 impl LunaDb {
-    /// Ouvre (ou crée) la base chiffrée au chemin donné.
-    ///
-    /// `db_key` : clé 32 bytes dérivée par HKDF depuis la clé maître.
     pub fn open(path: &str, db_key: &SecretVec<u8>) -> Result<Self, LunaError> {
-        let conn =
-            Connection::open(path).map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
+        let db = VaultDb::open(path, db_key, LUNA_MIGRATIONS)?;
 
-        // Déverrouillage SQLCipher — doit être la PREMIÈRE opération
-        let pragma = key_to_sqlcipher_pragma(db_key);
-        let pragma_str = std::str::from_utf8(pragma.expose_secret())
-            .map_err(|_| LunaError::CryptoError("Pragma UTF-8 invalide".into()))?;
+        db.set_schema_version(1)?;
 
-        conn.execute_batch(&format!("PRAGMA key = \"{}\";", pragma_str))
-            .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
-
-        // Vérifie que la DB est bien déchiffrée (mauvaise clé = erreur ici)
-        conn.execute_batch("SELECT count(*) FROM sqlite_master;")
-            .map_err(|_| LunaError::WrongPin)?;
-
-        let db = Self { conn };
-        db.run_migrations()?;
-        Ok(db)
+        Ok(Self { db })
     }
 
-    /// Migrations versionnées — toujours additive, jamais destructive.
-    fn run_migrations(&self) -> Result<(), LunaError> {
-        self.conn
-            .execute_batch(
-                "
-            PRAGMA journal_mode = WAL;
-            PRAGMA foreign_keys = ON;
-            PRAGMA secure_delete = ON;
-
-            CREATE TABLE IF NOT EXISTS schema_version (
-                version INTEGER PRIMARY KEY
-            );
-
-            CREATE TABLE IF NOT EXISTS cycles (
-                id            TEXT PRIMARY KEY,
-                start_date    TEXT NOT NULL,
-                end_date      TEXT,
-                period_length INTEGER,
-                notes         TEXT,
-                created_at    TEXT NOT NULL DEFAULT (datetime('now')),
-                updated_at    TEXT NOT NULL DEFAULT (datetime('now'))
-            );
-
-            CREATE TABLE IF NOT EXISTS daily_logs (
-                id              TEXT PRIMARY KEY,
-                date            TEXT NOT NULL UNIQUE,
-                symptoms        BLOB NOT NULL DEFAULT X'',
-                mood            INTEGER,
-                energy          INTEGER,
-                bbt             REAL,
-                lh_test         TEXT,
-                cervical_mucus  TEXT,
-                sexual_activity TEXT,
-                flow            TEXT,
-                sleep_quality   INTEGER,
-                weight_kg       REAL,
-                notes           TEXT,
-                created_at      TEXT NOT NULL DEFAULT (datetime('now')),
-                updated_at      TEXT NOT NULL DEFAULT (datetime('now'))
-            );
-
-            CREATE TABLE IF NOT EXISTS meta (
-                key   TEXT PRIMARY KEY,
-                value TEXT NOT NULL
-            );
-
-            CREATE INDEX IF NOT EXISTS idx_cycles_start ON cycles(start_date);
-            CREATE INDEX IF NOT EXISTS idx_logs_date    ON daily_logs(date);
-
-            CREATE TABLE IF NOT EXISTS user_profile (
-                id              INTEGER PRIMARY KEY CHECK (id = 1),
-                tracking_mode   TEXT NOT NULL DEFAULT 'regular',
-                contraception   TEXT NOT NULL DEFAULT 'none',
-                pill_reminder   TEXT,
-                notif_period    INTEGER NOT NULL DEFAULT 1,
-                notif_fertile   INTEGER NOT NULL DEFAULT 0,
-                notif_pill      INTEGER NOT NULL DEFAULT 0,
-                edd             TEXT,
-                calm_mode       INTEGER NOT NULL DEFAULT 0,
-                health_sync     INTEGER NOT NULL DEFAULT 0,
-                updated_at      TEXT NOT NULL DEFAULT (datetime('now'))
-            );
-
-            CREATE TABLE IF NOT EXISTS pregnancy_logs (
-                id           TEXT PRIMARY KEY,
-                date         TEXT NOT NULL UNIQUE,
-                hcg_positive INTEGER,
-                kicks        INTEGER,
-                nausea_level INTEGER,
-                weight_kg    REAL,
-                symptoms     BLOB NOT NULL DEFAULT X'',
-                notes        TEXT,
-                created_at   TEXT NOT NULL DEFAULT (datetime('now')),
-                updated_at   TEXT NOT NULL DEFAULT (datetime('now'))
-            );
-
-            CREATE INDEX IF NOT EXISTS idx_pregnancy_date ON pregnancy_logs(date);
-        ",
-            )
-            .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
-
-        // Insérer la version si absente
-        self.conn
-            .execute(
-                "INSERT OR IGNORE INTO schema_version (version) VALUES (1)",
-                [],
-            )
-            .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
-
+    pub fn wipe(&self) -> Result<(), LunaError> {
+        self.db.wipe(&[
+            "daily_logs",
+            "cycles",
+            "pregnancy_logs",
+            "meta",
+            "schema_version",
+        ])?;
         Ok(())
+    }
+
+    pub fn rekey(&self, new_db_key: &SecretVec<u8>) -> Result<(), LunaError> {
+        self.db.rekey(new_db_key)?;
+        Ok(())
+    }
+
+    fn conn(&self) -> &rusqlite::Connection {
+        self.db.conn()
     }
 
     // ─── Cycles ──────────────────────────────────────────────────────────────
 
     pub fn insert_cycle(&self, cycle: &Cycle) -> Result<(), LunaError> {
-        self.conn.execute(
+        self.conn().execute(
             "INSERT OR REPLACE INTO cycles (id, start_date, end_date, period_length, notes, updated_at)
              VALUES (?1, ?2, ?3, ?4, ?5, datetime('now'))",
             params![
@@ -150,7 +124,7 @@ impl LunaDb {
     }
 
     pub fn get_cycles(&self, limit: u32) -> Result<Vec<Cycle>, LunaError> {
-        let mut stmt = self.conn
+        let mut stmt = self.conn()
             .prepare("SELECT id, start_date, end_date, period_length, notes FROM cycles ORDER BY start_date DESC LIMIT ?1")
             .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
 
@@ -173,7 +147,7 @@ impl LunaDb {
 
     pub fn delete_cycle(&self, cycle_id: &str) -> Result<bool, LunaError> {
         let deleted = self
-            .conn
+            .conn()
             .execute("DELETE FROM cycles WHERE id = ?1", params![cycle_id])
             .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
         Ok(deleted > 0)
@@ -182,10 +156,9 @@ impl LunaDb {
     // ─── DailyLogs ───────────────────────────────────────────────────────────
 
     pub fn upsert_log(&self, log: &DailyLog) -> Result<(), LunaError> {
-        // Sérialisation JSON → compression zstd → BLOB binaire chiffré par SQLCipher
         let symptoms_blob = compress_blob(&serde_json::to_vec(&log.symptoms)?)?;
 
-        self.conn.execute(
+        self.conn().execute(
             "INSERT INTO daily_logs (id, date, symptoms, mood, energy, bbt, lh_test, cervical_mucus, sexual_activity, flow, sleep_quality, weight_kg, notes, updated_at)
              VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, datetime('now'))
              ON CONFLICT(date) DO UPDATE SET
@@ -207,17 +180,16 @@ impl LunaDb {
     }
 
     pub fn get_log(&self, date: &str) -> Result<Option<DailyLog>, LunaError> {
-        let mut stmt = self.conn
+        let mut stmt = self.conn()
             .prepare("SELECT id, date, symptoms, mood, energy, bbt, lh_test, cervical_mucus, sexual_activity, flow, sleep_quality, weight_kg, notes FROM daily_logs WHERE date = ?1")
             .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
 
         let mut rows = stmt
             .query_map(params![date], |row| {
-                let symptoms_blob: Vec<u8> = row.get(2)?;
                 Ok((
                     row.get(0)?,
                     row.get(1)?,
-                    symptoms_blob,
+                    row.get::<_, Vec<u8>>(2)?,
                     row.get(3)?,
                     row.get(4)?,
                     row.get(5)?,
@@ -290,17 +262,16 @@ impl LunaDb {
     }
 
     pub fn get_logs_range(&self, from: &str, to: &str) -> Result<Vec<DailyLog>, LunaError> {
-        let mut stmt = self.conn
+        let mut stmt = self.conn()
             .prepare("SELECT id, date, symptoms, mood, energy, bbt, lh_test, cervical_mucus, sexual_activity, flow, sleep_quality, weight_kg, notes FROM daily_logs WHERE date BETWEEN ?1 AND ?2 ORDER BY date")
             .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
 
         let logs = stmt
             .query_map(params![from, to], |row| {
-                let symptoms_blob: Vec<u8> = row.get(2)?;
                 Ok((
                     row.get::<_, String>(0)?,
                     row.get::<_, String>(1)?,
-                    symptoms_blob,
+                    row.get::<_, Vec<u8>>(2)?,
                     row.get::<_, Option<i64>>(3)?,
                     row.get::<_, Option<i64>>(4)?,
                     row.get::<_, Option<f64>>(5)?,
@@ -359,7 +330,7 @@ impl LunaDb {
 
     pub fn delete_log(&self, date: &str) -> Result<bool, LunaError> {
         let deleted = self
-            .conn
+            .conn()
             .execute("DELETE FROM daily_logs WHERE date = ?1", params![date])
             .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
         Ok(deleted > 0)
@@ -368,7 +339,7 @@ impl LunaDb {
     // ─── Meta ─────────────────────────────────────────────────────────────────
 
     pub fn set_meta(&self, key: &str, value: &str) -> Result<(), LunaError> {
-        self.conn
+        self.conn()
             .execute(
                 "INSERT OR REPLACE INTO meta (key, value) VALUES (?1, ?2)",
                 params![key, value],
@@ -379,7 +350,7 @@ impl LunaDb {
 
     pub fn get_meta(&self, key: &str) -> Result<Option<String>, LunaError> {
         let mut stmt = self
-            .conn
+            .conn()
             .prepare("SELECT value FROM meta WHERE key = ?1")
             .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
         let mut rows = stmt
@@ -388,49 +359,10 @@ impl LunaDb {
         Ok(rows.next().and_then(|r| r.ok()))
     }
 
-    // ─── Wipe ─────────────────────────────────────────────────────────────────
-
-    /// Supprime toutes les données de façon sécurisée.
-    /// VACUUM réécrit le fichier — aucun résidu en clair sur le disque.
-    pub fn wipe(&self) -> Result<(), LunaError> {
-        self.conn
-            .execute_batch(
-                "
-            DELETE FROM daily_logs;
-            DELETE FROM cycles;
-            DELETE FROM meta;
-            DELETE FROM schema_version;
-            VACUUM;
-        ",
-            )
-            .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
-        Ok(())
-    }
-
-    /// Re-chiffre la base de données avec une nouvelle clé via SQLCipher PRAGMA rekey.
-    pub fn rekey(&self, new_db_key: &SecretVec<u8>) -> Result<(), LunaError> {
-        let pragma = key_to_sqlcipher_pragma(new_db_key);
-        let pragma_str = std::str::from_utf8(pragma.expose_secret())
-            .map_err(|_| LunaError::CryptoError("Pragma UTF-8 invalide".into()))?;
-
-        self.conn
-            .execute_batch(&format!("PRAGMA rekey = \"{}\";", pragma_str))
-            .map_err(|e| LunaError::CryptoError(format!("PRAGMA rekey failed: {}", e)))?;
-
-        // Vérification : la DB doit rester lisible après rekey
-        self.conn
-            .execute_batch("SELECT count(*) FROM sqlite_master;")
-            .map_err(|e| {
-                LunaError::CryptoError(format!("Post-rekey verification failed: {}", e))
-            })?;
-
-        Ok(())
-    }
-
     // ─── UserProfile ──────────────────────────────────────────────────────────
 
     pub fn get_user_profile(&self) -> Result<UserProfile, LunaError> {
-        let mut stmt = self.conn
+        let mut stmt = self.conn()
             .prepare("SELECT tracking_mode, contraception, pill_reminder, notif_period, notif_fertile, notif_pill, edd, calm_mode, health_sync FROM user_profile WHERE id = 1")
             .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
 
@@ -468,7 +400,7 @@ impl LunaDb {
     }
 
     pub fn set_user_profile(&self, profile: &UserProfile) -> Result<(), LunaError> {
-        self.conn.execute(
+        self.conn().execute(
             "INSERT INTO user_profile (id, tracking_mode, contraception, pill_reminder, notif_period, notif_fertile, notif_pill, edd, calm_mode, health_sync, updated_at)
              VALUES (1, ?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, datetime('now'))
              ON CONFLICT(id) DO UPDATE SET
@@ -496,7 +428,7 @@ impl LunaDb {
 
     pub fn upsert_pregnancy_log(&self, log: &PregnancyLog) -> Result<(), LunaError> {
         let symptoms_blob = compress_blob(&serde_json::to_vec(&log.symptoms)?)?;
-        self.conn.execute(
+        self.conn().execute(
             "INSERT INTO pregnancy_logs (id, date, hcg_positive, kicks, nausea_level, weight_kg, symptoms, notes, updated_at)
              VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, datetime('now'))
              ON CONFLICT(date) DO UPDATE SET
@@ -517,7 +449,7 @@ impl LunaDb {
     }
 
     pub fn get_pregnancy_log(&self, date: &str) -> Result<Option<PregnancyLog>, LunaError> {
-        let mut stmt = self.conn
+        let mut stmt = self.conn()
             .prepare("SELECT id, date, hcg_positive, kicks, nausea_level, weight_kg, symptoms, notes FROM pregnancy_logs WHERE date = ?1")
             .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
 
@@ -559,7 +491,7 @@ impl LunaDb {
 
     pub fn delete_pregnancy_log(&self, date: &str) -> Result<bool, LunaError> {
         let deleted = self
-            .conn
+            .conn()
             .execute("DELETE FROM pregnancy_logs WHERE date = ?1", params![date])
             .map_err(|e| LunaError::DatabaseCorrupted(e.to_string()))?;
         Ok(deleted > 0)
@@ -569,7 +501,7 @@ impl LunaDb {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use secrecy::SecretVec;
+    use life_crypto::SecretVec;
     use tempfile::NamedTempFile;
 
     fn test_db() -> (LunaDb, NamedTempFile) {

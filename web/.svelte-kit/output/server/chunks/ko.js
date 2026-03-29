@@ -1,0 +1,17 @@
+const app = { "name": "Luna", "tagline": "당신의 사이클을 이해하세요" };
+const phases = { "menstrual": "월경기", "follicular": "난포기", "ovulation": "배란기", "luteal": "황체기" };
+const privacy = { "badge": "비공개 및 암호화", "disclaimer": "이 정보는 전문적인 의학적 조언을 대체하지 않습니다. 항상 자격을 갖춘 의료 전문가와 상담하세요." };
+const settings = { "title": "설정", "cycleLength": "주기 길이", "periodLength": "생리 기간", "lastPeriod": "마지막 생리 날짜", "save": "저장", "saved": "설정이 저장되었습니다" };
+const ko = {
+  app,
+  phases,
+  privacy,
+  settings
+};
+export {
+  app,
+  ko as default,
+  phases,
+  privacy,
+  settings
+};

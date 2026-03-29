@@ -1,3 +1,1 @@
-• 分段式週期環，帶相位顏色編碼
-• 增強的作業系統級隱私保證
-• AES-256-GCM本地加密儲存
+[zh-Hant] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

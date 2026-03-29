@@ -1,1 +1,1 @@
-cyklus,menstruace,fertilita,ovulace,soukromí,offline,šifrování
+[cs] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

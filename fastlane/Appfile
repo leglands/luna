@@ -5,7 +5,3 @@ team_id "P36X572LL9"
 for_platform :ios do
   app_identifier "com.macaron.luna"
 end
-
-for_lane :android do
-  package_name "com.macaron.luna"
-end

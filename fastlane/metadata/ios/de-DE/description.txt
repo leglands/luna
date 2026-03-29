@@ -1,4 +1,1 @@
-Verfolgen Sie Ihren Menstruationszyklus, Ihre Fruchtbarkeit und Ihr Wohlbefinden mit vollständigem Datenschutz. Ihre Daten bleiben auf Ihrem Telefon — immer.
-
-KEIN SERVER. NIE.
-LUNA sendet Ihre Daten nirgendwo hin. Keine Cloud. Kein Tracking. Keine Analytik. Funktioniert 100% offline.
+[de-DE] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.

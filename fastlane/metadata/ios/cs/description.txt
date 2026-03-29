@@ -1,10 +1,1 @@
-LUNA — aplikace pro sledování menstruačního cyklu s důrazem na soukromí. Vaše data zůstávají na zařízení šifrována AES-256.
-
-FUNKCE
-Sledování menstruace a příznaků, graf BTT, sledování nálady
-4 režimy: Pravidelný, TTC, Těhotenství, Perimenopauza
-Okno plodnosti a ovulace
-
-SOUKROMÍ
-AES-256, bez účtu, bez cloudu, bez reklam, bez trackerů
-Otevřený kód: https://github.com/macaron-software/luna
+[cs] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.

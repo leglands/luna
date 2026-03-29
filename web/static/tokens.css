@@ -1,0 +1,179 @@
+/* ============================================================
+   Life Ecosystem — Web Design System Tokens
+   SOURCE UNIQUE — ne jamais redéfinir dans une app
+   wiki/11-WEB-DESIGN-SYSTEM.md
+   ============================================================ */
+
+/* ── Light theme (default) ─────────────────────────────────── */
+:root {
+  /* Colours — semantic */
+  --c-bg:                    #FAFAFA;
+  --c-surface:               #FFFFFF;
+  --c-surface-raised:        #F7F7F8;
+  --c-surface-container:     #F2F2F5;
+  --c-surface-container-low: #F8F8FA;
+  --c-border:                #E5E5EA;
+  --c-text:                  #1C1C1E;
+  --c-text-secondary:        #6C6C70;
+  --c-brand:                 #6B3FA0; /* overridden by [data-app] */
+  --c-brand-dim:             #9D7BC9;
+  --c-hero-gradient:         linear-gradient(135deg, #6B3FA0, #9D7BC9, #C4A0E0);
+  --c-focus:                 #007AFF;
+  --c-growth:                #34C759;
+  --c-error:                 #FF3B30;
+  --c-overlay:               rgba(0, 0, 0, 0.4);
+
+  /* Typography */
+  --font-sans:        -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+  --text-xs:          12px;
+  --text-sm:          13px;
+  --text-base:        15px;
+  --text-lg:          17px;
+  --text-xl:          22px;
+  --text-2xl:         34px;
+  --weight-normal:    400;
+  --weight-medium:    500;
+  --weight-semibold:  600;
+  --weight-bold:      700;
+  --leading-none:     1;
+  --leading-tight:    1.2;
+  --leading-normal:   1.5;
+
+  /* Spacing — 4px grid */
+  --space-1:    4px;
+  --space-2:    8px;
+  --space-3:    12px;
+  --space-4:    16px;
+  --space-5:    20px;
+  --space-6:    24px;
+  --space-8:    32px;
+  --space-10:   40px;
+  --space-12:   48px;
+  --tap-target: 44px;
+
+  /* Radius */
+  --radius-xs:     4px;
+  --radius-sm:     8px;
+  --radius-md:     12px;
+  --radius-lg:     16px;
+  --radius-xl:     24px;
+  --radius-xxl:    32px;
+  --radius-full:   9999px;
+  --radius-pebble: 24px 28px 26px 22px; /* signature shape */
+
+  /* Elevation */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.10);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* Motion */
+  --duration-fast:   120ms;
+  --duration-normal: 240ms;
+  --duration-slow:   320ms;
+  --duration-enter:  250ms;
+  --ease-out:        cubic-bezier(0.2, 0, 0, 1);
+  --ease-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Component sizes */
+  --btn-height-sm: 32px;
+  --btn-height-md: 44px;
+  --btn-height-lg: 52px;
+
+  /* Z-index */
+  --z-base:    1;
+  --z-raised:  10;
+  --z-sticky:  100;
+  --z-overlay: 500;
+  --z-modal:   1000;
+  --z-toast:   2000;
+}
+
+/* ── Dark theme — system preference ────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --c-bg:                    #0A0A0F;
+    --c-surface:               #1C1C1E;
+    --c-surface-raised:        #2C2C2E;
+    --c-surface-container:     #252527;
+    --c-surface-container-low: #1E1E20;
+    --c-border:                #38383A;
+    --c-text:                  #F2F2F7;
+    --c-text-secondary:        #8E8E93;
+    --c-focus:                 #0A84FF;
+    --c-growth:                #30D158;
+    --c-error:                 #FF453A;
+    --c-overlay:               rgba(0, 0, 0, 0.7);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.30);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.40);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.50);
+  }
+}
+
+/* ── Dark theme — explicit override ────────────────────────── */
+[data-theme="dark"] {
+  --c-bg:                    #0A0A0F;
+  --c-surface:               #1C1C1E;
+  --c-surface-raised:        #2C2C2E;
+  --c-surface-container:     #252527;
+  --c-surface-container-low: #1E1E20;
+  --c-border:                #38383A;
+  --c-text:                  #F2F2F7;
+  --c-text-secondary:        #8E8E93;
+  --c-focus:                 #0A84FF;
+  --c-growth:                #30D158;
+  --c-error:                 #FF453A;
+  --c-overlay:               rgba(0, 0, 0, 0.7);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.30);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.40);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.50);
+}
+
+/* ── Light theme — explicit override ───────────────────────── */
+[data-theme="light"] {
+  --c-bg:                    #FAFAFA;
+  --c-surface:               #FFFFFF;
+  --c-surface-raised:        #F7F7F8;
+  --c-surface-container:     #F2F2F5;
+  --c-surface-container-low: #F8F8FA;
+  --c-border:                #E5E5EA;
+  --c-text:                  #1C1C1E;
+  --c-text-secondary:        #6C6C70;
+  --c-focus:                 #007AFF;
+  --c-growth:                #34C759;
+  --c-error:                 #FF3B30;
+  --c-overlay:               rgba(0, 0, 0, 0.4);
+}
+
+/* ── Brand per app ──────────────────────────────────────────── */
+[data-app="luna"]   { --c-brand: #6B3FA0; --c-brand-dim: #9D7BC9; --c-hero-gradient: linear-gradient(135deg, #6B3FA0, #9D7BC9, #C4A0E0); }
+[data-app="aura"]   { --c-brand: #00897B; --c-brand-dim: #4DB6AC; --c-hero-gradient: linear-gradient(135deg, #00897B, #4DB6AC, #B2DFDB); }
+[data-app="sienna"] { --c-brand: #E64A19; --c-brand-dim: #FF7043; --c-hero-gradient: linear-gradient(135deg, #E64A19, #FF7043, #FFCCBC); }
+[data-app="alma"]   { --c-brand: #5E35B1; --c-brand-dim: #7E57C2; --c-hero-gradient: linear-gradient(135deg, #5E35B1, #7E57C2, #B39DDB); }
+[data-app="nova"]   { --c-brand: #6366F1; --c-brand-dim: #818CF8; --c-hero-gradient: linear-gradient(135deg, #6366F1, #818CF8, #C7D2FE); }
+[data-app="aida"]   { --c-brand: #1565C0; --c-brand-dim: #1E88E5; --c-hero-gradient: linear-gradient(135deg, #1565C0, #1E88E5, #BBDEFB); }
+[data-app="stella"] { --c-brand: #F57F17; --c-brand-dim: #FFA726; --c-hero-gradient: linear-gradient(135deg, #F57F17, #FFA726, #FFE0B2); }
+[data-app="vera"]   { --c-brand: #C62828; --c-brand-dim: #E53935; --c-hero-gradient: linear-gradient(135deg, #C62828, #E53935, #FFCDD2); }
+[data-app="vita"]   { --c-brand: #2E7D32; --c-brand-dim: #43A047; --c-hero-gradient: linear-gradient(135deg, #2E7D32, #43A047, #C8E6C9); }
+[data-app="aria"]   { --c-brand: #283593; --c-brand-dim: #3949AB; --c-hero-gradient: linear-gradient(135deg, #283593, #3949AB, #C5CAE9); }
+
+/* ── Base reset ─────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--c-text);
+  background-color: var(--c-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

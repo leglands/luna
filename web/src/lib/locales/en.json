@@ -1,0 +1,73 @@
+{
+  "app": {
+    "name": "Luna",
+    "tagline": "Your cycle, understood"
+  },
+  "phases": {
+    "menstrual": "Menstrual",
+    "follicular": "Follicular",
+    "ovulation": "Ovulation",
+    "luteal": "Luteal"
+  },
+  "messages": {
+    "menstrual": "Your body is resting. Take it easy today.",
+    "follicular": "Energy is rising. A great time for new beginnings.",
+    "ovulation": "Peak fertility. You may feel more confident and social.",
+    "luteal": "Time for introspection. Be gentle with yourself."
+  },
+  "cycle": {
+    "day": "Day {day}",
+    "ofCycle": "of your cycle",
+    "nextPeriod": "Next period in {days} days",
+    "periodExpected": "Period expected in {days} days",
+    "fertileWindow": "Fertile window",
+    "predictedOvulation": "Predicted ovulation"
+  },
+  "logging": {
+    "period": "Period",
+    "symptoms": "Symptoms",
+    "temperature": "Temperature",
+    "mood": "Mood",
+    "logPeriod": "Log Period",
+    "logSymptoms": "Log Symptoms",
+    "logTemperature": "Log Temperature",
+    "logMood": "Log Mood"
+  },
+  "calendar": {
+    "title": "Calendar",
+    "insights": "Insights",
+    "today": "Today",
+    "logged": "Logged",
+    "predicted": "Predicted"
+  },
+  "insights": {
+    "title": "Insights",
+    "avgCycle": "Average cycle length",
+    "avgPeriod": "Average period length",
+    "symptomCorrelations": "Symptom correlations",
+    "noData": "Log more days to see insights"
+  },
+  "promo": {
+    "ttcTitle": "Trying to conceive?",
+    "ttcBody": "Aura helps you track fertility and connect with community.",
+    "auraCTA": "Try Aura",
+    "follicularTitle": "Boost your energy",
+    "follicularBody": "Nova helps you optimize your fitness and nutrition.",
+    "novaCTA": "Try Nova",
+    "almaTitle": "Need someone to talk to?",
+    "almaBody": "Alma connects you with licensed therapists.",
+    "almaCTA": "Talk to Alma"
+  },
+  "privacy": {
+    "badge": "Private & Encrypted",
+    "disclaimer": "This information does not replace professional medical advice. Always consult a qualified healthcare provider for medical concerns."
+  },
+  "settings": {
+    "title": "Settings",
+    "cycleLength": "Cycle Length",
+    "periodLength": "Period Length",
+    "lastPeriod": "Last Period Date",
+    "save": "Save",
+    "saved": "Settings saved"
+  }
+}

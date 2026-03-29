@@ -1,0 +1,1 @@
+const e={name:"Luna",tagline:"了解您的月经周期"},t={menstrual:"月经期",follicular:"卵泡期",ovulation:"排卵期",luteal:"黄体期"},a={badge:"私密且加密",disclaimer:"此信息不能替代专业医疗建议。请始终咨询合格的医疗保健提供者。"},s={title:"设置",cycleLength:"周期长度",periodLength:"经期长度",lastPeriod:"上次月经日期",save:"保存",saved:"设置已保存"},l={app:e,phases:t,privacy:a,settings:s};export{e as app,l as default,t as phases,a as privacy,s as settings};

@@ -1,3 +1,1 @@
-• Gesegmenteerde cyclusring met kleurcodering
-• Verbeterde privacygaranties
-• Lokale versleutelde opslag AES-256-GCM
+[nl-NL] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

@@ -1,3 +1,1 @@
-• रंग-कोडित फेज के साथ सेगमेंटेड साइकिल रिंग
-• बेहतर गोपनीयता गारंटी
-• AES-256-GCM स्थानीय एन्क्रिप्टेड स्टोरेज
+[hi] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.

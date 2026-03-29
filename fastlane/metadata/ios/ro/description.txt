@@ -1,10 +1,1 @@
-LUNA — aplicație de urmărire a ciclului cu confidențialitate totală. Datele rămân pe dispozitiv, criptate AES-256.
-
-FUNCȚIONALITĂȚI
-Urmărire perioadă și simptome, grafic TBB, urmărire dispoziție
-4 moduri: Regular, TTC, Sarcină, Perimenopauză
-Fereastră fertilitate și ovulație
-
-CONFIDENȚIALITATE
-AES-256, fără cont, fără cloud, fără reclame, fără trackere
-Cod sursă deschis: https://github.com/macaron-software/luna
+[ro] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.
