@@ -3,8 +3,6 @@
   import { _, locale } from 'svelte-i18n';
   import { browser } from '$app/environment';
   import { setupI18n, detectLocale, setLocale, ALL_LOCALES } from '$lib/i18n.js';
-  import AppPromoCard from '$sdk/app-promo/AppPromoCard.svelte';
-
   setupI18n();
 
   onMount(() => {
@@ -100,14 +98,3 @@
 </svelte:head>
 
 {@render children()}
-
-<footer style="padding: 1rem; max-width: 600px; margin: 0 auto;">
-  {#if $locale}
-  <AppPromoCard
-    appId="luna"
-    appName="Luna"
-    tagline={$_('app.tagline', { default: 'Your cycle, understood' })}
-    color="#C084A0"
-  />
-  {/if}
-</footer>

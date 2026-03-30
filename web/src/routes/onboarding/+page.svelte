@@ -18,7 +18,7 @@
       settings: { lastPeriodDate, cycleLength: Number(cycleLength), periodLength: 5 },
       log: { period: [], symptoms: [], temperature: [], mood: [] }
     };
-    localStorage.setItem('luna_data', JSON.stringify(data));
+    localStorage.setItem('life-luna-data', JSON.stringify(data));
     localStorage.setItem('life-luna-onboarded', '1');
     goto('/');
   }

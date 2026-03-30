@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { PebbleButton, Icon, TabBar, EmpathyBanner } from '$ds/index.js';
+  import { PebbleButton, Icon, TabBar, EmpathyBanner, SegmentedRing } from '$ds/index.js';
   import { Home, Calendar, Sparkles, Settings } from 'lucide-svelte';
   import { loadData, getCurrentPhase } from '$lib/cycle-engine.js';
 
@@ -50,6 +50,11 @@
     cycleInfo = getCurrentPhase(data.settings.lastPeriodDate, data.settings.cycleLength);
   }
 
+  const PHASE_IDX = { menstrual: 0, follicular: 1, ovulation: 2, luteal: 3, unknown: 0 };
+  const phaseIndex = $derived(PHASE_IDX[cycleInfo.phase] ?? 0);
+  const periodLength = $derived(data.settings?.periodLength ?? 5);
+  const cycleLength = $derived(data.settings?.cycleLength ?? 28);
+
   const todayLogged = $derived(() => {
     const today = new Date().toISOString().split('T')[0];
     return data.log.period?.find(p => p.date === today);
@@ -62,6 +67,18 @@
       <span class="day-number">{cycleInfo.dayOfCycle}</span>
       <span class="day-label">Day</span>
     </div>
+    <SegmentedRing
+      segments={[
+        { label: 'Menstrual', color: '#E57373', value: periodLength },
+        { label: 'Follicular', color: '#F48FB1', value: Math.floor(cycleLength * 0.35) },
+        { label: 'Ovulation', color: '#CE93D8', value: Math.floor(cycleLength * 0.14) },
+        { label: 'Luteal', color: '#9FA8DA', value: cycleLength - periodLength - Math.floor(cycleLength * 0.49) },
+      ]}
+      currentIndex={phaseIndex}
+      centerText={String(cycleInfo.dayOfCycle)}
+      centerSubtext="Day"
+      size={200}
+    />
     <p class="phase-name">{phaseLabels[cycleInfo.phase] || 'Unknown'}</p>
     <PebbleButton label="Log today" size="lg" onclick={() => goto('/log')} />
     {#if cycleInfo.daysUntilNextPeriod > 0}
@@ -77,7 +94,7 @@
     tabs={[
       { id: 'home', label: 'Home', icon: 'home' },
       { id: 'cycle', label: 'Cycle', icon: 'calendar' },
-      { id: 'insights', label: 'Insights', icon: 'chart' },
+      { id: 'insights', label: 'Insights', icon: 'bar-chart' },
       { id: 'settings', label: 'Settings', icon: 'settings' }
     ]}
     activeTab="home"
@@ -93,6 +110,8 @@
     color: var(--c-text);
     display: flex;
     flex-direction: column;
+    max-width: 390px;
+    margin: 0 auto;
   }
 
   .hero {
@@ -114,7 +133,7 @@
   }
 
   .day-number {
-    font-size: 96px;
+    font-size: clamp(52px, 14vw, 96px);
     font-weight: var(--weight-bold);
     line-height: 1;
     letter-spacing: -0.02em;

@@ -3,7 +3,7 @@
   import { goto } from '$app/navigation';
   import { PebbleButton, TabBar } from '$ds/index.js';
 
-  const TABS = [{id:'home',label:'Home'},{id:'cycle',label:'Cycle'},{id:'insights',label:'Insights'},{id:'settings',label:'Settings'}];
+  const TABS = [{id:'home',label:'Home',icon:'home'},{id:'cycle',label:'Cycle',icon:'calendar'},{id:'insights',label:'Insights',icon:'bar-chart'},{id:'settings',label:'Settings',icon:'settings'}];
 
   let heroValue = $state('—');
   let statusLine = $state('Based on 0 cycles');
@@ -50,10 +50,10 @@
 </div>
 
 <style>
-  .screen { min-height: 100dvh; background: var(--c-bg); color: var(--c-text); display: flex; flex-direction: column; }
+  .screen { min-height: 100dvh; background: var(--c-bg); color: var(--c-text); display: flex; flex-direction: column; max-width: 390px; margin: 0 auto; }
   .hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--space-10) var(--space-4); gap: var(--space-5); text-align: center; }
   .hero-display { display: flex; flex-direction: column; align-items: center; }
-  .hero-value { font-size: 96px; font-weight: var(--weight-bold); line-height: 1; letter-spacing: -0.02em; color: var(--c-brand); }
+  .hero-value { font-size: clamp(52px, 14vw, 96px); font-weight: var(--weight-bold); line-height: 1; letter-spacing: -0.02em; color: var(--c-brand); }
   .hero-label { font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; margin-top: var(--space-2); }
   .status { font-size: var(--text-xl); font-weight: var(--weight-semibold); margin: 0; }
   .hint { font-size: var(--text-sm); color: var(--c-text-secondary); margin: 0; }
