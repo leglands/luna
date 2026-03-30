@@ -23,8 +23,10 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Use vendored life-sdk copy (avoids cross-repo auth requirement)
-          cp -r vendor-life-sdk "${RUNNER_WORKSPACE}/life-sdk"
+          # Mount vendored life-sdk at exact path expected by vite aliases
+          mkdir -p "${RUNNER_WORKSPACE}/life-sdk/ds"
+          cp -r vendor-life-sdk/ds "${RUNNER_WORKSPACE}/life-sdk/ds/web"
+          cp -r vendor-life-sdk/sdk "${RUNNER_WORKSPACE}/life-sdk/web"
 
       - name: Fetch DS tokens
         run: |
