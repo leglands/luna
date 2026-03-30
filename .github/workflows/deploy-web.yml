@@ -19,6 +19,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Checkout life-sdk (sibling, required for DS imports)
+        uses: actions/checkout@v4
+        with:
+          repository: macaron-software/life-sdk
+          path: ../life-sdk
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Fetch DS tokens
         run: |
           mkdir -p web/static
