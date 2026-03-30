@@ -20,11 +20,12 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Checkout life-sdk (sibling, required for DS imports)
-        uses: actions/checkout@v4
-        with:
-          repository: macaron-software/life-sdk
-          path: ../life-sdk
-          token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git clone --depth 1 \
+            https://x-access-token:${GH_TOKEN}@github.com/macaron-software/life-sdk.git \
+            "${RUNNER_WORKSPACE}/life-sdk"
 
       - name: Fetch DS tokens
         run: |
