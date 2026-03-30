@@ -102,10 +102,12 @@
 {@render children()}
 
 <footer style="padding: 1rem; max-width: 600px; margin: 0 auto;">
+  {#if $locale}
   <AppPromoCard
     appId="luna"
     appName="Luna"
     tagline={$_('app.tagline', { default: 'Your cycle, understood' })}
     color="#C084A0"
   />
+  {/if}
 </footer>
