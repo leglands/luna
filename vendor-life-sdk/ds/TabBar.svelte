@@ -1,24 +1,29 @@
 <script>
   import Icon from './Icon.svelte';
-  import { page } from '$app/stores';
 
   const BRAND_COLORS = {
-    luna: '#D4678A',
-    aura: '#E8A87C',
-    sienna: '#3c684b',
-    alma: '#7BA7A7',
-    nova: '#6366F1',
-    aida: '#8B5CF6',
+    luna: '#D4678A', aura: '#E8A87C', sienna: '#E64A19',
+    alma: '#7BA7A7', nova: '#6366F1', aida: '#8B5CF6',
+    vera: '#F48FB1', vita: '#A5D6A7', stella: '#FFB74D', aria: '#4FC3F7',
   };
 
   let {
     tabs = [],
+    activeTab = '',
     activeIndex = 0,
+    onchange = null,
     brand = 'luna',
     class: className = '',
   } = $props();
 
   const brandColor = $derived(BRAND_COLORS[brand] ?? BRAND_COLORS.luna);
+
+  // Resolve active index from either string id or number
+  const resolvedIndex = $derived(
+    activeTab
+      ? tabs.findIndex(t => t.id === activeTab)
+      : activeIndex
+  );
 </script>
 
 <nav
@@ -28,19 +33,31 @@
   aria-label="Main navigation"
 >
   {#each tabs.slice(0, 5) as tab, i}
-    <a
-      href={tab.href}
-      class="tab-item"
-      class:tab-item--active={i === activeIndex}
-      role="tab"
-      aria-selected={i === activeIndex}
-      aria-label={tab.label}
-    >
-      <span class="tab-icon">
-        <Icon name={tab.icon} size={20} />
-      </span>
-      <span class="tab-label">{tab.label}</span>
-    </a>
+    {#if onchange}
+      <button
+        class="tab-item"
+        class:tab-item--active={i === resolvedIndex}
+        role="tab"
+        aria-selected={i === resolvedIndex}
+        aria-label={tab.label}
+        onclick={() => onchange(tab.id)}
+      >
+        <span class="tab-icon"><Icon name={tab.icon ?? 'home'} size={20} /></span>
+        <span class="tab-label">{tab.label}</span>
+      </button>
+    {:else}
+      <a
+        href={tab.href}
+        class="tab-item"
+        class:tab-item--active={i === resolvedIndex}
+        role="tab"
+        aria-selected={i === resolvedIndex}
+        aria-label={tab.label}
+      >
+        <span class="tab-icon"><Icon name={tab.icon ?? 'home'} size={20} /></span>
+        <span class="tab-label">{tab.label}</span>
+      </a>
+    {/if}
   {/each}
 </nav>
 
@@ -68,14 +85,16 @@
     gap: var(--space-1);
     padding: var(--space-2);
     text-decoration: none;
-    color: var(--c-text-tertiary);
+    color: var(--c-text-tertiary, var(--c-text-secondary));
     border-radius: var(--radius-md);
-    transition:
-      color var(--duration-fast),
-      background var(--duration-fast);
+    transition: color var(--duration-fast), background var(--duration-fast);
     min-width: var(--tap-target);
     min-height: var(--tap-target);
     -webkit-tap-highlight-color: transparent;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-sans);
   }
 
   .tab-item:hover:not(.tab-item--active) {
@@ -103,5 +122,9 @@
     font-weight: var(--weight-medium);
     line-height: var(--leading-tight);
     text-align: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tab-item { transition: none; }
   }
 </style>
