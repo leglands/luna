@@ -1,0 +1,50 @@
+name: Deploy Luna Web
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'web/**'
+      - '.github/workflows/deploy-web.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: luna-web-deploy
+  cancel-in-progress: true
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch DS tokens
+        run: |
+          mkdir -p web/static
+          curl -sfL "https://raw.githubusercontent.com/macaron-software/life-sdk/main/ds/web/tokens.css" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -o web/static/tokens.css || echo "warn: tokens.css fetch failed, using existing"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: web/package-lock.json
+
+      - run: cd web && npm ci --legacy-peer-deps
+      - run: cd web && npm run build
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.OVH_SSH_KEY }}
+
+      - name: Deploy to VPS
+        run: |
+          ssh-keyscan -H 54.36.183.124 >> ~/.ssh/known_hosts
+          ssh debian@54.36.183.124 "mkdir -p /opt/life/static/luna"
+          rsync -az --delete web/build/ debian@54.36.183.124:/opt/life/static/luna/
+
+      - name: Verify
+        run: curl -sf https://luna.macaron-software.com/ -o /dev/null -w "%{http_code}" | grep 200
