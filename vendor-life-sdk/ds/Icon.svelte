@@ -4,7 +4,7 @@
     Award, Baby, Bell, Bluetooth, BluetoothOff, BookOpen, Bookmark, BookmarkCheck,
     BarChart3, Briefcase, Calendar, CalendarCheck, CalendarClock, Camera, Check,
     CheckCircle2, ChevronDown, ChevronLeft, ChevronRight, ChevronUp, Circle,
-    Clipboard, ClipboardList, Coffee, Compass, Contact, Copy, Cross, Cylinder,
+    Clipboard, ClipboardList, Clock, Coffee, Compass, Contact, Copy, Cross, Cylinder,
     Database, Download, Droplet, Droplets, Eye, EyeOff, FileText, Flag, Flame,
     FlaskConical, Funnel, Gift, Globe, GripVertical, Hand, Heart, HeartPulse,
     HelpCircle, Home, Hospital, Image, Info, Keyboard, Lightbulb, Link, Link2,
