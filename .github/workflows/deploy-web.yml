@@ -23,9 +23,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git clone --depth 1 \
-            https://x-access-token:${GH_TOKEN}@github.com/macaron-software/life-sdk.git \
-            "${RUNNER_WORKSPACE}/life-sdk"
+          # Use vendored life-sdk copy (avoids cross-repo auth requirement)
+          cp -r vendor-life-sdk "${RUNNER_WORKSPACE}/life-sdk"
 
       - name: Fetch DS tokens
         run: |
