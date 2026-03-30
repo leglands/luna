@@ -1,246 +1,140 @@
 <script>
-  import { Icon, PebbleButton, EmpathyBanner, PrivacyBadge } from '$ds/index.js';
+  import { goto } from '$app/navigation';
+  import { PebbleButton, Icon } from '$ds/index.js';
+  import { ChevronLeft } from 'lucide-svelte';
+  import { loadData, logEntry, updateSettings } from '$lib/cycle-engine.js';
 
-  const flowTypes = [
-    { id: 'period-start', label: 'Period start', icon: 'droplets' },
-    { id: 'period-end', label: 'Period end', icon: 'droplet' },
-    { id: 'spotting', label: 'Spotting', icon: 'circle' },
-    { id: 'none', label: 'None', icon: 'x' }
-  ];
-
-  const flowIntensities = [
-    { id: 'light', label: 'Light' },
-    { id: 'medium', label: 'Medium' },
-    { id: 'heavy', label: 'Heavy' },
-    { id: 'very-heavy', label: 'Very heavy' }
-  ];
-
-  const symptoms = [
-    { id: 'cramps', label: 'Cramps', icon: 'flame' },
-    { id: 'bloating', label: 'Bloating', icon: 'waves' },
-    { id: 'headache', label: 'Headache', icon: 'zap' },
-    { id: 'fatigue', label: 'Fatigue', icon: 'moon' },
-    { id: 'mood-swings', label: 'Mood swings', icon: 'sun-moon' },
-    { id: 'breast-tenderness', label: 'Breast tenderness', icon: 'heart' },
-    { id: 'nausea', label: 'Nausea', icon: 'activity' },
-    { id: 'backache', label: 'Backache', icon: 'arrow-left' }
-  ];
-
-  const mucusTypes = [
-    { id: 'dry', label: 'Dry' },
-    { id: 'sticky', label: 'Sticky' },
-    { id: 'creamy', label: 'Creamy' },
-    { id: 'watery', label: 'Watery' },
-    { id: 'egg-white', label: 'Egg white' }
-  ];
-
-  const moods = [
-    { id: 'happy', label: 'Happy', icon: 'smile' },
-    { id: 'neutral', label: 'Neutral', icon: 'circle' },
-    { id: 'anxious', label: 'Anxious', icon: 'alert-circle' },
-    { id: 'sad', label: 'Sad', icon: 'droplet' },
-    { id: 'irritable', label: 'Irritable', icon: 'flame' },
-    { id: 'energetic', label: 'Energetic', icon: 'zap' }
-  ];
-
-  let flowType = $state(null);
-  let flowIntensity = $state(null);
+  let selectedFlow = $state(null);
+  let selectedMood = $state(null);
   let selectedSymptoms = $state([]);
-  let temperature = $state('');
-  let mucus = $state(null);
-  let mood = $state(null);
-  let notes = $state('');
+  let symptomsExpanded = $state(false);
   let saving = $state(false);
 
-  const isPeriod = $derived(flowType === 'period-start' || flowType === 'period-end');
+  const flowOptions = [
+    { id: 'none', label: 'None', icon: 'x' },
+    { id: 'light', label: 'Light', icon: 'droplet' },
+    { id: 'medium', label: 'Medium', icon: 'droplet' },
+    { id: 'heavy', label: 'Heavy', icon: 'droplets' }
+  ];
 
-  const today = $derived(new Date().toLocaleDateString('en-US', {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric'
-  }));
+  const moodOptions = [
+    { id: 'calm', label: 'Calm', icon: 'sun' },
+    { id: 'tired', label: 'Tired', icon: 'moon' },
+    { id: 'irritable', label: 'Irritable', icon: 'flame' },
+    { id: 'happy', label: 'Happy', icon: 'smile' },
+    { id: 'anxious', label: 'Anxious', icon: 'alert-circle' }
+  ];
 
-  function toggleFlowType(id) {
-    flowType = flowType === id ? null : id;
-    if (!isPeriod) {
-      flowIntensity = null;
-    }
-  }
+  const symptomOptions = [
+    'cramps', 'bloating', 'headache', 'fatigue', 'back-pain', 'breast-tenderness', 'nausea', 'acne'
+  ];
 
-  function toggleIntensity(id) {
-    flowIntensity = flowIntensity === id ? null : id;
-  }
-
-  function toggleSymptom(id) {
-    if (selectedSymptoms.includes(id)) {
-      selectedSymptoms = selectedSymptoms.filter(s => s !== id);
-    } else {
-      selectedSymptoms = [...selectedSymptoms, id];
-    }
-  }
-
-  function toggleMucus(id) {
-    mucus = mucus === id ? null : id;
+  function toggleFlow(id) {
+    selectedFlow = selectedFlow === id ? null : id;
   }
 
   function toggleMood(id) {
-    mood = mood === id ? null : id;
+    selectedMood = selectedMood === id ? null : id;
   }
 
-  function handleBack() {
-    window.location.href = '/cycle';
+  function toggleSymptom(symptom) {
+    if (selectedSymptoms.includes(symptom)) {
+      selectedSymptoms = selectedSymptoms.filter(s => s !== symptom);
+    } else {
+      selectedSymptoms = [...selectedSymptoms, symptom];
+    }
   }
 
   async function handleSave() {
     saving = true;
-    const entry = {
-      date: new Date().toISOString().split('T')[0],
-      flowType,
-      flowIntensity: isPeriod ? flowIntensity : null,
-      symptoms: selectedSymptoms,
-      temperature: temperature || null,
-      mucus,
-      mood,
-      notes: notes.trim() || null
-    };
-    console.log('Saving entry:', entry);
-    await new Promise(resolve => setTimeout(resolve, 500));
+    const today = new Date().toISOString().split('T')[0];
+    if (selectedFlow && selectedFlow !== 'none') {
+      logEntry('period', { date: today, flow: selectedFlow });
+    }
+    if (selectedMood || selectedSymptoms.length > 0) {
+      logEntry('symptoms', { date: today, mood: selectedMood, symptoms: selectedSymptoms });
+    }
+    await new Promise(r => setTimeout(r, 300));
     saving = false;
-    window.location.href = '/cycle';
+    goto('/');
+  }
+
+  function handleBack() {
+    goto('/');
   }
 </script>
 
-<div class="log-page">
+<div class="log-page" data-app="luna">
   <header class="page-header">
-    <button class="back-link" onclick={handleBack}>
+    <button class="back-btn" onclick={handleBack} aria-label="Back">
       <Icon name="chevron-left" size={20} />
-      <span>Back</span>
     </button>
-    <div class="header-center">
-      <h1 class="page-title">Log Today</h1>
-      <p class="page-date">{today}</p>
-    </div>
-    <PrivacyBadge />
+    <h1>How are you today?</h1>
   </header>
 
   <main class="page-content">
-    <EmpathyBanner type="info" />
-
-    <section class="form-section">
-      <h2 class="section-label">Flow type</h2>
-      <div class="chip-grid chip-grid-4">
-        {#each flowTypes as ft}
+    <section class="section">
+      <h2 class="section-label">Flow</h2>
+      <div class="flow-grid">
+        {#each flowOptions as option}
           <button
-            class="chip"
-            class:chip-selected={flowType === ft.id}
-            onclick={() => toggleFlowType(ft.id)}
+            class="flow-btn"
+            class:selected={selectedFlow === option.id}
+            onclick={() => toggleFlow(option.id)}
+            data-testid="flow-{option.id}"
           >
-            <Icon name={ft.icon} size={16} />
-            <span>{ft.label}</span>
+            <Icon name={option.icon} size={20} />
+            <span>{option.label}</span>
           </button>
         {/each}
       </div>
     </section>
 
-    {#if isPeriod}
-      <section class="form-section">
-        <h2 class="section-label">Flow intensity</h2>
-        <div class="chip-grid chip-grid-4">
-          {#each flowIntensities as intensity}
+    <section class="section">
+      <h2 class="section-label">Mood</h2>
+      <div class="mood-grid">
+        {#each moodOptions as option}
+          <button
+            class="mood-btn"
+            class:selected={selectedMood === option.id}
+            onclick={() => toggleMood(option.id)}
+            data-testid="mood-{option.id}"
+          >
+            <Icon name={option.icon} size={18} />
+            <span>{option.label}</span>
+          </button>
+        {/each}
+      </div>
+    </section>
+
+    <section class="section">
+      <button class="expand-btn" onclick={() => symptomsExpanded = !symptomsExpanded}>
+        <span>Add symptoms</span>
+        <Icon name={symptomsExpanded ? 'chevron-up' : 'chevron-down'} size={16} />
+      </button>
+      {#if symptomsExpanded}
+        <div class="symptom-grid">
+          {#each symptomOptions as symptom}
             <button
-              class="chip"
-              class:chip-selected={flowIntensity === intensity.id}
-              onclick={() => toggleIntensity(intensity.id)}
+              class="symptom-btn"
+              class:selected={selectedSymptoms.includes(symptom)}
+              onclick={() => toggleSymptom(symptom)}
+              data-testid="symptom-{symptom}"
             >
-              <span>{intensity.label}</span>
+              {symptom.replace('-', ' ')}
             </button>
           {/each}
         </div>
-      </section>
-    {/if}
-
-    <section class="form-section">
-      <h2 class="section-label">Symptoms</h2>
-      <div class="symptom-grid">
-        {#each symptoms as symptom}
-          <button
-            class="chip chip-symptom"
-            class:chip-selected={selectedSymptoms.includes(symptom.id)}
-            onclick={() => toggleSymptom(symptom.id)}
-          >
-            <Icon name={symptom.icon} size={14} />
-            <span>{symptom.label}</span>
-          </button>
-        {/each}
-      </div>
+      {/if}
     </section>
 
-    <section class="form-section">
-      <h2 class="section-label">Basal body temperature <span class="optional">(optional)</span></h2>
-      <div class="input-row">
-        <Icon name="thermometer" size={18} class="input-icon" />
-        <input
-          type="number"
-          step="0.01"
-          min="35"
-          max="42"
-          placeholder="36.5"
-          bind:value={temperature}
-          class="text-input"
-        />
-        <span class="input-unit">C</span>
-      </div>
-    </section>
-
-    <section class="form-section">
-      <h2 class="section-label">Cervical mucus</h2>
-      <div class="chip-grid chip-grid-5">
-        {#each mucusTypes as m}
-          <button
-            class="chip chip-small"
-            class:chip-selected={mucus === m.id}
-            onclick={() => toggleMucus(m.id)}
-          >
-            <span>{m.label}</span>
-          </button>
-        {/each}
-      </div>
-    </section>
-
-    <section class="form-section">
-      <h2 class="section-label">Mood</h2>
-      <div class="mood-grid">
-        {#each moods as m}
-          <button
-            class="mood-chip"
-            class:chip-selected={mood === m.id}
-            onclick={() => toggleMood(m.id)}
-          >
-            <Icon name={m.icon} size={20} />
-            <span>{m.label}</span>
-          </button>
-        {/each}
-      </div>
-    </section>
-
-    <section class="form-section">
-      <h2 class="section-label">Notes <span class="optional">(optional)</span></h2>
-      <textarea
-        bind:value={notes}
-        placeholder="How are you feeling today?"
-        class="notes-input"
-        rows="3"
-      ></textarea>
-    </section>
-
-    <div class="save-section">
+    <div class="save-area">
       <PebbleButton
-        brand="luna"
         label="Save"
         size="lg"
-        variant="primary"
         loading={saving}
         onclick={handleSave}
+        data-testid="save-btn"
       />
     </div>
   </main>
@@ -248,7 +142,7 @@
 
 <style>
   .log-page {
-    min-height: 100vh;
+    min-height: 100dvh;
     background: var(--c-bg);
     color: var(--c-text);
   }
@@ -265,55 +159,40 @@
     z-index: var(--z-sticky, 100);
   }
 
-  .back-link {
+  .back-btn {
     display: flex;
     align-items: center;
-    gap: var(--space-1);
+    justify-content: center;
     background: none;
     border: none;
-    color: var(--c-text-secondary);
-    font-size: var(--text-sm);
     cursor: pointer;
-    padding: var(--space-2);
-    border-radius: var(--radius-md);
-    min-height: var(--tap-target);
+    color: var(--c-text);
     min-width: var(--tap-target);
+    min-height: var(--tap-target);
+    border-radius: var(--radius-md);
   }
 
-  .back-link:hover {
+  .back-btn:hover {
     background: var(--c-surface-container);
-    color: var(--c-text);
   }
 
-  .header-center {
+  h1 {
     flex: 1;
-    text-align: center;
-  }
-
-  .page-title {
-    font-size: var(--text-lg);
-    font-weight: var(--weight-semibold);
-    color: var(--c-text);
+    font-size: var(--text-xl);
+    font-weight: var(--weight-bold);
     margin: 0;
   }
 
-  .page-date {
-    font-size: var(--text-xs);
-    color: var(--c-text-secondary);
-    margin: var(--space-1) 0 0 0;
-  }
-
   .page-content {
-    padding: var(--space-4);
+    padding: var(--space-6) var(--space-4);
     display: flex;
     flex-direction: column;
-    gap: var(--space-5);
+    gap: var(--space-6);
     max-width: 480px;
     margin: 0 auto;
-    padding-bottom: var(--space-12);
   }
 
-  .form-section {
+  .section {
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
@@ -322,183 +201,126 @@
   .section-label {
     font-size: var(--text-sm);
     font-weight: var(--weight-semibold);
-    color: var(--c-text);
+    color: var(--c-text-secondary);
     margin: 0;
   }
 
-  .optional {
-    font-weight: var(--weight-normal);
-    color: var(--c-text-secondary);
-  }
-
-  .chip-grid {
+  .flow-grid {
     display: grid;
-    gap: var(--space-2);
-  }
-
-  .chip-grid-4 {
     grid-template-columns: repeat(4, 1fr);
-  }
-
-  .chip-grid-5 {
-    grid-template-columns: repeat(5, 1fr);
-  }
-
-  .symptom-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
     gap: var(--space-2);
   }
 
-  .chip {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-1);
-    padding: var(--space-2) var(--space-2);
-    background: var(--c-surface);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-md);
-    font-size: var(--text-xs);
-    font-weight: var(--weight-medium);
-    color: var(--c-text-secondary);
-    cursor: pointer;
-    transition: all var(--duration-fast);
-    min-height: var(--tap-target);
-  }
-
-  .chip:hover {
-    border-color: var(--c-brand);
-    color: var(--c-brand);
-  }
-
-  .chip-selected {
-    background: var(--c-brand);
-    border-color: var(--c-brand);
-    color: white;
-  }
-
-  .chip-selected:hover {
-    color: white;
-  }
-
-  .chip-symptom {
-    justify-content: flex-start;
-    padding: var(--space-3);
-    font-size: var(--text-sm);
-  }
-
-  .chip-small {
-    font-size: var(--text-xs);
-    padding: var(--space-2);
-  }
-
-  .mood-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-2);
-  }
-
-  .mood-chip {
+  .flow-btn {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: var(--space-1);
     padding: var(--space-3);
     background: var(--c-surface);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-md);
-    font-size: var(--text-xs);
-    font-weight: var(--weight-medium);
-    color: var(--c-text-secondary);
+    border: 2px solid var(--c-border);
+    border-radius: var(--radius-lg);
     cursor: pointer;
+    color: var(--c-text-secondary);
     transition: all var(--duration-fast);
     min-height: var(--tap-target);
   }
 
-  .mood-chip:hover {
-    border-color: var(--c-brand);
-    color: var(--c-brand);
+  .flow-btn.selected {
+    border-color: var(--c-brand, #E57373);
+    color: var(--c-brand, #E57373);
+    background: color-mix(in srgb, var(--c-brand, #E57373) 8%, var(--c-surface));
   }
 
-  .mood-chip:has(.chip-selected) {
-    border-color: var(--c-brand);
+  .flow-btn span {
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
   }
 
-  .input-row {
-    display: flex;
-    align-items: center;
+  .mood-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
     gap: var(--space-2);
-    padding: var(--space-3);
+  }
+
+  .mood-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-2);
     background: var(--c-surface);
     border: 1px solid var(--c-border);
     border-radius: var(--radius-md);
-  }
-
-  .input-icon {
+    cursor: pointer;
     color: var(--c-text-secondary);
-    flex-shrink: 0;
-  }
-
-  .text-input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    font-size: var(--text-base);
-    color: var(--c-text);
-    font-family: var(--font-sans);
+    transition: all var(--duration-fast);
     min-height: var(--tap-target);
   }
 
-  .text-input:focus {
-    outline: none;
+  .mood-btn.selected {
+    border-color: var(--c-brand, #E57373);
+    color: var(--c-brand, #E57373);
+    background: color-mix(in srgb, var(--c-brand, #E57373) 8%, var(--c-surface));
   }
 
-  .text-input::placeholder {
-    color: var(--c-text-secondary);
+  .mood-btn span {
+    font-size: 10px;
+    font-weight: var(--weight-medium);
   }
 
-  .input-unit {
-    font-size: var(--text-sm);
-    color: var(--c-text-secondary);
-  }
-
-  .notes-input {
+  .expand-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
     padding: var(--space-3);
     background: var(--c-surface);
     border: 1px solid var(--c-border);
     border-radius: var(--radius-md);
-    font-size: var(--text-base);
+    cursor: pointer;
     color: var(--c-text);
-    font-family: var(--font-sans);
-    resize: vertical;
-    min-height: 80px;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    min-height: var(--tap-target);
   }
 
-  .notes-input:focus {
-    outline: none;
-    border-color: var(--c-brand);
+  .symptom-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
   }
 
-  .notes-input::placeholder {
+  .symptom-btn {
+    padding: var(--space-2) var(--space-3);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-full);
+    cursor: pointer;
     color: var(--c-text-secondary);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    transition: all var(--duration-fast);
+    min-height: var(--tap-target);
   }
 
-  .save-section {
+  .symptom-btn.selected {
+    border-color: var(--c-brand, #E57373);
+    color: var(--c-brand, #E57373);
+    background: color-mix(in srgb, var(--c-brand, #E57373) 8%, var(--c-surface));
+  }
+
+  .save-area {
     padding-top: var(--space-4);
     display: flex;
     justify-content: center;
   }
 
-  .save-section :global(button) {
-    width: 100%;
-    max-width: 280px;
-  }
-
   @media (prefers-reduced-motion: reduce) {
-    .chip,
-    .mood-chip {
+    .flow-btn,
+    .mood-btn,
+    .symptom-btn {
       transition: none;
     }
   }
