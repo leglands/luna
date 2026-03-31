@@ -120,7 +120,7 @@
     color: var(--c-text);
     display: flex;
     flex-direction: column;
-    max-width: 390px;
+    max-width: 780px;
     margin: 0 auto;
   }
 

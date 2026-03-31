@@ -156,7 +156,7 @@
     padding: 24px 16px 40px;
     gap: var(--space-6);
     text-align: center;
-    max-width: 390px;
+    max-width: 780px;
     margin: 0 auto;
   }
 

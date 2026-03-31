@@ -69,7 +69,7 @@
 </div>
 
 <style>
-  .screen { min-height: 100dvh; background: var(--c-bg); color: var(--c-text); display: flex; flex-direction: column; max-width: 390px; margin: 0 auto; }
+  .screen { min-height: 100dvh; background: var(--c-bg); color: var(--c-text); display: flex; flex-direction: column; max-width: 780px; margin: 0 auto; }
   .content { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--space-10) var(--space-4); gap: var(--space-6); }
   .title { font-size: var(--text-2xl); font-weight: var(--weight-bold); margin: 0; }
   .rows { display: flex; flex-direction: column; gap: var(--space-4); width: 100%; max-width: 320px; }

@@ -1,35 +1,36 @@
-import { k as derived } from "../../../chunks/index2.js";
-import { I as Icon, P as PebbleButton } from "../../../chunks/StitchCP.svelte_svelte_type_style_lang.js";
-import "@sveltejs/kit/internal";
-import "../../../chunks/exports.js";
-import "../../../chunks/utils.js";
-import "@sveltejs/kit/internal/server";
-import "../../../chunks/root.js";
-import "../../../chunks/state.svelte.js";
-import { P as PrivacyBadge } from "../../../chunks/PrivacyBadge.js";
+import { e as escape_html } from "../../../chunks/index2.js";
+import "clsx";
+import { g as goto } from "../../../chunks/client.js";
+import { P as PebbleButton } from "../../../chunks/EmotionPicker.svelte_svelte_type_style_lang.js";
+import { T as TabBar } from "../../../chunks/TabBar.js";
 function _page($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
-    let data = null;
-    let cycleInfo = null;
-    const hasData = derived(() => data);
-    function handleBack() {
-      window.location.href = "/";
-    }
-    $$renderer2.push(`<div class="cycle-page svelte-wl2tsh"><header class="page-header svelte-wl2tsh"><button class="back-link svelte-wl2tsh">`);
-    Icon($$renderer2, { name: "chevron-left", size: 20 });
-    $$renderer2.push(`<!----> <span>Home</span></button> <h1 class="page-title svelte-wl2tsh">My Cycle</h1> `);
-    PrivacyBadge($$renderer2, {});
-    $$renderer2.push(`<!----></header> `);
-    if (hasData() && cycleInfo) ;
-    else {
+    const TABS = [
+      { id: "home", label: "Home", icon: "home" },
+      { id: "cycle", label: "Cycle", icon: "calendar" },
+      { id: "insights", label: "Insights", icon: "bar-chart" },
+      { id: "settings", label: "Settings", icon: "settings" }
+    ];
+    let heroValue = "—";
+    let statusLine = "";
+    $$renderer2.push(`<div class="screen svelte-wl2tsh" data-app="luna"><main class="hero svelte-wl2tsh"><div class="hero-display svelte-wl2tsh"><span class="hero-value svelte-wl2tsh">${escape_html(heroValue)}</span> <span class="hero-label svelte-wl2tsh">Day of cycle</span></div> <p class="status svelte-wl2tsh">${escape_html(statusLine)}</p> `);
+    PebbleButton($$renderer2, { label: "Log today", size: "lg", onclick: () => goto() });
+    $$renderer2.push(`<!----> `);
+    {
       $$renderer2.push("<!--[-1-->");
-      $$renderer2.push(`<main class="empty-state svelte-wl2tsh"><div class="empty-icon svelte-wl2tsh">`);
-      Icon($$renderer2, { name: "calendar", size: 48 });
-      $$renderer2.push(`<!----></div> <h2 class="empty-title svelte-wl2tsh">No cycle data yet</h2> <p class="empty-description svelte-wl2tsh">Start tracking your cycle to see insights and predictions.</p> `);
-      PebbleButton($$renderer2, { label: "Log period", onclick: handleBack });
-      $$renderer2.push(`<!----></main>`);
     }
-    $$renderer2.push(`<!--]--></div>`);
+    $$renderer2.push(`<!--]--> `);
+    {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]--></main> `);
+    TabBar($$renderer2, {
+      tabs: TABS,
+      activeTab: "cycle",
+      onchange: (id) => goto(),
+      brand: "luna"
+    });
+    $$renderer2.push(`<!----></div>`);
   });
 }
 export {

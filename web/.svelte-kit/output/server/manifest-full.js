@@ -10,13 +10,19 @@ return {
 	assets: new Set(["apple-touch-icon.png","favicon.png","favicon.svg","robots.txt","tokens.css"]),
 	mimeTypes: {".png":"image/png",".svg":"image/svg+xml",".txt":"text/plain",".css":"text/css"},
 	_: {
-		client: {start:"_app/immutable/entry/start.C1Rk6s3m.js",app:"_app/immutable/entry/app.O0U6Ibd3.js",imports:["_app/immutable/entry/start.C1Rk6s3m.js","_app/immutable/chunks/BClP2IcV.js","_app/immutable/chunks/B6BIfIst.js","_app/immutable/chunks/DVguz3vq.js","_app/immutable/entry/app.O0U6Ibd3.js","_app/immutable/chunks/DVguz3vq.js","_app/immutable/chunks/B6BIfIst.js"],stylesheets:[],fonts:[],uses_env_dynamic_public:false},
+		client: {start:"_app/immutable/entry/start.Dx11DAlz.js",app:"_app/immutable/entry/app.BRdk7d8X.js",imports:["_app/immutable/entry/start.Dx11DAlz.js","_app/immutable/chunks/BNqctCUD.js","_app/immutable/chunks/8ZzFN8Yi.js","_app/immutable/chunks/bVzZqNtC.js","_app/immutable/entry/app.BRdk7d8X.js","_app/immutable/chunks/bVzZqNtC.js","_app/immutable/chunks/8ZzFN8Yi.js"],stylesheets:[],fonts:[],uses_env_dynamic_public:false},
 		nodes: [
 			__memo(() => import('./nodes/0.js')),
 			__memo(() => import('./nodes/1.js')),
 			__memo(() => import('./nodes/2.js')),
 			__memo(() => import('./nodes/3.js')),
-			__memo(() => import('./nodes/4.js'))
+			__memo(() => import('./nodes/4.js')),
+			__memo(() => import('./nodes/5.js')),
+			__memo(() => import('./nodes/6.js')),
+			__memo(() => import('./nodes/7.js')),
+			__memo(() => import('./nodes/8.js')),
+			__memo(() => import('./nodes/9.js')),
+			__memo(() => import('./nodes/10.js'))
 		],
 		remotes: {
 			
@@ -37,10 +43,52 @@ return {
 				endpoint: null
 			},
 			{
+				id: "/export",
+				pattern: /^\/export\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 4 },
+				endpoint: null
+			},
+			{
+				id: "/fertility",
+				pattern: /^\/fertility\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 5 },
+				endpoint: null
+			},
+			{
+				id: "/history",
+				pattern: /^\/history\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 6 },
+				endpoint: null
+			},
+			{
+				id: "/insights",
+				pattern: /^\/insights\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 7 },
+				endpoint: null
+			},
+			{
 				id: "/log",
 				pattern: /^\/log\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 4 },
+				page: { layouts: [0,], errors: [1,], leaf: 8 },
+				endpoint: null
+			},
+			{
+				id: "/onboarding",
+				pattern: /^\/onboarding\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 9 },
+				endpoint: null
+			},
+			{
+				id: "/settings",
+				pattern: /^\/settings\/?$/,
+				params: [],
+				page: { layouts: [0,], errors: [1,], leaf: 10 },
 				endpoint: null
 			},
 			{

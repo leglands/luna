@@ -1,147 +1,121 @@
-import { e as escape_html, f as ensure_array_like, a as attr_class, c as attr, k as derived } from "../../../chunks/index2.js";
-import { I as Icon, P as PebbleButton } from "../../../chunks/StitchCP.svelte_svelte_type_style_lang.js";
-import { E as EmpathyBanner } from "../../../chunks/EmpathyBanner.js";
-import "@sveltejs/kit/internal";
-import "../../../chunks/exports.js";
-import "../../../chunks/utils.js";
-import "@sveltejs/kit/internal/server";
-import "../../../chunks/root.js";
-import "../../../chunks/state.svelte.js";
-import { P as PrivacyBadge } from "../../../chunks/PrivacyBadge.js";
+import { f as attr_style, e as escape_html, c as ensure_array_like, d as attr_class, a as attr, b as stringify } from "../../../chunks/index2.js";
+import { g as goto } from "../../../chunks/client.js";
+import { P as PebbleButton } from "../../../chunks/EmotionPicker.svelte_svelte_type_style_lang.js";
 function _page($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
-    const flowTypes = [
-      { id: "period-start", label: "Period start", icon: "droplets" },
-      { id: "period-end", label: "Period end", icon: "droplet" },
-      { id: "spotting", label: "Spotting", icon: "circle" },
-      { id: "none", label: "None", icon: "x" }
-    ];
-    const flowIntensities = [
-      { id: "light", label: "Light" },
-      { id: "medium", label: "Medium" },
-      { id: "heavy", label: "Heavy" },
-      { id: "very-heavy", label: "Very heavy" }
-    ];
-    const symptoms = [
-      { id: "cramps", label: "Cramps", icon: "flame" },
-      { id: "bloating", label: "Bloating", icon: "waves" },
-      { id: "headache", label: "Headache", icon: "zap" },
-      { id: "fatigue", label: "Fatigue", icon: "moon" },
-      { id: "mood-swings", label: "Mood swings", icon: "sun-moon" },
-      {
-        id: "breast-tenderness",
-        label: "Breast tenderness",
-        icon: "heart"
-      },
-      { id: "nausea", label: "Nausea", icon: "activity" },
-      { id: "backache", label: "Backache", icon: "arrow-left" }
-    ];
-    const mucusTypes = [
-      { id: "dry", label: "Dry" },
-      { id: "sticky", label: "Sticky" },
-      { id: "creamy", label: "Creamy" },
-      { id: "watery", label: "Watery" },
-      { id: "egg-white", label: "Egg white" }
-    ];
-    const moods = [
-      { id: "happy", label: "Happy", icon: "smile" },
-      { id: "neutral", label: "Neutral", icon: "circle" },
-      { id: "anxious", label: "Anxious", icon: "alert-circle" },
-      { id: "sad", label: "Sad", icon: "droplet" },
-      { id: "irritable", label: "Irritable", icon: "flame" },
-      { id: "energetic", label: "Energetic", icon: "zap" }
-    ];
-    let flowType = null;
-    let flowIntensity = null;
-    let selectedSymptoms = [];
-    let temperature = "";
-    let mucus = null;
-    let mood = null;
-    let notes = "";
-    let saving = false;
-    const isPeriod = derived(() => flowType === "period-end");
-    const today = derived(() => (/* @__PURE__ */ new Date()).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" }));
-    async function handleSave() {
-      saving = true;
-      const entry = {
-        date: (/* @__PURE__ */ new Date()).toISOString().split("T")[0],
-        flowType,
-        flowIntensity: isPeriod() ? flowIntensity : null,
-        symptoms: selectedSymptoms,
-        temperature: null,
-        mucus,
-        mood,
-        notes: notes.trim() || null
+    const BRAND = "#E91E8C";
+    const KEY = "life-luna-data";
+    const today = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
+    const heroText = (/* @__PURE__ */ new Date()).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+    function loadToday() {
+      const d = JSON.parse(localStorage.getItem(KEY) ?? "{}");
+      const log = d.log ?? {};
+      const periodEntry = (log.period ?? []).find((e) => e.date === today);
+      const moodEntry = (log.mood ?? []).find((e) => e.date === today);
+      const energyEntry = (log.energy ?? []).find((e) => e.date === today);
+      const sympEntry = (log.symptoms ?? []).find((e) => e.date === today);
+      const tempEntry = (log.temperature ?? []).find((e) => e.date === today);
+      return {
+        flow: periodEntry?.flow ?? "none",
+        mood: moodEntry?.score ?? 0,
+        energy: energyEntry?.score ?? 0,
+        symptoms: sympEntry?.items ?? [],
+        temperature: tempEntry?.value ?? ""
       };
-      console.log("Saving entry:", entry);
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      saving = false;
-      window.location.href = "/cycle";
     }
-    $$renderer2.push(`<div class="log-page svelte-b2zgdd"><header class="page-header svelte-b2zgdd"><button class="back-link svelte-b2zgdd">`);
-    Icon($$renderer2, { name: "chevron-left", size: 20 });
-    $$renderer2.push(`<!----> <span>Back</span></button> <div class="header-center svelte-b2zgdd"><h1 class="page-title svelte-b2zgdd">Log Today</h1> <p class="page-date svelte-b2zgdd">${escape_html(today())}</p></div> `);
-    PrivacyBadge($$renderer2, {});
-    $$renderer2.push(`<!----></header> <main class="page-content svelte-b2zgdd">`);
-    EmpathyBanner($$renderer2, {});
-    $$renderer2.push(`<!----> <section class="form-section svelte-b2zgdd"><h2 class="section-label svelte-b2zgdd">Flow type</h2> <div class="chip-grid chip-grid-4 svelte-b2zgdd"><!--[-->`);
-    const each_array = ensure_array_like(flowTypes);
-    for (let $$index = 0, $$length = each_array.length; $$index < $$length; $$index++) {
-      let ft = each_array[$$index];
-      $$renderer2.push(`<button${attr_class("chip svelte-b2zgdd", void 0, { "chip-selected": flowType === ft.id })}>`);
-      Icon($$renderer2, { name: ft.icon, size: 16 });
-      $$renderer2.push(`<!----> <span>${escape_html(ft.label)}</span></button>`);
-    }
-    $$renderer2.push(`<!--]--></div></section> `);
-    if (isPeriod()) {
-      $$renderer2.push("<!--[0-->");
-      $$renderer2.push(`<section class="form-section svelte-b2zgdd"><h2 class="section-label svelte-b2zgdd">Flow intensity</h2> <div class="chip-grid chip-grid-4 svelte-b2zgdd"><!--[-->`);
-      const each_array_1 = ensure_array_like(flowIntensities);
-      for (let $$index_1 = 0, $$length = each_array_1.length; $$index_1 < $$length; $$index_1++) {
-        let intensity = each_array_1[$$index_1];
-        $$renderer2.push(`<button${attr_class("chip svelte-b2zgdd", void 0, { "chip-selected": flowIntensity === intensity.id })}><span>${escape_html(intensity.label)}</span></button>`);
+    let existing = loadToday();
+    let flow = existing.flow;
+    let mood = existing.mood;
+    let energy = existing.energy;
+    let selectedSymptoms = new Set(existing.symptoms);
+    let temperature = existing.temperature;
+    const FLOW_OPTIONS = [
+      { value: "none", label: "None" },
+      { value: "spotting", label: "Spotting" },
+      { value: "light", label: "Light" },
+      { value: "medium", label: "Medium" },
+      { value: "heavy", label: "Heavy" }
+    ];
+    const MOOD_LABELS = ["", "Difficult", "Low", "Okay", "Good", "Great"];
+    const ENERGY_LABELS = ["", "Exhausted", "Tired", "Normal", "Energized", "Amazing"];
+    const QUICK_SYMPTOMS = [
+      { id: "cramps", label: "Cramps" },
+      { id: "bloating", label: "Bloating" },
+      { id: "fatigue", label: "Fatigue" },
+      { id: "headache", label: "Headache" },
+      { id: "breast_tenderness", label: "Breast tenderness" },
+      { id: "irritability", label: "Irritability" },
+      { id: "low_mood", label: "Low mood" },
+      { id: "high_energy", label: "High energy" },
+      { id: "nausea", label: "Nausea" },
+      { id: "lower_back_pain", label: "Back pain" }
+    ];
+    function save() {
+      const d = JSON.parse(localStorage.getItem(KEY) ?? "{}");
+      if (!d.log) d.log = {};
+      if (!d.log.period) d.log.period = [];
+      d.log.period = d.log.period.filter((e) => e.date !== today);
+      if (flow !== "none") {
+        d.log.period.push({ date: today, flow });
+        if (!d.settings) d.settings = {};
+        d.settings.lastPeriodDate = today;
       }
-      $$renderer2.push(`<!--]--></div></section>`);
-    } else {
+      if (!d.log.mood) d.log.mood = [];
+      d.log.mood = d.log.mood.filter((e) => e.date !== today);
+      if (mood > 0) d.log.mood.push({
+        date: today,
+        score: mood,
+        label: MOOD_LABELS[mood].toLowerCase()
+      });
+      if (!d.log.energy) d.log.energy = [];
+      d.log.energy = d.log.energy.filter((e) => e.date !== today);
+      if (energy > 0) d.log.energy.push({ date: today, score: energy });
+      if (!d.log.symptoms) d.log.symptoms = [];
+      d.log.symptoms = d.log.symptoms.filter((e) => e.date !== today);
+      if (selectedSymptoms.size > 0) d.log.symptoms.push({ date: today, items: [...selectedSymptoms] });
+      if (!d.log.temperature) d.log.temperature = [];
+      d.log.temperature = d.log.temperature.filter((e) => e.date !== today);
+      if (temperature) d.log.temperature.push({
+        date: today,
+        value: parseFloat(temperature),
+        time: (/* @__PURE__ */ new Date()).toTimeString().slice(0, 5)
+      });
+      localStorage.setItem(KEY, JSON.stringify(d));
+      goto();
+    }
+    $$renderer2.push(`<div class="screen svelte-b2zgdd" data-app="luna"><header class="svelte-b2zgdd"><button class="back svelte-b2zgdd">Back</button> <h1 class="title svelte-b2zgdd">Log today</h1></header> <main class="content svelte-b2zgdd"><p class="hero-date svelte-b2zgdd"${attr_style(`color:${stringify(BRAND)}`)}>${escape_html(heroText)}</p> <section class="section svelte-b2zgdd"><p class="section-label svelte-b2zgdd">Period flow</p> <div class="chip-row svelte-b2zgdd"><!--[-->`);
+    const each_array = ensure_array_like(FLOW_OPTIONS);
+    for (let $$index = 0, $$length = each_array.length; $$index < $$length; $$index++) {
+      let opt = each_array[$$index];
+      $$renderer2.push(`<button${attr_class("chip svelte-b2zgdd", void 0, { "active": flow === opt.value })}${attr_style(flow === opt.value ? `background:${BRAND};color:white;border-color:${BRAND}` : "")}>${escape_html(opt.label)}</button>`);
+    }
+    $$renderer2.push(`<!--]--></div></section> <section class="section svelte-b2zgdd"><p class="section-label svelte-b2zgdd">Mood ${escape_html(mood > 0 ? "— " + MOOD_LABELS[mood] : "")}</p> <div class="scale-row svelte-b2zgdd"><!--[-->`);
+    const each_array_1 = ensure_array_like([1, 2, 3, 4, 5]);
+    for (let $$index_1 = 0, $$length = each_array_1.length; $$index_1 < $$length; $$index_1++) {
+      let i = each_array_1[$$index_1];
+      $$renderer2.push(`<button${attr_class("scale-btn svelte-b2zgdd", void 0, { "active": mood === i })}${attr_style(mood === i ? `background:${BRAND};color:white` : "")}>${escape_html(i)}</button>`);
+    }
+    $$renderer2.push(`<!--]--></div></section> <section class="section svelte-b2zgdd"><p class="section-label svelte-b2zgdd">Energy ${escape_html(energy > 0 ? "— " + ENERGY_LABELS[energy] : "")}</p> <div class="scale-row svelte-b2zgdd"><!--[-->`);
+    const each_array_2 = ensure_array_like([1, 2, 3, 4, 5]);
+    for (let $$index_2 = 0, $$length = each_array_2.length; $$index_2 < $$length; $$index_2++) {
+      let i = each_array_2[$$index_2];
+      $$renderer2.push(`<button${attr_class("scale-btn svelte-b2zgdd", void 0, { "active": energy === i })}${attr_style(energy === i ? `background:${BRAND};color:white` : "")}>${escape_html(i)}</button>`);
+    }
+    $$renderer2.push(`<!--]--></div></section> <section class="section svelte-b2zgdd"><p class="section-label svelte-b2zgdd">Symptoms</p> <div class="chip-row wrap svelte-b2zgdd"><!--[-->`);
+    const each_array_3 = ensure_array_like(QUICK_SYMPTOMS);
+    for (let $$index_3 = 0, $$length = each_array_3.length; $$index_3 < $$length; $$index_3++) {
+      let s = each_array_3[$$index_3];
+      $$renderer2.push(`<button${attr_class("chip svelte-b2zgdd", void 0, { "active": selectedSymptoms.has(s.id) })}${attr_style(selectedSymptoms.has(s.id) ? `background:${BRAND};color:white;border-color:${BRAND}` : "")}>${escape_html(s.label)}</button>`);
+    }
+    $$renderer2.push(`<!--]--></div> `);
+    {
       $$renderer2.push("<!--[-1-->");
     }
-    $$renderer2.push(`<!--]--> <section class="form-section svelte-b2zgdd"><h2 class="section-label svelte-b2zgdd">Symptoms</h2> <div class="symptom-grid svelte-b2zgdd"><!--[-->`);
-    const each_array_2 = ensure_array_like(symptoms);
-    for (let $$index_2 = 0, $$length = each_array_2.length; $$index_2 < $$length; $$index_2++) {
-      let symptom = each_array_2[$$index_2];
-      $$renderer2.push(`<button${attr_class("chip chip-symptom svelte-b2zgdd", void 0, { "chip-selected": selectedSymptoms.includes(symptom.id) })}>`);
-      Icon($$renderer2, { name: symptom.icon, size: 14 });
-      $$renderer2.push(`<!----> <span>${escape_html(symptom.label)}</span></button>`);
-    }
-    $$renderer2.push(`<!--]--></div></section> <section class="form-section svelte-b2zgdd"><h2 class="section-label svelte-b2zgdd">Basal body temperature <span class="optional svelte-b2zgdd">(optional)</span></h2> <div class="input-row svelte-b2zgdd">`);
-    Icon($$renderer2, { name: "thermometer", size: 18, class: "input-icon" });
-    $$renderer2.push(`<!----> <input type="number" step="0.01" min="35" max="42" placeholder="36.5"${attr("value", temperature)} class="text-input svelte-b2zgdd"/> <span class="input-unit svelte-b2zgdd">C</span></div></section> <section class="form-section svelte-b2zgdd"><h2 class="section-label svelte-b2zgdd">Cervical mucus</h2> <div class="chip-grid chip-grid-5 svelte-b2zgdd"><!--[-->`);
-    const each_array_3 = ensure_array_like(mucusTypes);
-    for (let $$index_3 = 0, $$length = each_array_3.length; $$index_3 < $$length; $$index_3++) {
-      let m = each_array_3[$$index_3];
-      $$renderer2.push(`<button${attr_class("chip chip-small svelte-b2zgdd", void 0, { "chip-selected": mucus === m.id })}><span>${escape_html(m.label)}</span></button>`);
-    }
-    $$renderer2.push(`<!--]--></div></section> <section class="form-section svelte-b2zgdd"><h2 class="section-label svelte-b2zgdd">Mood</h2> <div class="mood-grid svelte-b2zgdd"><!--[-->`);
-    const each_array_4 = ensure_array_like(moods);
-    for (let $$index_4 = 0, $$length = each_array_4.length; $$index_4 < $$length; $$index_4++) {
-      let m = each_array_4[$$index_4];
-      $$renderer2.push(`<button${attr_class("mood-chip svelte-b2zgdd", void 0, { "chip-selected": mood === m.id })}>`);
-      Icon($$renderer2, { name: m.icon, size: 20 });
-      $$renderer2.push(`<!----> <span>${escape_html(m.label)}</span></button>`);
-    }
-    $$renderer2.push(`<!--]--></div></section> <section class="form-section svelte-b2zgdd"><h2 class="section-label svelte-b2zgdd">Notes <span class="optional svelte-b2zgdd">(optional)</span></h2> <textarea placeholder="How are you feeling today?" class="notes-input svelte-b2zgdd" rows="3">`);
-    const $$body = escape_html(notes);
-    if ($$body) {
-      $$renderer2.push(`${$$body}`);
-    }
-    $$renderer2.push(`</textarea></section> <div class="save-section svelte-b2zgdd">`);
+    $$renderer2.push(`<!--]--> <button class="more-btn svelte-b2zgdd">${escape_html("More symptoms")}</button></section> <section class="section svelte-b2zgdd"><p class="section-label svelte-b2zgdd">Temperature (BBT) — optional</p> <div class="temp-row svelte-b2zgdd"><input type="number"${attr("value", temperature)} placeholder="36.7" step="0.1" min="35" max="42" class="temp-input svelte-b2zgdd"/> <span class="temp-unit svelte-b2zgdd">°C</span></div> <p class="temp-hint svelte-b2zgdd">Take before getting up, at the same time each day</p></section> <div class="cta svelte-b2zgdd">`);
     PebbleButton($$renderer2, {
-      brand: "luna",
       label: "Save",
-      size: "lg",
-      variant: "primary",
-      loading: saving,
-      onclick: handleSave
+      onclick: save,
+      style: `--pebble-brand:${stringify(BRAND)}`
     });
     $$renderer2.push(`<!----></div></main></div>`);
   });

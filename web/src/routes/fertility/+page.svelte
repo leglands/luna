@@ -105,7 +105,7 @@
 </div>
 
 <style>
-  .screen { min-height: 100dvh; background: var(--c-bg, #fff); color: var(--c-text, #111); display: flex; flex-direction: column; max-width: 390px; margin: 0 auto; }
+  .screen { min-height: 100dvh; background: var(--c-bg, #fff); color: var(--c-text, #111); display: flex; flex-direction: column; max-width: 780px; margin: 0 auto; }
   .hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px 100px; gap: var(--space-2); text-align: center; }
   .label { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.1em; color: #888; margin: 0; }
   .hero-val { font-size: clamp(52px,14vw,96px); font-weight: 700; line-height: 1; margin: 8px 0 0; }

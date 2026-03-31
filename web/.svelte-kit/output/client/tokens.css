@@ -46,6 +46,7 @@
   --space-4:    16px;
   --space-5:    20px;
   --space-6:    24px;
+  --space-7:    28px;
   --space-8:    32px;
   --space-10:   40px;
   --space-12:   48px;
@@ -168,6 +169,50 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* ── Base typography (flow defaults) ───────────────────────── */
+/* Headings */
+h1 {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  margin-block: 0 var(--space-4);
+}
+h2 {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  margin-block: var(--space-5) var(--space-3);
+}
+h3 {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  margin-block: var(--space-4) var(--space-2);
+}
+h4 {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  margin-block: var(--space-3) var(--space-1);
+}
+
+/* Paragraphs */
+p {
+  line-height: var(--leading-normal);
+  margin-block: 0 var(--space-3);
+}
+p:last-child { margin-block-end: 0; }
+
+/* Form elements inherit font */
+button, input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* Sections breathe */
+section + section { margin-top: var(--space-6); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

@@ -1,216 +1,181 @@
-import { a as attr_class, b as attr_style, c as attr, e as escape_html, s as stringify, f as ensure_array_like, k as derived } from "../../chunks/index2.js";
-import { I as Icon, P as PebbleButton } from "../../chunks/StitchCP.svelte_svelte_type_style_lang.js";
-import { E as EmpathyBanner } from "../../chunks/EmpathyBanner.js";
-import "@sveltejs/kit/internal";
-import "../../chunks/exports.js";
-import "../../chunks/utils.js";
-import "@sveltejs/kit/internal/server";
-import "../../chunks/root.js";
-import "../../chunks/state.svelte.js";
-function PebbleAction($$renderer, $$props) {
-  let {
-    icon = "plus",
-    label = "",
-    color = "#3c684b",
-    active = false,
-    onclick = null,
-    class: className = ""
-  } = $$props;
-  $$renderer.push(`<button${attr_class(`pebble-action ${stringify(className)}`, "svelte-tj96p3", { "pebble-action--active": active })}${attr_style(`--action-color: ${stringify(color)}`)}${attr("aria-pressed", active)}><span class="pebble-icon svelte-tj96p3">`);
-  Icon($$renderer, { name: icon, size: 24 });
-  $$renderer.push(`<!----></span> `);
-  if (label) {
-    $$renderer.push("<!--[0-->");
-    $$renderer.push(`<span class="pebble-label svelte-tj96p3">${escape_html(label)}</span>`);
-  } else {
-    $$renderer.push("<!--[-1-->");
-  }
-  $$renderer.push(`<!--]--></button>`);
-}
-function TabBar($$renderer, $$props) {
+import { d as attr_class, f as attr_style, a as attr, c as ensure_array_like, e as escape_html, i as derived, b as stringify } from "../../chunks/index2.js";
+import { g as goto } from "../../chunks/client.js";
+import { I as Icon, P as PebbleButton } from "../../chunks/EmotionPicker.svelte_svelte_type_style_lang.js";
+import { T as TabBar } from "../../chunks/TabBar.js";
+function SegmentedRing($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
-    const BRAND_COLORS = {
-      luna: "#D4678A",
-      aura: "#E8A87C",
-      sienna: "#3c684b",
-      alma: "#7BA7A7",
-      nova: "#6366F1",
-      aida: "#8B5CF6"
-    };
     let {
-      tabs = [],
-      activeIndex = 0,
-      brand = "luna",
+      segments = [],
+      currentIndex = 0,
+      centerText = "",
+      centerSubtext = "",
+      size = 120,
       class: className = ""
     } = $$props;
-    const brandColor = derived(() => BRAND_COLORS[brand] ?? BRAND_COLORS.luna);
-    $$renderer2.push(`<nav${attr_class(`tab-bar ${stringify(className)}`, "svelte-1lgda09")}${attr_style(`--tab-brand: ${stringify(brandColor())}`)} role="tablist" aria-label="Main navigation"><!--[-->`);
-    const each_array = ensure_array_like(tabs.slice(0, 5));
-    for (let i = 0, $$length = each_array.length; i < $$length; i++) {
-      let tab = each_array[i];
-      $$renderer2.push(`<a${attr("href", tab.href)}${attr_class("tab-item svelte-1lgda09", void 0, { "tab-item--active": i === activeIndex })} role="tab"${attr("aria-selected", i === activeIndex)}${attr("aria-label", tab.label)}><span class="tab-icon svelte-1lgda09">`);
-      Icon($$renderer2, { name: tab.icon, size: 20 });
-      $$renderer2.push(`<!----></span> <span class="tab-label svelte-1lgda09">${escape_html(tab.label)}</span></a>`);
+    const strokeWidth = 12;
+    const radius = (size - strokeWidth) / 2;
+    function polarToCartesian(cx, cy, r, angle) {
+      const rad = (angle - 90) * Math.PI / 180;
+      return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
     }
-    $$renderer2.push(`<!--]--></nav>`);
+    function describeArc(cx, cy, r, startAngle, endAngle) {
+      const start = polarToCartesian(cx, cy, r, endAngle);
+      const end = polarToCartesian(cx, cy, r, startAngle);
+      const largeArcFlag = endAngle - startAngle <= 180 ? 0 : 1;
+      return `M ${start.x} ${start.y} A ${r} ${r} 0 ${largeArcFlag} 0 ${end.x} ${end.y}`;
+    }
+    const totalSegments = derived(() => segments.length);
+    const segmentAngle = derived(() => 360 / totalSegments());
+    const arcPaths = derived(() => segments.map((seg, i) => {
+      const startAngle = i * segmentAngle();
+      const endAngle = startAngle + segmentAngle() - 2;
+      return {
+        ...seg,
+        path: describeArc(size / 2, size / 2, radius, startAngle, endAngle),
+        isCurrent: i === currentIndex
+      };
+    }));
+    $$renderer2.push(`<div${attr_class(`segmented-ring ${stringify(className)}`, "svelte-1emoo3r")}${attr_style(`--ring-size: ${stringify(size)}px`)} role="img"${attr("aria-label", centerText || "Progress ring")}><svg${attr("width", size)}${attr("height", size)}${attr("viewBox", `0 0 ${stringify(size)} ${stringify(size)}`)} class="ring-svg svelte-1emoo3r"><circle${attr("cx", size / 2)}${attr("cy", size / 2)}${attr("r", radius)} fill="none" stroke="var(--c-surface-container)"${attr("stroke-width", strokeWidth)} class="svelte-1emoo3r"></circle><!--[-->`);
+    const each_array = ensure_array_like(arcPaths());
+    for (let $$index = 0, $$length = each_array.length; $$index < $$length; $$index++) {
+      let arc = each_array[$$index];
+      $$renderer2.push(`<g class="arc-group svelte-1emoo3r"><path${attr("d", arc.path)} fill="none"${attr("stroke", arc.color)}${attr("stroke-width", arc.isCurrent && true ? strokeWidth + 4 : strokeWidth)} stroke-linecap="round"${attr_class("arc svelte-1emoo3r", void 0, { "arc--active": arc.isCurrent })}></path>`);
+      if (arc.isCurrent && true) {
+        $$renderer2.push("<!--[0-->");
+        $$renderer2.push(`<path${attr("d", arc.path)} fill="none"${attr("stroke", arc.color)}${attr("stroke-width", strokeWidth + 8)} stroke-linecap="round" opacity="0.2" class="arc-glow svelte-1emoo3r"></path>`);
+      } else {
+        $$renderer2.push("<!--[-1-->");
+      }
+      $$renderer2.push(`<!--]--></g>`);
+    }
+    $$renderer2.push(`<!--]--></svg> <div class="ring-center svelte-1emoo3r">`);
+    if (centerText) {
+      $$renderer2.push("<!--[0-->");
+      $$renderer2.push(`<span class="ring-text svelte-1emoo3r">${escape_html(centerText)}</span>`);
+    } else {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]--> `);
+    if (centerSubtext) {
+      $$renderer2.push("<!--[0-->");
+      $$renderer2.push(`<span class="ring-subtext svelte-1emoo3r">${escape_html(centerSubtext)}</span>`);
+    } else {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]--></div></div>`);
   });
 }
-function getCurrentPhase(lastPeriodDate, cycleLength = 28, today = /* @__PURE__ */ new Date()) {
-  return { phase: "unknown", dayOfPhase: 0, fertileStart: null, fertileEnd: null };
-}
-function getFertileWindow(lastPeriodDate, cycleLength = 28) {
-  const phase = getCurrentPhase(lastPeriodDate, cycleLength);
-  return {
-    start: phase.fertileStart,
-    end: phase.fertileEnd
-  };
+function EmpathyBanner($$renderer, $$props) {
+  $$renderer.component(($$renderer2) => {
+    let { message = null, class: className = "" } = $$props;
+    if (message) {
+      $$renderer2.push("<!--[0-->");
+      $$renderer2.push(`<div${attr_class(`empathy-banner ${stringify(className)}`, "svelte-k4baxj", {
+        "empathy-banner--celebration": message.category === "celebration"
+      })} role="status" aria-live="polite"><div class="empathy-icon svelte-k4baxj">`);
+      Icon($$renderer2, { name: message.icon || "heart", size: 20 });
+      $$renderer2.push(`<!----></div> <p class="empathy-text svelte-k4baxj">${escape_html(message.fallback || message.key)}</p> <button class="empathy-close svelte-k4baxj" aria-label="Dismiss">`);
+      Icon($$renderer2, { name: "x", size: 16 });
+      $$renderer2.push(`<!----></button></div>`);
+    } else {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]-->`);
+  });
 }
 function _page($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     let data = {
-      settings: { cycleLength: 28, lastPeriodDate: null },
-      log: { period: [] }
+      settings: { cycleLength: 28, periodLength: 5 }
     };
-    let cycleInfo = {
-      phase: "follicular",
-      dayOfCycle: 1,
-      daysUntilNextPeriod: 14
+    let cycleInfo = { phase: "unknown", dayOfCycle: 1, daysUntilNextPeriod: 14 };
+    const empathyMessages = {
+      morning: [
+        "A new day, a new beginning.",
+        "Take a moment for yourself.",
+        "Your body, your rhythm."
+      ],
+      evening: [
+        "Rest is part of the cycle.",
+        "Tomorrow is a new opportunity.",
+        "Listen to your body."
+      ]
     };
-    (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-    const phaseIcons = {
-      menstrual: "droplets",
-      follicular: "sun",
-      ovulation: "sparkles",
-      luteal: "moon"
-    };
+    const empathy = derived(() => () => {
+      const hour = (/* @__PURE__ */ new Date()).getHours();
+      const timeKey = hour < 12 ? "morning" : "evening";
+      const messages = empathyMessages[timeKey];
+      return messages[Math.floor(Math.random() * messages.length)];
+    });
     const phaseLabels = {
       menstrual: "Menstrual",
       follicular: "Follicular",
-      ovulation: "Fertile",
-      luteal: "Luteal"
+      ovulation: "Ovulation",
+      luteal: "Luteal",
+      unknown: "Unknown"
     };
-    const cycleDays = derived(() => data.settings.cycleLength);
-    const fertileWindow = derived(() => getFertileWindow(data.settings.lastPeriodDate, cycleDays()));
-    const isInFertileWindow = derived(() => () => {
-      if (!fertileWindow().start || !fertileWindow().end) return false;
-      const today = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-      return today >= fertileWindow().start && today <= fertileWindow().end;
-    });
-    const todayLogged = derived(() => () => {
-      const today = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-      return data.log.period?.find((p) => p.date === today);
-    });
-    const isLatePeriod = derived(() => () => {
-      return cycleInfo.daysUntilNextPeriod < -5;
-    });
-    const isHeavyFlow = derived(() => () => {
-      const today = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
-      const todayEntry = data.log.period?.find((p) => p.date === today);
-      return todayEntry && (todayEntry.flow === "heavy" || todayEntry.flow === "soaking");
-    });
-    {
-      $$renderer2.push("<!--[-1-->");
-      $$renderer2.push(`<div class="luna-app svelte-1uha8ag" data-app="luna"><header class="app-header svelte-1uha8ag"><h1 class="svelte-1uha8ag">Luna</h1> <button class="icon-btn svelte-1uha8ag" aria-label="Settings">`);
-      Icon($$renderer2, { name: "settings", size: 20 });
-      $$renderer2.push(`<!----></button></header> <main class="app-main svelte-1uha8ag">`);
-      {
-        $$renderer2.push("<!--[0-->");
-        $$renderer2.push(`<div class="home-view svelte-1uha8ag"><div class="hero-card svelte-1uha8ag" style="background: var(--c-hero-gradient, linear-gradient(135deg, #D4678A 0%, #E8A87C 100%))"><div class="phase-header svelte-1uha8ag">`);
-        Icon($$renderer2, { name: phaseIcons[cycleInfo.phase], size: 24 });
-        $$renderer2.push(`<!----> <span class="phase-label svelte-1uha8ag">${escape_html(phaseLabels[cycleInfo.phase])}</span></div> <div class="days-counter svelte-1uha8ag"><span class="day-number svelte-1uha8ag">Day ${escape_html(cycleInfo.dayOfCycle)}</span> <span class="cycle-of svelte-1uha8ag">of ${escape_html(cycleDays())}</span></div> `);
+    const PHASE_IDX = {
+      menstrual: 0,
+      follicular: 1,
+      ovulation: 2,
+      luteal: 3,
+      unknown: 0
+    };
+    const phaseIndex = derived(() => PHASE_IDX[cycleInfo.phase]);
+    const periodLength = derived(() => data.settings?.periodLength);
+    const cycleLength = derived(() => data.settings?.cycleLength);
+    $$renderer2.push(`<div class="home-page svelte-1uha8ag" data-app="luna"><main class="hero svelte-1uha8ag"><div class="day-display svelte-1uha8ag"><span class="day-number svelte-1uha8ag">${escape_html(cycleInfo.dayOfCycle)}</span> <span class="day-label svelte-1uha8ag">Day</span></div> `);
+    SegmentedRing($$renderer2, {
+      segments: [
+        { label: "Menstrual", color: "#E57373", value: periodLength() },
         {
-          $$renderer2.push("<!--[0-->");
-          $$renderer2.push(`<p class="next-hint svelte-1uha8ag">Next period in ${escape_html(cycleInfo.daysUntilNextPeriod)} days</p>`);
+          label: "Follicular",
+          color: "#F48FB1",
+          value: Math.floor(cycleLength() * 0.35)
+        },
+        {
+          label: "Ovulation",
+          color: "#CE93D8",
+          value: Math.floor(cycleLength() * 0.14)
+        },
+        {
+          label: "Luteal",
+          color: "#9FA8DA",
+          value: cycleLength() - periodLength() - Math.floor(cycleLength() * 0.49)
         }
-        $$renderer2.push(`<!--]--></div> `);
-        if (isLatePeriod()()) {
-          $$renderer2.push("<!--[0-->");
-          EmpathyBanner($$renderer2, {
-            message: {
-              icon: "heart",
-              fallback: "Your period is a few days late. This can be completely normal. Let us know when it arrives."
-            }
-          });
-        } else {
-          $$renderer2.push("<!--[-1-->");
-        }
-        $$renderer2.push(`<!--]--> `);
-        if (isHeavyFlow()()) {
-          $$renderer2.push("<!--[0-->");
-          $$renderer2.push(`<div class="alert-card alert-warn svelte-1uha8ag">`);
-          Icon($$renderer2, { name: "alert-triangle", size: 20 });
-          $$renderer2.push(`<!----> <p class="svelte-1uha8ag">If you're soaking through protection every hour, consider speaking with your doctor.</p></div>`);
-        } else {
-          $$renderer2.push("<!--[-1-->");
-        }
-        $$renderer2.push(`<!--]--> `);
-        if (isInFertileWindow()()) {
-          $$renderer2.push("<!--[0-->");
-          $$renderer2.push(`<div class="fertile-indicator svelte-1uha8ag">`);
-          Icon($$renderer2, { name: "sparkles", size: 16 });
-          $$renderer2.push(`<!----> <span>Fertile window</span></div>`);
-        } else {
-          $$renderer2.push("<!--[-1-->");
-        }
-        $$renderer2.push(`<!--]--> <div class="quick-actions svelte-1uha8ag">`);
-        PebbleAction($$renderer2, {
-          icon: "droplets",
-          label: "Log period",
-          color: "#D4678A",
-          onclick: () => {
-          }
-        });
-        $$renderer2.push(`<!----> `);
-        PebbleAction($$renderer2, {
-          icon: "heart",
-          label: "Symptoms",
-          color: "#E5A855",
-          onclick: () => {
-          }
-        });
-        $$renderer2.push(`<!----> `);
-        PebbleAction($$renderer2, {
-          icon: "thermometer",
-          label: "Temperature",
-          color: "#5BA876",
-          onclick: () => {
-          }
-        });
-        $$renderer2.push(`<!----></div> <div class="today-card svelte-1uha8ag">`);
-        if (todayLogged()()) {
-          $$renderer2.push("<!--[0-->");
-          $$renderer2.push(`<h3 class="svelte-1uha8ag">Today's entry</h3> <p class="entry-summary svelte-1uha8ag">Logged: ${escape_html(todayLogged()().flow)} flow</p>`);
-        } else {
-          $$renderer2.push("<!--[-1-->");
-          $$renderer2.push(`<h3 class="svelte-1uha8ag">Log today</h3> `);
-          PebbleButton($$renderer2, {
-            brand: "luna",
-            label: "Log entry",
-            size: "md",
-            onclick: () => true
-          });
-          $$renderer2.push(`<!---->`);
-        }
-        $$renderer2.push(`<!--]--></div></div>`);
-      }
-      $$renderer2.push(`<!--]--></main> `);
-      TabBar($$renderer2, {
-        tabs: [
-          { id: "home", label: "Home", icon: "home" },
-          { id: "calendar", label: "Calendar", icon: "calendar" },
-          { id: "log", label: "Log", icon: "plus-circle" },
-          { id: "insights", label: "Insights", icon: "chart" },
-          { id: "settings", label: "Settings", icon: "settings" }
-        ],
-        brand: "luna"
-      });
-      $$renderer2.push(`<!----></div>`);
+      ],
+      currentIndex: phaseIndex(),
+      centerText: String(cycleInfo.dayOfCycle),
+      centerSubtext: "Day",
+      size: 200
+    });
+    $$renderer2.push(`<!----> <p class="phase-name svelte-1uha8ag">${escape_html(phaseLabels[cycleInfo.phase])}</p> `);
+    PebbleButton($$renderer2, { label: "Log today", size: "lg", onclick: () => goto() });
+    $$renderer2.push(`<!----> `);
+    {
+      $$renderer2.push("<!--[0-->");
+      $$renderer2.push(`<p class="next-hint svelte-1uha8ag">Next period in ${escape_html(cycleInfo.daysUntilNextPeriod)} days</p>`);
     }
-    $$renderer2.push(`<!--]--> `);
+    $$renderer2.push(`<!--]--></main> `);
+    EmpathyBanner($$renderer2, { message: empathy()() });
+    $$renderer2.push(`<!----> `);
+    TabBar($$renderer2, {
+      tabs: [
+        { id: "home", label: "Home", icon: "home" },
+        { id: "cycle", label: "Cycle", icon: "calendar" },
+        { id: "fertility", label: "Fertile", icon: "heart" },
+        { id: "insights", label: "Insights", icon: "bar-chart" },
+        { id: "settings", label: "Settings", icon: "settings" }
+      ],
+      activeTab: "home",
+      onchange: (id) => goto(),
+      brand: "luna"
+    });
+    $$renderer2.push(`<!----> `);
     {
       $$renderer2.push("<!--[-1-->");
     }
-    $$renderer2.push(`<!--]-->`);
+    $$renderer2.push(`<!--]--></div>`);
   });
 }
 export {

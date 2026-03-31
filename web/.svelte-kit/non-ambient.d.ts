@@ -29,17 +29,23 @@ declare module "$app/types" {
 	type MatcherParam<M> = M extends (param : string) => param is (infer U extends string) ? U : string;
 
 	export interface AppTypes {
-		RouteId(): "/" | "/cycle" | "/log" | "/sitemap.xml";
+		RouteId(): "/" | "/cycle" | "/export" | "/fertility" | "/history" | "/insights" | "/log" | "/onboarding" | "/settings" | "/sitemap.xml";
 		RouteParams(): {
 			
 		};
 		LayoutParams(): {
 			"/": Record<string, never>;
 			"/cycle": Record<string, never>;
+			"/export": Record<string, never>;
+			"/fertility": Record<string, never>;
+			"/history": Record<string, never>;
+			"/insights": Record<string, never>;
 			"/log": Record<string, never>;
+			"/onboarding": Record<string, never>;
+			"/settings": Record<string, never>;
 			"/sitemap.xml": Record<string, never>
 		};
-		Pathname(): "/" | "/cycle" | "/log" | "/sitemap.xml";
+		Pathname(): "/" | "/cycle" | "/export" | "/fertility" | "/history" | "/insights" | "/log" | "/onboarding" | "/settings" | "/sitemap.xml";
 		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
 		Asset(): "/apple-touch-icon.png" | "/favicon.png" | "/favicon.svg" | "/robots.txt" | "/tokens.css" | string & {};
 	}

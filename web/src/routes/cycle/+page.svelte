@@ -50,7 +50,7 @@
 </div>
 
 <style>
-  .screen { min-height: 100dvh; background: var(--c-bg); color: var(--c-text); display: flex; flex-direction: column; max-width: 390px; margin: 0 auto; }
+  .screen { min-height: 100dvh; background: var(--c-bg); color: var(--c-text); display: flex; flex-direction: column; max-width: 780px; margin: 0 auto; }
   .hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--space-10) var(--space-4); gap: var(--space-5); text-align: center; }
   .hero-display { display: flex; flex-direction: column; align-items: center; }
   .hero-value { font-size: clamp(52px, 14vw, 96px); font-weight: var(--weight-bold); line-height: 1; letter-spacing: -0.02em; color: var(--c-brand); }

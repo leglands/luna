@@ -1,4 +1,4 @@
-import { a as attr_class, b as attr_style, c as attr, e as escape_html, s as stringify, h as head, d as store_get, u as unsubscribe_stores, f as ensure_array_like } from "../../chunks/index2.js";
+import { h as head, e as escape_html, s as store_get, a as attr, b as stringify, c as ensure_array_like, u as unsubscribe_stores } from "../../chunks/index2.js";
 import { d as derived, w as writable } from "../../chunks/index.js";
 import deepmerge from "deepmerge";
 import { IntlMessageFormat } from "intl-messageformat";
@@ -511,7 +511,7 @@ const formatNumber = (n, options2) => {
 const getJSON = (id, locale = getCurrentLocale()) => {
   return lookup(id, locale);
 };
-const $format = derived([$locale, $dictionary], () => formatMessage);
+derived([$locale, $dictionary], () => formatMessage);
 derived([$locale], () => formatTime);
 derived([$locale], () => formatDate);
 derived([$locale], () => formatNumber);
@@ -596,40 +596,6 @@ function setupI18n() {
   _initDone = true;
   return init({ fallbackLocale: "en", initialLocale: "en" });
 }
-function AppPromoCard($$renderer, $$props) {
-  let {
-    appName = "",
-    tagline = "",
-    appStoreUrl = null,
-    playStoreUrl = null,
-    color = "#6B5BD4",
-    class: className = ""
-  } = $$props;
-  $$renderer.push(`<aside${attr_class(`app-promo ${stringify(className)}`, "svelte-er44mr")}${attr_style(`--promo-color: ${stringify(color)}`)}${attr("aria-label", `Download ${stringify(appName)} on mobile`)}><div class="promo-identity svelte-er44mr"><span class="promo-dot svelte-er44mr" aria-hidden="true"></span> <div class="promo-text"><p class="promo-name svelte-er44mr">${escape_html(appName)}</p> `);
-  if (tagline) {
-    $$renderer.push("<!--[0-->");
-    $$renderer.push(`<p class="promo-tagline svelte-er44mr">${escape_html(tagline)}</p>`);
-  } else {
-    $$renderer.push("<!--[-1-->");
-  }
-  $$renderer.push(`<!--]--></div></div> <div class="badge-row svelte-er44mr" role="list">`);
-  if (appStoreUrl) {
-    $$renderer.push("<!--[0-->");
-    $$renderer.push(`<a${attr("href", appStoreUrl)} target="_blank" rel="noopener noreferrer" class="store-badge svelte-er44mr" role="listitem"${attr("aria-label", `Download ${stringify(appName)} on the App Store`)}><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true" focusable="false"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"></path></svg> <span class="badge-label svelte-er44mr"><span class="badge-sub svelte-er44mr">Download on the</span> <span class="badge-main svelte-er44mr">App Store</span></span></a>`);
-  } else {
-    $$renderer.push("<!--[-1-->");
-    $$renderer.push(`<span class="store-badge store-badge--soon svelte-er44mr" role="listitem" aria-label="App Store — coming soon"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true" focusable="false"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"></path></svg> <span class="badge-label svelte-er44mr"><span class="badge-sub svelte-er44mr">Coming soon</span> <span class="badge-main svelte-er44mr">App Store</span></span></span>`);
-  }
-  $$renderer.push(`<!--]--> `);
-  if (playStoreUrl) {
-    $$renderer.push("<!--[0-->");
-    $$renderer.push(`<a${attr("href", playStoreUrl)} target="_blank" rel="noopener noreferrer" class="store-badge svelte-er44mr" role="listitem"${attr("aria-label", `Download ${stringify(appName)} on Google Play`)}><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true" focusable="false"><path d="M3 20.5v-17c0-.83 1-.95 1.37-.37l14 8.5c.42.26.42.88 0 1.14l-14 8.5C3.71 21.45 3 21.33 3 20.5z"></path></svg> <span class="badge-label svelte-er44mr"><span class="badge-sub svelte-er44mr">Get it on</span> <span class="badge-main svelte-er44mr">Google Play</span></span></a>`);
-  } else {
-    $$renderer.push("<!--[-1-->");
-    $$renderer.push(`<span class="store-badge store-badge--soon svelte-er44mr" role="listitem" aria-label="Google Play — coming soon"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true" focusable="false"><path d="M3 20.5v-17c0-.83 1-.95 1.37-.37l14 8.5c.42.26.42.88 0 1.14l-14 8.5C3.71 21.45 3 21.33 3 20.5z"></path></svg> <span class="badge-label svelte-er44mr"><span class="badge-sub svelte-er44mr">Coming soon</span> <span class="badge-main svelte-er44mr">Google Play</span></span></span>`);
-  }
-  $$renderer.push(`<!--]--></div></aside>`);
-}
 function _layout($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     var $$store_subs;
@@ -699,18 +665,7 @@ function _layout($$renderer, $$props) {
       $$renderer3.push(`<!--]--> <link rel="alternate" hreflang="x-default"${attr("href", BASE_URL)}/> ${html(`<script type="application/ld+json">${jsonLd}<\/script>`)}`);
     });
     children($$renderer2);
-    $$renderer2.push(`<!----> <footer style="padding: 1rem; max-width: 600px; margin: 0 auto;">`);
-    if (store_get($$store_subs ??= {}, "$locale", $locale)) {
-      $$renderer2.push("<!--[0-->");
-      AppPromoCard($$renderer2, {
-        appName: "Luna",
-        tagline: store_get($$store_subs ??= {}, "$_", $format)("app.tagline", { default: "Your cycle, understood" }),
-        color: "#C084A0"
-      });
-    } else {
-      $$renderer2.push("<!--[-1-->");
-    }
-    $$renderer2.push(`<!--]--></footer>`);
+    $$renderer2.push(`<!---->`);
     if ($$store_subs) unsubscribe_stores($$store_subs);
   });
 }

@@ -101,9 +101,9 @@
 
 <style>
   :global(body) { background: var(--c-surface-container, #F2F2F5); }
-  /* pages inside already have max-width: 390px; add phone frame on desktop */
+  /* pages inside already have max-width: 780px; add phone frame on desktop */
   :global(.screen) {
-    max-width: 390px;
+    max-width: 780px;
     margin: 0 auto;
   }
   @media (min-width: 420px) {
