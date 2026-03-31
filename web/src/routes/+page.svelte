@@ -4,9 +4,11 @@
   import { PebbleButton, Icon, TabBar, EmpathyBanner, SegmentedRing } from '$ds/index.js';
   import { Home, Calendar, Sparkles, Settings } from 'lucide-svelte';
   import { loadData, getCurrentPhase } from '$lib/cycle-engine.js';
+  import FeatureTour from '$lib/components/FeatureTour.svelte';
 
   let data = $state({ settings: { cycleLength: 28, periodLength: 5, lastPeriodDate: null }, log: { period: [], symptoms: [], mood: [] } });
   let cycleInfo = $state({ phase: 'unknown', dayOfCycle: 1, daysUntilNextPeriod: 14 });
+  let showTour = $state(false);
 
   const empathyMessages = {
     morning: [
@@ -44,6 +46,9 @@
     }
     data = loadData();
     updateCycleInfo();
+    if (localStorage.getItem('life-luna-tour-pending') === '1') {
+      showTour = true;
+    }
   });
 
   function updateCycleInfo() {
@@ -102,6 +107,10 @@
     onchange={(id) => goto('/' + (id === 'home' ? '' : id))}
     brand="luna"
   />
+
+  {#if showTour}
+    <FeatureTour onDone={() => showTour = false} />
+  {/if}
 </div>
 
 <style>

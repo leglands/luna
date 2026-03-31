@@ -2,26 +2,55 @@
   import { goto } from '$app/navigation';
   import { PebbleButton } from '$ds/index.js';
 
+  const BRAND = '#E91E8C';
+  const TOTAL = 5;
   let step = $state(0);
-  const TOTAL = 3;
 
+  let firstName = $state('');
   let lastPeriodDate = $state('');
   let cycleLength = $state(28);
+  let periodLength = $state(5);
+  let selectedGoals = $state(new Set());
+
+  const GOALS = [
+    { id: 'track', label: 'Track my cycle' },
+    { id: 'pregnancy', label: 'Plan a pregnancy' },
+    { id: 'understand', label: 'Understand my body' },
+    { id: 'pms', label: 'Manage PMS' },
+    { id: 'curious', label: 'Just curious' },
+  ];
 
   function next() {
     if (step < TOTAL - 1) { step++; return; }
     complete();
   }
 
+  function skip() { step++; }
+
+  function toggleGoal(id) {
+    const g = new Set(selectedGoals);
+    if (g.has(id)) g.delete(id); else g.add(id);
+    selectedGoals = g;
+  }
+
   function complete() {
     const data = {
-      settings: { lastPeriodDate, cycleLength: Number(cycleLength), periodLength: 5 },
-      log: { period: [], symptoms: [], temperature: [], mood: [] }
+      settings: {
+        firstName: firstName.trim(),
+        lastPeriodDate,
+        cycleLength: Number(cycleLength),
+        periodLength: Number(periodLength),
+        goals: [...selectedGoals],
+      },
+      log: { period: [], symptoms: [], temperature: [], mood: [], energy: [] },
     };
     localStorage.setItem('life-luna-data', JSON.stringify(data));
     localStorage.setItem('life-luna-onboarded', '1');
+    localStorage.setItem('life-luna-tour-pending', '1');
     goto('/');
   }
+
+  const canProceed = $derived(step !== 2 || lastPeriodDate !== '');
 </script>
 
 <div class="onboarding" data-app="luna">
@@ -32,41 +61,86 @@
   </div>
 
   {#if step === 0}
+    <!-- Slide 1: Welcome -->
     <div class="slide">
-      <svg viewBox="0 0 120 120" width="120" height="120" aria-hidden="true">
-        <circle cx="60" cy="60" r="50" fill="var(--c-brand)" fill-opacity="0.15"/>
+      <svg viewBox="0 0 120 120" width="96" height="96" aria-hidden="true">
+        <circle cx="60" cy="60" r="50" fill={BRAND} fill-opacity="0.12"/>
         <path d="M72 30 A34 34 0 1 0 72 90 A22 22 0 1 1 72 30Z"
-              fill="none" stroke="var(--c-brand)" stroke-width="2" stroke-linecap="round"/>
+              fill="none" stroke={BRAND} stroke-width="2.5" stroke-linecap="round"/>
       </svg>
-      <h1>Know your cycle</h1>
-      <p>Your rhythm, made simple.</p>
-      <PebbleButton label="Next" size="lg" onclick={next} />
+      <h1>Hi, I'm Luna</h1>
+      <p>Your cycle, understood. Log in seconds, understand your body over time — privately, on your device.</p>
+      <PebbleButton label="Get started" size="lg" onclick={next} style="--pebble-brand:{BRAND}" />
     </div>
 
   {:else if step === 1}
+    <!-- Slide 2: Name (optional) -->
     <div class="slide">
-      <svg viewBox="0 0 120 120" width="120" height="120" aria-hidden="true">
-        <circle cx="60" cy="60" r="50" fill="var(--c-brand)" fill-opacity="0.15"/>
-        <circle cx="60" cy="60" r="28" fill="none" stroke="var(--c-brand)" stroke-width="2"/>
-        <circle cx="60" cy="60" r="6" fill="var(--c-brand)"/>
-      </svg>
-      <h1>Track effortlessly</h1>
-      <p>Log in seconds, understand in days.</p>
-      <PebbleButton label="Next" size="lg" onclick={next} />
+      <h1>What should I call you?</h1>
+      <p>Optional — only used to personalise your experience.</p>
+      <input
+        type="text"
+        bind:value={firstName}
+        placeholder="Your first name"
+        class="input"
+        autocomplete="given-name"
+      />
+      <PebbleButton label="Continue" size="lg" onclick={next} style="--pebble-brand:{BRAND}" />
+      <button class="skip" onclick={skip}>Skip</button>
+    </div>
+
+  {:else if step === 2}
+    <!-- Slide 3: Last period (required) -->
+    <div class="slide">
+      <h1>When did your last period start?</h1>
+      <p>This helps Luna predict your next cycle right away.</p>
+      <input
+        type="date"
+        bind:value={lastPeriodDate}
+        class="input"
+        max={new Date().toISOString().split('T')[0]}
+      />
+      <PebbleButton label="Continue" size="lg" onclick={next} disabled={!lastPeriodDate} style="--pebble-brand:{BRAND}" />
+    </div>
+
+  {:else if step === 3}
+    <!-- Slide 4: Cycle profile -->
+    <div class="slide">
+      <h1>Your cycle rhythm</h1>
+      <p>We'll refine this over time as Luna learns your pattern.</p>
+
+      <div class="slider-group">
+        <label>Cycle length: <strong>{cycleLength} days</strong></label>
+        <input type="range" bind:value={cycleLength} min="21" max="35" step="1" class="slider" />
+        <div class="slider-range"><span>21</span><span>35</span></div>
+      </div>
+
+      <div class="slider-group">
+        <label>Period length: <strong>{periodLength} days</strong></label>
+        <input type="range" bind:value={periodLength} min="2" max="8" step="1" class="slider" />
+        <div class="slider-range"><span>2</span><span>8</span></div>
+      </div>
+
+      <PebbleButton label="Continue" size="lg" onclick={next} style="--pebble-brand:{BRAND}" />
     </div>
 
   {:else}
-    <div class="slide setup">
-      <h1>Ready to start</h1>
-      <label>
-        When did your last period start?
-        <input type="date" bind:value={lastPeriodDate} />
-      </label>
-      <label>
-        How long is your cycle?
-        <input type="number" bind:value={cycleLength} min="21" max="35" />
-      </label>
-      <PebbleButton label="Start tracking" size="lg" onclick={complete} />
+    <!-- Slide 5: Goals -->
+    <div class="slide">
+      <h1>What brings you to Luna?</h1>
+      <p>Choose all that apply. You can change this anytime.</p>
+      <div class="goals-grid">
+        {#each GOALS as g}
+          <button
+            class="goal-chip"
+            class:active={selectedGoals.has(g.id)}
+            style={selectedGoals.has(g.id) ? `background:${BRAND};color:white;border-color:${BRAND}` : ''}
+            onclick={() => toggleGoal(g.id)}
+          >{g.label}</button>
+        {/each}
+      </div>
+      <PebbleButton label="Start tracking" size="lg" onclick={complete} style="--pebble-brand:{BRAND}" />
+      <button class="skip" onclick={complete}>Skip</button>
     </div>
   {/if}
 </div>
@@ -74,81 +148,127 @@
 <style>
   .onboarding {
     min-height: 100dvh;
-    background: var(--c-bg);
+    background: var(--c-bg, #fff);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: var(--space-8) var(--space-4);
-    gap: var(--space-6);
+    padding: 24px 16px 40px;
+    gap: 24px;
     text-align: center;
+    max-width: 390px;
+    margin: 0 auto;
   }
 
   .dots {
     display: flex;
-    gap: var(--space-2);
+    gap: 6px;
   }
 
   .dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--c-text-secondary);
-    opacity: 0.3;
-    transition: opacity 0.2s, width 0.2s;
+    background: #ccc;
+    transition: all 0.2s;
   }
 
   .dot.active {
-    opacity: 1;
     width: 24px;
     border-radius: 4px;
-    background: var(--c-brand);
+    background: #E91E8C;
   }
 
   .slide {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-5);
-    max-width: 320px;
+    gap: 16px;
     width: 100%;
+    max-width: 320px;
   }
 
   h1 {
-    font-size: var(--text-3xl, 28px);
-    font-weight: var(--weight-bold);
+    font-size: clamp(24px, 7vw, 32px);
+    font-weight: 700;
     margin: 0;
+    line-height: 1.2;
   }
 
   p {
-    font-size: var(--text-base, 15px);
-    color: var(--c-text-secondary);
+    font-size: 15px;
+    color: #666;
     margin: 0;
-    max-width: 260px;
     line-height: 1.5;
+    max-width: 280px;
   }
 
-  label {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-1);
-    font-size: var(--text-sm);
+  .input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid #ddd;
+    border-radius: 16px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background: var(--c-surface, #fafafa);
+    color: var(--c-text, #111);
+  }
+
+  .skip {
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 4px;
+    padding: 4px 8px;
+  }
+
+  .slider-group {
     width: 100%;
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
 
-  input {
-    padding: var(--space-3);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-md, 16px);
-    background: var(--c-surface);
-    font-size: var(--text-base);
-    color: var(--c-text);
+  .slider-group label {
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .slider {
     width: 100%;
-    box-sizing: border-box;
+    accent-color: #E91E8C;
+  }
+
+  .slider-range {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #aaa;
+  }
+
+  .goals-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .goal-chip {
+    padding: 10px 18px;
+    border-radius: 24px;
+    border: 1.5px solid #ddd;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.15s;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .dot { transition: none; }
+    .dot,
+    .goal-chip { transition: none; }
   }
 </style>
