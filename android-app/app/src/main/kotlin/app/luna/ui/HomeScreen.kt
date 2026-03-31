@@ -40,6 +40,7 @@ import com.macaron.lifeds.components.PrivacyBadge
 import com.macaron.lifeds.components.SegmentedRing
 import com.macaron.lifeds.components.SegmentedRingSegment
 import com.macaron.lifeds.theme.LifeBrand
+import uniffi.luna_core.CyclePhase
 import com.macaron.lifeds.tokens.LifeColors
 import com.macaron.lifeds.tokens.LifeRadius
 import com.macaron.lifeds.tokens.LifeSpacing
@@ -56,6 +57,8 @@ fun HomeScreen(
     onQuickLogSymptoms: () -> Unit,
     onQuickLogTemp: () -> Unit,
     onQuickLogMood: () -> Unit,
+    cycleLength: Int = 28,
+    cyclePhase: CyclePhase = CyclePhase.UNKNOWN,
     modifier: Modifier = Modifier
 ) {
     val lunaBrand = LifeBrand.Luna
@@ -72,9 +75,10 @@ fun HomeScreen(
 
         CycleProgressSection(
             cycleDay = cycleDay,
+            cycleLength = cycleLength,
             phaseName = phaseName,
-            daysUntilNext = daysUntilNext,
-            lunaBrand = lunaBrand
+            cyclePhase = cyclePhase,
+            daysUntilNext = daysUntilNext
         )
 
         Spacer(modifier = Modifier.height(LifeSpacing.Spacing4))
@@ -129,35 +133,21 @@ fun HomeScreen(
 @Composable
 private fun CycleProgressSection(
     cycleDay: Int,
+    cycleLength: Int,
     phaseName: String,
-    daysUntilNext: Int,
-    lunaBrand: LifeBrand
+    cyclePhase: CyclePhase,
+    daysUntilNext: Int
 ) {
-    val segments = listOf(
-        SegmentedRingSegment(0.18f, lunaBrand.primary),
-        SegmentedRingSegment(0.14f, lunaBrand.secondary),
-        SegmentedRingSegment(0.07f, Color(0xFFE8523A)),
-        SegmentedRingSegment(0.61f, Color(0xFF7A9E6B))
-    )
-
-    val currentIndex = when {
-        cycleDay <= 5 -> 0
-        cycleDay <= 9 -> 1
-        cycleDay <= 11 -> 2
-        else -> 3
-    }
-
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
     ) {
-        SegmentedRing(
-            segments = segments,
-            currentIndex = currentIndex,
-            size = 160.dp,
-            strokeWidth = 16.dp,
+        CycleRing(
+            cycleDay = cycleDay,
+            cycleLength = cycleLength,
+            cyclePhase = cyclePhase,
             modifier = Modifier.semantics {
-                contentDescription = "Cycle day $cycleDay of 28, $phaseName phase"
+                contentDescription = "Cycle day $cycleDay of $cycleLength, $phaseName phase"
             }
         )
     }
@@ -293,6 +283,48 @@ private fun CrossPromoSection(lunaBrand: LifeBrand) {
             }
         }
     }
+}
+
+@Composable
+private fun CycleRing(
+    cycleDay: Int,
+    cycleLength: Int,
+    cyclePhase: CyclePhase,
+    modifier: Modifier = Modifier
+) {
+    val length = cycleLength.coerceAtLeast(1)
+    val segmentValue = 1f / length
+    val segments = (1..length).map { day ->
+        SegmentedRingSegment(
+            value = segmentValue,
+            color = phaseColorForDay(day, length)
+        )
+    }
+    SegmentedRing(
+        segments = segments,
+        size = 200.dp,
+        strokeWidth = 18.dp,
+        gapAngle = 0.5f,
+        modifier = modifier
+    )
+}
+
+private fun getPhaseForDay(day: Int, cycleLength: Int): CyclePhase {
+    val ovulationDay = (cycleLength - 14).coerceAtLeast(10)
+    return when {
+        day <= 5               -> CyclePhase.MENSTRUAL
+        day < ovulationDay     -> CyclePhase.FOLLICULAR
+        day <= ovulationDay + 2 -> CyclePhase.OVULATORY
+        else                   -> CyclePhase.LUTEAL
+    }
+}
+
+private fun phaseColorForDay(day: Int, cycleLength: Int): Color = when (getPhaseForDay(day, cycleLength)) {
+    CyclePhase.MENSTRUAL  -> Color(0xFFD4737A)
+    CyclePhase.FOLLICULAR -> Color(0xFFE5A855)
+    CyclePhase.OVULATORY  -> Color(0xFF5BA876)
+    CyclePhase.LUTEAL     -> Color(0xFF6B7FC4)
+    CyclePhase.UNKNOWN    -> Color.Gray
 }
 
 private fun getPhaseMessage(phaseName: String): String {

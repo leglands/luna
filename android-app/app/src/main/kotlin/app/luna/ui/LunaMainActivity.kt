@@ -29,6 +29,7 @@ import androidx.compose.ui.semantics.semantics
 import com.macaron.lifeds.theme.LifeBrand
 import com.macaron.lifeds.theme.LifeTheme
 import com.macaron.lifeds.theme.LifeThemeMode
+import uniffi.luna_core.CyclePhase
 import java.time.LocalDate
 import java.time.YearMonth
 
@@ -87,6 +88,8 @@ private fun LunaApp() {
                 phaseName = "Follicular",
                 daysUntilNext = 14,
                 isTTCMode = false,
+                cycleLength = 28,
+                cyclePhase = CyclePhase.FOLLICULAR,
                 onLogClick = { },
                 onQuickLogPeriod = { },
                 onQuickLogSymptoms = { },

@@ -6,12 +6,15 @@ import app.luna.services.VaultService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import uniffi.luna_core.CyclePhase
 import java.time.LocalDate
 
 class HomeViewModel : ViewModel() {
 
     data class HomeUiState(
         val cycleDay: Int = 1,
+        val cycleLength: Int = 28,
+        val cyclePhase: CyclePhase = CyclePhase.UNKNOWN,
         val daysUntilNextPeriod: Int = 0,
         val phaseName: String = "",
         val insight: String? = null,
@@ -28,28 +31,27 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val prediction = engine.predictNext()
-                val cycles = engine.getCycles(1u)
                 val today = LocalDate.now()
                 val nextDate = prediction.nextPeriodStart
                 val daysLeft = calculateDaysLeft(nextDate, today.toString())
 
-                // Compute current cycle day from latest cycle start
-                val cycleDay = cycles.firstOrNull()?.let { cycle ->
-                    try {
-                        val start = LocalDate.parse(cycle.startDate)
-                        maxOf(1, java.time.temporal.ChronoUnit.DAYS.between(start, today).toInt() + 1)
-                    } catch (e: Exception) { 1 }
-                } ?: 1
+                val cycleDay = prediction.currentCycleDay.toInt().coerceAtLeast(1)
+                val phase = prediction.currentPhase
+                val cyclePhase = parseCyclePhase(phase)
 
-                // Derive phase from algorithm hint
-                val phase = prediction.algorithm
+                val cycleLength = try {
+                    engine.getCycleSummary().averageCycleLength.toInt().coerceIn(21, 40)
+                } catch (e: Exception) { 28 }
+
                 val phaseChanged = phase != lastPhase && lastPhase.isNotEmpty()
                 lastPhase = phase
                 _uiState.value = HomeUiState(
                     cycleDay = cycleDay,
+                    cycleLength = cycleLength,
+                    cyclePhase = cyclePhase,
                     daysUntilNextPeriod = daysLeft,
                     phaseName = phase,
-                    insight = null, // TODO: générer un insight depuis l'historique
+                    insight = null,
                     phaseChanged = phaseChanged,
                 )
             } catch (e: Exception) {
@@ -64,5 +66,13 @@ class HomeViewModel : ViewModel() {
             val now = LocalDate.parse(today)
             maxOf(0, java.time.temporal.ChronoUnit.DAYS.between(now, next).toInt())
         } catch (e: Exception) { 0 }
+    }
+
+    private fun parseCyclePhase(phase: String): CyclePhase = when (phase.lowercase()) {
+        "menstrual"  -> CyclePhase.MENSTRUAL
+        "follicular" -> CyclePhase.FOLLICULAR
+        "ovulatory"  -> CyclePhase.OVULATORY
+        "luteal"     -> CyclePhase.LUTEAL
+        else         -> CyclePhase.UNKNOWN
     }
 }
