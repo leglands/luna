@@ -1,361 +1,214 @@
 <script>
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { PebbleButton, Icon, TabBar, EmpathyBanner, SegmentedRing } from '$ds/index.js';
+  import { PebbleButton, Icon, TabBar, SegmentedRing } from '$ds/index.js';
   import { loadData, getCurrentPhase } from '$lib/cycle-engine.js';
   import FeatureTour from '$lib/components/FeatureTour.svelte';
 
-  let data = $state({
-    settings: { cycleLength: 28, periodLength: 5, lastPeriodDate: null },
-    log: { period: [], symptoms: [], mood: [] }
-  });
-  let cycleInfo = $state({ phase: 'unknown', dayOfCycle: 1, daysUntilNextPeriod: 14 });
-  let showTour = $state(false);
+  const BRAND = '#6B3FA0';
+  const TABS = [
+    { id: 'home',     label: 'Home',     icon: 'home'      },
+    { id: 'cycle',    label: 'Cycle',    icon: 'calendar'  },
+    { id: 'fertility',label: 'Fertile',  icon: 'heart'     },
+    { id: 'insights', label: 'Insights', icon: 'bar-chart' },
+    { id: 'settings', label: 'Settings', icon: 'settings'  },
+  ];
+  const PHASE_COLORS  = { menstrual:'#E57373', follicular:'#F48FB1', ovulation:'#CE93D8', luteal:'#9FA8DA', unknown:'#9D7BC9' };
+  const PHASE_LABELS  = { menstrual:'Menstrual', follicular:'Follicular', ovulation:'Ovulation', luteal:'Luteal', unknown:'—' };
+  const DAY_NAMES = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+  const QUICK = [
+    { icon:'droplets',    label:'Period',      bg:'#FFCDD2', fg:'#C62828', type:'period'      },
+    { icon:'activity',    label:'Symptoms',    bg:'#FCE4EC', fg:'#AD1457', type:'symptoms'    },
+    { icon:'thermometer', label:'Temperature', bg:'#EDE7F6', fg:'#5E35B1', type:'temperature' },
+    { icon:'smile',       label:'Mood',        bg:'#FFF9C4', fg:'#F57F17', type:'mood'        },
+  ];
+  const EMPATHY = [
+    'Your body, your rhythm.',
+    'Take a moment for yourself.',
+    'A new day, a new cycle.',
+    'Listen to what your body tells you.',
+    'Rest is part of the journey.',
+    'Every phase has its beauty.',
+    'You are in tune with yourself.',
+  ];
 
-  const EMPATHY = {
-    menstrual:  { fallback: 'Rest and be gentle with yourself.', icon: 'heart' },
-    follicular: { fallback: 'Your energy is rising — embrace it.', icon: 'sun' },
-    ovulation:  { fallback: 'You are at your peak. Shine.', icon: 'sparkles' },
-    luteal:     { fallback: 'Take it one step at a time.', icon: 'moon' },
-    unknown:    { fallback: 'Your body, your rhythm.', icon: 'heart' },
-  };
+  let settings  = $state({ cycleLength:28, periodLength:5, lastPeriodDate:null });
+  let cycleInfo = $state({ phase:'unknown', dayOfCycle:0, daysUntilNextPeriod:0 });
+  let events    = $state({});
+  let hasData   = $state(false);
+  let showTour  = $state(false);
 
-  const PHASE_LABELS = {
-    menstrual: 'Menstrual', follicular: 'Follicular',
-    ovulation: 'Ovulation', luteal: 'Luteal', unknown: 'Unknown'
-  };
+  const today   = new Date();
+  const fmtDate = d => d.toISOString().split('T')[0];
+  const isToday = d => fmtDate(d) === fmtDate(today);
 
-  const PHASE_IDX = { menstrual: 0, follicular: 1, ovulation: 2, luteal: 3, unknown: 0 };
-  const SHORT_DAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-
-  onMount(() => {
-    const onboarded = localStorage.getItem('life-luna-onboarded');
-    if (!onboarded) { goto('/onboarding'); return; }
-    data = loadData();
-    cycleInfo = getCurrentPhase(data.settings.lastPeriodDate, data.settings.cycleLength);
-    if (localStorage.getItem('life-luna-tour-pending') === '1') showTour = true;
-  });
-
-  const empathy = $derived(EMPATHY[cycleInfo.phase] ?? EMPATHY.unknown);
-  const phaseIndex = $derived(PHASE_IDX[cycleInfo.phase] ?? 0);
-  const periodLength = $derived(data.settings?.periodLength ?? 5);
-  const cycleLength = $derived(data.settings?.cycleLength ?? 28);
-
-  // 7-day strip centred on today (-3 … +3)
-  const weekDays = Array.from({ length: 7 }, (_, i) => {
-    const d = new Date();
-    d.setDate(d.getDate() - 3 + i);
-    d.setHours(0, 0, 0, 0);
+  const weekDays = $derived(Array.from({length:7}, (_,i) => {
+    const d = new Date(today);
+    d.setDate(today.getDate() - 3 + i);
     return d;
-  });
+  }));
 
-  function fmtDate(d) {
-    const y = d.getFullYear();
-    const m = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${y}-${m}-${day}`;
-  }
+  const segments = $derived([
+    { label:'Menstrual',  color:'#E57373', value: settings.periodLength },
+    { label:'Follicular', color:'#F48FB1', value: Math.floor(settings.cycleLength * 0.35) },
+    { label:'Ovulation',  color:'#CE93D8', value: Math.floor(settings.cycleLength * 0.14) },
+    { label:'Luteal',     color:'#9FA8DA', value: Math.max(1, settings.cycleLength - settings.periodLength - Math.floor(settings.cycleLength * 0.49)) },
+  ]);
 
-  function isToday(d) {
-    const t = new Date();
-    return d.getDate() === t.getDate() &&
-           d.getMonth() === t.getMonth() &&
-           d.getFullYear() === t.getFullYear();
-  }
+  const PHASE_IDX = { menstrual:0, follicular:1, ovulation:2, luteal:3, unknown:0 };
+  const phaseIndex = $derived(PHASE_IDX[cycleInfo.phase] ?? 0);
+  const empathy    = $derived(EMPATHY[today.getDay()]);
 
-  function getDayEvent(d) {
-    const { lastPeriodDate, cycleLength: cl = 28, periodLength: pl = 5 } = data.settings;
-    if (!lastPeriodDate) return null;
-    const start = new Date(lastPeriodDate + 'T00:00:00');
-    const diff = Math.floor((d - start) / 86400000);
-    let pos = diff % cl;
-    if (pos < 0) pos += cl;
-    if (pos < pl) return 'period';
-    if (pos === 13) return 'ovulation';
-    if (pos >= 9 && pos <= 15) return 'fertile';
-    return null;
-  }
-
-  function eventColor(d) {
-    const ev = getDayEvent(d);
-    if (ev === 'period') return '#6B3FA0';
-    if (ev === 'ovulation') return '#CE93D8';
-    if (ev === 'fertile') return '#34C759';
+  function dotColor(d) {
+    const e = events[fmtDate(d)];
+    if (e === 'period')    return '#E57373';
+    if (e === 'ovulation') return '#CE93D8';
+    if (e === 'fertile')   return '#81C784';
     return 'transparent';
   }
 
-  function hasEvent(d) { return getDayEvent(d) !== null; }
+  function buildEvents(s, log) {
+    const ev = {};
+    if (!s.lastPeriodDate) return ev;
+    const start = new Date(s.lastPeriodDate);
+    for (let c = -3; c <= 3; c++) {
+      const cs = new Date(start);
+      cs.setDate(start.getDate() + c * s.cycleLength);
+      for (let d = 0; d < s.periodLength; d++) {
+        const day = new Date(cs); day.setDate(cs.getDate() + d);
+        ev[fmtDate(day)] = 'period';
+      }
+      for (let d = 9; d <= 15; d++) {
+        const day = new Date(cs); day.setDate(cs.getDate() + d);
+        if (!ev[fmtDate(day)]) ev[fmtDate(day)] = 'fertile';
+      }
+      const ov = new Date(cs); ov.setDate(cs.getDate() + 13);
+      ev[fmtDate(ov)] = 'ovulation';
+    }
+    (log.symptoms ?? []).forEach(e => { if (!ev[e.date]) ev[e.date] = 'logged'; });
+    (log.mood      ?? []).forEach(e => { if (!ev[e.date]) ev[e.date] = 'logged'; });
+    return ev;
+  }
+
+  onMount(() => {
+    const d = loadData();
+    settings = { cycleLength:28, periodLength:5, lastPeriodDate:null, ...d.settings };
+    hasData  = !!settings.lastPeriodDate;
+    if (hasData) {
+      cycleInfo = getCurrentPhase(settings.lastPeriodDate, settings.cycleLength);
+      events    = buildEvents(settings, d.log ?? {});
+    }
+    if (localStorage.getItem('life-luna-tour-pending') === '1') showTour = true;
+  });
 </script>
 
-<div class="home-page" data-app="luna">
-  <main class="scroll-content">
+<div class="page" data-app="luna">
+  <main class="content">
 
-    <!-- Cycle ring -->
-    <section class="hero">
-      <SegmentedRing
-        segments={[
-          { label: 'Menstrual', color: '#E57373', value: periodLength },
-          { label: 'Follicular', color: '#F48FB1', value: Math.floor(cycleLength * 0.35) },
-          { label: 'Ovulation', color: '#CE93D8', value: Math.floor(cycleLength * 0.14) },
-          { label: 'Luteal', color: '#9FA8DA', value: cycleLength - periodLength - Math.floor(cycleLength * 0.49) },
-        ]}
-        currentIndex={phaseIndex}
-        centerText={String(cycleInfo.dayOfCycle)}
-        centerSubtext="Day"
-        size={180}
-      />
-      <p class="phase-name">{PHASE_LABELS[cycleInfo.phase] || 'Unknown'}</p>
-      {#if cycleInfo.daysUntilNextPeriod > 0}
-        <p class="next-hint">Next period in {cycleInfo.daysUntilNextPeriod} days</p>
-      {:else if cycleInfo.daysUntilNextPeriod === 0}
-        <p class="next-hint">Period expected today</p>
-      {/if}
-    </section>
-
-    <!-- 7-day week strip -->
-    <div class="week-strip">
-      {#each weekDays as day}
-        <div class="week-day" class:today={isToday(day)}>
-          <span class="wd-name">{SHORT_DAYS[day.getDay()]}</span>
-          <div class="wd-num" class:wd-today={isToday(day)}>{day.getDate()}</div>
-          <div class="wd-dot" style="background:{eventColor(day)}; opacity:{hasEvent(day) ? 1 : 0}"></div>
-        </div>
-      {/each}
-    </div>
-
-    <!-- Phase-aware empathy message -->
-    <div class="empathy-wrapper">
-      <EmpathyBanner message={empathy} />
-    </div>
-
-    <!-- Quick log actions -->
-    <section class="quick-actions">
-      <h3 class="qa-title">Quick log</h3>
-      <div class="qa-row">
-        <button class="qa-btn" onclick={() => goto('/log?type=period')}>
-          <span class="qa-icon" style="background:#FFCDD2">
-            <Icon name="droplets" size={20} color="#C62828" />
-          </span>
-          <span class="qa-label">Period</span>
-        </button>
-        <button class="qa-btn" onclick={() => goto('/log?type=symptoms')}>
-          <span class="qa-icon" style="background:#FCE4EC">
-            <Icon name="clipboard" size={20} color="#AD1457" />
-          </span>
-          <span class="qa-label">Symptoms</span>
-        </button>
-        <button class="qa-btn" onclick={() => goto('/log?type=temperature')}>
-          <span class="qa-icon" style="background:#EDE7F6">
-            <Icon name="thermometer" size={20} color="#5E35B1" />
-          </span>
-          <span class="qa-label">Temperature</span>
-        </button>
-        <button class="qa-btn" onclick={() => goto('/log?type=mood')}>
-          <span class="qa-icon" style="background:#FFF9C4">
-            <Icon name="smile" size={20} color="#F57F17" />
-          </span>
-          <span class="qa-label">Mood</span>
-        </button>
+    {#if !hasData}
+      <div class="empty-state">
+        <div class="ring-ph"></div>
+        <p class="empty-msg">Set up your cycle to get predictions and tracking</p>
+        <PebbleButton label="Get started" onclick={() => goto('/onboarding')} />
       </div>
-    </section>
 
+    {:else}
+
+      <!-- ── 1. Cycle ring card ── -->
+      <div class="card ring-card">
+        <SegmentedRing
+          segments={segments}
+          currentIndex={phaseIndex}
+          centerText={String(cycleInfo.dayOfCycle)}
+          centerSubtext="Day"
+          size={200}
+        />
+        <p class="phase-name" style="color:{PHASE_COLORS[cycleInfo.phase]}">{PHASE_LABELS[cycleInfo.phase]}</p>
+        {#if cycleInfo.daysUntilNextPeriod > 0}
+          <p class="next-hint">Next period in {cycleInfo.daysUntilNextPeriod} days</p>
+        {:else if cycleInfo.daysUntilNextPeriod === 0}
+          <p class="next-hint" style="color:#E57373">Period expected today</p>
+        {/if}
+      </div>
+
+      <!-- ── 2. Week strip ── -->
+      <div class="card week-strip" role="list" aria-label="This week">
+        {#each weekDays as day (fmtDate(day))}
+          <div class="wd" class:wd-today={isToday(day)} role="listitem">
+            <span class="wd-name">{DAY_NAMES[day.getDay()]}</span>
+            <div class="wd-num" class:wd-num-today={isToday(day)}>{day.getDate()}</div>
+            <div class="wd-dot" style="background:{dotColor(day)}"></div>
+          </div>
+        {/each}
+      </div>
+
+      <!-- ── 3. Quick log ── -->
+      <div class="card">
+        <p class="section-title">Quick log</p>
+        <div class="qa-row">
+          {#each QUICK as qa}
+            <button class="qa-btn" onclick={() => goto('/log?type=' + qa.type)} aria-label="Log {qa.label}">
+              <span class="qa-icon" style="background:{qa.bg}">
+                <Icon name={qa.icon} size={22} color={qa.fg} />
+              </span>
+              <span class="qa-label">{qa.label}</span>
+            </button>
+          {/each}
+        </div>
+      </div>
+
+      <!-- ── 4. Empathy ── -->
+      <div class="empathy-card">
+        <p class="empathy-msg">{empathy}</p>
+      </div>
+
+    {/if}
+
+    <div class="log-cta">
+      <PebbleButton label="Log today" onclick={() => goto('/log')} />
+    </div>
   </main>
 
-  <!-- Log today — pinned above tab bar -->
-  <div class="bottom-cta">
-    <PebbleButton label="Log today" size="lg" onclick={() => goto('/log')} />
-  </div>
-
-  <TabBar
-    tabs={[
-      { id: 'home', label: 'Home', icon: 'home' },
-      { id: 'cycle', label: 'Cycle', icon: 'calendar' },
-      { id: 'fertility', label: 'Fertile', icon: 'heart' },
-      { id: 'insights', label: 'Insights', icon: 'bar-chart' },
-      { id: 'settings', label: 'Settings', icon: 'settings' }
-    ]}
-    activeTab="home"
-    onchange={(id) => goto('/' + (id === 'home' ? '' : id))}
-    brand="luna"
-  />
-
-  {#if showTour}
-    <FeatureTour onDone={() => showTour = false} />
-  {/if}
+  <TabBar tabs={TABS} activeTab="home" onchange={(id) => goto('/' + (id === 'home' ? '' : id))} brand="luna" />
+  {#if showTour}<FeatureTour onDone={() => showTour = false} />{/if}
 </div>
 
 <style>
-  .home-page {
-    min-height: 100dvh;
-    background: var(--c-bg);
-    color: var(--c-text);
-    display: flex;
-    flex-direction: column;
-    max-width: 780px;
-    margin: 0 auto;
-  }
+  .page { min-height:100dvh; background:var(--c-bg); color:var(--c-text); max-width:780px; margin:0 auto; display:flex; flex-direction:column; }
+  .content { flex:1; display:flex; flex-direction:column; gap:var(--space-4); padding:var(--space-6) var(--space-4) calc(100px + env(safe-area-inset-bottom,0px)); }
 
-  .scroll-content {
-    flex: 1;
-    padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px));
-  }
+  /* Cards */
+  .card { background:var(--c-surface); border-radius:var(--radius-lg); padding:var(--space-5); }
 
-  /* ── Hero ring ── */
-  .hero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: var(--space-8) var(--space-4) var(--space-4);
-    gap: var(--space-3);
-    text-align: center;
-  }
+  /* Ring card */
+  .ring-card { display:flex; flex-direction:column; align-items:center; gap:var(--space-3); }
+  .phase-name { font-size:var(--text-xl); font-weight:var(--weight-bold); margin:0; }
+  .next-hint  { font-size:var(--text-sm); color:var(--c-text-secondary); margin:var(--space-1) 0 0; }
 
-  .phase-name {
-    font-size: var(--text-xl);
-    font-weight: var(--weight-semibold);
-    color: var(--c-text);
-    margin: 0;
-    text-transform: capitalize;
-  }
+  /* Week strip */
+  .week-strip { display:flex; justify-content:space-between; padding:var(--space-3) var(--space-2); }
+  .wd { display:flex; flex-direction:column; align-items:center; gap:3px; flex:1; }
+  .wd-name { font-size:10px; font-weight:600; text-transform:uppercase; color:var(--c-text-secondary); letter-spacing:.04em; }
+  .wd-num { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; }
+  .wd-num-today { background:rgba(107,63,160,.12); color:#6B3FA0; font-weight:700; outline:2px solid #6B3FA0; outline-offset:-2px; }
+  .wd-dot { width:6px; height:6px; border-radius:50%; }
 
-  .next-hint {
-    font-size: var(--text-sm);
-    color: var(--c-text-secondary);
-    margin: 0;
-  }
+  /* Quick actions */
+  .section-title { font-size:var(--text-sm); font-weight:var(--weight-semibold); text-transform:uppercase; letter-spacing:.06em; color:var(--c-text-secondary); margin:0 0 var(--space-3); }
+  .qa-row { display:grid; grid-template-columns:repeat(4,1fr); gap:var(--space-2); }
+  .qa-btn { display:flex; flex-direction:column; align-items:center; gap:var(--space-2); background:none; border:none; cursor:pointer; padding:0; }
+  .qa-icon { width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center; }
+  .qa-label { font-size:11px; font-weight:500; color:var(--c-text-secondary); }
 
-  /* ── Week strip ── */
-  .week-strip {
-    display: flex;
-    justify-content: space-between;
-    padding: var(--space-2) var(--space-4);
-    gap: var(--space-1);
-  }
+  /* Empathy */
+  .empathy-card { background:rgba(107,63,160,.06); border-radius:var(--radius-lg); padding:var(--space-4) var(--space-5); border-left:3px solid #6B3FA0; }
+  .empathy-msg { font-size:var(--text-base); font-style:italic; color:var(--c-text); margin:0; line-height:1.5; }
 
-  .week-day {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-1);
-    padding: var(--space-2) 0;
-    border-radius: var(--radius-md);
-    min-width: 0;
-  }
+  /* CTA */
+  .log-cta { display:flex; justify-content:center; padding-top:var(--space-2); }
 
-  .week-day.today {
-    background: color-mix(in srgb, var(--c-brand, #6B3FA0) 8%, transparent);
-  }
-
-  .wd-name {
-    font-size: var(--text-xs);
-    color: var(--c-text-secondary);
-    font-weight: var(--weight-medium);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .wd-num {
-    font-size: var(--text-sm);
-    font-weight: var(--weight-medium);
-    color: var(--c-text);
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-  }
-
-  .wd-num.wd-today {
-    background: var(--c-brand, #6B3FA0);
-    color: #fff;
-    font-weight: var(--weight-bold);
-  }
-
-  .wd-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-  }
-
-  /* ── Empathy ── */
-  .empathy-wrapper {
-    padding: var(--space-2) var(--space-4) var(--space-4);
-  }
-
-  /* ── Quick log ── */
-  .quick-actions {
-    padding: 0 var(--space-4) var(--space-4);
-  }
-
-  .qa-title {
-    font-size: var(--text-sm);
-    font-weight: var(--weight-semibold);
-    color: var(--c-text-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin: 0 0 var(--space-3);
-  }
-
-  .qa-row {
-    display: flex;
-    gap: var(--space-3);
-  }
-
-  .qa-btn {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-2);
-    background: var(--c-surface);
-    border: none;
-    border-radius: var(--radius-lg);
-    padding: var(--space-3) var(--space-2);
-    cursor: pointer;
-    min-height: var(--tap-target);
-    transition: background var(--duration-fast) var(--ease-out),
-                transform var(--duration-fast) var(--ease-out);
-    -webkit-tap-highlight-color: transparent;
-    font-family: var(--font-sans);
-  }
-
-  .qa-btn:hover { background: var(--c-surface-raised); }
-  .qa-btn:active { transform: scale(0.96); }
-  .qa-btn:focus-visible { outline: 2px solid var(--c-focus); outline-offset: 2px; }
-
-  .qa-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .qa-label {
-    font-size: var(--text-xs);
-    font-weight: var(--weight-medium);
-    color: var(--c-text-secondary);
-    text-align: center;
-  }
-
-  /* ── Pinned CTA ── */
-  .bottom-cta {
-    position: fixed;
-    bottom: calc(56px + env(safe-area-inset-bottom, 0px));
-    left: max(0px, calc(50% - var(--app-max-width, 195px)));
-    right: max(0px, calc(50% - var(--app-max-width, 195px)));
-    z-index: calc(var(--z-sticky) - 1);
-    padding: var(--space-3) var(--space-4) var(--space-2);
-    background: linear-gradient(to bottom, transparent, var(--c-bg) 50%);
-    display: flex;
-    justify-content: center;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .qa-btn { transition: none; }
-    .qa-btn:active { transform: none; }
-  }
+  /* Empty state */
+  .empty-state { display:flex; flex-direction:column; align-items:center; gap:var(--space-5); padding:var(--space-12) 0; text-align:center; }
+  .ring-ph { width:200px; height:200px; border-radius:50%; border:12px solid var(--c-border); opacity:.35; }
+  .empty-msg { color:var(--c-text-secondary); max-width:260px; }
 </style>
