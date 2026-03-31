@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { TabBar, SegmentedRing, Icon } from '$ds/index.js';
+  import { TabBar, SegmentedRing, Icon, PebbleButton } from '$ds/index.js';
 
   let data = $state({
     settings: { cycleLength: 28, periodLength: 5, lastPeriodDate: null },
@@ -96,15 +96,17 @@
     return events;
   });
 
-  // Calendar cells for display month (null = empty padding cell)
+  // Calendar cells for display month (null = empty padding cell), Mon-first
   const calendarDays = $derived.by(() => {
     const year  = displayMonth.getFullYear();
     const month = displayMonth.getMonth();
-    const firstDow    = new Date(year, month, 1).getDay();
+    const firstDow    = (new Date(year, month, 1).getDay() + 6) % 7; // Mon=0
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const days = [];
     for (let i = 0; i < firstDow; i++) days.push(null);
     for (let d = 1; d <= daysInMonth; d++) days.push(new Date(year, month, d));
+    // Pad to full weeks
+    while (days.length % 7 !== 0) days.push(null);
     return days;
   });
 
@@ -131,28 +133,14 @@
 <div class="screen" data-app="luna">
   <main class="calendar-page">
 
-    <!-- Overview ring card -->
-    <div class="card overview-card">
-      <SegmentedRing
-        segments={[
-          { label: 'Menstrual', color: '#E57373', value: periodLength },
-          { label: 'Follicular', color: '#F48FB1', value: Math.floor(cycleLength * 0.35) },
-          { label: 'Ovulation', color: '#CE93D8', value: Math.floor(cycleLength * 0.14) },
-          { label: 'Luteal',    color: '#9FA8DA', value: cycleLength - periodLength - Math.floor(cycleLength * 0.49) },
-        ]}
-        currentIndex={phaseIndex}
-        centerText={String(cycleInfo.dayOfCycle)}
-        centerSubtext="Day"
-        size={80}
-      />
-      <div class="phase-info">
-        <p class="phase-name">{PHASE_LABELS[cycleInfo.phase] || 'Unknown'}</p>
-        {#if cycleInfo.daysUntilNextPeriod > 0}
-          <p class="phase-hint">Next period in {cycleInfo.daysUntilNextPeriod} days</p>
-        {:else}
-          <p class="phase-hint">Period expected today</p>
-        {/if}
-      </div>
+    <!-- Phase summary (compact, no extra ring here) -->
+    <div class="card phase-summary">
+      <p class="phase-name">{PHASE_LABELS[cycleInfo.phase] || 'Unknown'}</p>
+      {#if cycleInfo.daysUntilNextPeriod > 0}
+        <p class="phase-hint">Next period in {cycleInfo.daysUntilNextPeriod} days</p>
+      {:else}
+        <p class="phase-hint">Period expected today</p>
+      {/if}
     </div>
 
     <!-- Calendar card -->
@@ -169,7 +157,7 @@
       </div>
 
       <div class="weekday-header">
-        {#each ['Su','Mo','Tu','We','Th','Fr','Sa'] as d}
+        {#each ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] as d}
           <span>{d}</span>
         {/each}
       </div>
@@ -196,12 +184,32 @@
       </div>
 
       <div class="legend">
-        <span class="leg-item"><span class="leg-dot" style="background:#6B3FA0"></span> Period</span>
-        <span class="leg-item"><span class="leg-dot" style="background:#34C759"></span> Fertile</span>
-        <span class="leg-item"><span class="leg-dot" style="background:#CE93D8"></span> Ovulation</span>
+        <span class="leg-item"><span class="leg-dot" style="background:#E57373"></span>Period</span>
+        <span class="leg-item"><span class="leg-dot" style="background:#F8BBD9;border:1px solid #f0b0c8"></span>Fertile</span>
+        <span class="leg-item"><span class="leg-dot" style="background:#CE93D8"></span>Ovulation</span>
       </div>
-    </div>
 
+      <div class="cal-cta">
+        <PebbleButton label="Log today" size="lg" onclick={() => goto('/log')} />
+      </div>
+
+      <div class="ring-section">
+        <SegmentedRing
+          segments={[
+            { label: 'Menstrual', color: '#E57373', value: periodLength },
+            { label: 'Follicular', color: '#F48FB1', value: Math.floor(cycleLength * 0.35) },
+            { label: 'Ovulation', color: '#CE93D8', value: Math.floor(cycleLength * 0.14) },
+            { label: 'Luteal',    color: '#9FA8DA', value: cycleLength - periodLength - Math.floor(cycleLength * 0.49) },
+          ]}
+          currentIndex={phaseIndex}
+          centerText={String(cycleInfo.dayOfCycle)}
+          centerSubtext="Day"
+          size={160}
+        />
+        <p class="ring-phase">{PHASE_LABELS[cycleInfo.phase] || 'Unknown'} — day {cycleInfo.dayOfCycle}</p>
+      </div>
+
+    </div><!-- /calendar-card -->
   </main>
 
   <TabBar
@@ -247,7 +255,23 @@
     gap: var(--space-4);
   }
 
+  /* ── Overview card ── */
+  .overview-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
   .phase-info { flex: 1; }
+
+  /* ── Phase summary (compact) ── */
+  .phase-summary {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-3) var(--space-4);
+  }
 
   .phase-name {
     font-size: var(--text-lg);
@@ -333,11 +357,11 @@
   .cal-day:hover:not(.is-selected) { background: var(--c-surface-raised); }
   .cal-day:focus-visible { outline: 2px solid var(--c-focus); outline-offset: 2px; }
 
-  .is-period    { background: #6B3FA026; color: #6B3FA0; font-weight: 600; }
-  .is-fertile   { background: #34C75926; color: #2E7D32; }
-  .is-ovulation { background: #CE93D840; color: #7B1FA2; font-weight: 600; }
-  .is-today     { outline: 2px solid #6B3FA0; outline-offset: -2px; font-weight: 700; }
-  .is-selected  { background: #6B3FA0 !important; color: white !important; }
+  .is-period    { background: #E5737340; color: #c62828; font-weight: 600; }
+  .is-fertile   { background: #F8BBD9; color: #333; }
+  .is-ovulation { background: #CE93D8; color: #4a148c; font-weight: 600; }
+  .is-today     { outline: 2px solid #E57373; outline-offset: -2px; font-weight: 700; }
+  .is-selected  { background: #E57373 !important; color: white !important; }
 
   /* ── Legend ── */
   .legend {
@@ -367,5 +391,26 @@
 
   @media (prefers-reduced-motion: reduce) {
     .cal-day, .month-nav { transition: none; }
+  }
+
+  /* ── CTA + ring below calendar ── */
+  .cal-cta {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-4) 0 var(--space-2);
+  }
+
+  .ring-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) 0 var(--space-4);
+  }
+
+  .ring-phase {
+    font-size: var(--text-sm);
+    color: var(--c-text-secondary);
+    margin: 0;
   }
 </style>

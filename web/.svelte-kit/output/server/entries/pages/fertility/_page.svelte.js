@@ -1,7 +1,6 @@
 import { e as escape_html, d as attr_class, f as attr_style, b as stringify } from "../../../chunks/index2.js";
 import { g as goto } from "../../../chunks/client.js";
-import "../../../chunks/EmotionPicker.svelte_svelte_type_style_lang.js";
-import { P as PebbleButton } from "../../../chunks/PebbleButton.js";
+import { P as PebbleButton } from "../../../chunks/EmotionPicker.svelte_svelte_type_style_lang.js";
 import { T as TabBar } from "../../../chunks/TabBar.js";
 function _page($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {

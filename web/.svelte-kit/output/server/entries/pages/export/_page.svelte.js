@@ -5,8 +5,7 @@ import "../../../chunks/utils.js";
 import "@sveltejs/kit/internal/server";
 import "../../../chunks/root.js";
 import "../../../chunks/state.svelte.js";
-import "../../../chunks/EmotionPicker.svelte_svelte_type_style_lang.js";
-import { P as PebbleButton } from "../../../chunks/PebbleButton.js";
+import { P as PebbleButton } from "../../../chunks/EmotionPicker.svelte_svelte_type_style_lang.js";
 function _page($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     const BRAND = "#E91E8C";
