@@ -60,7 +60,7 @@
     user-select: none;
     -webkit-tap-highlight-color: transparent;
     min-height: var(--tap-target);
-    border-radius: 24px 28px 22px 26px;
+    border-radius: 24px 28px 26px 22px;
     box-shadow: 0 4px 12px color-mix(in srgb, var(--pebble-brand) 8%, transparent);
     transition:
       transform var(--duration-fast) var(--ease-out),

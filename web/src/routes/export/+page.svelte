@@ -76,17 +76,17 @@
 
 <style>
   .screen { min-height: 100dvh; background: var(--c-bg, #fff); color: var(--c-text, #111); display: flex; flex-direction: column; max-width: 390px; margin: 0 auto; }
-  header { display: flex; align-items: center; gap: 12px; padding: 16px; border-bottom: 1px solid #f0f0f0; }
-  .back { background: none; border: none; color: #E91E8C; cursor: pointer; font-size: 15px; padding: 0; }
-  .title { font-size: 17px; font-weight: 600; margin: 0; }
-  .hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; gap: 8px; text-align: center; }
+  header { display: flex; align-items: center; gap: 12px; padding: var(--space-4); border-bottom: 1px solid #f0f0f0; }
+  .back { background: none; border: none; color: #E91E8C; cursor: pointer; font-size: var(--text-base); padding: 0; }
+  .title { font-size: var(--text-lg); font-weight: 600; margin: 0; }
+  .hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; gap: var(--space-2); text-align: center; }
   .hero-val { font-size: clamp(52px,14vw,96px); font-weight: 700; line-height: 1; margin: 0; }
   .hero-lbl { font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin: 0; }
-  .status { font-size: 15px; color: #666; margin: 0 0 24px; }
+  .status { font-size: var(--text-base); color: #666; margin: 0 0 24px; }
   .info { max-width: 320px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
-  .info-text { font-size: 15px; line-height: 1.5; color: #444; margin: 0; }
-  .privacy-note { background: #F1F8E9; border-radius: 12px; padding: 12px 14px; }
-  .privacy-note p { font-size: 13px; color: #555; margin: 0; }
+  .info-text { font-size: var(--text-base); line-height: 1.5; color: #444; margin: 0; }
+  .privacy-note { background: #F1F8E9; border-radius: var(--radius-md); padding: 12px 14px; }
+  .privacy-note p { font-size: var(--text-sm); color: #555; margin: 0; }
   .cancel { background: none; border: none; color: #888; cursor: pointer; font-size: 14px; margin-top: 8px; }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>

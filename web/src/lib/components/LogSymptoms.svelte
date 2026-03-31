@@ -66,20 +66,20 @@
     border-radius: var(--radius-md, 12px);
     border: 1px solid var(--luna-secondary, #9D7BC9);
     background: transparent;
-    color: var(--luna-primary, #6B3FA0);
+    color: var(--c-brand);
     font-size: var(--font-size-sm, 13px);
     font-weight: var(--font-weight-medium, 500);
     cursor: pointer;
-    transition: all var(--transition-fast, 150ms ease);
+    transition: all var(--duration-fast, 150ms ease);
   }
 
   .symptom-chip:hover {
-    background: var(--luna-primary-container, #E8DFF5);
+    background: var(--c-surface-container);
   }
 
   .symptom-chip.selected {
-    background: var(--luna-primary, #6B3FA0);
+    background: var(--c-brand);
     color: white;
-    border-color: var(--luna-primary, #6B3FA0);
+    border-color: var(--c-brand);
   }
 </style>

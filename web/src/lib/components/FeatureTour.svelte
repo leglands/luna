@@ -100,7 +100,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 24px;
+    padding: var(--space-6);
   }
 
   .tour-card {
@@ -123,7 +123,7 @@
   }
 
   .tour-step-count {
-    font-size: 12px;
+    font-size: var(--text-xs);
     color: #bbb;
     margin: 0;
     text-transform: uppercase;
@@ -137,7 +137,7 @@
   }
 
   .tour-body {
-    font-size: 15px;
+    font-size: var(--text-base);
     color: #555;
     line-height: 1.5;
     margin: 0;
@@ -177,7 +177,7 @@
     border: none;
     color: #aaa;
     cursor: pointer;
-    font-size: 13px;
+    font-size: var(--text-sm);
   }
 
   @media (prefers-reduced-motion: reduce) {

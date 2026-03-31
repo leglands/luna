@@ -20,7 +20,7 @@
 
 <div class="temp-input">
   <div class="input-row">
-    <Thermometer size={24} color="var(--luna-primary)" />
+    <Thermometer size={24} color="var(--c-brand)" />
     <input
       type="number"
       step="0.01"
@@ -68,7 +68,7 @@
     border: none;
     background: transparent;
     font-size: var(--font-size-xl, 22px);
-    color: var(--luna-primary, #6B3FA0);
+    color: var(--c-brand);
     outline: none;
   }
 
@@ -97,6 +97,6 @@
     border: 1px solid var(--luna-secondary, #9D7BC9);
     border-radius: var(--radius-sm, 8px);
     font-size: var(--font-size-sm, 13px);
-    color: var(--luna-primary, #6B3FA0);
+    color: var(--c-brand);
   }
 </style>

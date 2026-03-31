@@ -210,23 +210,23 @@
 
 <style>
   .screen { min-height: 100dvh; background: var(--c-bg, #fff); color: var(--c-text, #111); display: flex; flex-direction: column; max-width: 390px; margin: 0 auto; }
-  header { display: flex; align-items: center; gap: 12px; padding: 16px; border-bottom: 1px solid #f0f0f0; }
-  .back { background: none; border: none; color: #E91E8C; cursor: pointer; font-size: 15px; padding: 0; }
-  .title { font-size: 17px; font-weight: 600; margin: 0; }
-  .content { flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 0; padding-bottom: 40px; }
+  header { display: flex; align-items: center; gap: 12px; padding: var(--space-4); border-bottom: 1px solid #f0f0f0; }
+  .back { background: none; border: none; color: #E91E8C; cursor: pointer; font-size: var(--text-base); padding: 0; }
+  .title { font-size: var(--text-lg); font-weight: 600; margin: 0; }
+  .content { flex: 1; padding: var(--space-4); display: flex; flex-direction: column; gap: 0; padding-bottom: 40px; }
   .hero-date { font-size: clamp(36px, 10vw, 52px); font-weight: 700; text-align: center; margin: 8px 0 20px; }
   .section { margin-bottom: 24px; }
-  .section-label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin: 0 0 10px; }
-  .chip-row { display: flex; gap: 8px; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 2px; }
+  .section-label { font-size: var(--text-sm); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin: 0 0 10px; }
+  .chip-row { display: flex; gap: var(--space-2); flex-wrap: nowrap; overflow-x: auto; padding-bottom: 2px; }
   .chip-row.wrap { flex-wrap: wrap; overflow: visible; }
   .chip { padding: 7px 14px; border-radius: 20px; border: 1.5px solid #ddd; background: white; cursor: pointer; font-size: 14px; white-space: nowrap; transition: all 0.15s; }
-  .scale-row { display: flex; gap: 8px; }
-  .scale-btn { width: 52px; height: 52px; border-radius: 12px; border: 1.5px solid #ddd; background: white; cursor: pointer; font-size: 18px; font-weight: 600; transition: all 0.15s; }
-  .more-btn { background: none; border: none; color: #E91E8C; cursor: pointer; font-size: 13px; margin-top: 8px; padding: 0; }
-  .temp-row { display: flex; align-items: center; gap: 8px; }
-  .temp-input { width: 100px; padding: 10px 12px; border: 1.5px solid #ddd; border-radius: 12px; font-size: 16px; }
+  .scale-row { display: flex; gap: var(--space-2); }
+  .scale-btn { width: 52px; height: 52px; border-radius: var(--radius-md); border: 1.5px solid #ddd; background: white; cursor: pointer; font-size: 18px; font-weight: 600; transition: all 0.15s; }
+  .more-btn { background: none; border: none; color: #E91E8C; cursor: pointer; font-size: var(--text-sm); margin-top: 8px; padding: 0; }
+  .temp-row { display: flex; align-items: center; gap: var(--space-2); }
+  .temp-input { width: 100px; padding: 10px 12px; border: 1.5px solid #ddd; border-radius: var(--radius-md); font-size: 16px; }
   .temp-unit { font-size: 16px; color: #666; }
-  .temp-hint { font-size: 12px; color: #aaa; margin: 6px 0 0; }
+  .temp-hint { font-size: var(--text-xs); color: #aaa; margin: 6px 0 0; }
   .cta { margin-top: 16px; display: flex; justify-content: center; }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>

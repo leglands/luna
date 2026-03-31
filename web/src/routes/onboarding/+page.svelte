@@ -154,7 +154,7 @@
     align-items: center;
     justify-content: center;
     padding: 24px 16px 40px;
-    gap: 24px;
+    gap: var(--space-6);
     text-align: center;
     max-width: 390px;
     margin: 0 auto;
@@ -183,7 +183,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: var(--space-4);
     width: 100%;
     max-width: 320px;
   }
@@ -196,7 +196,7 @@
   }
 
   p {
-    font-size: 15px;
+    font-size: var(--text-base);
     color: #666;
     margin: 0;
     line-height: 1.5;
@@ -207,7 +207,7 @@
     width: 100%;
     padding: 14px 16px;
     border: 1.5px solid #ddd;
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     font-size: 16px;
     box-sizing: border-box;
     background: var(--c-surface, #fafafa);
@@ -233,7 +233,7 @@
   }
 
   .slider-group label {
-    font-size: 15px;
+    font-size: var(--text-base);
     font-weight: 500;
   }
 
@@ -245,7 +245,7 @@
   .slider-range {
     display: flex;
     justify-content: space-between;
-    font-size: 12px;
+    font-size: var(--text-xs);
     color: #aaa;
   }
 
