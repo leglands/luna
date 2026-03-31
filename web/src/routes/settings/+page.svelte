@@ -3,7 +3,7 @@
   import { goto } from '$app/navigation';
   import { PebbleButton, TabBar } from '$ds/index.js';
 
-  const TABS = [{id:'home',label:'Home',icon:'home'},{id:'cycle',label:'Cycle',icon:'calendar'},{id:'insights',label:'Insights',icon:'bar-chart'},{id:'settings',label:'Settings',icon:'settings'}];
+  const TABS = [{id:'home',label:'Home',icon:'home'},{id:'cycle',label:'Cycle',icon:'calendar'},{id:'fertility',label:'Fertile',icon:'heart'},{id:'insights',label:'Insights',icon:'bar-chart'},{id:'settings',label:'Settings',icon:'settings'}];
 
   let cycleLength = $state(28);
   let periodLength = $state(5);
@@ -57,6 +57,12 @@
         <input type="date" bind:value={cycleStartDate} class="date-input" />
       </label>
     </div>
+    <div class="rows" style="margin-top:8px">
+      <button class="row export-row" onclick={() => goto('/export')}>
+        <span>Export data</span>
+        <span class="export-hint">CSV for gynecologist →</span>
+      </button>
+    </div>
     <PebbleButton label="Save" size="lg" onclick={save} />
   </main>
   <TabBar tabs={TABS} activeTab="settings" onchange={(id) => goto('/' + (id === 'home' ? '' : id))} brand="luna" />
@@ -72,5 +78,7 @@
   .row input[type=number] { width: 60px; text-align: center; border: 1.5px solid var(--c-border); border-radius: var(--radius-sm); padding: var(--space-1) var(--space-2); background: transparent; color: var(--c-text); font-size: var(--text-base); }
   .date-input { border: 1.5px solid var(--c-border); border-radius: var(--radius-sm); padding: var(--space-1) var(--space-2); background: transparent; color: var(--c-text); font-size: var(--text-sm); }
   .unit { color: var(--c-text-secondary); font-size: var(--text-sm); }
+  .export-row { background: none; border: none; cursor: pointer; color: var(--c-text); text-align: left; width: 100%; padding: 0; }
+  .export-hint { color: #E91E8C; font-size: var(--text-sm); }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>

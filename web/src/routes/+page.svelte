@@ -94,6 +94,7 @@
     tabs={[
       { id: 'home', label: 'Home', icon: 'home' },
       { id: 'cycle', label: 'Cycle', icon: 'calendar' },
+      { id: 'fertility', label: 'Fertile', icon: 'heart' },
       { id: 'insights', label: 'Insights', icon: 'bar-chart' },
       { id: 'settings', label: 'Settings', icon: 'settings' }
     ]}

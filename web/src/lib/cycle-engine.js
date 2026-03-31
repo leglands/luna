@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'luna_data';
+const STORAGE_KEY = 'life-luna-data';
 
 const DEFAULT_SETTINGS = {
   cycleLength: 28,

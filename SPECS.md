@@ -1,35 +1,74 @@
-# Luna — Specifications
+# Luna — Product Specs
 
-> **Status:** 🚧 À compléter (phase Discovery)
+## App Identity
+- Name: Luna
+- Purpose: Period & cycle tracking — understand your body, predict your cycle, log health data daily
+- Brand: #E91E8C (rose/pink)
+- Platform: iOS + Web (luna.macaron-software.com)
+- Privacy: fully local-first (SQLCipher iOS, localStorage web), GDPR, zero PII network
+- i18n: 47 locales, RTL support
 
-## Vision & Objectif
+## User Journeys — 1 week of use
 
-Private local Luna project loaded only in local SF.
+### Daily
+| Task | Frequency | Web | iOS |
+|------|-----------|-----|-----|
+| Dashboard — cycle day, phase, next period | 1× morning | ✅ / | ✅ HomeView |
+| Log period (start/end) | 3–7 days/cycle | ⚠️ toggle only | ✅ LogSheet |
+| Log flow intensity (light/medium/heavy/spotting) | 1×/day during period | ❌ | ✅ LogSheet |
+| Log symptoms (cramps/headache/fatigue/bloating/etc) | 1-2×/day | ❌ | ✅ LogSheet |
+| Log mood (1-5 scale) | 1×/day | ⚠️ text only | ✅ MoodPicker |
+| Log energy (1-5 scale) | 1×/day | ❌ | ✅ LogSheet |
+| Log BBT temperature | 1×/morning (fertility) | ❌ | ✅ LogSheet |
 
-## Périmètre fonctionnel
+### Weekly
+| Task | Web | iOS |
+|------|-----|-----|
+| Calendar view — cycle phases on month | ✅ /cycle | ✅ CalendarView |
+| Insights — avg cycle length, trends | ✅ /insights | ✅ InsightsView |
+| Fertile window — ovulation prediction, fertile days | ❌ | ✅ |
+| History — past cycles list | ✅ /history | ✅ |
 
-- [ ] Fonctionnalité 1
-- [ ] Fonctionnalité 2
+### Contextual
+| Task | Web | iOS |
+|------|-----|-----|
+| Export data (CSV/PDF) for gynecologist | ❌ | ❌ |
+| Notifications/reminders (period coming) | ❌ | ❌ |
+| Switch to pregnancy mode → Aura | ❌ | ⚠️ TrackingModeView |
 
-## Stack technique
+## Data Model
 
-- **Backend:** *À définir*
-- **Frontend:** *À définir*
-- **Base de données:** *À définir*
-- **Infra:** Docker / docker-compose
+### localStorage key: `life-luna-data`
+```json
+{
+  "settings": {
+    "cycleLength": 28,
+    "periodLength": 5,
+    "lastPeriodDate": "2025-03-01"
+  },
+  "log": {
+    "period": [{ "date": "YYYY-MM-DD", "flow": "spotting|light|medium|heavy" }],
+    "symptoms": [{ "date": "YYYY-MM-DD", "items": ["cramps","fatigue","headache","bloating","breast_tenderness","irritability","low_mood","high_energy","nausea","lower_back_pain"] }],
+    "mood": [{ "date": "YYYY-MM-DD", "score": "1-5", "label": "sad|neutral|ok|good|great" }],
+    "energy": [{ "date": "YYYY-MM-DD", "score": "1-5" }],
+    "temperature": [{ "date": "YYYY-MM-DD", "value": 36.7, "time": "HH:MM" }]
+  }
+}
+```
 
-## Contraintes & Non-Functional Requirements
+## Cycle Engine
+- Phase calculation: menstrual (d1-5), follicular (d6-13), ovulation (d13-15), luteal (d16-28)
+- Fertile window: ovulation day ± 5 days (Sperm survival = 5d, egg = 24h — ACOG)
+- Ovulation prediction: lastPeriodDate + cycleLength - 14
+- BBT shift: sustained +0.2°C indicates ovulation (post-hoc only)
 
-- Sécurité : OWASP Top 10, aucune CVE critique
-- Légalité : RGPD, licences open-source conformes
-- Performance : *À définir*
+## Missing Screens (to build)
+1. Enhanced `/log` — full daily log (flow + 9 symptoms + mood 1-5 + energy + BBT)
+2. `/fertility` — fertile window + ovulation prediction
+3. `/export` — CSV data export for gynecologist
 
-## Critères d'acceptation (Definition of Done)
-
-- [ ] Tests unitaires ≥ 80% couverture
-- [ ] Lint / type-check passant
-- [ ] Docker build + run OK
-- [ ] Audit sécurité validé
-
----
-*Généré par Software Factory — à compléter par l'agent architecte*
+## Evidence Base
+- ACOG — cycle length norms (21-35 days), fertile window
+- WHO — menstrual health guidelines
+- Fehring et al. 2006 — BBT charting accuracy
+- Crawford et al. 2018 — symptom logging app engagement
