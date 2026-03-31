@@ -26,7 +26,7 @@
 
   onMount(() => {
     const d = JSON.parse(localStorage.getItem(KEY) ?? '{}');
-    if (!d.settings?.lastPeriodDate) { goto('/onboarding'); return; }
+    if (!d.settings?.lastPeriodDate) {  return; }
 
     const { cycleLength = 28, lastPeriodDate } = d.settings;
     const today = new Date();

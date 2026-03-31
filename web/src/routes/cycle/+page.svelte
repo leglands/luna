@@ -27,7 +27,7 @@
 
   onMount(() => {
     const raw = localStorage.getItem('life-luna-data');
-    if (!raw) { goto('/onboarding'); return; }
+    if (!raw) { data = { settings: { cycleLength: 28, periodLength: 5 }, log: {} }; }
     data = JSON.parse(raw);
     displayMonth = new Date();
   });

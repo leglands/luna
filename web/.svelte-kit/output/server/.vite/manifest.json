@@ -32,14 +32,6 @@
       "_EmotionPicker.svelte_svelte_type_style_lang.js"
     ]
   },
-  "_SegmentedRing.js": {
-    "file": "chunks/SegmentedRing.js",
-    "name": "SegmentedRing",
-    "imports": [
-      "_index2.js",
-      "_EmotionPicker.svelte_svelte_type_style_lang.js"
-    ]
-  },
   "_TabBar.js": {
     "file": "chunks/TabBar.js",
     "name": "TabBar",
@@ -500,15 +492,13 @@
     "src": "src/routes/+page.svelte",
     "isEntry": true,
     "imports": [
-      "_index2.js",
       "_client.js",
       "_EmotionPicker.svelte_svelte_type_style_lang.js",
       "_PebbleButton.js",
-      "_SegmentedRing.js",
       "_TabBar.js"
     ],
     "css": [
-      "_app/immutable/assets/_page.CLmrYzxp.css"
+      "_app/immutable/assets/_page.CDsdcq2f.css"
     ]
   },
   "src/routes/cycle/+page.svelte": {
@@ -520,7 +510,6 @@
       "_index2.js",
       "_client.js",
       "_EmotionPicker.svelte_svelte_type_style_lang.js",
-      "_SegmentedRing.js",
       "_TabBar.js"
     ],
     "css": [
