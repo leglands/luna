@@ -1,6 +1,7 @@
 import { c as ensure_array_like, d as attr_class, a as attr, b as stringify, e as escape_html, f as attr_style } from "../../../chunks/index2.js";
 import { g as goto } from "../../../chunks/client.js";
-import { P as PebbleButton } from "../../../chunks/EmotionPicker.svelte_svelte_type_style_lang.js";
+import "../../../chunks/EmotionPicker.svelte_svelte_type_style_lang.js";
+import { P as PebbleButton } from "../../../chunks/PebbleButton.js";
 function _page($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     const BRAND = "#E91E8C";

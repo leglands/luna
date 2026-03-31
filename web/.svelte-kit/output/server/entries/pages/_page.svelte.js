@@ -1,70 +1,9 @@
-import { d as attr_class, f as attr_style, a as attr, c as ensure_array_like, e as escape_html, i as derived, b as stringify } from "../../chunks/index2.js";
+import { d as attr_class, b as stringify, e as escape_html, c as ensure_array_like, f as attr_style, i as derived } from "../../chunks/index2.js";
 import { g as goto } from "../../chunks/client.js";
-import { I as Icon, P as PebbleButton } from "../../chunks/EmotionPicker.svelte_svelte_type_style_lang.js";
+import { I as Icon } from "../../chunks/EmotionPicker.svelte_svelte_type_style_lang.js";
+import { P as PebbleButton } from "../../chunks/PebbleButton.js";
+import { S as SegmentedRing } from "../../chunks/SegmentedRing.js";
 import { T as TabBar } from "../../chunks/TabBar.js";
-function SegmentedRing($$renderer, $$props) {
-  $$renderer.component(($$renderer2) => {
-    let {
-      segments = [],
-      currentIndex = 0,
-      centerText = "",
-      centerSubtext = "",
-      size = 120,
-      class: className = ""
-    } = $$props;
-    const strokeWidth = 12;
-    const radius = (size - strokeWidth) / 2;
-    function polarToCartesian(cx, cy, r, angle) {
-      const rad = (angle - 90) * Math.PI / 180;
-      return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
-    }
-    function describeArc(cx, cy, r, startAngle, endAngle) {
-      const start = polarToCartesian(cx, cy, r, endAngle);
-      const end = polarToCartesian(cx, cy, r, startAngle);
-      const largeArcFlag = endAngle - startAngle <= 180 ? 0 : 1;
-      return `M ${start.x} ${start.y} A ${r} ${r} 0 ${largeArcFlag} 0 ${end.x} ${end.y}`;
-    }
-    const totalSegments = derived(() => segments.length);
-    const segmentAngle = derived(() => 360 / totalSegments());
-    const arcPaths = derived(() => segments.map((seg, i) => {
-      const startAngle = i * segmentAngle();
-      const endAngle = startAngle + segmentAngle() - 2;
-      return {
-        ...seg,
-        path: describeArc(size / 2, size / 2, radius, startAngle, endAngle),
-        isCurrent: i === currentIndex
-      };
-    }));
-    $$renderer2.push(`<div${attr_class(`segmented-ring ${stringify(className)}`, "svelte-1emoo3r")}${attr_style(`--ring-size: ${stringify(size)}px`)} role="img"${attr("aria-label", centerText || "Progress ring")}><svg${attr("width", size)}${attr("height", size)}${attr("viewBox", `0 0 ${stringify(size)} ${stringify(size)}`)} class="ring-svg svelte-1emoo3r"><circle${attr("cx", size / 2)}${attr("cy", size / 2)}${attr("r", radius)} fill="none" stroke="var(--c-surface-container)"${attr("stroke-width", strokeWidth)} class="svelte-1emoo3r"></circle><!--[-->`);
-    const each_array = ensure_array_like(arcPaths());
-    for (let $$index = 0, $$length = each_array.length; $$index < $$length; $$index++) {
-      let arc = each_array[$$index];
-      $$renderer2.push(`<g class="arc-group svelte-1emoo3r"><path${attr("d", arc.path)} fill="none"${attr("stroke", arc.color)}${attr("stroke-width", arc.isCurrent && true ? strokeWidth + 4 : strokeWidth)} stroke-linecap="round"${attr_class("arc svelte-1emoo3r", void 0, { "arc--active": arc.isCurrent })}></path>`);
-      if (arc.isCurrent && true) {
-        $$renderer2.push("<!--[0-->");
-        $$renderer2.push(`<path${attr("d", arc.path)} fill="none"${attr("stroke", arc.color)}${attr("stroke-width", strokeWidth + 8)} stroke-linecap="round" opacity="0.2" class="arc-glow svelte-1emoo3r"></path>`);
-      } else {
-        $$renderer2.push("<!--[-1-->");
-      }
-      $$renderer2.push(`<!--]--></g>`);
-    }
-    $$renderer2.push(`<!--]--></svg> <div class="ring-center svelte-1emoo3r">`);
-    if (centerText) {
-      $$renderer2.push("<!--[0-->");
-      $$renderer2.push(`<span class="ring-text svelte-1emoo3r">${escape_html(centerText)}</span>`);
-    } else {
-      $$renderer2.push("<!--[-1-->");
-    }
-    $$renderer2.push(`<!--]--> `);
-    if (centerSubtext) {
-      $$renderer2.push("<!--[0-->");
-      $$renderer2.push(`<span class="ring-subtext svelte-1emoo3r">${escape_html(centerSubtext)}</span>`);
-    } else {
-      $$renderer2.push("<!--[-1-->");
-    }
-    $$renderer2.push(`<!--]--></div></div>`);
-  });
-}
 function EmpathyBanner($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     let { message = null, class: className = "" } = $$props;
@@ -89,25 +28,14 @@ function _page($$renderer, $$props) {
       settings: { cycleLength: 28, periodLength: 5 }
     };
     let cycleInfo = { phase: "unknown", dayOfCycle: 1, daysUntilNextPeriod: 14 };
-    const empathyMessages = {
-      morning: [
-        "A new day, a new beginning.",
-        "Take a moment for yourself.",
-        "Your body, your rhythm."
-      ],
-      evening: [
-        "Rest is part of the cycle.",
-        "Tomorrow is a new opportunity.",
-        "Listen to your body."
-      ]
+    const EMPATHY = {
+      menstrual: { fallback: "Rest and be gentle with yourself.", icon: "heart" },
+      follicular: { fallback: "Your energy is rising — embrace it.", icon: "sun" },
+      ovulation: { fallback: "You are at your peak. Shine.", icon: "sparkles" },
+      luteal: { fallback: "Take it one step at a time.", icon: "moon" },
+      unknown: { fallback: "Your body, your rhythm.", icon: "heart" }
     };
-    const empathy = derived(() => () => {
-      const hour = (/* @__PURE__ */ new Date()).getHours();
-      const timeKey = hour < 12 ? "morning" : "evening";
-      const messages = empathyMessages[timeKey];
-      return messages[Math.floor(Math.random() * messages.length)];
-    });
-    const phaseLabels = {
+    const PHASE_LABELS = {
       menstrual: "Menstrual",
       follicular: "Follicular",
       ovulation: "Ovulation",
@@ -121,10 +49,35 @@ function _page($$renderer, $$props) {
       luteal: 3,
       unknown: 0
     };
+    const SHORT_DAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+    const empathy = derived(() => EMPATHY[cycleInfo.phase] ?? EMPATHY.unknown);
     const phaseIndex = derived(() => PHASE_IDX[cycleInfo.phase]);
     const periodLength = derived(() => data.settings?.periodLength);
     const cycleLength = derived(() => data.settings?.cycleLength);
-    $$renderer2.push(`<div class="home-page svelte-1uha8ag" data-app="luna"><main class="hero svelte-1uha8ag"><div class="day-display svelte-1uha8ag"><span class="day-number svelte-1uha8ag">${escape_html(cycleInfo.dayOfCycle)}</span> <span class="day-label svelte-1uha8ag">Day</span></div> `);
+    const weekDays = Array.from({ length: 7 }, (_, i) => {
+      const d = /* @__PURE__ */ new Date();
+      d.setDate(d.getDate() - 3 + i);
+      d.setHours(0, 0, 0, 0);
+      return d;
+    });
+    function isToday(d) {
+      const t = /* @__PURE__ */ new Date();
+      return d.getDate() === t.getDate() && d.getMonth() === t.getMonth() && d.getFullYear() === t.getFullYear();
+    }
+    function getDayEvent(d) {
+      return null;
+    }
+    function eventColor(d) {
+      const ev = getDayEvent();
+      if (ev === "period") return "#6B3FA0";
+      if (ev === "ovulation") return "#CE93D8";
+      if (ev === "fertile") return "#34C759";
+      return "transparent";
+    }
+    function hasEvent(d) {
+      return getDayEvent() !== null;
+    }
+    $$renderer2.push(`<div class="home-page svelte-1uha8ag" data-app="luna"><main class="scroll-content svelte-1uha8ag"><section class="hero svelte-1uha8ag">`);
     SegmentedRing($$renderer2, {
       segments: [
         { label: "Menstrual", color: "#E57373", value: periodLength() },
@@ -147,18 +100,32 @@ function _page($$renderer, $$props) {
       currentIndex: phaseIndex(),
       centerText: String(cycleInfo.dayOfCycle),
       centerSubtext: "Day",
-      size: 200
+      size: 180
     });
-    $$renderer2.push(`<!----> <p class="phase-name svelte-1uha8ag">${escape_html(phaseLabels[cycleInfo.phase])}</p> `);
-    PebbleButton($$renderer2, { label: "Log today", size: "lg", onclick: () => goto() });
-    $$renderer2.push(`<!----> `);
+    $$renderer2.push(`<!----> <p class="phase-name svelte-1uha8ag">${escape_html(PHASE_LABELS[cycleInfo.phase])}</p> `);
     {
       $$renderer2.push("<!--[0-->");
       $$renderer2.push(`<p class="next-hint svelte-1uha8ag">Next period in ${escape_html(cycleInfo.daysUntilNextPeriod)} days</p>`);
     }
-    $$renderer2.push(`<!--]--></main> `);
-    EmpathyBanner($$renderer2, { message: empathy()() });
-    $$renderer2.push(`<!----> `);
+    $$renderer2.push(`<!--]--></section> <div class="week-strip svelte-1uha8ag"><!--[-->`);
+    const each_array = ensure_array_like(weekDays);
+    for (let $$index = 0, $$length = each_array.length; $$index < $$length; $$index++) {
+      let day = each_array[$$index];
+      $$renderer2.push(`<div${attr_class("week-day svelte-1uha8ag", void 0, { "today": isToday(day) })}><span class="wd-name svelte-1uha8ag">${escape_html(SHORT_DAYS[day.getDay()])}</span> <div${attr_class("wd-num svelte-1uha8ag", void 0, { "wd-today": isToday(day) })}>${escape_html(day.getDate())}</div> <div class="wd-dot svelte-1uha8ag"${attr_style(`background:${stringify(eventColor())}; opacity:${stringify(hasEvent() ? 1 : 0)}`)}></div></div>`);
+    }
+    $$renderer2.push(`<!--]--></div> <div class="empathy-wrapper svelte-1uha8ag">`);
+    EmpathyBanner($$renderer2, { message: empathy() });
+    $$renderer2.push(`<!----></div> <section class="quick-actions svelte-1uha8ag"><h3 class="qa-title svelte-1uha8ag">Quick log</h3> <div class="qa-row svelte-1uha8ag"><button class="qa-btn svelte-1uha8ag"><span class="qa-icon svelte-1uha8ag" style="background:#FFCDD2">`);
+    Icon($$renderer2, { name: "droplets", size: 20, color: "#C62828" });
+    $$renderer2.push(`<!----></span> <span class="qa-label svelte-1uha8ag">Period</span></button> <button class="qa-btn svelte-1uha8ag"><span class="qa-icon svelte-1uha8ag" style="background:#FCE4EC">`);
+    Icon($$renderer2, { name: "clipboard", size: 20, color: "#AD1457" });
+    $$renderer2.push(`<!----></span> <span class="qa-label svelte-1uha8ag">Symptoms</span></button> <button class="qa-btn svelte-1uha8ag"><span class="qa-icon svelte-1uha8ag" style="background:#EDE7F6">`);
+    Icon($$renderer2, { name: "thermometer", size: 20, color: "#5E35B1" });
+    $$renderer2.push(`<!----></span> <span class="qa-label svelte-1uha8ag">Temperature</span></button> <button class="qa-btn svelte-1uha8ag"><span class="qa-icon svelte-1uha8ag" style="background:#FFF9C4">`);
+    Icon($$renderer2, { name: "smile", size: 20, color: "#F57F17" });
+    $$renderer2.push(`<!----></span> <span class="qa-label svelte-1uha8ag">Mood</span></button></div></section></main> <div class="bottom-cta svelte-1uha8ag">`);
+    PebbleButton($$renderer2, { label: "Log today", size: "lg", onclick: () => goto() });
+    $$renderer2.push(`<!----></div> `);
     TabBar($$renderer2, {
       tabs: [
         { id: "home", label: "Home", icon: "home" },
