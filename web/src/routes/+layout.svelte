@@ -98,3 +98,18 @@
 </svelte:head>
 
 {@render children()}
+
+<style>
+  :global(body) { background: var(--c-surface-container, #F2F2F5); }
+  /* pages inside already have max-width: 390px; add phone frame on desktop */
+  :global(.screen) {
+    max-width: 390px;
+    margin: 0 auto;
+  }
+  @media (min-width: 420px) {
+    :global(.screen) {
+      box-shadow: 0 0 0 1px var(--c-border, #e5e7eb), 0 8px 40px rgba(0,0,0,0.06);
+      min-height: 100dvh;
+    }
+  }
+</style>
