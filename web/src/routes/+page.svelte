@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { PebbleButton, Icon, TabBar, SegmentedRing } from '$ds/index.js';
+  import { PebbleButton, Icon, SegmentedRing, DSFloatingNav, DaisyMenu, DSPebbleDrawer, DSSettingsSlide } from '$ds/index.js';
   import { loadData, getCurrentPhase } from '$lib/cycle-engine.js';
   import FeatureTour from '$lib/components/FeatureTour.svelte';
 
@@ -100,6 +100,34 @@
     }
     if (localStorage.getItem('life-luna-tour-pending') === '1') showTour = true;
   });
+
+  let settingsOpen = $state(false);
+  let activeProfile = $state('me');
+  let locationLabel = $state('');
+
+  // Fetch city name from browser geolocation + Nominatim reverse geocode
+  onMount(() => {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(async (pos) => {
+        try {
+          const r = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&format=json`,
+            { headers: { 'Accept-Language': 'en' } }
+          );
+          const d = await r.json();
+          locationLabel = d.address?.city ?? d.address?.town ?? d.address?.village ?? d.address?.county ?? '';
+        } catch { locationLabel = ''; }
+      }, () => { locationLabel = ''; });
+    }
+  });
+
+  let daisyOpen = $state(false);
+  const DAISY_ITEMS = [
+    { icon: 'droplet',    label: 'Règles',    onclick: () => goto('/cycle') },
+    { icon: 'thermometer',label: 'Symptôme',  onclick: () => goto('/cycle') },
+    { icon: 'smile',      label: 'Humeur',    onclick: () => goto('/insights') },
+    { icon: 'moon',       label: 'Ovulation', onclick: () => goto('/fertility') },
+  ];
 </script>
 
 <div class="page" data-app="luna">
@@ -169,9 +197,58 @@
     </div>
   </main>
 
-  <TabBar tabs={TABS} activeTab="home" onchange={(id) => goto('/' + (id === 'home' ? '' : id))} brand="luna" />
+  <DSPebbleDrawer
+    brand="luna"
+    items={[
+      ...(locationLabel ? [{ id: 'location', label: locationLabel, type: 'location' }] : []),
+      { id: 'me', label: 'Me', type: 'profile' },
+      { id: 'settings', label: 'Settings', type: 'action' },
+    ]}
+    activeId={activeProfile}
+    onselect={(id) => activeProfile = id}
+    onsettings={() => settingsOpen = true}
+  />
+  <DSFloatingNav
+  tabs={TABS}
+  active="home"
+  brand="luna"
+  onchange={(id) => goto('/' + (id === 'home' ? '' : id))}
+  onfab={() => daisyOpen = !daisyOpen}
+  bind:daisyOpen
+/>
+<DaisyMenu open={daisyOpen} onclose={() => daisyOpen = false} items={DAISY_ITEMS} />
   {#if showTour}<FeatureTour onDone={() => showTour = false} />{/if}
 </div>
+
+<DSSettingsSlide
+  open={settingsOpen}
+  brand="luna"
+  title="Settings"
+  onclose={() => settingsOpen = false}
+>
+  <p class="settings-section-title">General</p>
+  <div class="settings-row">
+    <div>
+      <p class="settings-row-label">Theme</p>
+      <p class="settings-row-sub">System default</p>
+    </div>
+  </div>
+  <p class="settings-section-title">Privacy</p>
+  <div class="settings-row">
+    <div>
+      <p class="settings-row-label">Data encryption</p>
+      <p class="settings-row-sub">End-to-end encrypted</p>
+    </div>
+  </div>
+  <p class="settings-section-title">About</p>
+  <div class="settings-row">
+    <div>
+      <p class="settings-row-label">Version</p>
+      <p class="settings-row-sub">1.0.0</p>
+    </div>
+  </div>
+  <button class="settings-danger-btn">Delete my data</button>
+</DSSettingsSlide>
 
 <style>
   .page { min-height:100dvh; background:var(--c-bg); color:var(--c-text); max-width:780px; margin:0 auto; display:flex; flex-direction:column; }

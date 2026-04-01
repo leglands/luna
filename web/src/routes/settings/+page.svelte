@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { PebbleButton, TabBar } from '$ds/index.js';
+  import { PebbleButton, DSFloatingNav, DaisyMenu } from '$ds/index.js';
 
   const TABS = [{id:'home',label:'Home',icon:'home'},{id:'cycle',label:'Cycle',icon:'calendar'},{id:'fertility',label:'Fertile',icon:'heart'},{id:'insights',label:'Insights',icon:'bar-chart'},{id:'settings',label:'Settings',icon:'settings'}];
 
@@ -38,6 +38,14 @@
     }
     goto('/');
   }
+
+  let daisyOpen = $state(false);
+  const DAISY_ITEMS = [
+    { icon: 'droplet',    label: 'Règles',    onclick: () => goto('/cycle') },
+    { icon: 'thermometer',label: 'Symptôme',  onclick: () => goto('/cycle') },
+    { icon: 'smile',      label: 'Humeur',    onclick: () => goto('/insights') },
+    { icon: 'moon',       label: 'Ovulation', onclick: () => goto('/fertility') },
+  ];
 </script>
 
 <div class="screen" data-app="luna">
@@ -65,7 +73,15 @@
     </div>
     <PebbleButton label="Save" size="lg" onclick={save} />
   </main>
-  <TabBar tabs={TABS} activeTab="settings" onchange={(id) => goto('/' + (id === 'home' ? '' : id))} brand="luna" />
+  <DSFloatingNav
+  tabs={TABS}
+  active="settings"
+  brand="luna"
+  onchange={(id) => goto('/' + (id === 'home' ? '' : id))}
+  onfab={() => daisyOpen = !daisyOpen}
+  bind:daisyOpen
+/>
+<DaisyMenu open={daisyOpen} onclose={() => daisyOpen = false} items={DAISY_ITEMS} />
 </div>
 
 <style>

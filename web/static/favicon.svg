@@ -1,4 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
-  <circle cx="16" cy="16" r="16" fill="#1A0A10"/>
-  <text x="16" y="22" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="700" font-size="18" fill="#C2185B">L</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="7" fill="#D4678A"/>
+  <defs>
+    <mask id="fcm">
+      <rect width="32" height="32" fill="white"/>
+      <circle cx="19.5" cy="14" r="7.5" fill="black"/>
+    </mask>
+  </defs>
+  <circle cx="14.5" cy="16" r="8.5" fill="white" opacity="0.95" mask="url(#fcm)"/>
+  <circle cx="24" cy="8" r="1.5" fill="white" opacity="0.85"/>
+  <circle cx="26" cy="12" r="1" fill="white" opacity="0.70"/>
 </svg>

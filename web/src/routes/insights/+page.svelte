@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { PebbleButton, TabBar } from '$ds/index.js';
+  import { PebbleButton, DSFloatingNav, DaisyMenu } from '$ds/index.js';
 
   const TABS = [{id:'home',label:'Home',icon:'home'},{id:'cycle',label:'Cycle',icon:'calendar'},{id:'insights',label:'Insights',icon:'bar-chart'},{id:'settings',label:'Settings',icon:'settings'}];
 
@@ -33,6 +33,14 @@
     if (d.settings?.periodLength) hint1 = `Avg period: ${d.settings.periodLength} days`;
     if (lastCycleLen) hint2 = `Last cycle: ${lastCycleLen} days`;
   });
+
+  let daisyOpen = $state(false);
+  const DAISY_ITEMS = [
+    { icon: 'droplet',    label: 'Règles',    onclick: () => goto('/cycle') },
+    { icon: 'thermometer',label: 'Symptôme',  onclick: () => goto('/cycle') },
+    { icon: 'smile',      label: 'Humeur',    onclick: () => goto('/insights') },
+    { icon: 'moon',       label: 'Ovulation', onclick: () => goto('/fertility') },
+  ];
 </script>
 
 <div class="screen" data-app="luna">
@@ -46,7 +54,15 @@
     {#if hint1}<p class="hint">{hint1}</p>{/if}
     {#if hint2}<p class="hint secondary">{hint2}</p>{/if}
   </main>
-  <TabBar tabs={TABS} activeTab="insights" onchange={(id) => goto('/' + (id === 'home' ? '' : id))} brand="luna" />
+  <DSFloatingNav
+  tabs={TABS}
+  active="insights"
+  brand="luna"
+  onchange={(id) => goto('/' + (id === 'home' ? '' : id))}
+  onfab={() => daisyOpen = !daisyOpen}
+  bind:daisyOpen
+/>
+<DaisyMenu open={daisyOpen} onclose={() => daisyOpen = false} items={DAISY_ITEMS} />
 </div>
 
 <style>

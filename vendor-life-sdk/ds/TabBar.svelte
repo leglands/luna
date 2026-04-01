@@ -72,8 +72,10 @@
     padding-bottom: calc(var(--space-2) + env(safe-area-inset-bottom, 0px));
     position: fixed;
     bottom: 0;
-    left: 0;
-    right: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: var(--app-max-width, 780px);
     z-index: var(--z-sticky);
   }
 

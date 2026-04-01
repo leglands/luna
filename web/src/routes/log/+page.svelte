@@ -3,7 +3,6 @@
   import { goto } from '$app/navigation';
   import { PebbleButton } from '$ds/index.js';
 
-  const BRAND = '#E91E8C';
   const KEY = 'life-luna-data';
   const today = new Date().toISOString().split('T')[0];
   const heroText = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
@@ -112,7 +111,7 @@
   </header>
 
   <main class="content">
-    <p class="hero-date" style="color:{BRAND}">{heroText}</p>
+    <p class="hero-date">{heroText}</p>
 
     <section class="section">
       <p class="section-label">Period flow</p>
@@ -121,7 +120,6 @@
           <button
             class="chip"
             class:active={flow === opt.value}
-            style={flow === opt.value ? `background:${BRAND};color:white;border-color:${BRAND}` : ''}
             onclick={() => flow = opt.value}
           >{opt.label}</button>
         {/each}
@@ -135,7 +133,6 @@
           <button
             class="scale-btn"
             class:active={mood === i}
-            style={mood === i ? `background:${BRAND};color:white` : ''}
             onclick={() => mood = mood === i ? 0 : i}
           >{i}</button>
         {/each}
@@ -149,7 +146,6 @@
           <button
             class="scale-btn"
             class:active={energy === i}
-            style={energy === i ? `background:${BRAND};color:white` : ''}
             onclick={() => energy = energy === i ? 0 : i}
           >{i}</button>
         {/each}
@@ -163,7 +159,6 @@
           <button
             class="chip"
             class:active={selectedSymptoms.has(s.id)}
-            style={selectedSymptoms.has(s.id) ? `background:${BRAND};color:white;border-color:${BRAND}` : ''}
             onclick={() => toggleSymptom(s.id)}
           >{s.label}</button>
         {/each}
@@ -174,7 +169,6 @@
             <button
               class="chip"
               class:active={selectedSymptoms.has(s.id)}
-              style={selectedSymptoms.has(s.id) ? `background:${BRAND};color:white;border-color:${BRAND}` : ''}
               onclick={() => toggleSymptom(s.id)}
             >{s.label}</button>
           {/each}
@@ -209,24 +203,28 @@
 </div>
 
 <style>
-  .screen { min-height: 100dvh; background: var(--c-bg, #fff); color: var(--c-text, #111); display: flex; flex-direction: column; max-width: 780px; margin: 0 auto; }
-  header { display: flex; align-items: center; gap: 12px; padding: var(--space-4); border-bottom: 1px solid #f0f0f0; }
-  .back { background: none; border: none; color: #E91E8C; cursor: pointer; font-size: var(--text-base); padding: 0; }
+  .screen { min-height: 100dvh; background: var(--c-bg); color: var(--c-text); display: flex; flex-direction: column; max-width: 780px;
+    width: 100%;
+    min-width: 360px; margin: 0 auto; }
+  header { display: flex; align-items: center; gap: 12px; padding: var(--space-4); border-bottom: 1px solid var(--c-border); }
+  .back { background: none; border: none; color: var(--c-brand); cursor: pointer; font-size: var(--text-base); padding: 0; min-height: 44px; }
   .title { font-size: var(--text-lg); font-weight: 600; margin: 0; }
   .content { flex: 1; padding: var(--space-4); display: flex; flex-direction: column; gap: 0; padding-bottom: 40px; }
-  .hero-date { font-size: clamp(36px, 10vw, 52px); font-weight: 700; text-align: center; margin: 8px 0 20px; }
+  .hero-date { font-size: clamp(36px, 10vw, 52px); font-weight: 700; text-align: center; margin: 8px 0 20px; color: var(--c-brand); }
   .section { margin-bottom: 24px; }
-  .section-label { font-size: var(--text-sm); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin: 0 0 10px; }
+  .section-label { font-size: var(--text-sm); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--c-text-secondary); margin: 0 0 10px; }
   .chip-row { display: flex; gap: var(--space-2); flex-wrap: nowrap; overflow-x: auto; padding-bottom: 2px; }
   .chip-row.wrap { flex-wrap: wrap; overflow: visible; }
-  .chip { padding: 7px 14px; border-radius: 20px; border: 1.5px solid #ddd; background: white; cursor: pointer; font-size: 14px; white-space: nowrap; transition: all 0.15s; }
+  .chip { padding: 7px 14px; border-radius: 20px; border: 1.5px solid var(--c-border); background: var(--c-surface); color: var(--c-text); cursor: pointer; font-size: 14px; white-space: nowrap; transition: all var(--duration-fast); font-family: inherit; }
+  .chip.active { background: var(--c-brand); color: #fff; border-color: var(--c-brand); }
   .scale-row { display: flex; gap: var(--space-2); }
-  .scale-btn { width: 52px; height: 52px; border-radius: var(--radius-md); border: 1.5px solid #ddd; background: white; cursor: pointer; font-size: 18px; font-weight: 600; transition: all 0.15s; }
-  .more-btn { background: none; border: none; color: #E91E8C; cursor: pointer; font-size: var(--text-sm); margin-top: 8px; padding: 0; }
+  .scale-btn { width: 52px; height: 52px; border-radius: var(--radius-md); border: 1.5px solid var(--c-border); background: var(--c-surface); color: var(--c-text); cursor: pointer; font-size: 18px; font-weight: 600; transition: all var(--duration-fast); font-family: inherit; }
+  .scale-btn.active { background: var(--c-brand); color: #fff; border-color: var(--c-brand); }
+  .more-btn { background: none; border: none; color: var(--c-brand); cursor: pointer; font-size: var(--text-sm); margin-top: 8px; padding: 0; font-family: inherit; }
   .temp-row { display: flex; align-items: center; gap: var(--space-2); }
-  .temp-input { width: 100px; padding: 10px 12px; border: 1.5px solid #ddd; border-radius: var(--radius-md); font-size: 16px; }
-  .temp-unit { font-size: 16px; color: #666; }
-  .temp-hint { font-size: var(--text-xs); color: #aaa; margin: 6px 0 0; }
+  .temp-input { width: 100px; padding: 10px 12px; border: 1.5px solid var(--c-border); border-radius: var(--radius-md); font-size: 16px; background: var(--c-surface); color: var(--c-text); font-family: inherit; }
+  .temp-unit { font-size: 16px; color: var(--c-text-secondary); }
+  .temp-hint { font-size: var(--text-xs); color: var(--c-text-tertiary, var(--c-text-secondary)); margin: 6px 0 0; }
   .cta { margin-top: 16px; display: flex; justify-content: center; }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>

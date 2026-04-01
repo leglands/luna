@@ -21,3 +21,8 @@ export { default as StitchInsight } from './StitchInsight.svelte';
 export { default as StitchCalendar } from './StitchCalendar.svelte';
 export { default as StitchChart } from './StitchChart.svelte';
 export { default as StitchCP } from './StitchCP.svelte';
+export { default as EmotionPicker } from './EmotionPicker.svelte';
+export { default as EmotionFace } from './EmotionFace.svelte';
+export { default as DSBottomSheet } from "./DSBottomSheet.svelte";
+export { default as DSFloatingNav } from "./DSFloatingNav.svelte";
+export { default as DaisyMenu } from "./DaisyMenu.svelte";

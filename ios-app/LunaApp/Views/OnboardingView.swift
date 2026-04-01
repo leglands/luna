@@ -9,6 +9,7 @@
 // └──────────────────────────────────────────────────────────────┘
 
 import SwiftUI
+import LifeDS
 
 // MARK: - OnboardingView (4 steps — no PIN, lock optional later in Settings)
 
@@ -27,87 +28,52 @@ struct OnboardingView: View {
     private let totalSteps = 4
 
     var body: some View {
-        ZStack {
-            Color("AppBackground").ignoresSafeArea()
-
-            VStack(spacing: 0) {
-                ProgressBar(current: step, total: totalSteps)
-                    .padding(.horizontal, 24)
-                    .padding(.top, 16)
-                    .accessibilityLabel(Text("onboarding_step_a11y \(step+1) / \(totalSteps)"))
-
-                TabView(selection: $step) {
-                    WelcomeStep(firstName: $firstName).tag(0)
-                    LastPeriodStep(selectedDate: $lastPeriodDate).tag(1)
-                    CycleProfileStep(duration: $periodDuration, regularity: $cycleRegularity).tag(2)
-                    GoalsStep(goals: $goals).tag(3)
-                }
-                .accessibilityIdentifier("onboarding_pager")
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                .animation(reduceMotion ? .none : .easeInOut, value: step)
-
-                OnboardingNavBar(
-                    step: step,
-                    totalSteps: totalSteps,
-                    canProceed: true,
-                    isSettingUp: isSettingUp,
-                    onNext: nextStep,
-                    onBack: { step -= 1 }
-                )
-                .padding(.horizontal, 24)
-                .padding(.bottom, 32)
+        DSOnboardingShell(
+            step: step,
+            totalSteps: totalSteps,
+            canProceed: true,
+            isFinishing: isSettingUp,
+            showWelcome: showWelcome,
+            onNext: nextStep,
+            onBack: { step -= 1 }
+        ) {
+            TabView(selection: $step) {
+                WelcomeStep(firstName: $firstName).tag(0)
+                LastPeriodStep(selectedDate: $lastPeriodDate).tag(1)
+                CycleProfileStep(duration: $periodDuration, regularity: $cycleRegularity).tag(2)
+                GoalsStep(goals: $goals).tag(3)
             }
-        }
-        // Doherty Threshold: loading during Argon2id key derivation
-        .overlay {
-            if isSettingUp && !showWelcome {
-                VStack(spacing: 16) {
-                    ProgressView()
-                        .scaleEffect(1.5)
-                    Text("creating_vault_loading")
-                        .font(.subheadline)
+            .accessibilityIdentifier("onboarding_pager")
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            .animation(reduceMotion ? .none : .easeInOut, value: step)
+        } welcomeOverlay: {
+            // Peak-End Rule: warm welcome before transition
+            VStack(spacing: 20) {
+                Image(systemName: "checkmark.seal.fill")
+                    .font(.system(size: 64))
+                    .foregroundStyle(Color("AccentPrimary"))
+                Text("welcome_title")
+                    .font(.title.bold())
+                if !firstName.isEmpty {
+                    Text(firstName)
+                        .font(.title2)
                         .foregroundStyle(.secondary)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(.ultraThinMaterial)
-            }
-        }
-        // Peak-End Rule: warm welcome before transition
-        .overlay {
-            if showWelcome {
-                VStack(spacing: 20) {
-                    Image(systemName: "checkmark.seal.fill")
-                        .font(.system(size: 64))
+                Text("welcome_subtitle_privacy")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 32)
+                HStack(spacing: 6) {
+                    Image(systemName: "lock.shield.fill")
                         .foregroundStyle(Color("AccentPrimary"))
-                    Text("welcome_title")
-                        .font(.title.bold())
-                    if !firstName.isEmpty {
-                        Text(firstName)
-                            .font(.title2)
-                            .foregroundStyle(.secondary)
-                    }
-                    Text("welcome_subtitle_privacy")
-                        .font(.subheadline)
+                    Text("onboarding_privacy_guarantee")
+                        .font(.caption)
                         .foregroundStyle(.secondary)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 32)
-
-                    // Privacy badge
-                    HStack(spacing: 6) {
-                        Image(systemName: "lock.shield.fill")
-                            .foregroundStyle(Color("AccentPrimary"))
-                        Text("onboarding_privacy_guarantee")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                    .padding(.top, 8)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color("AppBackground").ignoresSafeArea())
-                .transition(.opacity)
+                .padding(.top, 8)
             }
         }
-        .animation(reduceMotion ? .none : .easeInOut(duration: 0.5), value: showWelcome)
     }
 
     private func nextStep() {
@@ -124,21 +90,23 @@ struct OnboardingView: View {
 
         Task {
             do {
-                // Auto-generate PIN — user never sees or types it.
-                // Vault encryption requires a key; the PIN is derived via Argon2id.
-                // Stored in Keychain, gated by device auth when lock is enabled.
-                let autoPin = String(format: "%06d", Int.random(in: 0...999999))
-
-                let engine = try LunaEngine.openVault(dbPath: appState.dbPath, pin: autoPin)
-
-                // Always store PIN — needed for vault re-open
-                KeychainService.shared.storePin(autoPin)
+                // If autoUnlock() recovery already opened a vault (with "0000"), reuse it.
+                // Otherwise wipe any stale DB+salt so key derivation always starts clean,
+                // then create a fresh vault with a new random PIN.
+                if appState.engine == nil {
+                    let autoPin = String(format: "%06d", Int.random(in: 0...999999))
+                    try? FileManager.default.removeItem(atPath: appState.dbPath)
+                    try? FileManager.default.removeItem(atPath: appState.dbPath + ".salt")
+                    KeychainService.shared.deletePin()
+                    let engine = try LunaEngine.openVault(dbPath: appState.dbPath, pin: autoPin)
+                    KeychainService.shared.storePin(autoPin)
+                    await MainActor.run { appState.engine = engine }
+                }
 
                 await MainActor.run {
-                    appState.engine = engine
                     appState.isVaultOpen = true
                     appState.userName = firstName.isEmpty ? nil : firstName
-                    appState.lockEnabled = false // No lock by default — enable in Settings
+                    appState.lockEnabled = false
                 }
 
                 await MainActor.run { showWelcome = true }
@@ -385,64 +353,3 @@ struct SelectableButtonStyle: ButtonStyle {
     }
 }
 
-struct ProgressBar: View {
-    let current: Int
-    let total: Int
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-
-    var body: some View {
-        GeometryReader { geo in
-            ZStack(alignment: .leading) {
-                Capsule().fill(Color.secondary.opacity(0.2)).frame(height: 4)
-                Capsule()
-                    .fill(Color("AccentPrimary"))
-                    .frame(width: geo.size.width * CGFloat(current + 1) / CGFloat(total), height: 4)
-                    .animation(reduceMotion ? .none : .easeInOut, value: current)
-            }
-        }
-        .frame(height: 4)
-    }
-}
-
-struct OnboardingNavBar: View {
-    let step: Int
-    let totalSteps: Int
-    let canProceed: Bool
-    let isSettingUp: Bool
-    let onNext: () -> Void
-    let onBack: () -> Void
-
-    private var isLastStep: Bool { step == totalSteps - 1 }
-
-    var body: some View {
-        HStack {
-            if step > 0 {
-                Button("onboarding_back") { onBack() }
-                    .frame(minHeight: 44)
-                    .foregroundStyle(.secondary)
-                    .accessibilityIdentifier("onboarding_back")
-            }
-            Spacer()
-            Button {
-                onNext()
-            } label: {
-                if isSettingUp {
-                    ProgressView().tint(.white)
-                } else {
-                    Text(isLastStep ? "onboarding_start_button" : "onboarding_next_button")
-                        .bold()
-                }
-            }
-            .disabled(!canProceed || isSettingUp)
-            .padding(.horizontal, 28)
-            .padding(.vertical, 14)
-            .background(canProceed ? Color("AccentPrimary") : Color.secondary.opacity(0.3), in: Capsule())
-            .foregroundStyle(.white)
-            .accessibilityIdentifier(isLastStep ? "onboarding_finish" : "onboarding_next")
-            .accessibilityLabel(isLastStep
-                ? Text("onboarding_start_a11y")
-                : Text("onboarding_next_a11y")
-            )
-        }
-    }
-}

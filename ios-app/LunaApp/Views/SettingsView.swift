@@ -31,7 +31,6 @@ struct SettingsView: View {
     @AppStorage("notif_fertile_window") private var notifFertileWindow: Bool = false
     @AppStorage("notif_bbt_reminder") private var notifBBTReminder: Bool = false
 
-    @State private var lockEnabled: Bool = true
     @State private var pillReminderEnabled: Bool = false
     @State private var pillReminderTime: Date = Calendar.current.date(from: DateComponents(hour: 8, minute: 0)) ?? Date()
     @State private var healthKitEnabled: Bool = false
@@ -39,7 +38,6 @@ struct SettingsView: View {
     @State private var shareItems: [Any] = []
     @State private var iCloudSyncEnabled: Bool = UserDefaults.standard.bool(forKey: "icloud_sync_enabled")
 
-    @State private var showLockDisableConfirm: Bool = false
     @State private var showICloudConfirm: Bool = false
     @StateObject private var themeManager = ThemeManager()
 
@@ -59,32 +57,6 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    Toggle(isOn: $lockEnabled) {
-                        Label("settings_lock_label", systemImage: "faceid")
-                    }
-                    .accessibilityIdentifier("settings_lock_toggle")
-                    .onChange(of: lockEnabled) { new in
-                        if new {
-                            let ctx = LAContext()
-                            var error: NSError?
-                            if !ctx.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
-                                lockEnabled = false
-                                return
-                            }
-                            appState.lockEnabled = true
-                        } else {
-                            showLockDisableConfirm = true
-                        }
-                    }
-
-                    NavigationLink {
-                        ChangePINView()
-                    } label: {
-                        Label("settings_change_pin", systemImage: "key")
-                    }
-                    .accessibilityIdentifier("settings_change_pin")
-                    .frame(minHeight: 44)
-
                     Toggle(isOn: $iCloudSyncEnabled) {
                         Label {
                             VStack(alignment: .leading, spacing: 2) {
@@ -307,16 +279,6 @@ struct SettingsView: View {
                 Button("cancel_button", role: .cancel) {}
             } message: {
                 Text("panic_wipe_confirm_message")
-            }
-            .confirmationDialog("confirm_lock_disable_title", isPresented: $showLockDisableConfirm, titleVisibility: .visible) {
-                Button("confirm_lock_disable_confirm", role: .destructive) {
-                    appState.lockEnabled = false
-                }
-                Button("cancel_button", role: .cancel) {
-                    lockEnabled = true
-                }
-            } message: {
-                Text("confirm_lock_disable_message")
             }
             .confirmationDialog("confirm_icloud_sync_title", isPresented: $showICloudConfirm, titleVisibility: .visible) {
                 Button("confirm_icloud_sync_confirm") {

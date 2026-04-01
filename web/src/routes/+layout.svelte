@@ -104,6 +104,8 @@
   /* pages inside already have max-width: 780px; add phone frame on desktop */
   :global(.screen) {
     max-width: 780px;
+    width: 100%;
+    min-width: 360px;
     margin: 0 auto;
   }
   @media (min-width: 420px) {

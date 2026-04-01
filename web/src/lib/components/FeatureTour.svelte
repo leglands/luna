@@ -311,7 +311,7 @@
   .tour-card {
     flex: 0 0 40%;
     background: #fff;
-    border-radius: 24px 28px 26px 22px;
+    border-radius: 24px 22px 26px 28px / 18px 16px 20px 20px;
     padding: var(--space-5) var(--space-5) var(--space-4);
     display: flex;
     flex-direction: column;
@@ -365,7 +365,7 @@
     width: 100%;
     min-height: 44px;
     padding: 0 var(--space-4);
-    border-radius: 24px 28px 26px 22px;
+    border-radius: 24px 22px 26px 28px / 18px 16px 20px 20px;
     border: none;
     color: #fff;
     font-size: 15px;

@@ -22,10 +22,8 @@ struct RootView: View {
                 OnboardingView()
             } else if appState.engine != nil {
                 MainTabView()
-            } else if appState.lockEnabled || autoUnlockFailed {
-                LockView()
             } else {
-                // Lock disabled — auto-open vault silently
+                // Auto-unlock silently — never show LockView
                 VStack(spacing: 16) {
                     ProgressView()
                         .scaleEffect(1.3)
@@ -42,9 +40,13 @@ struct RootView: View {
     }
 
     private func autoUnlock() async {
-        guard let pin = KeychainService.shared.readPin() else {
-            await MainActor.run { autoUnlockFailed = true }
-            return
+        // No lock mode — use stored PIN or default "0000", never show LockView
+        let pin: String
+        if let stored = KeychainService.shared.readPin() {
+            pin = stored
+        } else {
+            pin = "0000"
+            _ = KeychainService.shared.storePin("0000")
         }
         do {
             let engine = try LunaEngine.openVault(dbPath: appState.dbPath, pin: pin)
@@ -54,7 +56,17 @@ struct RootView: View {
             }
             await appState.refreshCycleData()
         } catch {
-            await MainActor.run { autoUnlockFailed = true }
+            // Vault corrupt or wrong key — wipe DB + salt and restart onboarding fresh.
+            try? FileManager.default.removeItem(atPath: appState.dbPath)
+            try? FileManager.default.removeItem(atPath: appState.dbPath + ".salt")
+            _ = KeychainService.shared.storePin("0000")
+            if let engine = try? LunaEngine.openVault(dbPath: appState.dbPath, pin: "0000") {
+                await MainActor.run {
+                    appState.engine = engine
+                    appState.isVaultOpen = true
+                    appState.isOnboardingDone = false  // restart onboarding on fresh vault
+                }
+            }
         }
     }
 }

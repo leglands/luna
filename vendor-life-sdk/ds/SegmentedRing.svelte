@@ -1,4 +1,13 @@
 <script>
+  /**
+   * SegmentedRing — DS component matching iOS DSSegmentedRing
+   *
+   * segments: Array of { value: number (0-1, proportion), color: string, label: string }
+   *   If value is omitted, falls back to equal division (1/n each).
+   *
+   * Matches iOS: active segment wider (strokeWidth+8), pulsing glow,
+   * 2° gap between segments, proportional arcs.
+   */
   import { onMount } from 'svelte';
 
   let {
@@ -6,93 +15,117 @@
     currentIndex = 0,
     centerText = '',
     centerSubtext = '',
-    size = 120,
+    size = 200,
     class: className = '',
   } = $props();
 
   let reducedMotion = $state(false);
+  let pulsing = $state(false);
 
   onMount(() => {
     reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reducedMotion) {
+      setTimeout(() => { pulsing = true; }, 100);
+    }
   });
 
-  const strokeWidth = 12;
-  const radius = (size - strokeWidth) / 2;
-  const circumference = 2 * Math.PI * radius;
+  const GAP_DEG = 2; // 2° gap between segments (matches iOS)
+  const BASE_SW  = 12;
+  const ACTIVE_SW = 20;
 
-  function polarToCartesian(cx, cy, r, angle) {
-    const rad = (angle - 90) * Math.PI / 180;
-    return {
-      x: cx + r * Math.cos(rad),
-      y: cy + r * Math.sin(rad)
-    };
-  }
+  const cx = $derived(size / 2);
+  const cy = $derived(size / 2);
+  const radius = $derived((size - ACTIVE_SW - 4) / 2);
 
-  function describeArc(cx, cy, r, startAngle, endAngle) {
-    const start = polarToCartesian(cx, cy, r, endAngle);
-    const end = polarToCartesian(cx, cy, r, startAngle);
-    const largeArcFlag = endAngle - startAngle <= 180 ? 0 : 1;
-    return `M ${start.x} ${start.y} A ${r} ${r} 0 ${largeArcFlag} 0 ${end.x} ${end.y}`;
-  }
-
-  const totalSegments = $derived(segments.length);
-  const segmentAngle = $derived(360 / totalSegments);
-
-  const arcPaths = $derived(segments.map((seg, i) => {
-    const startAngle = i * segmentAngle;
-    const endAngle = startAngle + segmentAngle - 2;
-    return {
+  // Normalise: sum all values and divide — works with proportions (0-1) OR day counts (5,9,3,11)
+  const totalValue = $derived(
+    segments.reduce((s, seg) => s + (seg.value ?? 1), 0)
+  );
+  const normSegments = $derived(
+    segments.map(seg => ({
       ...seg,
-      path: describeArc(size / 2, size / 2, radius, startAngle, endAngle),
-      isCurrent: i === currentIndex
-    };
-  }));
+      norm: totalValue > 0 ? (seg.value ?? 1) / totalValue : 1 / segments.length
+    }))
+  );
+
+  function toRad(deg) { return (deg - 90) * Math.PI / 180; }
+
+  function polarXY(angleDeg) {
+    const r = toRad(angleDeg);
+    return { x: cx + radius * Math.cos(r), y: cy + radius * Math.sin(r) };
+  }
+
+  function arcPath(startDeg, endDeg) {
+    const s = polarXY(startDeg);
+    const e = polarXY(endDeg);
+    const large = (endDeg - startDeg) > 180 ? 1 : 0;
+    return `M ${s.x} ${s.y} A ${radius} ${radius} 0 ${large} 1 ${e.x} ${e.y}`;
+  }
+
+  // Build arc paths with proportional angles
+  const arcPaths = $derived(() => {
+    let cursor = 0;
+    return normSegments.map((seg, i) => {
+      const span = seg.norm * 360;
+      const startDeg = cursor + GAP_DEG / 2;
+      const endDeg   = cursor + span - GAP_DEG / 2;
+      cursor += span;
+      const isActive = i === currentIndex;
+      return {
+        ...seg,
+        path: arcPath(startDeg, endDeg),
+        isActive,
+        sw: isActive ? ACTIVE_SW : BASE_SW,
+      };
+    });
+  });
 </script>
 
 <div
   class="segmented-ring {className}"
-  style="--ring-size: {size}px"
+  style="width:{size}px;height:{size}px"
   role="img"
-  aria-label={centerText || 'Progress ring'}
+  aria-label="{centerText} {centerSubtext}"
 >
   <svg
     width={size}
     height={size}
     viewBox="0 0 {size} {size}"
-    class="ring-svg"
+    aria-hidden="true"
+    overflow="visible"
   >
+    <!-- Track -->
     <circle
-      cx={size / 2}
-      cy={size / 2}
-      r={radius}
+      cx={cx} cy={cy} r={radius}
       fill="none"
-      stroke="var(--c-surface-container)"
-      stroke-width={strokeWidth}
+      stroke="var(--c-surface-container, #f0f0f0)"
+      stroke-width={BASE_SW}
     />
 
-    {#each arcPaths as arc}
-      <g class="arc-group">
+    {#each arcPaths() as arc}
+      <!-- Glow (active only) -->
+      {#if arc.isActive && !reducedMotion}
         <path
           d={arc.path}
           fill="none"
           stroke={arc.color}
-          stroke-width={arc.isCurrent && !reducedMotion ? strokeWidth + 4 : strokeWidth}
+          stroke-width={arc.sw + 10}
           stroke-linecap="round"
-          class="arc"
-          class:arc--active={arc.isCurrent}
+          opacity="0"
+          class:glow-pulse={pulsing}
+          style="--glow-color:{arc.color}"
         />
-        {#if arc.isCurrent && !reducedMotion}
-          <path
-            d={arc.path}
-            fill="none"
-            stroke={arc.color}
-            stroke-width={strokeWidth + 8}
-            stroke-linecap="round"
-            opacity="0.2"
-            class="arc-glow"
-          />
-        {/if}
-      </g>
+      {/if}
+      <!-- Arc -->
+      <path
+        d={arc.path}
+        fill="none"
+        stroke={arc.color}
+        stroke-width={arc.sw}
+        stroke-linecap="round"
+        class:arc-active={arc.isActive}
+        style={arc.isActive ? `filter:drop-shadow(0 0 6px ${arc.color}88)` : ''}
+      />
     {/each}
   </svg>
 
@@ -112,31 +145,12 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: var(--ring-size);
-    height: var(--ring-size);
+    flex-shrink: 0;
   }
 
-  .ring-svg {
-    transform: rotate(-90deg);
+  svg {
     position: absolute;
     inset: 0;
-  }
-
-  .arc {
-    transition: stroke-width var(--duration-normal) var(--ease-out);
-  }
-
-  .arc--active {
-    filter: drop-shadow(0 0 6px currentColor);
-  }
-
-  .arc-glow {
-    animation: arc-pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes arc-pulse {
-    0%, 100% { opacity: 0.2; }
-    50% { opacity: 0.1; }
   }
 
   .ring-center {
@@ -146,30 +160,33 @@
     justify-content: center;
     text-align: center;
     z-index: 1;
+    pointer-events: none;
   }
 
   .ring-text {
-    font-size: var(--text-xl);
-    font-weight: var(--weight-semibold);
-    color: var(--c-text);
-    line-height: var(--leading-tight);
+    font-size: var(--text-xl, 22px);
+    font-weight: var(--weight-semibold, 600);
+    color: var(--c-text, #111);
+    line-height: 1.1;
   }
 
   .ring-subtext {
-    font-size: var(--text-xs);
-    color: var(--c-text-secondary);
-    line-height: var(--leading-tight);
+    font-size: var(--text-xs, 12px);
+    color: var(--c-text-secondary, #666);
+    line-height: 1.2;
     margin-top: 2px;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .arc--active {
-      filter: none;
-    }
+  .glow-pulse {
+    animation: glow 2s ease-in-out infinite;
+  }
 
-    .arc-glow {
-      animation: none;
-      opacity: 0.15;
-    }
+  @keyframes glow {
+    0%, 100% { opacity: 0.25; }
+    50%       { opacity: 0.08; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .glow-pulse { animation: none; opacity: 0.12; }
   }
 </style>

@@ -2,7 +2,7 @@
   // Luna Fertility - LEAN: hero = days to ovulation, fertile window
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { PebbleButton, TabBar } from '$ds/index.js';
+  import { PebbleButton, DSFloatingNav, DaisyMenu } from '$ds/index.js';
 
   const BRAND = '#E91E8C';
   const KEY = 'life-luna-data';
@@ -75,6 +75,14 @@
       statusLine = 'Ovulation passed';
     }
   });
+
+  let daisyOpen = $state(false);
+  const DAISY_ITEMS = [
+    { icon: 'droplet',    label: 'Règles',    onclick: () => goto('/cycle') },
+    { icon: 'thermometer',label: 'Symptôme',  onclick: () => goto('/cycle') },
+    { icon: 'smile',      label: 'Humeur',    onclick: () => goto('/insights') },
+    { icon: 'moon',       label: 'Ovulation', onclick: () => goto('/fertility') },
+  ];
 </script>
 
 <div class="screen" data-app="luna">
@@ -101,7 +109,15 @@
     <PebbleButton label="Log today" onclick={() => goto('/log')} style="--pebble-brand:{BRAND}" />
   </main>
 
-  <TabBar tabs={TABS} activeTab="fertility" onchange={(id) => goto('/' + (id === 'home' ? '' : id))} brand="luna" />
+  <DSFloatingNav
+  tabs={TABS}
+  active="fertility"
+  brand="luna"
+  onchange={(id) => goto('/' + (id === 'home' ? '' : id))}
+  onfab={() => daisyOpen = !daisyOpen}
+  bind:daisyOpen
+/>
+<DaisyMenu open={daisyOpen} onclose={() => daisyOpen = false} items={DAISY_ITEMS} />
 </div>
 
 <style>

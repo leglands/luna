@@ -20,18 +20,34 @@
     loading = false,
     onclick = null,
     class: className = '',
+    'data-testid': dataTestid = undefined,
+    ...restProps
   } = $props();
 
   const brandColor = $derived(BRAND_COLORS[brand] ?? BRAND_COLORS.luna);
   const iconSize = { sm: 14, md: 16, lg: 18 }[size] ?? 16;
+
+  function handleMouseEnter(e) {
+    if (disabled || loading) return;
+    const angle = Math.random() * 6 - 3;
+    e.currentTarget.style.setProperty('--pebble-rot', `${angle}deg`);
+  }
+
+  function handleMouseLeave(e) {
+    e.currentTarget.style.setProperty('--pebble-rot', '0deg');
+  }
 </script>
 
 <button
   class="pebble-btn pebble-btn--{size} pebble-btn--{variant} {className}"
   class:pebble-btn--loading={loading}
   disabled={disabled || loading}
-  onclick={onclick}
+  {onclick}
+  onmouseenter={handleMouseEnter}
+  onmouseleave={handleMouseLeave}
   style="--pebble-brand: {brandColor}"
+  data-testid={dataTestid}
+  {...restProps}
 >
   {#if loading}
     <span class="pebble-spinner" aria-hidden="true"></span>
@@ -59,15 +75,20 @@
     white-space: nowrap;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
-    min-height: var(--tap-target);
-    border-radius: 24px 28px 26px 22px;
-    box-shadow: 0 4px 12px color-mix(in srgb, var(--pebble-brand) 8%, transparent);
+    /* Organic pebble radius — fixed px so it never telescopes on wide buttons.
+       v-radii < h/2 keeps overflow:hidden from clipping text. */
+    border-radius: 24px 22px 26px 28px / 18px 16px 20px 20px;
+    box-shadow:
+      0 4px 16px color-mix(in srgb, var(--pebble-brand) 30%, transparent),
+      0 2px 6px  color-mix(in srgb, var(--pebble-brand) 20%, transparent);
     transition:
       transform var(--duration-fast) var(--ease-out),
       box-shadow var(--duration-fast) var(--ease-out),
       opacity var(--duration-fast) var(--ease-out);
     position: relative;
     overflow: hidden;
+    --pebble-rot: 0deg;
+    transform: rotate(var(--pebble-rot, 0deg)) translateZ(0);
   }
 
   .pebble-btn::before {
@@ -75,12 +96,13 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
     pointer-events: none;
   }
 
   .pebble-btn:active:not(:disabled) {
-    transform: scale(0.95) rotate(-1deg);
+    transform: scale(0.96) rotate(-1deg) translateZ(0);
+    box-shadow: 0 1px 4px color-mix(in srgb, var(--pebble-brand) 20%, transparent);
   }
 
   .pebble-btn:disabled {
@@ -90,25 +112,26 @@
   }
 
   .pebble-btn:focus-visible {
-    outline: 2px solid var(--c-focus);
-    outline-offset: 2px;
+    outline: 3px solid var(--c-focus, var(--pebble-brand));
+    outline-offset: 3px;
   }
 
+  /* Sizes — taller than standard to give the pebble its plump silhouette */
   .pebble-btn--sm {
-    height: var(--btn-height-sm);
-    padding: 0 var(--space-3);
+    min-height: 44px;
+    padding: var(--space-2) var(--space-4);
     font-size: var(--text-xs);
   }
 
   .pebble-btn--md {
-    height: var(--btn-height-md);
-    padding: 0 var(--space-4);
+    min-height: 56px;
+    padding: var(--space-3) var(--space-6);
     font-size: var(--text-sm);
   }
 
   .pebble-btn--lg {
-    height: var(--btn-height-lg);
-    padding: 0 var(--space-5);
+    min-height: 64px;
+    padding: var(--space-4) var(--space-7);
     font-size: var(--text-base);
   }
 
@@ -118,7 +141,9 @@
   }
 
   .pebble-btn--primary:hover:not(:disabled) {
-    box-shadow: 0 6px 20px color-mix(in srgb, var(--pebble-brand) 15%, transparent);
+    box-shadow:
+      0 8px 28px color-mix(in srgb, var(--pebble-brand) 40%, transparent),
+      0 4px 12px color-mix(in srgb, var(--pebble-brand) 25%, transparent);
   }
 
   .pebble-btn--secondary {

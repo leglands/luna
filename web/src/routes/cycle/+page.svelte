@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { TabBar, SegmentedRing, Icon, PebbleButton } from '$ds/index.js';
+  import { SegmentedRing, Icon, PebbleButton, DSFloatingNav, DaisyMenu } from '$ds/index.js';
 
   let data = $state({
     settings: { cycleLength: 28, periodLength: 5, lastPeriodDate: null },
@@ -128,6 +128,14 @@
     selectedDate = fmt;
     goto('/log?date=' + fmt);
   }
+
+  let daisyOpen = $state(false);
+  const DAISY_ITEMS = [
+    { icon: 'droplet',    label: 'Règles',    onclick: () => goto('/cycle') },
+    { icon: 'thermometer',label: 'Symptôme',  onclick: () => goto('/cycle') },
+    { icon: 'smile',      label: 'Humeur',    onclick: () => goto('/insights') },
+    { icon: 'moon',       label: 'Ovulation', onclick: () => goto('/fertility') },
+  ];
 </script>
 
 <div class="screen" data-app="luna">
@@ -212,12 +220,15 @@
     </div><!-- /calendar-card -->
   </main>
 
-  <TabBar
-    tabs={TABS}
-    activeTab="cycle"
-    onchange={(id) => goto('/' + (id === 'home' ? '' : id))}
-    brand="luna"
-  />
+  <DSFloatingNav
+  tabs={TABS}
+  active="cycle"
+  brand="luna"
+  onchange={(id) => goto('/' + (id === 'home' ? '' : id))}
+  onfab={() => daisyOpen = !daisyOpen}
+  bind:daisyOpen
+/>
+<DaisyMenu open={daisyOpen} onclose={() => daisyOpen = false} items={DAISY_ITEMS} />
 </div>
 
 <style>

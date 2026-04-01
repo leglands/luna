@@ -15,6 +15,7 @@
   --c-border:                #E5E5EA;
   --c-text:                  #1C1C1E;
   --c-text-secondary:        #6C6C70;
+  --c-text-tertiary:         #9CA3AF;
   --c-brand:                 #6B3FA0; /* overridden by [data-app] */
   --c-brand-dim:             #9D7BC9;
   --c-hero-gradient:         linear-gradient(135deg, #6B3FA0, #9D7BC9, #C4A0E0);
@@ -46,6 +47,7 @@
   --space-4:    16px;
   --space-5:    20px;
   --space-6:    24px;
+  --space-7:    28px;
   --space-8:    32px;
   --space-10:   40px;
   --space-12:   48px;
@@ -59,7 +61,7 @@
   --radius-xl:     24px;
   --radius-xxl:    32px;
   --radius-full:   9999px;
-  --radius-pebble: 24px 28px 26px 22px; /* signature shape */
+  --radius-pebble: 24px 22px 26px 28px / 18px 16px 20px 20px; /* organic pebble — h fixed, v < height/2 to avoid clipping */
 
   /* Elevation */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -75,9 +77,9 @@
   --ease-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* Component sizes */
-  --btn-height-sm: 32px;
-  --btn-height-md: 44px;
-  --btn-height-lg: 52px;
+  --btn-height-sm: 36px;
+  --btn-height-md: 48px;
+  --btn-height-lg: 56px;
 
   /* Z-index */
   --z-base:    1;
@@ -99,6 +101,7 @@
     --c-border:                #38383A;
     --c-text:                  #F2F2F7;
     --c-text-secondary:        #8E8E93;
+    --c-text-tertiary:         #6B7280;
     --c-focus:                 #0A84FF;
     --c-growth:                #30D158;
     --c-error:                 #FF453A;
@@ -168,6 +171,50 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* ── Base typography (flow defaults) ───────────────────────── */
+/* Headings */
+h1 {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  margin-block: 0 var(--space-4);
+}
+h2 {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  margin-block: var(--space-5) var(--space-3);
+}
+h3 {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  margin-block: var(--space-4) var(--space-2);
+}
+h4 {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  margin-block: var(--space-3) var(--space-1);
+}
+
+/* Paragraphs */
+p {
+  line-height: var(--leading-normal);
+  margin-block: 0 var(--space-3);
+}
+p:last-child { margin-block-end: 0; }
+
+/* Form elements inherit font */
+button, input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* Sections breathe */
+section + section { margin-top: var(--space-6); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
