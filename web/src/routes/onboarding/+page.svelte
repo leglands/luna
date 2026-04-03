@@ -1,210 +1,240 @@
 <script>
   import { goto } from '$app/navigation';
-  import { DSOnboarding } from '$ds/index.js';
+  import { PebbleButton } from '$ds/index.js';
 
-  const TOTAL = 5;
-  let step = $state(0);
-
-  let firstName = $state('');
+  const today = new Date().toISOString().split('T')[0];
   let lastPeriodDate = $state('');
-  let cycleLength = $state(28);
-  let periodLength = $state(5);
-  let selectedGoals = $state(new Set());
-
-  const GOALS = [
-    { id: 'track', label: 'Track my cycle' },
-    { id: 'pregnancy', label: 'Plan a pregnancy' },
-    { id: 'understand', label: 'Understand my body' },
-    { id: 'pms', label: 'Manage PMS' },
-    { id: 'curious', label: 'Just curious' },
-  ];
-
-  function next() {
-    if (step < TOTAL - 1) { step++; return; }
-    complete();
-  }
-
-  function prev() { if (step > 0) step--; }
-
-  function toggleGoal(id) {
-    const g = new Set(selectedGoals);
-    if (g.has(id)) g.delete(id); else g.add(id);
-    selectedGoals = g;
-  }
+  let cycleLength    = $state(28);
+  let periodLength   = $state(5);
 
   function complete() {
     const data = {
       settings: {
-        firstName: firstName.trim(),
-        lastPeriodDate,
-        cycleLength: Number(cycleLength),
-        periodLength: Number(periodLength),
-        goals: [...selectedGoals],
+        lastPeriodDate: lastPeriodDate || null,
+        cycleLength:    Number(cycleLength),
+        periodLength:   Number(periodLength),
       },
       log: { period: [], symptoms: [], temperature: [], mood: [], energy: [] },
     };
     localStorage.setItem('life-luna-data', JSON.stringify(data));
     localStorage.setItem('life-luna-onboarded', '1');
-    localStorage.setItem('life-luna-tour-pending', '1');
     goto('/');
   }
 
-  const canProceed = $derived(step !== 2 || lastPeriodDate !== '');
+  function skip() {
+    localStorage.setItem('life-luna-onboarded', '1');
+    goto('/');
+  }
 </script>
 
-<DSOnboarding
-  currentStep={step}
-  totalSteps={TOTAL}
-  {canProceed}
-  onNext={next}
-  onBack={prev}
-  brand="luna"
-  finishLabel="Start tracking"
->
-  {#snippet children()}
-    {#if step === 0}
-      <svg viewBox="0 0 120 120" width="96" height="96" aria-hidden="true">
-        <circle cx="60" cy="60" r="50" fill="var(--c-brand)" fill-opacity="0.12"/>
-        <path d="M72 30 A34 34 0 1 0 72 90 A22 22 0 1 1 72 30Z"
-              fill="none" stroke="var(--c-brand)" stroke-width="2.5" stroke-linecap="round"/>
+<div class="screen" data-app="luna">
+  <div class="ob-page">
+
+    <div class="ob-header">
+      <svg viewBox="0 0 80 80" width="56" height="56" aria-hidden="true">
+        <path d="M50 14 A28 28 0 1 0 50 66 A18 18 0 1 1 50 14Z"
+              fill="none" stroke="var(--c-brand)" stroke-width="2" stroke-linecap="round"/>
       </svg>
-      <h1>Hi, I'm Luna</h1>
-      <p>Your cycle, understood. Log in seconds, understand your body over time — privately, on your device.</p>
+      <h1 class="ob-title">Welcome to Luna</h1>
+      <p class="ob-sub">Your cycle, on your device. Private by design.</p>
+    </div>
 
-    {:else if step === 1}
-      <h1>What should I call you?</h1>
-      <p>Optional — only used to personalise your experience.</p>
-      <input
-        type="text"
-        bind:value={firstName}
-        placeholder="Your first name"
-        class="ob-input"
-        autocomplete="given-name"
-      />
+    <div class="ob-form">
 
-    {:else if step === 2}
-      <h1>When did your last period start?</h1>
-      <p>This helps Luna predict your next cycle right away.</p>
-      <input
-        type="date"
-        bind:value={lastPeriodDate}
-        class="ob-input"
-        max={new Date().toISOString().split('T')[0]}
-      />
-
-    {:else if step === 3}
-      <h1>Your cycle rhythm</h1>
-      <p>We'll refine this over time as Luna learns your pattern.</p>
-      <div class="slider-group">
-        <label>Cycle length: <strong>{cycleLength} days</strong></label>
-        <input type="range" bind:value={cycleLength} min="21" max="35" step="1" class="slider" />
-        <div class="slider-range"><span>21</span><span>35</span></div>
+      <div class="field">
+        <label class="field-label" for="last-period">
+          Last period start
+          <span class="field-hint">Optional</span>
+        </label>
+        <input
+          id="last-period"
+          type="date"
+          bind:value={lastPeriodDate}
+          max={today}
+          class="ob-input"
+        />
       </div>
-      <div class="slider-group">
-        <label>Period length: <strong>{periodLength} days</strong></label>
-        <input type="range" bind:value={periodLength} min="2" max="8" step="1" class="slider" />
+
+      <div class="field">
+        <label class="field-label" for="cycle-len">
+          Cycle length
+          <span class="field-value">{cycleLength} days</span>
+        </label>
+        <input
+          id="cycle-len"
+          type="range"
+          bind:value={cycleLength}
+          min="21" max="45" step="1"
+          class="slider"
+          aria-valuenow={cycleLength}
+          aria-valuemin="21"
+          aria-valuemax="45"
+        />
+        <div class="slider-range"><span>21</span><span>45</span></div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="period-len">
+          Period length
+          <span class="field-value">{periodLength} days</span>
+        </label>
+        <input
+          id="period-len"
+          type="range"
+          bind:value={periodLength}
+          min="2" max="8" step="1"
+          class="slider"
+          aria-valuenow={periodLength}
+          aria-valuemin="2"
+          aria-valuemax="8"
+        />
         <div class="slider-range"><span>2</span><span>8</span></div>
       </div>
 
-    {:else}
-      <h1>What brings you to Luna?</h1>
-      <p>Choose all that apply. You can change this anytime.</p>
-      <div class="goals-grid">
-        {#each GOALS as g}
-          <button
-            class="goal-chip"
-            class:active={selectedGoals.has(g.id)}
-            onclick={() => toggleGoal(g.id)}
-          >{g.label}</button>
-        {/each}
-      </div>
-    {/if}
-  {/snippet}
-</DSOnboarding>
+    </div>
+
+    <div class="ob-actions">
+      <PebbleButton label="Start tracking" onclick={complete} />
+      <button class="skip-btn" onclick={skip}>Skip for now</button>
+    </div>
+
+  </div>
+</div>
 
 <style>
-  h1 {
-    font-size: clamp(24px, 7vw, 32px);
-    font-weight: 700;
-    margin: 0;
-    line-height: 1.2;
+  .screen {
+    min-height: 100dvh;
+    background: var(--c-bg);
+    color: var(--c-text);
+    display: flex;
+    justify-content: center;
+  }
+
+  .ob-page {
+    width: 100%;
+    max-width: 390px;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    padding: 52px 24px 32px;
+    box-sizing: border-box;
+    gap: 32px;
+  }
+
+  .ob-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
     text-align: center;
   }
 
-  p {
-    font-size: var(--text-base);
+  .ob-title {
+    font-size: clamp(26px, 7vw, 32px);
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.15;
+  }
+
+  .ob-sub {
+    font-size: var(--text-base, 15px);
     color: var(--c-text-secondary);
     margin: 0;
     line-height: 1.5;
-    max-width: 280px;
-    text-align: center;
+  }
+
+  .ob-form {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    flex: 1;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .field-label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    font-size: var(--text-base, 15px);
+    font-weight: 600;
+    color: var(--c-text);
+    gap: 8px;
+  }
+
+  .field-hint {
+    font-size: var(--text-xs, 11px);
+    font-weight: 400;
+    color: var(--c-text-secondary);
+  }
+
+  .field-value {
+    font-size: var(--text-sm, 13px);
+    font-weight: 700;
+    color: var(--c-brand);
   }
 
   .ob-input {
     width: 100%;
     padding: 14px 16px;
     border: 1.5px solid var(--c-border);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-lg, 24px);
     font-size: 16px;
     box-sizing: border-box;
     background: var(--c-surface);
     color: var(--c-text);
     font-family: inherit;
+    min-height: 44px;
   }
 
-  .slider-group {
-    width: 100%;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .slider-group label {
-    font-size: var(--text-base);
-    font-weight: 500;
+  .ob-input:focus {
+    outline: 2px solid var(--c-brand);
+    outline-offset: 2px;
+    border-color: transparent;
   }
 
   .slider {
     width: 100%;
     accent-color: var(--c-brand);
+    height: 44px;
+    cursor: pointer;
   }
 
   .slider-range {
     display: flex;
     justify-content: space-between;
-    font-size: var(--text-xs);
+    font-size: var(--text-xs, 11px);
     color: var(--c-text-secondary);
+    margin-top: -6px;
   }
 
-  .goals-grid {
+  .ob-actions {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
   }
 
-  .goal-chip {
-    padding: 10px 18px;
-    border-radius: 24px;
-    border: 1.5px solid var(--c-border);
-    background: var(--c-surface);
-    color: var(--c-text);
+  .skip-btn {
+    background: none;
+    border: none;
+    color: var(--c-text-secondary);
+    font-size: var(--text-sm, 13px);
     cursor: pointer;
-    font-size: 14px;
-    transition: all 0.15s;
     font-family: inherit;
     min-height: 44px;
+    padding: 8px 16px;
+    border-radius: var(--radius-md, 16px);
   }
 
-  .goal-chip.active {
-    background: var(--c-brand);
-    color: #fff;
-    border-color: var(--c-brand);
-  }
+  .skip-btn:hover { color: var(--c-text); }
+  .skip-btn:focus-visible { outline: 2px solid var(--c-brand); outline-offset: 2px; }
 
   @media (prefers-reduced-motion: reduce) {
-    .goal-chip { transition: none; }
+    * { transition: none !important; }
   }
 </style>
