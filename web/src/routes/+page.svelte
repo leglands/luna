@@ -134,30 +134,38 @@
   <main class="content">
 
     {#if !hasData}
-      <div class="empty-state">
-        <div class="ring-ph"></div>
-        <p class="empty-msg">Set up your cycle to get predictions and tracking</p>
-        <PebbleButton label="Get started" onclick={() => goto('/onboarding')} />
+      <!-- Setup banner (compact) — ring still shows with default 28-day cycle -->
+      <div class="setup-banner">
+        <div class="setup-text">
+          <p class="setup-msg">Set up your cycle to get personalised predictions</p>
+        </div>
+        <PebbleButton label="Get started" size="sm" onclick={() => goto('/onboarding')} />
       </div>
+    {/if}
 
-    {:else}
-
-      <!-- ── 1. Cycle ring card ── -->
-      <div class="card ring-card">
-        <SegmentedRing
-          segments={segments}
-          currentIndex={phaseIndex}
-          centerText={String(cycleInfo.dayOfCycle)}
-          centerSubtext="Day"
-          size={200}
-        />
+    <!-- ── 1. Cycle ring card — always visible ── -->
+    <div class="card ring-card">
+      <SegmentedRing
+        segments={segments}
+        currentIndex={phaseIndex}
+        centerText={hasData ? String(cycleInfo.dayOfCycle) : '?'}
+        centerSubtext="Day"
+        size={200}
+      />
+      {#if hasData}
         <p class="phase-name" style="color:{PHASE_COLORS[cycleInfo.phase]}">{PHASE_LABELS[cycleInfo.phase]}</p>
         {#if cycleInfo.daysUntilNextPeriod > 0}
           <p class="next-hint">Next period in {cycleInfo.daysUntilNextPeriod} days</p>
         {:else if cycleInfo.daysUntilNextPeriod === 0}
           <p class="next-hint" style="color:#E57373">Period expected today</p>
         {/if}
-      </div>
+      {:else}
+        <p class="phase-name" style="color:var(--c-text-secondary)">—</p>
+        <p class="next-hint">Add your last period date to see predictions</p>
+      {/if}
+    </div>
+
+    {#if hasData}
 
       <!-- ── 2. Week strip ── -->
       <div class="card week-strip" role="list" aria-label="This week">
@@ -285,6 +293,9 @@
   .log-cta { display:flex; justify-content:center; padding-top:var(--space-2); }
 
   /* Empty state */
+  .setup-banner { display:flex; align-items:center; gap:var(--space-3); background:var(--c-surface); border-radius:var(--radius-lg); padding:var(--space-3) var(--space-4); }
+  .setup-text { flex:1; }
+  .setup-msg { font-size:var(--text-sm); color:var(--c-text-secondary); margin:0; line-height:1.4; }
   .empty-state { display:flex; flex-direction:column; align-items:center; gap:var(--space-5); padding:var(--space-12) 0; text-align:center; }
   .ring-ph { width:200px; height:200px; border-radius:50%; border:12px solid var(--c-border); opacity:.35; }
   .empty-msg { color:var(--c-text-secondary); max-width:260px; }

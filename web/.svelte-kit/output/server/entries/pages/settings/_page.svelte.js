@@ -1,7 +1,7 @@
 import { a as attr } from "../../../chunks/index2.js";
 import { g as goto } from "../../../chunks/client.js";
-import { P as PebbleButton } from "../../../chunks/EmotionPicker.svelte_svelte_type_style_lang.js";
-import { T as TabBar } from "../../../chunks/TabBar.js";
+import { P as PebbleButton } from "../../../chunks/DSOnboarding.svelte_svelte_type_style_lang.js";
+import { D as DSFloatingNav, a as DaisyMenu } from "../../../chunks/DaisyMenu.js";
 function _page($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     const TABS = [
@@ -29,16 +29,63 @@ function _page($$renderer, $$props) {
       }
       goto();
     }
-    $$renderer2.push(`<div class="screen svelte-1i19ct2" data-app="luna"><main class="content svelte-1i19ct2"><h1 class="title svelte-1i19ct2">Settings</h1> <div class="rows svelte-1i19ct2"><label class="row svelte-1i19ct2"><span class="svelte-1i19ct2">Cycle length</span> <span class="field svelte-1i19ct2"><input type="number"${attr("value", cycleLength)} min="20" max="45" class="svelte-1i19ct2"/><span class="unit svelte-1i19ct2">days</span></span></label> <label class="row svelte-1i19ct2"><span class="svelte-1i19ct2">Period length</span> <span class="field svelte-1i19ct2"><input type="number"${attr("value", periodLength)} min="1" max="10" class="svelte-1i19ct2"/><span class="unit svelte-1i19ct2">days</span></span></label> <label class="row svelte-1i19ct2"><span class="svelte-1i19ct2">Cycle start date</span> <input type="date"${attr("value", cycleStartDate)} class="date-input svelte-1i19ct2"/></label></div> <div class="rows svelte-1i19ct2" style="margin-top:8px"><button class="row export-row svelte-1i19ct2"><span class="svelte-1i19ct2">Export data</span> <span class="export-hint svelte-1i19ct2">CSV for gynecologist →</span></button></div> `);
-    PebbleButton($$renderer2, { label: "Save", size: "lg", onclick: save });
-    $$renderer2.push(`<!----></main> `);
-    TabBar($$renderer2, {
-      tabs: TABS,
-      activeTab: "settings",
-      onchange: (id) => goto(),
-      brand: "luna"
-    });
-    $$renderer2.push(`<!----></div>`);
+    let daisyOpen = false;
+    const DAISY_ITEMS = [
+      {
+        icon: "droplet",
+        label: "Règles",
+        onclick: () => goto()
+      },
+      {
+        icon: "thermometer",
+        label: "Symptôme",
+        onclick: () => goto()
+      },
+      {
+        icon: "smile",
+        label: "Humeur",
+        onclick: () => goto()
+      },
+      {
+        icon: "moon",
+        label: "Ovulation",
+        onclick: () => goto()
+      }
+    ];
+    let $$settled = true;
+    let $$inner_renderer;
+    function $$render_inner($$renderer3) {
+      $$renderer3.push(`<div class="screen svelte-1i19ct2" data-app="luna"><main class="content svelte-1i19ct2"><h1 class="title svelte-1i19ct2">Settings</h1> <div class="rows svelte-1i19ct2"><label class="row svelte-1i19ct2"><span class="svelte-1i19ct2">Cycle length</span> <span class="field svelte-1i19ct2"><input type="number"${attr("value", cycleLength)} min="20" max="45" class="svelte-1i19ct2"/><span class="unit svelte-1i19ct2">days</span></span></label> <label class="row svelte-1i19ct2"><span class="svelte-1i19ct2">Period length</span> <span class="field svelte-1i19ct2"><input type="number"${attr("value", periodLength)} min="1" max="10" class="svelte-1i19ct2"/><span class="unit svelte-1i19ct2">days</span></span></label> <label class="row svelte-1i19ct2"><span class="svelte-1i19ct2">Cycle start date</span> <input type="date"${attr("value", cycleStartDate)} class="date-input svelte-1i19ct2"/></label></div> <div class="rows svelte-1i19ct2" style="margin-top:8px"><button class="row export-row svelte-1i19ct2"><span class="svelte-1i19ct2">Export data</span> <span class="export-hint svelte-1i19ct2">CSV for gynecologist →</span></button></div> `);
+      PebbleButton($$renderer3, { label: "Save", size: "lg", onclick: save });
+      $$renderer3.push(`<!----></main> `);
+      DSFloatingNav($$renderer3, {
+        tabs: TABS,
+        active: "settings",
+        brand: "luna",
+        onchange: (id) => goto(),
+        onfab: () => daisyOpen = !daisyOpen,
+        get daisyOpen() {
+          return daisyOpen;
+        },
+        set daisyOpen($$value) {
+          daisyOpen = $$value;
+          $$settled = false;
+        }
+      });
+      $$renderer3.push(`<!----> `);
+      DaisyMenu($$renderer3, {
+        open: daisyOpen,
+        onclose: () => daisyOpen = false,
+        items: DAISY_ITEMS
+      });
+      $$renderer3.push(`<!----></div>`);
+    }
+    do {
+      $$settled = true;
+      $$inner_renderer = $$renderer2.copy();
+      $$render_inner($$inner_renderer);
+    } while (!$$settled);
+    $$renderer2.subsume($$inner_renderer);
   });
 }
 export {

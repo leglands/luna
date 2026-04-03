@@ -30,7 +30,7 @@ const options = {
   service_worker_options: void 0,
   server_error_boundaries: false,
   templates: {
-    app: ({ head, body, assets, nonce, env }) => '<!doctype html>\n<html lang="en" data-app="luna">\n	<head>\n		<meta charset="utf-8" />\n		<link rel="icon" href="' + assets + '/favicon.svg" type="image/svg+xml" />\n		<link rel="apple-touch-icon" href="' + assets + '/apple-touch-icon.png" />\n		<meta name="viewport" content="width=device-width, initial-scale=1" />\n		<title>Luna — Cycle & Wellness</title>\n	<link rel="stylesheet" href="' + assets + '/tokens.css" />\n<script>(function(){var s=localStorage.getItem("life-theme");var d=window.matchMedia("(prefers-color-scheme:dark)").matches;document.documentElement.setAttribute("data-theme",s||(d?"dark":"light"));})();<\/script>\n	' + head + '\n	</head>\n	<body data-sveltekit-preload-data="hover">\n		<div style="display: contents">' + body + "</div>\n	</body>\n</html>\n",
+    app: ({ head, body, assets, nonce, env }) => '<!doctype html>\n<html lang="en" data-app="luna">\n	<head>\n		<meta charset="utf-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1" />\n		<title>Luna — Cycle & Wellness</title>\n	<link rel="stylesheet" href="' + assets + '/tokens.css" />\n<script>(function(){var s=localStorage.getItem("life-theme");var d=window.matchMedia("(prefers-color-scheme:dark)").matches;document.documentElement.setAttribute("data-theme",s||(d?"dark":"light"));})();<\/script>\n	' + head + '\n			<!-- Icons & PWA -->\n		<link rel="icon" href="' + assets + '/favicon.svg" type="image/svg+xml" />\n		<link rel="icon" href="' + assets + '/favicon.png" type="image/png" sizes="32x32" />\n		<link rel="apple-touch-icon" sizes="180x180" href="' + assets + '/apple-touch-icon.png" />\n		<link rel="manifest" href="' + assets + '/manifest.json" />\n		<meta name="theme-color" content="#D4678A" />\n		<meta name="apple-mobile-web-app-capable" content="yes" />\n		<meta name="apple-mobile-web-app-status-bar-style" content="default" />\n		<meta name="apple-mobile-web-app-title" content="Luna" />\n	</head>\n	<body data-sveltekit-preload-data="hover">\n		<div style="display: contents">' + body + "</div>\n	</body>\n</html>\n",
     error: ({ status, message }) => '<!doctype html>\n<html lang="en">\n	<head>\n		<meta charset="utf-8" />\n		<title>' + message + `</title>
 
 		<style>
@@ -102,7 +102,7 @@ const options = {
 		<div class="error">
 			<span class="status">` + status + '</span>\n			<div class="message">\n				<h1>' + message + "</h1>\n			</div>\n		</div>\n	</body>\n</html>\n"
   },
-  version_hash: "139sro4"
+  version_hash: "jvsw1f"
 };
 async function get_hooks() {
   let handle;

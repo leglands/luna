@@ -10,26 +10,26 @@
       "_internal.js"
     ]
   },
-  "_EmotionPicker.ImPSiTPZ.css": {
-    "file": "_app/immutable/assets/EmotionPicker.ImPSiTPZ.css",
-    "src": "_EmotionPicker.ImPSiTPZ.css"
+  "_DSOnboarding.D2QlNxxe.css": {
+    "file": "_app/immutable/assets/DSOnboarding.D2QlNxxe.css",
+    "src": "_DSOnboarding.D2QlNxxe.css"
   },
-  "_EmotionPicker.svelte_svelte_type_style_lang.js": {
-    "file": "chunks/EmotionPicker.svelte_svelte_type_style_lang.js",
-    "name": "EmotionPicker.svelte_svelte_type_style_lang",
+  "_DSOnboarding.svelte_svelte_type_style_lang.js": {
+    "file": "chunks/DSOnboarding.svelte_svelte_type_style_lang.js",
+    "name": "DSOnboarding.svelte_svelte_type_style_lang",
     "imports": [
       "_index2.js"
     ],
     "css": [
-      "_app/immutable/assets/EmotionPicker.ImPSiTPZ.css"
+      "_app/immutable/assets/DSOnboarding.D2QlNxxe.css"
     ]
   },
-  "_TabBar.js": {
-    "file": "chunks/TabBar.js",
-    "name": "TabBar",
+  "_DaisyMenu.js": {
+    "file": "chunks/DaisyMenu.js",
+    "name": "DaisyMenu",
     "imports": [
       "_index2.js",
-      "_EmotionPicker.svelte_svelte_type_style_lang.js"
+      "_DSOnboarding.svelte_svelte_type_style_lang.js"
     ]
   },
   "_client.js": {
@@ -475,7 +475,7 @@
       "src/lib/locales/zh.json"
     ],
     "css": [
-      "_app/immutable/assets/_layout.CeVhNc7C.css"
+      "_app/immutable/assets/_layout.BlENiZTk.css"
     ]
   },
   "src/routes/+page.svelte": {
@@ -485,11 +485,12 @@
     "isEntry": true,
     "imports": [
       "_client.js",
-      "_EmotionPicker.svelte_svelte_type_style_lang.js",
-      "_TabBar.js"
+      "_DSOnboarding.svelte_svelte_type_style_lang.js",
+      "_DaisyMenu.js",
+      "_index2.js"
     ],
     "css": [
-      "_app/immutable/assets/_page.CDsdcq2f.css"
+      "_app/immutable/assets/_page.8Xf90chL.css"
     ]
   },
   "src/routes/cycle/+page.svelte": {
@@ -500,8 +501,8 @@
     "imports": [
       "_index2.js",
       "_client.js",
-      "_EmotionPicker.svelte_svelte_type_style_lang.js",
-      "_TabBar.js"
+      "_DSOnboarding.svelte_svelte_type_style_lang.js",
+      "_DaisyMenu.js"
     ],
     "css": [
       "_app/immutable/assets/_page.CIiJSuKF.css"
@@ -518,10 +519,10 @@
       "_utils.js",
       "_root.js",
       "_state.svelte.js",
-      "_EmotionPicker.svelte_svelte_type_style_lang.js"
+      "_DSOnboarding.svelte_svelte_type_style_lang.js"
     ],
     "css": [
-      "_app/immutable/assets/_page.CMJwUNk7.css"
+      "_app/immutable/assets/_page.DbfFo7cv.css"
     ]
   },
   "src/routes/fertility/+page.svelte": {
@@ -532,8 +533,8 @@
     "imports": [
       "_index2.js",
       "_client.js",
-      "_EmotionPicker.svelte_svelte_type_style_lang.js",
-      "_TabBar.js"
+      "_DSOnboarding.svelte_svelte_type_style_lang.js",
+      "_DaisyMenu.js"
     ],
     "css": [
       "_app/immutable/assets/_page.Df-lfT5v.css"
@@ -547,7 +548,7 @@
     "imports": [
       "_index2.js",
       "_client.js",
-      "_EmotionPicker.svelte_svelte_type_style_lang.js"
+      "_DSOnboarding.svelte_svelte_type_style_lang.js"
     ],
     "css": [
       "_app/immutable/assets/_page.DIi7jXho.css"
@@ -561,8 +562,8 @@
     "imports": [
       "_index2.js",
       "_client.js",
-      "_EmotionPicker.svelte_svelte_type_style_lang.js",
-      "_TabBar.js"
+      "_DSOnboarding.svelte_svelte_type_style_lang.js",
+      "_DaisyMenu.js"
     ],
     "css": [
       "_app/immutable/assets/_page.BF6K4tPu.css"
@@ -576,10 +577,10 @@
     "imports": [
       "_index2.js",
       "_client.js",
-      "_EmotionPicker.svelte_svelte_type_style_lang.js"
+      "_DSOnboarding.svelte_svelte_type_style_lang.js"
     ],
     "css": [
-      "_app/immutable/assets/_page.BhPjo2Vy.css"
+      "_app/immutable/assets/_page.CbYZ3a9H.css"
     ]
   },
   "src/routes/onboarding/+page.svelte": {
@@ -590,10 +591,10 @@
     "imports": [
       "_index2.js",
       "_client.js",
-      "_EmotionPicker.svelte_svelte_type_style_lang.js"
+      "_DSOnboarding.svelte_svelte_type_style_lang.js"
     ],
     "css": [
-      "_app/immutable/assets/_page.B_EQoJOG.css"
+      "_app/immutable/assets/_page.BxYJf05d.css"
     ]
   },
   "src/routes/settings/+page.svelte": {
@@ -604,8 +605,8 @@
     "imports": [
       "_index2.js",
       "_client.js",
-      "_EmotionPicker.svelte_svelte_type_style_lang.js",
-      "_TabBar.js"
+      "_DSOnboarding.svelte_svelte_type_style_lang.js",
+      "_DaisyMenu.js"
     ],
     "css": [
       "_app/immutable/assets/_page.CBLtO6GH.css"

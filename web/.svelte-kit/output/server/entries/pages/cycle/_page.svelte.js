@@ -1,7 +1,7 @@
 import { d as attr_class, f as attr_style, a as attr, c as ensure_array_like, e as escape_html, i as derived, b as stringify } from "../../../chunks/index2.js";
 import { g as goto } from "../../../chunks/client.js";
-import { I as Icon, P as PebbleButton } from "../../../chunks/EmotionPicker.svelte_svelte_type_style_lang.js";
-import { T as TabBar } from "../../../chunks/TabBar.js";
+import { I as Icon, P as PebbleButton } from "../../../chunks/DSOnboarding.svelte_svelte_type_style_lang.js";
+import { D as DSFloatingNav, a as DaisyMenu } from "../../../chunks/DaisyMenu.js";
 function SegmentedRing($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     let {
@@ -127,78 +127,125 @@ function _page($$renderer, $$props) {
       return days;
     });
     const monthTitle = derived(() => displayMonth.toLocaleDateString("en-US", { month: "long", year: "numeric" }));
-    $$renderer2.push(`<div class="screen svelte-wl2tsh" data-app="luna"><main class="calendar-page svelte-wl2tsh"><div class="card phase-summary svelte-wl2tsh"><p class="phase-name svelte-wl2tsh">${escape_html(PHASE_LABELS[cycleInfo().phase] || "Unknown")}</p> `);
-    if (cycleInfo().daysUntilNextPeriod > 0) {
-      $$renderer2.push("<!--[0-->");
-      $$renderer2.push(`<p class="phase-hint svelte-wl2tsh">Next period in ${escape_html(cycleInfo().daysUntilNextPeriod)} days</p>`);
-    } else {
-      $$renderer2.push("<!--[-1-->");
-      $$renderer2.push(`<p class="phase-hint svelte-wl2tsh">Period expected today</p>`);
-    }
-    $$renderer2.push(`<!--]--></div> <div class="card calendar-card svelte-wl2tsh"><div class="month-header svelte-wl2tsh"><button class="month-nav svelte-wl2tsh" aria-label="Previous month">`);
-    Icon($$renderer2, { name: "chevron-left", size: 20 });
-    $$renderer2.push(`<!----></button> <h2 class="month-title svelte-wl2tsh">${escape_html(monthTitle())}</h2> <button class="month-nav svelte-wl2tsh" aria-label="Next month">`);
-    Icon($$renderer2, { name: "chevron-right", size: 20 });
-    $$renderer2.push(`<!----></button></div> <div class="weekday-header svelte-wl2tsh"><!--[-->`);
-    const each_array = ensure_array_like(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]);
-    for (let $$index = 0, $$length = each_array.length; $$index < $$length; $$index++) {
-      let d = each_array[$$index];
-      $$renderer2.push(`<span>${escape_html(d)}</span>`);
-    }
-    $$renderer2.push(`<!--]--></div> <div class="calendar-grid svelte-wl2tsh"><!--[-->`);
-    const each_array_1 = ensure_array_like(calendarDays());
-    for (let $$index_1 = 0, $$length = each_array_1.length; $$index_1 < $$length; $$index_1++) {
-      let day = each_array_1[$$index_1];
-      if (day) {
-        $$renderer2.push("<!--[0-->");
-        $$renderer2.push(`<button${attr_class("cal-day svelte-wl2tsh", void 0, {
-          "is-today": isToday(day),
-          "is-selected": selectedDate === fmtDate(day),
-          "is-period": cycleEvents()[fmtDate(day)] === "period",
-          "is-fertile": cycleEvents()[fmtDate(day)] === "fertile",
-          "is-ovulation": cycleEvents()[fmtDate(day)] === "ovulation"
-        })}${attr("aria-label", day.toLocaleDateString())}>${escape_html(day.getDate())}</button>`);
-      } else {
-        $$renderer2.push("<!--[-1-->");
-        $$renderer2.push(`<span></span>`);
+    let daisyOpen = false;
+    const DAISY_ITEMS = [
+      {
+        icon: "droplet",
+        label: "Règles",
+        onclick: () => goto()
+      },
+      {
+        icon: "thermometer",
+        label: "Symptôme",
+        onclick: () => goto()
+      },
+      {
+        icon: "smile",
+        label: "Humeur",
+        onclick: () => goto()
+      },
+      {
+        icon: "moon",
+        label: "Ovulation",
+        onclick: () => goto()
       }
-      $$renderer2.push(`<!--]-->`);
-    }
-    $$renderer2.push(`<!--]--></div> <div class="legend svelte-wl2tsh"><span class="leg-item svelte-wl2tsh"><span class="leg-dot svelte-wl2tsh" style="background:#E57373"></span>Period</span> <span class="leg-item svelte-wl2tsh"><span class="leg-dot svelte-wl2tsh" style="background:#F8BBD9;border:1px solid #f0b0c8"></span>Fertile</span> <span class="leg-item svelte-wl2tsh"><span class="leg-dot svelte-wl2tsh" style="background:#CE93D8"></span>Ovulation</span></div> <div class="cal-cta svelte-wl2tsh">`);
-    PebbleButton($$renderer2, { label: "Log today", size: "lg", onclick: () => goto() });
-    $$renderer2.push(`<!----></div> <div class="ring-section svelte-wl2tsh">`);
-    SegmentedRing($$renderer2, {
-      segments: [
-        { label: "Menstrual", color: "#E57373", value: periodLength() },
-        {
-          label: "Follicular",
-          color: "#F48FB1",
-          value: Math.floor(cycleLength() * 0.35)
-        },
-        {
-          label: "Ovulation",
-          color: "#CE93D8",
-          value: Math.floor(cycleLength() * 0.14)
-        },
-        {
-          label: "Luteal",
-          color: "#9FA8DA",
-          value: cycleLength() - periodLength() - Math.floor(cycleLength() * 0.49)
+    ];
+    let $$settled = true;
+    let $$inner_renderer;
+    function $$render_inner($$renderer3) {
+      $$renderer3.push(`<div class="screen svelte-wl2tsh" data-app="luna"><main class="calendar-page svelte-wl2tsh"><div class="card phase-summary svelte-wl2tsh"><p class="phase-name svelte-wl2tsh">${escape_html(PHASE_LABELS[cycleInfo().phase] || "Unknown")}</p> `);
+      if (cycleInfo().daysUntilNextPeriod > 0) {
+        $$renderer3.push("<!--[0-->");
+        $$renderer3.push(`<p class="phase-hint svelte-wl2tsh">Next period in ${escape_html(cycleInfo().daysUntilNextPeriod)} days</p>`);
+      } else {
+        $$renderer3.push("<!--[-1-->");
+        $$renderer3.push(`<p class="phase-hint svelte-wl2tsh">Period expected today</p>`);
+      }
+      $$renderer3.push(`<!--]--></div> <div class="card calendar-card svelte-wl2tsh"><div class="month-header svelte-wl2tsh"><button class="month-nav svelte-wl2tsh" aria-label="Previous month">`);
+      Icon($$renderer3, { name: "chevron-left", size: 20 });
+      $$renderer3.push(`<!----></button> <h2 class="month-title svelte-wl2tsh">${escape_html(monthTitle())}</h2> <button class="month-nav svelte-wl2tsh" aria-label="Next month">`);
+      Icon($$renderer3, { name: "chevron-right", size: 20 });
+      $$renderer3.push(`<!----></button></div> <div class="weekday-header svelte-wl2tsh"><!--[-->`);
+      const each_array = ensure_array_like(["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]);
+      for (let $$index = 0, $$length = each_array.length; $$index < $$length; $$index++) {
+        let d = each_array[$$index];
+        $$renderer3.push(`<span>${escape_html(d)}</span>`);
+      }
+      $$renderer3.push(`<!--]--></div> <div class="calendar-grid svelte-wl2tsh"><!--[-->`);
+      const each_array_1 = ensure_array_like(calendarDays());
+      for (let $$index_1 = 0, $$length = each_array_1.length; $$index_1 < $$length; $$index_1++) {
+        let day = each_array_1[$$index_1];
+        if (day) {
+          $$renderer3.push("<!--[0-->");
+          $$renderer3.push(`<button${attr_class("cal-day svelte-wl2tsh", void 0, {
+            "is-today": isToday(day),
+            "is-selected": selectedDate === fmtDate(day),
+            "is-period": cycleEvents()[fmtDate(day)] === "period",
+            "is-fertile": cycleEvents()[fmtDate(day)] === "fertile",
+            "is-ovulation": cycleEvents()[fmtDate(day)] === "ovulation"
+          })}${attr("aria-label", day.toLocaleDateString())}>${escape_html(day.getDate())}</button>`);
+        } else {
+          $$renderer3.push("<!--[-1-->");
+          $$renderer3.push(`<span></span>`);
         }
-      ],
-      currentIndex: phaseIndex(),
-      centerText: String(cycleInfo().dayOfCycle),
-      centerSubtext: "Day",
-      size: 160
-    });
-    $$renderer2.push(`<!----> <p class="ring-phase svelte-wl2tsh">${escape_html(PHASE_LABELS[cycleInfo().phase] || "Unknown")} — day ${escape_html(cycleInfo().dayOfCycle)}</p></div></div></main> `);
-    TabBar($$renderer2, {
-      tabs: TABS,
-      activeTab: "cycle",
-      onchange: (id) => goto(),
-      brand: "luna"
-    });
-    $$renderer2.push(`<!----></div>`);
+        $$renderer3.push(`<!--]-->`);
+      }
+      $$renderer3.push(`<!--]--></div> <div class="legend svelte-wl2tsh"><span class="leg-item svelte-wl2tsh"><span class="leg-dot svelte-wl2tsh" style="background:#E57373"></span>Period</span> <span class="leg-item svelte-wl2tsh"><span class="leg-dot svelte-wl2tsh" style="background:#F8BBD9;border:1px solid #f0b0c8"></span>Fertile</span> <span class="leg-item svelte-wl2tsh"><span class="leg-dot svelte-wl2tsh" style="background:#CE93D8"></span>Ovulation</span></div> <div class="cal-cta svelte-wl2tsh">`);
+      PebbleButton($$renderer3, { label: "Log today", size: "lg", onclick: () => goto() });
+      $$renderer3.push(`<!----></div> <div class="ring-section svelte-wl2tsh">`);
+      SegmentedRing($$renderer3, {
+        segments: [
+          { label: "Menstrual", color: "#E57373", value: periodLength() },
+          {
+            label: "Follicular",
+            color: "#F48FB1",
+            value: Math.floor(cycleLength() * 0.35)
+          },
+          {
+            label: "Ovulation",
+            color: "#CE93D8",
+            value: Math.floor(cycleLength() * 0.14)
+          },
+          {
+            label: "Luteal",
+            color: "#9FA8DA",
+            value: cycleLength() - periodLength() - Math.floor(cycleLength() * 0.49)
+          }
+        ],
+        currentIndex: phaseIndex(),
+        centerText: String(cycleInfo().dayOfCycle),
+        centerSubtext: "Day",
+        size: 160
+      });
+      $$renderer3.push(`<!----> <p class="ring-phase svelte-wl2tsh">${escape_html(PHASE_LABELS[cycleInfo().phase] || "Unknown")} — day ${escape_html(cycleInfo().dayOfCycle)}</p></div></div></main> `);
+      DSFloatingNav($$renderer3, {
+        tabs: TABS,
+        active: "cycle",
+        brand: "luna",
+        onchange: (id) => goto(),
+        onfab: () => daisyOpen = !daisyOpen,
+        get daisyOpen() {
+          return daisyOpen;
+        },
+        set daisyOpen($$value) {
+          daisyOpen = $$value;
+          $$settled = false;
+        }
+      });
+      $$renderer3.push(`<!----> `);
+      DaisyMenu($$renderer3, {
+        open: daisyOpen,
+        onclose: () => daisyOpen = false,
+        items: DAISY_ITEMS
+      });
+      $$renderer3.push(`<!----></div>`);
+    }
+    do {
+      $$settled = true;
+      $$inner_renderer = $$renderer2.copy();
+      $$render_inner($$inner_renderer);
+    } while (!$$settled);
+    $$renderer2.subsume($$inner_renderer);
   });
 }
 export {

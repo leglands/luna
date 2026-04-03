@@ -47,6 +47,6 @@ declare module "$app/types" {
 		};
 		Pathname(): "/" | "/cycle" | "/export" | "/fertility" | "/history" | "/insights" | "/log" | "/onboarding" | "/settings" | "/sitemap.xml";
 		ResolvedPathname(): `${"" | `/${string}`}${ReturnType<AppTypes['Pathname']>}`;
-		Asset(): "/apple-touch-icon.png" | "/favicon.png" | "/favicon.svg" | "/robots.txt" | "/tokens.css" | string & {};
+		Asset(): "/apple-touch-icon.png" | "/favicon.png" | "/favicon.svg" | "/icon-512.png" | "/manifest.json" | "/robots.txt" | "/tokens.css" | string & {};
 	}
 }
