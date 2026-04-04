@@ -201,7 +201,7 @@
   </div>
 </div>
 
-<DSContactModal open={contactOpen} appName="Luna" brand="luna" onclose={() => contactOpen = false}
+<DSContactModal open={contactOpen} appName="Luna" brand="luna" apiEndpoint="https://api.macaron-software.com/api/contact" onclose={() => contactOpen = false}
   labels={{
     title: $_('contact.title'),
     close: $_('contact.close'),
