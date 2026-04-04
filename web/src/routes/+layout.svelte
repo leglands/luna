@@ -7,6 +7,7 @@
   import { goto } from '$app/navigation';
   import TabBar from '$ds/TabBar.svelte';
   import DSPebbleDrawer from '$ds/DSPebbleDrawer.svelte';
+  import { DSContactModal } from '$ds/index.js';
   setupI18n();
 
   const NAV_TABS = [
@@ -17,6 +18,7 @@
   ];
 
   let width = $state(0);
+  let contactOpen = $state(false);
 
   const activeTab = $derived(
     $page.url.pathname === '/' ? 'home' :
@@ -160,6 +162,12 @@
           </a>
         {/each}
       </nav>
+      <div class="sidebar-contact">
+        <button class="sidebar-contact-btn" onclick={() => contactOpen = true} aria-label="Nous contacter">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span>Nous contacter</span>
+        </button>
+      </div>
     </aside>
   {/if}
 
@@ -192,6 +200,24 @@
     {/if}
   </div>
 </div>
+
+<DSContactModal open={contactOpen} appName="Luna" brand="luna" onclose={() => contactOpen = false}
+  labels={{
+    title: $_('contact.title'),
+    close: $_('contact.close'),
+    back: $_('contact.back'),
+    send: $_('contact.send'),
+    messageAriaLabel: $_('contact.messageAriaLabel'),
+    sentTitle: $_('contact.sentTitle'),
+    sentBody: $_('contact.sentBody'),
+    typeImprovement: $_('contact.typeImprovement'),
+    typeFeedback: $_('contact.typeFeedback'),
+    typeBug: $_('contact.typeBug'),
+    placeholderImprovement: $_('contact.placeholderImprovement'),
+    placeholderFeedback: $_('contact.placeholderFeedback'),
+    placeholderBug: $_('contact.placeholderBug'),
+  }}
+/>
 
 <style>
   :global(body) { background: var(--c-surface-container, #F2F2F5); }
@@ -361,4 +387,32 @@
   @media (prefers-reduced-motion: reduce) {
     .sidebar-item { transition: none; }
   }
+
+  .sidebar-contact {
+    padding: 8px 8px 16px;
+    border-top: 1px solid var(--c-border, #f3f4f6);
+  }
+  .sidebar-contact-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--c-text-secondary, #6b7280);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+    min-height: 44px;
+    transition: background 0.12s, color 0.12s;
+  }
+  .sidebar-contact-btn:hover {
+    background: color-mix(in srgb, var(--c-brand) 8%, transparent);
+    color: var(--c-brand);
+  }
+  .sidebar-contact-btn:focus-visible { outline: 2px solid var(--c-brand); outline-offset: 2px; }
 </style>

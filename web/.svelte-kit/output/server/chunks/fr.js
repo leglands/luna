@@ -8,6 +8,7 @@ const insights = { "title": "Aperçus", "avgCycle": "Durée moyenne du cycle", "
 const promo = { "ttcTitle": "Vous essayez de concevoir?", "ttcBody": "Aura vous aide à suivre votre fertilité et à vous connecter avec la communauté.", "auraCTA": "Essayer Aura", "follicularTitle": "Boostez votre énergie", "follicularBody": "Nova vous aide à optimiser votre fitness et nutrition.", "novaCTA": "Essayer Nova", "almaTitle": "Besoin de parler à quelqu'un?", "almaBody": "Alma vous connecte avec des thérapeutes licenciés.", "almaCTA": "Parler à Alma" };
 const privacy = { "badge": "Privé et Chiffré", "disclaimer": "Ces informations ne remplacent pas l'avis médical professionnel. Consultez toujours un professionnel de santé qualifié pour vos préoccupations médicales." };
 const settings = { "title": "Paramètres", "cycleLength": "Durée du cycle", "periodLength": "Durée des règles", "lastPeriod": "Date des dernières règles", "save": "Enregistrer", "saved": "Paramètres enregistrés" };
+const contact = { "title": "Nous contacter", "close": "Fermer", "back": "Retour", "send": "Envoyer", "messageAriaLabel": "Votre message", "sentTitle": "Message envoyé !", "sentBody": "Merci, nous lisons chaque message.", "typeImprovement": "Amélioration", "typeFeedback": "Feedback", "typeBug": "Bug", "placeholderImprovement": "Ce serait super si…", "placeholderFeedback": "Votre avis compte…", "placeholderBug": "Quand je fais… il se passe…" };
 const fr = {
   app,
   phases,
@@ -18,11 +19,13 @@ const fr = {
   insights,
   promo,
   privacy,
-  settings
+  settings,
+  contact
 };
 export {
   app,
   calendar,
+  contact,
   cycle,
   fr as default,
   insights,

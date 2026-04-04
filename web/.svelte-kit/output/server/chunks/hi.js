@@ -2,14 +2,17 @@ const app = { "name": "Luna", "tagline": "अपने मासिक धर्
 const phases = { "menstrual": "मासिक धर्म", "follicular": "फॉलिकुलर", "ovulation": "ओव्यूलेशन", "luteal": "लुटेल" };
 const privacy = { "badge": "निजी और एन्क्रिप्टेड", "disclaimer": "यह जानकारी पेशेवर चिकित्सा सलाह का विकल्प नहीं है। हमेशा एक योग्य स्वास्थ्य सेवा प्रदाता से परामर्श लें।" };
 const settings = { "title": "सेटिंग्स", "cycleLength": "चक्र की लंबाई", "periodLength": "माहवारी की लंबाई", "lastPeriod": "अंतिम माहवारी की तारीख", "save": "सहेजें", "saved": "सेटिंग्स सहेजी गईं" };
+const contact = { "title": "संपर्क करें", "close": "बंद करें", "back": "वापस", "send": "भेजें", "messageAriaLabel": "आपका संदेश", "sentTitle": "संदेश भेजा गया!", "sentBody": "धन्यवाद, हम हर संदेश पढ़ते हैं।", "typeImprovement": "सुधार", "typeFeedback": "प्रतिक्रिया", "typeBug": "बग", "placeholderImprovement": "यह अच्छा होता अगर…", "placeholderFeedback": "आपकी राय मायने रखती है…", "placeholderBug": "जब मैं… करता हूं तो… होता है" };
 const hi = {
   app,
   phases,
   privacy,
-  settings
+  settings,
+  contact
 };
 export {
   app,
+  contact,
   hi as default,
   phases,
   privacy,

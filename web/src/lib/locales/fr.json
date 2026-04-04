@@ -69,5 +69,20 @@
     "lastPeriod": "Date des dernières règles",
     "save": "Enregistrer",
     "saved": "Paramètres enregistrés"
+  },
+  "contact": {
+    "title": "Nous contacter",
+    "close": "Fermer",
+    "back": "Retour",
+    "send": "Envoyer",
+    "messageAriaLabel": "Votre message",
+    "sentTitle": "Message envoyé !",
+    "sentBody": "Merci, nous lisons chaque message.",
+    "typeImprovement": "Amélioration",
+    "typeFeedback": "Feedback",
+    "typeBug": "Bug",
+    "placeholderImprovement": "Ce serait super si…",
+    "placeholderFeedback": "Votre avis compte…",
+    "placeholderBug": "Quand je fais… il se passe…"
   }
 }

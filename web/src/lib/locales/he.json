@@ -1,6 +1,39 @@
 {
-  "app": { "name": "Luna", "tagline": "המחזור שלך, מובן" },
-  "phases": { "menstrual": "וסתית", "follicular": "פוליקולרית", "ovulation": "ביוץ", "luteal": "לוטיאלית" },
-  "privacy": { "badge": "פרטית ומוצפנת", "disclaimer": "מידע זה אינו מחליף ייעוץ רפואי מקצועי. התייעצ תמיד עם ספק שירותי בריאות מוסמך לגבי בעיות רפואיות." },
-  "settings": { "title": "הגדרות", "cycleLength": "אורך המחזור", "periodLength": "אורך הווסת", "lastPeriod": "תאריך הווסת האחרון", "save": "שמור", "saved": "ההגדרות נשמרו" }
+  "app": {
+    "name": "Luna",
+    "tagline": "המחזור שלך, מובן"
+  },
+  "phases": {
+    "menstrual": "וסתית",
+    "follicular": "פוליקולרית",
+    "ovulation": "ביוץ",
+    "luteal": "לוטיאלית"
+  },
+  "privacy": {
+    "badge": "פרטית ומוצפנת",
+    "disclaimer": "מידע זה אינו מחליף ייעוץ רפואי מקצועי. התייעצ תמיד עם ספק שירותי בריאות מוסמך לגבי בעיות רפואיות."
+  },
+  "settings": {
+    "title": "הגדרות",
+    "cycleLength": "אורך המחזור",
+    "periodLength": "אורך הווסת",
+    "lastPeriod": "תאריך הווסת האחרון",
+    "save": "שמור",
+    "saved": "ההגדרות נשמרו"
+  },
+  "contact": {
+    "title": "צור קשר",
+    "close": "סגור",
+    "back": "חזור",
+    "send": "שלח",
+    "messageAriaLabel": "ההודעה שלך",
+    "sentTitle": "ההודעה נשלחה!",
+    "sentBody": "תודה, אנחנו קוראים כל הודעה.",
+    "typeImprovement": "שיפור",
+    "typeFeedback": "משוב",
+    "typeBug": "באג",
+    "placeholderImprovement": "היה נהדר אם…",
+    "placeholderFeedback": "דעתך חשובה…",
+    "placeholderBug": "כשאני… קורה…"
+  }
 }

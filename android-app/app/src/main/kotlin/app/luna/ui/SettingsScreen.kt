@@ -16,14 +16,18 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.CloudOff
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Security
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,7 +38,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import com.macaron.lifeds.components.PebbleButton
+import androidx.compose.ui.platform.LocalContext
+import android.content.Intent
+import android.net.Uri
 import com.macaron.lifeds.components.PebbleStyle
 import com.macaron.lifeds.components.PrivacyBadge
 import com.macaron.lifeds.theme.LifeBrand
@@ -127,6 +133,52 @@ fun SettingsScreen(
             style = PebbleStyle.Secondary,
             modifier = Modifier.fillMaxWidth()
         )
+
+        Spacer(modifier = Modifier.height(LifeSpacing.Spacing4))
+
+        // Contact section
+        val context = LocalContext.current
+        Text(
+            text = "Nous contacter",
+            style = LifeTypography.TitleMedium,
+            color = LifeColors.SemanticOnSurface,
+            modifier = Modifier.padding(bottom = LifeSpacing.Spacing2)
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            listOf(
+                Triple("Amélioration", Icons.Default.Star,    "Amélioration"),
+                Triple("Feedback",     Icons.Default.Email,   "Feedback"),
+                Triple("Bug",          Icons.Default.Warning, "Bug"),
+            ).forEach { (label, icon, subject) ->
+                OutlinedCard(
+                    onClick = {
+                        val intent = Intent(Intent.ACTION_SENDTO).apply {
+                            data = Uri.parse("mailto:support@macaron-software.com")
+                            putExtra(Intent.EXTRA_SUBJECT, "[Luna] $subject")
+                        }
+                        context.startActivity(Intent.createChooser(intent, null))
+                    },
+                    modifier = Modifier.weight(1f),
+                    shape = androidx.compose.foundation.shape.RoundedCornerShape(
+                        topStart = 22.dp, topEnd = 24.dp, bottomEnd = 20.dp, bottomStart = 18.dp
+                    )
+                ) {
+                    Column(
+                        modifier = Modifier.padding(12.dp).fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Icon(icon, contentDescription = label,
+                            tint = lunaBrand.primary,
+                            modifier = Modifier.size(28.dp))
+                        Text(label, style = LifeTypography.LabelSmall)
+                    }
+                }
+            }
+        }
     }
 }
 

@@ -2,14 +2,17 @@ const app = { "name": "Luna", "tagline": "Jūsų ciklas, suprastas" };
 const phases = { "menstrual": "Menstruacinė", "follicular": "Folikulinė", "ovulation": "Ovuliacija", "luteal": "Lutealinė" };
 const privacy = { "badge": "Privatus ir užšifruotas", "disclaimer": "Ši informacija nepakeičia profesionalios medicininės konsultacijos. Dėl medicininių klausimų visada kreipkitės į kvalifikuotą sveikatos priežiūros paslaugų teikėją." };
 const settings = { "title": "Nustatymai", "cycleLength": "Ciklo ilgis", "periodLength": "Menstruacijų ilgis", "lastPeriod": "Paskutinių menstruacijų data", "save": "Išsaugoti", "saved": "Nustatymai išsaugoti" };
+const contact = { "title": "Susisiekite su mumis", "close": "Uždaryti", "back": "Atgal", "send": "Siųsti", "messageAriaLabel": "Jūsų žinutė", "sentTitle": "Žinutė išsiųsta!", "sentBody": "Ačiū, mes skaitome kiekvieną žinutę.", "typeImprovement": "Patobulinimas", "typeFeedback": "Atsiliepimas", "typeBug": "Klaida", "placeholderImprovement": "Būtų puiku, jei…", "placeholderFeedback": "Jūsų nuomonė svarbi…", "placeholderBug": "Kai darau… įvyksta…" };
 const lt = {
   app,
   phases,
   privacy,
-  settings
+  settings,
+  contact
 };
 export {
   app,
+  contact,
   lt as default,
   phases,
   privacy,

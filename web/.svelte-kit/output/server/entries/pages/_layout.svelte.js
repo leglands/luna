@@ -1,7 +1,16 @@
-import { h as head, e as escape_html, s as store_get, a as attr, b as stringify, c as ensure_array_like, u as unsubscribe_stores } from "../../chunks/index2.js";
+import { g as getContext, a as attr_class, b as attr, e as ensure_array_like, c as escape_html, d as derived$1, s as stringify, f as attr_style, h as head, i as store_get, u as unsubscribe_stores } from "../../chunks/root.js";
 import { d as derived, w as writable } from "../../chunks/index.js";
 import deepmerge from "deepmerge";
 import { IntlMessageFormat } from "intl-messageformat";
+import "clsx";
+import "@sveltejs/kit/internal";
+import "../../chunks/exports.js";
+import "../../chunks/utils.js";
+import "@sveltejs/kit/internal/server";
+import "../../chunks/state.svelte.js";
+import { g as goto } from "../../chunks/client.js";
+import { I as Icon } from "../../chunks/PebbleButton.svelte_svelte_type_style_lang.js";
+/* empty css                                                        */
 function html(value) {
   var html2 = String(value ?? "");
   var open = "<!---->";
@@ -511,7 +520,7 @@ const formatNumber = (n, options2) => {
 const getJSON = (id, locale = getCurrentLocale()) => {
   return lookup(id, locale);
 };
-derived([$locale, $dictionary], () => formatMessage);
+const $format = derived([$locale, $dictionary], () => formatMessage);
 derived([$locale], () => formatTime);
 derived([$locale], () => formatDate);
 derived([$locale], () => formatNumber);
@@ -596,10 +605,297 @@ function setupI18n() {
   _initDone = true;
   return init({ fallbackLocale: "en", initialLocale: "en" });
 }
+const getStores = () => {
+  const stores$1 = getContext("__svelte__");
+  return {
+    /** @type {typeof page} */
+    page: {
+      subscribe: stores$1.page.subscribe
+    },
+    /** @type {typeof navigating} */
+    navigating: {
+      subscribe: stores$1.navigating.subscribe
+    },
+    /** @type {typeof updated} */
+    updated: stores$1.updated
+  };
+};
+const page = {
+  subscribe(fn) {
+    const store = getStores().page;
+    return store.subscribe(fn);
+  }
+};
+function TabBar($$renderer, $$props) {
+  $$renderer.component(($$renderer2) => {
+    let {
+      tabs = [],
+      activeTab = "",
+      activeIndex = 0,
+      onchange = null,
+      brand = "luna",
+      class: className = ""
+    } = $$props;
+    const resolvedIndex = derived$1(() => activeTab ? tabs.findIndex((t) => t.id === activeTab) : activeIndex);
+    $$renderer2.push(`<nav${attr_class(`tab-bar ${stringify(className)}`, "svelte-1lgda09")}${attr("data-app", brand)} role="tablist" aria-label="Main navigation"><!--[-->`);
+    const each_array = ensure_array_like(tabs.slice(0, 5));
+    for (let i = 0, $$length = each_array.length; i < $$length; i++) {
+      let tab = each_array[i];
+      if (onchange) {
+        $$renderer2.push("<!--[0-->");
+        $$renderer2.push(`<button${attr_class("tab-item svelte-1lgda09", void 0, { "tab-item--active": i === resolvedIndex() })} role="tab"${attr("aria-selected", i === resolvedIndex())}${attr("aria-label", tab.label)}><span class="tab-icon svelte-1lgda09">`);
+        Icon($$renderer2, { name: tab.icon ?? "home", size: 20 });
+        $$renderer2.push(`<!----></span> <span class="tab-label svelte-1lgda09">${escape_html(tab.label)}</span></button>`);
+      } else {
+        $$renderer2.push("<!--[-1-->");
+        $$renderer2.push(`<a${attr("href", tab.href)}${attr_class("tab-item svelte-1lgda09", void 0, { "tab-item--active": i === resolvedIndex() })} role="tab"${attr("aria-selected", i === resolvedIndex())}${attr("aria-label", tab.label)}><span class="tab-icon svelte-1lgda09">`);
+        Icon($$renderer2, { name: tab.icon ?? "home", size: 20 });
+        $$renderer2.push(`<!----></span> <span class="tab-label svelte-1lgda09">${escape_html(tab.label)}</span></a>`);
+      }
+      $$renderer2.push(`<!--]-->`);
+    }
+    $$renderer2.push(`<!--]--></nav>`);
+  });
+}
+function DSPebbleDrawer($$renderer, $$props) {
+  $$renderer.component(($$renderer2) => {
+    const BRAND_COLORS = {
+      luna: "#D4678A",
+      aura: "#E8A87C",
+      sienna: "#3c684b",
+      alma: "#4CAF9B",
+      nova: "#23003D",
+      aida: "#8B5CF6",
+      stella: "#F59E0B",
+      vera: "#E91E8C",
+      vita: "#22C55E",
+      aria: "#3B82F6"
+    };
+    let {
+      brand = "luna",
+      brandColor: brandColorProp = null,
+      items = [],
+      pinnedItems = [],
+      activeId = "",
+      anchored = false
+    } = $$props;
+    let open = false;
+    let theme = "dark";
+    const isDark = derived$1(() => theme === "dark");
+    const isContrast = derived$1(() => theme === "dark-contrast");
+    const brandColor = derived$1(() => brandColorProp ?? BRAND_COLORS[brand] ?? BRAND_COLORS.luna);
+    function hexToRgba(hex, a) {
+      const r = parseInt(hex.slice(1, 3), 16);
+      const g = parseInt(hex.slice(3, 5), 16);
+      const b = parseInt(hex.slice(5, 7), 16);
+      return `rgba(${r},${g},${b},${a})`;
+    }
+    const brandTint = derived$1(() => hexToRgba(brandColor(), 0.1));
+    const brandBorder = derived$1(() => hexToRgba(brandColor(), 0.28));
+    const activeItem = derived$1(() => items.find((it) => it.id === activeId) ?? items[0]);
+    const avatarItem = derived$1(() => activeItem() ?? items[0]);
+    const extraItems = derived$1(() => items.filter((it) => it !== avatarItem()));
+    {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]--> <div${attr_class("pill svelte-yxfjq5", void 0, { "pill-open": open, "pill-anchored": anchored })}${attr_style(`--brand:${stringify(brandColor())}; --brand-tint:${stringify(brandTint())}; --brand-border:${stringify(brandBorder())};`)} aria-label="Drawer"><button class="pebble pebble-avatar svelte-yxfjq5"${attr("aria-expanded", open)} aria-haspopup="true"${attr("aria-label", avatarItem()?.label ?? "Open drawer")}>`);
+    if (avatarItem()?.avatar) {
+      $$renderer2.push("<!--[0-->");
+      $$renderer2.push(`<img${attr("src", avatarItem().avatar)}${attr("alt", avatarItem().label)} class="pebble-img svelte-yxfjq5"/>`);
+    } else {
+      $$renderer2.push("<!--[-1-->");
+      $$renderer2.push(`<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`);
+    }
+    $$renderer2.push(`<!--]--></button> <div class="extra-items svelte-yxfjq5"${attr("aria-hidden", !open)}><button${attr_class("pebble pebble-theme svelte-yxfjq5", void 0, { "pebble-theme-active": true })}${attr("aria-label", isDark() ? "Passer en mode clair" : "Passer en mode sombre")}${attr("title", isDark() ? "Mode clair" : "Mode sombre")}${attr("tabindex", -1)}>`);
+    if (isDark()) {
+      $$renderer2.push("<!--[0-->");
+      $$renderer2.push(`<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`);
+    } else {
+      $$renderer2.push("<!--[-1-->");
+      $$renderer2.push(`<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="currentColor" stroke="none"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`);
+    }
+    $$renderer2.push(`<!--]--></button> <button${attr_class("pebble pebble-theme svelte-yxfjq5", void 0, { "pebble-theme-active": isContrast() })} role="switch"${attr("aria-checked", isContrast())}${attr("aria-label", isContrast() ? "Désactiver le contraste élevé" : "Activer le contraste élevé")}${attr("title", isContrast() ? "Contraste élevé ON" : "Contraste élevé OFF")}${attr("tabindex", -1)}>`);
+    if (isContrast()) {
+      $$renderer2.push("<!--[0-->");
+      $$renderer2.push(`<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor" stroke="none"></path><line x1="12" y1="2" x2="12" y2="22" stroke="currentColor" stroke-width="1.5"></line></svg>`);
+    } else {
+      $$renderer2.push("<!--[-1-->");
+      $$renderer2.push(`<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="2" x2="12" y2="22"></line></svg>`);
+    }
+    $$renderer2.push(`<!--]--></button> `);
+    if (extraItems().length > 0) {
+      $$renderer2.push("<!--[0-->");
+      $$renderer2.push(`<div class="theme-sep svelte-yxfjq5" aria-hidden="true"></div>`);
+    } else {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]--> <!--[-->`);
+    const each_array = ensure_array_like(extraItems());
+    for (let $$index = 0, $$length = each_array.length; $$index < $$length; $$index++) {
+      let item = each_array[$$index];
+      $$renderer2.push(`<button${attr_class("pebble svelte-yxfjq5", void 0, {
+        "pebble-active": item.id === activeId,
+        "pebble-nearme-active": item.type === "nearme" && item.id === activeId,
+        "pebble-add": item.type === "add",
+        "pebble-location": item.type === "location"
+      })}${attr("aria-label", item.label)}${attr("title", item.label)}${attr("tabindex", -1)}>`);
+      if (item.avatar) {
+        $$renderer2.push("<!--[0-->");
+        $$renderer2.push(`<img${attr("src", item.avatar)}${attr("alt", item.label)} class="pebble-img svelte-yxfjq5"/>`);
+      } else if (item.type === "nearme") {
+        $$renderer2.push("<!--[1-->");
+        if (item.id === activeId) {
+          $$renderer2.push("<!--[0-->");
+          $$renderer2.push(`<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3" fill="white" stroke="white"></circle></svg>`);
+        } else {
+          $$renderer2.push("<!--[-1-->");
+          $$renderer2.push(`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M17.94 17.94A8.97 8.97 0 0 1 12 20S3 17 3 10a9 9 0 0 1 1.35-4.73"></path><path d="M8.56 3.69A9 9 0 0 1 21 10c0 2.74-1.37 5.25-3.34 7.13"></path><line x1="2" y1="2" x2="22" y2="22"></line></svg>`);
+        }
+        $$renderer2.push(`<!--]-->`);
+      } else if (item.type === "add") {
+        $$renderer2.push("<!--[2-->");
+        $$renderer2.push(`<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>`);
+      } else if (item.id === "settings") {
+        $$renderer2.push("<!--[3-->");
+        $$renderer2.push(`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>`);
+      } else if (item.type === "location") {
+        $$renderer2.push("<!--[4-->");
+        $$renderer2.push(`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> <span class="location-label svelte-yxfjq5">${escape_html(item.label)}</span>`);
+      } else {
+        $$renderer2.push("<!--[-1-->");
+        $$renderer2.push(`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`);
+      }
+      $$renderer2.push(`<!--]--> `);
+      if (item.id === activeId) {
+        $$renderer2.push("<!--[0-->");
+        $$renderer2.push(`<span class="dot svelte-yxfjq5"></span>`);
+      } else {
+        $$renderer2.push("<!--[-1-->");
+      }
+      $$renderer2.push(`<!--]--></button>`);
+    }
+    $$renderer2.push(`<!--]--></div> <!--[-->`);
+    const each_array_1 = ensure_array_like(pinnedItems);
+    for (let $$index_1 = 0, $$length = each_array_1.length; $$index_1 < $$length; $$index_1++) {
+      let item = each_array_1[$$index_1];
+      $$renderer2.push(`<button${attr_class("pebble pebble-pinned svelte-yxfjq5", void 0, { "pebble-pinned-active": item.id === activeId })}${attr("aria-label", item.label)}${attr("title", item.label)}>`);
+      if (item.type === "nearme") {
+        $$renderer2.push("<!--[0-->");
+        if (item.id === activeId) {
+          $$renderer2.push("<!--[0-->");
+          $$renderer2.push(`<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3" fill="white" stroke="white"></circle></svg>`);
+        } else {
+          $$renderer2.push("<!--[-1-->");
+          $$renderer2.push(`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M17.94 17.94A8.97 8.97 0 0 1 12 20S3 17 3 10a9 9 0 0 1 1.35-4.73"></path><path d="M8.56 3.69A9 9 0 0 1 21 10c0 2.74-1.37 5.25-3.34 7.13"></path><line x1="2" y1="2" x2="22" y2="22"></line></svg>`);
+        }
+        $$renderer2.push(`<!--]-->`);
+      } else {
+        $$renderer2.push("<!--[-1-->");
+        $$renderer2.push(`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>`);
+      }
+      $$renderer2.push(`<!--]--></button>`);
+    }
+    $$renderer2.push(`<!--]--></div>`);
+  });
+}
+function DSContactModal($$renderer, $$props) {
+  $$renderer.component(($$renderer2) => {
+    const BRAND_COLORS = {
+      luna: "#D4678A",
+      aura: "#00897B",
+      sienna: "#33D298",
+      alma: "#4CAF9B",
+      nova: "#7B2FBE",
+      aida: "#1565C0",
+      stella: "#F57F17",
+      vera: "#C62828",
+      vita: "#2E7D32",
+      aria: "#283593"
+    };
+    let {
+      open = false,
+      brand = "luna",
+      labels = {}
+    } = $$props;
+    const L = derived$1(() => ({
+      title: labels.title ?? "Contact us",
+      close: labels.close ?? "Close",
+      back: labels.back ?? "Back",
+      send: labels.send ?? "Send",
+      messageAriaLabel: labels.messageAriaLabel ?? "Your message",
+      sentTitle: labels.sentTitle ?? "Message sent!",
+      sentBody: labels.sentBody ?? "Thank you, we read every message.",
+      typeImprovement: labels.typeImprovement ?? "Improvement",
+      typeFeedback: labels.typeFeedback ?? "Feedback",
+      typeBug: labels.typeBug ?? "Bug",
+      placeholderImprovement: labels.placeholderImprovement ?? "It would be great if…",
+      placeholderFeedback: labels.placeholderFeedback ?? "Your feedback matters…",
+      placeholderBug: labels.placeholderBug ?? "When I do… this happens…"
+    }));
+    const CHOICES = derived$1(() => [
+      {
+        id: "improvement",
+        label: L().typeImprovement,
+        icon: "sparkles",
+        placeholder: L().placeholderImprovement
+      },
+      {
+        id: "feedback",
+        label: L().typeFeedback,
+        icon: "message-circle",
+        placeholder: L().placeholderFeedback
+      },
+      {
+        id: "bug",
+        label: L().typeBug,
+        icon: "bug",
+        placeholder: L().placeholderBug
+      }
+    ]);
+    const brandColor = derived$1(() => BRAND_COLORS[brand] ?? "#6B3FA0");
+    const brandTint = derived$1(() => brandColor() + "18");
+    const brandBorder = derived$1(() => brandColor() + "44");
+    const ICONS = {
+      sparkles: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.663 17h4.673M12 3v1m6.364 1.636-.707.707M21 12h-1M4 12H3m3.343-5.657-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>`,
+      "message-circle": `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+      bug: `<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`
+    };
+    if (open) {
+      $$renderer2.push("<!--[0-->");
+      $$renderer2.push(`<div class="ds-backdrop svelte-r6hy5l" role="presentation"></div> <div class="ds-sheet svelte-r6hy5l" role="dialog" aria-modal="true"${attr("aria-label", L().title)}${attr_style(`--brand:${stringify(brandColor())}; --brand-tint:${stringify(brandTint())}; --brand-border:${stringify(brandBorder())};`)}><div class="ds-handle svelte-r6hy5l" aria-hidden="true"></div> <button class="ds-close svelte-r6hy5l"${attr("aria-label", L().close)}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" class="svelte-r6hy5l"><line x1="18" y1="6" x2="6" y2="18" class="svelte-r6hy5l"></line><line x1="6" y1="6" x2="18" y2="18" class="svelte-r6hy5l"></line></svg></button> `);
+      {
+        $$renderer2.push("<!--[0-->");
+        $$renderer2.push(`<div class="ds-header svelte-r6hy5l"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="svelte-r6hy5l"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" class="svelte-r6hy5l"></path></svg> <span class="svelte-r6hy5l">${escape_html(L().title)}</span></div> <div class="ds-choices svelte-r6hy5l"><!--[-->`);
+        const each_array = ensure_array_like(CHOICES());
+        for (let $$index = 0, $$length = each_array.length; $$index < $$length; $$index++) {
+          let c = each_array[$$index];
+          $$renderer2.push(`<button class="ds-choice svelte-r6hy5l"${attr("aria-label", c.label)}><span class="ds-choice-icon svelte-r6hy5l">${html(ICONS[c.icon])}</span> <span class="ds-choice-label svelte-r6hy5l">${escape_html(c.label)}</span></button>`);
+        }
+        $$renderer2.push(`<!--]--></div>`);
+      }
+      $$renderer2.push(`<!--]--></div>`);
+    } else {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]-->`);
+  });
+}
 function _layout($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     var $$store_subs;
     setupI18n();
+    const NAV_TABS = [
+      { id: "home", label: "Accueil", icon: "home" },
+      { id: "calendar", label: "Calendrier", icon: "calendar" },
+      { id: "insights", label: "Insights", icon: "bar-chart" },
+      { id: "settings", label: "Réglages", icon: "settings" }
+    ];
+    let contactOpen = false;
+    const activeTab = derived$1(() => store_get($$store_subs ??= {}, "$page", page).url.pathname === "/" ? "home" : store_get($$store_subs ??= {}, "$page", page).url.pathname.startsWith("/calendar") ? "calendar" : store_get($$store_subs ??= {}, "$page", page).url.pathname.startsWith("/insights") ? "insights" : store_get($$store_subs ??= {}, "$page", page).url.pathname.startsWith("/settings") ? "settings" : "home");
+    const showNav = derived$1(() => store_get($$store_subs ??= {}, "$page", page).url.pathname !== "/onboarding" && !store_get($$store_subs ??= {}, "$page", page).url.pathname.startsWith("/onboarding"));
+    function navTo(id) {
+      goto();
+    }
     const BASE_URL = "https://luna.macaron-software.com";
     const SEO_TITLE = {
       fr: "Luna — Ton cycle, compris",
@@ -664,7 +960,84 @@ function _layout($$renderer, $$props) {
       }
       $$renderer3.push(`<!--]--> <link rel="alternate" hreflang="x-default"${attr("href", BASE_URL)}/> ${html(`<script type="application/ld+json">${jsonLd}<\/script>`)}`);
     });
+    $$renderer2.push(`<div class="app-shell svelte-12qhfyh">`);
+    if (showNav()) {
+      $$renderer2.push("<!--[0-->");
+      $$renderer2.push(`<aside class="sidebar svelte-12qhfyh" aria-label="Navigation principale"><div class="sidebar-header svelte-12qhfyh"><div class="sidebar-brand svelte-12qhfyh"><svg width="22" height="22" viewBox="0 0 24 24" fill="var(--c-brand)" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"></path></svg> <span class="sidebar-app-name svelte-12qhfyh">Luna</span></div></div> <nav class="sidebar-nav svelte-12qhfyh" aria-label="Navigation"><!--[-->`);
+      const each_array_1 = ensure_array_like(NAV_TABS);
+      for (let $$index_1 = 0, $$length = each_array_1.length; $$index_1 < $$length; $$index_1++) {
+        let tab = each_array_1[$$index_1];
+        $$renderer2.push(`<a${attr("href", "/" + (tab.id === "home" ? "" : tab.id))}${attr_class("sidebar-item svelte-12qhfyh", void 0, { "active": activeTab() === tab.id })}${attr("aria-current", activeTab() === tab.id ? "page" : void 0)}>`);
+        if (tab.id === "home") {
+          $$renderer2.push("<!--[0-->");
+          $$renderer2.push(`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>`);
+        } else if (tab.id === "calendar") {
+          $$renderer2.push("<!--[1-->");
+          $$renderer2.push(`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>`);
+        } else if (tab.id === "insights") {
+          $$renderer2.push("<!--[2-->");
+          $$renderer2.push(`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>`);
+        } else if (tab.id === "settings") {
+          $$renderer2.push("<!--[3-->");
+          $$renderer2.push(`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"></path></svg>`);
+        } else {
+          $$renderer2.push("<!--[-1-->");
+        }
+        $$renderer2.push(`<!--]--> <span>${escape_html(tab.label)}</span></a>`);
+      }
+      $$renderer2.push(`<!--]--></nav> <div class="sidebar-contact svelte-12qhfyh"><button class="sidebar-contact-btn svelte-12qhfyh" aria-label="Nous contacter"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg> <span>Nous contacter</span></button></div></aside>`);
+    } else {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]--> <div${attr_class("main-area svelte-12qhfyh", void 0, { "has-sidebar": showNav() })}>`);
+    if (showNav()) {
+      $$renderer2.push("<!--[0-->");
+      $$renderer2.push(`<div class="mobile-drawer-anchor svelte-12qhfyh">`);
+      DSPebbleDrawer($$renderer2, {
+        brand: "luna",
+        items: NAV_TABS,
+        activeId: activeTab()
+      });
+      $$renderer2.push(`<!----></div>`);
+    } else {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]--> `);
     children($$renderer2);
+    $$renderer2.push(`<!----> `);
+    if (showNav()) {
+      $$renderer2.push("<!--[0-->");
+      $$renderer2.push(`<div class="bottom-nav-wrap svelte-12qhfyh">`);
+      TabBar($$renderer2, {
+        tabs: NAV_TABS,
+        activeTab: activeTab(),
+        brand: "luna",
+        onchange: navTo
+      });
+      $$renderer2.push(`<!----></div>`);
+    } else {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]--></div></div> `);
+    DSContactModal($$renderer2, {
+      open: contactOpen,
+      brand: "luna",
+      labels: {
+        title: store_get($$store_subs ??= {}, "$_", $format)("contact.title"),
+        close: store_get($$store_subs ??= {}, "$_", $format)("contact.close"),
+        back: store_get($$store_subs ??= {}, "$_", $format)("contact.back"),
+        send: store_get($$store_subs ??= {}, "$_", $format)("contact.send"),
+        messageAriaLabel: store_get($$store_subs ??= {}, "$_", $format)("contact.messageAriaLabel"),
+        sentTitle: store_get($$store_subs ??= {}, "$_", $format)("contact.sentTitle"),
+        sentBody: store_get($$store_subs ??= {}, "$_", $format)("contact.sentBody"),
+        typeImprovement: store_get($$store_subs ??= {}, "$_", $format)("contact.typeImprovement"),
+        typeFeedback: store_get($$store_subs ??= {}, "$_", $format)("contact.typeFeedback"),
+        typeBug: store_get($$store_subs ??= {}, "$_", $format)("contact.typeBug"),
+        placeholderImprovement: store_get($$store_subs ??= {}, "$_", $format)("contact.placeholderImprovement"),
+        placeholderFeedback: store_get($$store_subs ??= {}, "$_", $format)("contact.placeholderFeedback"),
+        placeholderBug: store_get($$store_subs ??= {}, "$_", $format)("contact.placeholderBug")
+      }
+    });
     $$renderer2.push(`<!---->`);
     if ($$store_subs) unsubscribe_stores($$store_subs);
   });

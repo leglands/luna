@@ -1,6 +1,39 @@
 {
-  "app": { "name": "Luna", "tagline": "Ciclul tău, înțeles" },
-  "phases": { "menstrual": "Menstrual", "follicular": "Folicular", "ovulation": "Ovulație", "luteal": "Luteală" },
-  "privacy": { "badge": "Confidențial și Criptat", "disclaimer": "Această informație nu înlocuiește sfatul medical profesional. Consultați întotdeauna un furnizor de servicii medicale calificat pentru preocupări medicale." },
-  "settings": { "title": "Setări", "cycleLength": "Durata ciclului", "periodLength": "Durata menstruației", "lastPeriod": "Data ultimei menstruații", "save": "Salvează", "saved": "Setări salvate" }
+  "app": {
+    "name": "Luna",
+    "tagline": "Ciclul tău, înțeles"
+  },
+  "phases": {
+    "menstrual": "Menstrual",
+    "follicular": "Folicular",
+    "ovulation": "Ovulație",
+    "luteal": "Luteală"
+  },
+  "privacy": {
+    "badge": "Confidențial și Criptat",
+    "disclaimer": "Această informație nu înlocuiește sfatul medical profesional. Consultați întotdeauna un furnizor de servicii medicale calificat pentru preocupări medicale."
+  },
+  "settings": {
+    "title": "Setări",
+    "cycleLength": "Durata ciclului",
+    "periodLength": "Durata menstruației",
+    "lastPeriod": "Data ultimei menstruații",
+    "save": "Salvează",
+    "saved": "Setări salvate"
+  },
+  "contact": {
+    "title": "Contactați-ne",
+    "close": "Închide",
+    "back": "Înapoi",
+    "send": "Trimite",
+    "messageAriaLabel": "Mesajul dvs.",
+    "sentTitle": "Mesaj trimis!",
+    "sentBody": "Mulțumim, citim fiecare mesaj.",
+    "typeImprovement": "Îmbunătățire",
+    "typeFeedback": "Feedback",
+    "typeBug": "Eroare",
+    "placeholderImprovement": "Ar fi minunat dacă…",
+    "placeholderFeedback": "Opinia dvs. contează…",
+    "placeholderBug": "Când fac… se întâmplă…"
+  }
 }

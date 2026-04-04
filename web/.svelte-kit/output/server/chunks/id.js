@@ -2,14 +2,17 @@ const app = { "name": "Luna", "tagline": "Siklusmu, dipahami" };
 const phases = { "menstrual": "Menstruasi", "follicular": "Folikuler", "ovulation": "Ovulasi", "luteal": "Luteal" };
 const privacy = { "badge": "Pribadi dan Terenkripsi", "disclaimer": "Informasi ini tidak menggantikan nasihat medis profesional. Selalu konsultasikan dengan penyedia layanan kesehatan yang memenuhi syarat untuk masalah medis." };
 const settings = { "title": "Pengaturan", "cycleLength": "Durasi Siklus", "periodLength": "Durasi Haid", "lastPeriod": "Tanggal Haid Terakhir", "save": "Simpan", "saved": "Pengaturan tersimpan" };
+const contact = { "title": "Hubungi kami", "close": "Tutup", "back": "Kembali", "send": "Kirim", "messageAriaLabel": "Pesan Anda", "sentTitle": "Pesan terkirim!", "sentBody": "Terima kasih, kami membaca setiap pesan.", "typeImprovement": "Peningkatan", "typeFeedback": "Masukan", "typeBug": "Bug", "placeholderImprovement": "Akan sangat bagus jika…", "placeholderFeedback": "Pendapat Anda penting…", "placeholderBug": "Ketika saya… terjadi…" };
 const id = {
   app,
   phases,
   privacy,
-  settings
+  settings,
+  contact
 };
 export {
   app,
+  contact,
   id as default,
   phases,
   privacy,

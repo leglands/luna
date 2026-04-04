@@ -1,6 +1,39 @@
 {
-  "app": { "name": "Luna", "tagline": "A ciklusod, megértve" },
-  "phases": { "menstrual": "Menstruációs", "follicular": "Follikuláris", "ovulation": "Ovuláció", "luteal": "Luteális" },
-  "privacy": { "badge": "Privát és titkosított", "disclaimer": "Ez az információ nem helyettesíti a szakmai orvosi tanácsadást. Orvosi kérdésekkel mindig forduljon képzett egészségügyi szolgáltatóhoz." },
-  "settings": { "title": "Beállítások", "cycleLength": "Ciklus hossza", "periodLength": "Menstruáció hossza", "lastPeriod": "Utolsó menstruáció dátuma", "save": "Mentés", "saved": "Beállítások mentve" }
+  "app": {
+    "name": "Luna",
+    "tagline": "A ciklusod, megértve"
+  },
+  "phases": {
+    "menstrual": "Menstruációs",
+    "follicular": "Follikuláris",
+    "ovulation": "Ovuláció",
+    "luteal": "Luteális"
+  },
+  "privacy": {
+    "badge": "Privát és titkosított",
+    "disclaimer": "Ez az információ nem helyettesíti a szakmai orvosi tanácsadást. Orvosi kérdésekkel mindig forduljon képzett egészségügyi szolgáltatóhoz."
+  },
+  "settings": {
+    "title": "Beállítások",
+    "cycleLength": "Ciklus hossza",
+    "periodLength": "Menstruáció hossza",
+    "lastPeriod": "Utolsó menstruáció dátuma",
+    "save": "Mentés",
+    "saved": "Beállítások mentve"
+  },
+  "contact": {
+    "title": "Kapcsolat",
+    "close": "Bezárás",
+    "back": "Vissza",
+    "send": "Küldés",
+    "messageAriaLabel": "Az üzenete",
+    "sentTitle": "Üzenet elküldve!",
+    "sentBody": "Köszönjük, minden üzenetet elolvasunk.",
+    "typeImprovement": "Fejlesztési javaslat",
+    "typeFeedback": "Visszajelzés",
+    "typeBug": "Hiba",
+    "placeholderImprovement": "Klassz lenne, ha…",
+    "placeholderFeedback": "A véleménye fontos…",
+    "placeholderBug": "Amikor… csinálom,… történik"
+  }
 }

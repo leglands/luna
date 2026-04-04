@@ -69,5 +69,20 @@
     "lastPeriod": "Last Period Date",
     "save": "Save",
     "saved": "Settings saved"
+  },
+  "contact": {
+    "title": "Contact us",
+    "close": "Close",
+    "back": "Back",
+    "send": "Send",
+    "messageAriaLabel": "Your message",
+    "sentTitle": "Message sent!",
+    "sentBody": "Thank you, we read every message.",
+    "typeImprovement": "Improvement",
+    "typeFeedback": "Feedback",
+    "typeBug": "Bug",
+    "placeholderImprovement": "It would be great if…",
+    "placeholderFeedback": "Your feedback matters…",
+    "placeholderBug": "When I do… this happens…"
   }
 }

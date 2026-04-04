@@ -1,140 +1,98 @@
 <script>
-  // Luna Log - LEAN: hero = today's date, log flow+symptoms+mood+energy+BBT
   import { goto } from '$app/navigation';
-  import { PebbleButton } from '$ds/index.js';
+  import PebbleButton from '$ds/PebbleButton.svelte';
+  import Icon from '$ds/Icon.svelte';
 
+  // Symptoms: ACOG PMS criteria (Am J Obstet Gynecol 2000)
   const KEY = 'life-luna-data';
-  const today = new Date().toISOString().split('T')[0];
-  const heroText = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+  const BRAND = 'luna';
+  const todayISO = new Date().toISOString().slice(0, 10);
+  const todayObj = new Date();
+  const weekday = todayObj.toLocaleDateString('en-US', { weekday: 'long' });
+  const dateStr = todayObj.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
 
-  function loadToday() {
-    const d = JSON.parse(localStorage.getItem(KEY) ?? '{}');
-    const log = d.log ?? {};
-    const periodEntry = (log.period ?? []).find(e => e.date === today);
-    const moodEntry = (log.mood ?? []).find(e => e.date === today);
-    const energyEntry = (log.energy ?? []).find(e => e.date === today);
-    const sympEntry = (log.symptoms ?? []).find(e => e.date === today);
-    const tempEntry = (log.temperature ?? []).find(e => e.date === today);
-    return {
-      flow: periodEntry?.flow ?? 'none',
-      mood: moodEntry?.score ?? 0,
-      energy: energyEntry?.score ?? 0,
-      symptoms: sympEntry?.items ?? [],
-      temperature: tempEntry?.value ?? ''
-    };
-  }
-
-  let existing = loadToday();
-  let flow = $state(existing.flow);
-  let mood = $state(existing.mood);
-  let energy = $state(existing.energy);
-  let selectedSymptoms = $state(new Set(existing.symptoms));
-  let temperature = $state(existing.temperature);
-  let showAdvanced = $state(false);
+  let date = todayISO;
+  let periodStart = false;
+  let flow = '';
+  let symptoms = [];
+  let mood = 0;
+  let energy = 0;
+  let notes = '';
+  const ENERGY_LABELS = ['', 'Very low', 'Low', 'Neutral', 'Good', 'High'];
 
   const FLOW_OPTIONS = [
-    { value: 'none', label: 'None' },
-    { value: 'spotting', label: 'Spotting' },
     { value: 'light', label: 'Light' },
     { value: 'medium', label: 'Medium' },
     { value: 'heavy', label: 'Heavy' },
+    { value: 'spotting', label: 'Spotting' },
   ];
-
-  const MOOD_LABELS = ['', 'Difficult', 'Low', 'Okay', 'Good', 'Great'];
-  const ENERGY_LABELS = ['', 'Exhausted', 'Tired', 'Normal', 'Energized', 'Amazing'];
-
-  const QUICK_SYMPTOMS = [
+  const SYMPTOMS = [
     { id: 'cramps', label: 'Cramps' },
-    { id: 'bloating', label: 'Bloating' },
-    { id: 'fatigue', label: 'Fatigue' },
     { id: 'headache', label: 'Headache' },
-    { id: 'breast_tenderness', label: 'Breast tenderness' },
-    { id: 'irritability', label: 'Irritability' },
-    { id: 'low_mood', label: 'Low mood' },
-    { id: 'high_energy', label: 'High energy' },
-    { id: 'nausea', label: 'Nausea' },
-    { id: 'lower_back_pain', label: 'Back pain' },
-  ];
-
-  const ADVANCED_SYMPTOMS = [
+    { id: 'bloating', label: 'Bloating' },
+    { id: 'mood_swings', label: 'Mood swings' },
+    { id: 'fatigue', label: 'Fatigue' },
+    { id: 'tender_breasts', label: 'Tender breasts' },
     { id: 'acne', label: 'Acne' },
-    { id: 'insomnia', label: 'Insomnia' },
-    { id: 'anxiety', label: 'Anxiety' },
-    { id: 'cravings', label: 'Cravings' },
-    { id: 'hot_flash', label: 'Hot flash' },
-    { id: 'migraine', label: 'Migraine' },
+    { id: 'back_pain', label: 'Back pain' },
   ];
+  const MOOD_COLORS = ['#D9D9D9', '#B0E0A8', '#A7D8F0', '#FFD580', '#FFB3B3'];
 
   function toggleSymptom(id) {
-    const s = new Set(selectedSymptoms);
-    if (s.has(id)) s.delete(id); else s.add(id);
-    selectedSymptoms = s;
+    symptoms = symptoms.includes(id) ? symptoms.filter(s => s !== id) : [...symptoms, id];
   }
 
   function save() {
-    const d = JSON.parse(localStorage.getItem(KEY) ?? '{}');
-    if (!d.log) d.log = {};
-
-    if (!d.log.period) d.log.period = [];
-    d.log.period = d.log.period.filter(e => e.date !== today);
-    if (flow !== 'none') {
-      d.log.period.push({ date: today, flow });
-      if (!d.settings) d.settings = {};
-      d.settings.lastPeriodDate = today;
-    }
-
-    if (!d.log.mood) d.log.mood = [];
-    d.log.mood = d.log.mood.filter(e => e.date !== today);
-    if (mood > 0) d.log.mood.push({ date: today, score: mood, label: MOOD_LABELS[mood].toLowerCase() });
-
-    if (!d.log.energy) d.log.energy = [];
-    d.log.energy = d.log.energy.filter(e => e.date !== today);
-    if (energy > 0) d.log.energy.push({ date: today, score: energy });
-
-    if (!d.log.symptoms) d.log.symptoms = [];
-    d.log.symptoms = d.log.symptoms.filter(e => e.date !== today);
-    if (selectedSymptoms.size > 0) d.log.symptoms.push({ date: today, items: [...selectedSymptoms] });
-
-    if (!d.log.temperature) d.log.temperature = [];
-    d.log.temperature = d.log.temperature.filter(e => e.date !== today);
-    if (temperature) d.log.temperature.push({ date: today, value: parseFloat(temperature), time: new Date().toTimeString().slice(0,5) });
-
-    localStorage.setItem(KEY, JSON.stringify(d));
+    let data = JSON.parse(localStorage.getItem(KEY) || '{"entries":[]}');
+    if (!data.entries) data.entries = [];
+    // Remove existing entry for date
+    data.entries = data.entries.filter(e => e.date !== date);
+    data.entries.push({
+      date,
+      periodStart,
+      flow: periodStart ? flow : '',
+      symptoms,
+      mood,
+      energy,
+      notes: notes.trim()
+    });
+    localStorage.setItem(KEY, JSON.stringify(data));
     goto('/');
   }
 </script>
 
 <div class="screen" data-app="luna">
   <header>
-    <button class="back" onclick={() => goto('/')}>Back</button>
-    <h1 class="title">Log today</h1>
+    <button class="back" aria-label="Back" onclick={() => goto('/')}><Icon name="arrow-left" size={22} color="var(--c-brand)" /></button>
+    <h1 class="title">Log</h1>
   </header>
 
   <main class="content">
-    <p class="hero-date">{heroText}</p>
-
+    <section class="date-section">
+      <label class="section-label">Date</label>
+      <input class="date-input" type="date" bind:value={date} max={todayISO} />
+    </section>
     <section class="section">
-      <p class="section-label">Period flow</p>
+      <button class="period-toggle" class:active={periodStart} onclick={() => periodStart = !periodStart}>
+        Period started today
+      </button>
+    </section>
+    {#if periodStart}
+    <section class="section">
+      <label class="section-label">Flow intensity</label>
       <div class="chip-row">
         {#each FLOW_OPTIONS as opt}
-          <button
-            class="chip"
-            class:active={flow === opt.value}
-            onclick={() => flow = opt.value}
-          >{opt.label}</button>
+          <button class="chip" class:active={flow === opt.value} onclick={() => flow = opt.value}>{opt.label}</button>
         {/each}
       </div>
     </section>
+    {/if}
 
     <section class="section">
-      <p class="section-label">Mood {mood > 0 ? '— ' + MOOD_LABELS[mood] : ''}</p>
-      <div class="scale-row">
+      <label class="section-label">Mood</label>
+      <div class="mood-row">
         {#each [1,2,3,4,5] as i}
-          <button
-            class="scale-btn"
-            class:active={mood === i}
-            onclick={() => mood = mood === i ? 0 : i}
-          >{i}</button>
+          <button class="mood-dot" class:active={mood === i} style="background:{mood === i ? 'var(--c-brand)' : MOOD_COLORS[i-1]};" onclick={() => mood = mood === i ? 0 : i}></button>
         {/each}
       </div>
     </section>
@@ -153,78 +111,189 @@
     </section>
 
     <section class="section">
-      <p class="section-label">Symptoms</p>
+      <label class="section-label">Symptoms</label>
       <div class="chip-row wrap">
-        {#each QUICK_SYMPTOMS as s}
-          <button
-            class="chip"
-            class:active={selectedSymptoms.has(s.id)}
-            onclick={() => toggleSymptom(s.id)}
-          >{s.label}</button>
+        {#each SYMPTOMS as s}
+          <button class="chip" class:active={symptoms.includes(s.id)} onclick={() => toggleSymptom(s.id)}>{s.label}</button>
         {/each}
       </div>
-      {#if showAdvanced}
-        <div class="chip-row wrap" style="margin-top:8px">
-          {#each ADVANCED_SYMPTOMS as s}
-            <button
-              class="chip"
-              class:active={selectedSymptoms.has(s.id)}
-              onclick={() => toggleSymptom(s.id)}
-            >{s.label}</button>
-          {/each}
-        </div>
-      {/if}
-      <button class="more-btn" onclick={() => showAdvanced = !showAdvanced}>
-        {showAdvanced ? 'Show less' : 'More symptoms'}
-      </button>
     </section>
 
     <section class="section">
-      <p class="section-label">Temperature (BBT) — optional</p>
-      <div class="temp-row">
-        <input
-          type="number"
-          bind:value={temperature}
-          placeholder="36.7"
-          step="0.1"
-          min="35"
-          max="42"
-          class="temp-input"
-        />
-        <span class="temp-unit">°C</span>
-      </div>
-      <p class="temp-hint">Take before getting up, at the same time each day</p>
+      <label class="section-label">Notes</label>
+      <textarea class="notes" bind:value={notes} rows="2" maxlength="200" placeholder="Add a note..."></textarea>
     </section>
-
     <div class="cta">
-      <PebbleButton label="Save" onclick={save} style="--pebble-brand:{BRAND}" />
+      <PebbleButton brand={BRAND} label="Save entry" onclick={save} />
     </div>
   </main>
 </div>
 
 <style>
-  .screen { min-height: 100dvh; background: var(--c-bg); color: var(--c-text); display: flex; flex-direction: column; max-width: 780px;
+  .screen {
+    max-width: 390px;
+    margin: 0 auto;
+    min-height: 100dvh;
+    background: var(--c-bg);
+    color: var(--c-text);
+    display: flex;
+    flex-direction: column;
+    padding: 24px 20px;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 12px;
+  }
+  .back {
+    background: none;
+    border: none;
+    color: var(--c-brand);
+    cursor: pointer;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .title {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+  }
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-bottom: 40px;
+  }
+  .date-section {
+    margin-bottom: 18px;
+  }
+  .date-input {
     width: 100%;
-    min-width: 360px; margin: 0 auto; }
-  header { display: flex; align-items: center; gap: 12px; padding: var(--space-4); border-bottom: 1px solid var(--c-border); }
-  .back { background: none; border: none; color: var(--c-brand); cursor: pointer; font-size: var(--text-base); padding: 0; min-height: 44px; }
-  .title { font-size: var(--text-lg); font-weight: 600; margin: 0; }
-  .content { flex: 1; padding: var(--space-4); display: flex; flex-direction: column; gap: 0; padding-bottom: 40px; }
-  .hero-date { font-size: clamp(36px, 10vw, 52px); font-weight: 700; text-align: center; margin: 8px 0 20px; color: var(--c-brand); }
-  .section { margin-bottom: 24px; }
-  .section-label { font-size: var(--text-sm); font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--c-text-secondary); margin: 0 0 10px; }
-  .chip-row { display: flex; gap: var(--space-2); flex-wrap: nowrap; overflow-x: auto; padding-bottom: 2px; }
-  .chip-row.wrap { flex-wrap: wrap; overflow: visible; }
-  .chip { padding: 7px 14px; border-radius: 20px; border: 1.5px solid var(--c-border); background: var(--c-surface); color: var(--c-text); cursor: pointer; font-size: 14px; white-space: nowrap; transition: all var(--duration-fast); font-family: inherit; }
-  .chip.active { background: var(--c-brand); color: #fff; border-color: var(--c-brand); }
-  .scale-row { display: flex; gap: var(--space-2); }
-  .scale-btn { width: 52px; height: 52px; border-radius: var(--radius-md); border: 1.5px solid var(--c-border); background: var(--c-surface); color: var(--c-text); cursor: pointer; font-size: 18px; font-weight: 600; transition: all var(--duration-fast); font-family: inherit; }
-  .scale-btn.active { background: var(--c-brand); color: #fff; border-color: var(--c-brand); }
-  .more-btn { background: none; border: none; color: var(--c-brand); cursor: pointer; font-size: var(--text-sm); margin-top: 8px; padding: 0; font-family: inherit; }
-  .temp-row { display: flex; align-items: center; gap: var(--space-2); }
-  .temp-input { width: 100px; padding: 10px 12px; border: 1.5px solid var(--c-border); border-radius: var(--radius-md); font-size: 16px; background: var(--c-surface); color: var(--c-text); font-family: inherit; }
-  .temp-unit { font-size: 16px; color: var(--c-text-secondary); }
-  .temp-hint { font-size: var(--text-xs); color: var(--c-text-tertiary, var(--c-text-secondary)); margin: 6px 0 0; }
-  .cta { margin-top: 16px; display: flex; justify-content: center; }
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+    height: 52px;
+    border-radius: var(--radius-md, 16px);
+    border: 1.5px solid var(--c-border);
+    background: var(--c-surface-raised);
+    color: var(--c-text);
+    font-size: 16px;
+    padding: 0 16px;
+    font-family: inherit;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+  .date-input:focus { outline: 2px solid var(--c-brand); outline-offset: 2px; }
+  .section {
+    margin-bottom: 18px;
+  }
+  .section-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--c-text-secondary);
+    margin: 0 0 10px;
+    display: block;
+  }
+  .period-toggle {
+    width: 100%;
+    height: 56px;
+    border-radius: 9999px;
+    border: 2px solid var(--c-brand);
+    background: var(--c-surface-raised);
+    color: var(--c-brand);
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    margin-bottom: 0;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .period-toggle.active {
+    background: var(--c-brand);
+    color: #fff;
+    border-color: var(--c-brand);
+  }
+  .chip-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .chip-row.wrap {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+  .chip {
+    border-radius: 9999px;
+    padding: 8px 16px;
+    min-height: 44px;
+    border: 1.5px solid var(--c-brand);
+    background: var(--c-surface-raised);
+    color: var(--c-brand);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    margin-bottom: 6px;
+  }
+  .chip.active {
+    background: var(--c-brand);
+    color: #fff;
+    border-color: var(--c-brand);
+  }
+  .mood-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 8px;
+    margin-bottom: 0;
+    justify-content: flex-start;
+  }
+  .mood-dot {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid var(--c-border);
+    background: #D9D9D9;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+    margin: 0;
+    padding: 0;
+  }
+  .mood-dot.active {
+    border-color: var(--c-brand);
+    background: var(--c-brand);
+  }
+  .notes {
+    width: 100%;
+    min-height: 44px;
+    border-radius: 12px;
+    border: 1.5px solid var(--c-border);
+    background: var(--c-surface-raised);
+    color: var(--c-text);
+    font-size: 15px;
+    padding: 10px 12px;
+    resize: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: inherit;
+  }
+  .cta {
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
 </style>

@@ -1,6 +1,39 @@
 {
-  "app": { "name": "Luna", "tagline": "了解您的月经周期" },
-  "phases": { "menstrual": "月经期", "follicular": "卵泡期", "ovulation": "排卵期", "luteal": "黄体期" },
-  "privacy": { "badge": "私密且加密", "disclaimer": "此信息不能替代专业医疗建议。请始终咨询合格的医疗保健提供者。" },
-  "settings": { "title": "设置", "cycleLength": "周期长度", "periodLength": "经期长度", "lastPeriod": "上次月经日期", "save": "保存", "saved": "设置已保存" }
+  "app": {
+    "name": "Luna",
+    "tagline": "了解您的月经周期"
+  },
+  "phases": {
+    "menstrual": "月经期",
+    "follicular": "卵泡期",
+    "ovulation": "排卵期",
+    "luteal": "黄体期"
+  },
+  "privacy": {
+    "badge": "私密且加密",
+    "disclaimer": "此信息不能替代专业医疗建议。请始终咨询合格的医疗保健提供者。"
+  },
+  "settings": {
+    "title": "设置",
+    "cycleLength": "周期长度",
+    "periodLength": "经期长度",
+    "lastPeriod": "上次月经日期",
+    "save": "保存",
+    "saved": "设置已保存"
+  },
+  "contact": {
+    "title": "联系我们",
+    "close": "关闭",
+    "back": "返回",
+    "send": "发送",
+    "messageAriaLabel": "您的消息",
+    "sentTitle": "消息已发送！",
+    "sentBody": "感谢您，我们阅读每一条消息。",
+    "typeImprovement": "改进建议",
+    "typeFeedback": "反馈",
+    "typeBug": "问题",
+    "placeholderImprovement": "如果能…就太好了",
+    "placeholderFeedback": "您的意见很重要…",
+    "placeholderBug": "当我…时，发生了…"
+  }
 }

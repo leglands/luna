@@ -26,6 +26,7 @@ struct SettingsView: View {
     @EnvironmentObject var appState: AppState
     @State private var showPanicWipeConfirmation: Bool = false
     @State private var showExportSheet: Bool = false
+    @State private var showContact: Bool = false
     @AppStorage("notif_daily_log") private var notifDailyLog: Bool = false
     @AppStorage("notif_period_reminder") private var notifPeriodReminder: Bool = false
     @AppStorage("notif_fertile_window") private var notifFertileWindow: Bool = false
@@ -262,6 +263,12 @@ struct SettingsView: View {
                         Label("settings_replay_tour", systemImage: "sparkles")
                     }
                     .accessibilityIdentifier("settings_replay_tour")
+                    Button {
+                        showContact = true
+                    } label: {
+                        Label("settings_contact_label", systemImage: "message.circle.fill")
+                    }
+                    .accessibilityLabel("Nous contacter")
                 } header: {
                     Text("settings_section_help")
                 }
@@ -303,6 +310,9 @@ struct SettingsView: View {
             }
             .sheet(isPresented: $showShareSheet) {
                 ShareSheet(items: shareItems)
+            }
+            .sheet(isPresented: $showContact) {
+                DSMailContactSheet<LunaBrand>(appName: "Luna")
             }
         }
     }

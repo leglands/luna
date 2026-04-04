@@ -2,14 +2,17 @@ const app = { "name": "Luna", "tagline": "รอบเดือนของค�
 const phases = { "menstrual": "ช่วงมีประจำเดือน", "follicular": "ช่วง follicular", "ovulation": "ช่วงตกไข่", "luteal": "ช่วง luteal" };
 const privacy = { "badge": "เป็นส่วนตัวและเข้ารหัส", "disclaimer": "ข้อมูลนี้ไม่สามารถใช้แทนคำแนะนำทางการแพทย์จากผู้เชี่ยวชาญได้ ควรปรึกษาแพทย์ผู้เชี่ยวชาญเสมอสำหรับปัญหาสุขภาพ" };
 const settings = { "title": "การตั้งค่า", "cycleLength": "ความยาวรอบเดือน", "periodLength": "ความยาวของการมีประจำเดือน", "lastPeriod": "วันที่ของเดือนที่แล้ว", "save": "บันทึก", "saved": "การตั้งค่าถูกบันทึกแล้ว" };
+const contact = { "title": "ติดต่อเรา", "close": "ปิด", "back": "กลับ", "send": "ส่ง", "messageAriaLabel": "ข้อความของคุณ", "sentTitle": "ส่งข้อความแล้ว!", "sentBody": "ขอบคุณ เราอ่านทุกข้อความ", "typeImprovement": "การปรับปรุง", "typeFeedback": "ความคิดเห็น", "typeBug": "บัก", "placeholderImprovement": "จะดีมากถ้า…", "placeholderFeedback": "ความคิดเห็นของคุณสำคัญ…", "placeholderBug": "เมื่อฉัน… เกิด…" };
 const th = {
   app,
   phases,
   privacy,
-  settings
+  settings,
+  contact
 };
 export {
   app,
+  contact,
   th as default,
   phases,
   privacy,

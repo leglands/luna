@@ -8,6 +8,7 @@ const insights = { "title": "Insights", "avgCycle": "Average cycle length", "avg
 const promo = { "ttcTitle": "Trying to conceive?", "ttcBody": "Aura helps you track fertility and connect with community.", "auraCTA": "Try Aura", "follicularTitle": "Boost your energy", "follicularBody": "Nova helps you optimize your fitness and nutrition.", "novaCTA": "Try Nova", "almaTitle": "Need someone to talk to?", "almaBody": "Alma connects you with licensed therapists.", "almaCTA": "Talk to Alma" };
 const privacy = { "badge": "Private & Encrypted", "disclaimer": "This information does not replace professional medical advice. Always consult a qualified healthcare provider for medical concerns." };
 const settings = { "title": "Settings", "cycleLength": "Cycle Length", "periodLength": "Period Length", "lastPeriod": "Last Period Date", "save": "Save", "saved": "Settings saved" };
+const contact = { "title": "Contact us", "close": "Close", "back": "Back", "send": "Send", "messageAriaLabel": "Your message", "sentTitle": "Message sent!", "sentBody": "Thank you, we read every message.", "typeImprovement": "Improvement", "typeFeedback": "Feedback", "typeBug": "Bug", "placeholderImprovement": "It would be great if…", "placeholderFeedback": "Your feedback matters…", "placeholderBug": "When I do… this happens…" };
 const en = {
   app,
   phases,
@@ -18,11 +19,13 @@ const en = {
   insights,
   promo,
   privacy,
-  settings
+  settings,
+  contact
 };
 export {
   app,
   calendar,
+  contact,
   cycle,
   en as default,
   insights,

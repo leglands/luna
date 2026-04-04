@@ -2,14 +2,17 @@ const app = { "name": "Luna", "tagline": "Kitaran anda, difahami" };
 const phases = { "menstrual": "Menstruasi", "follicular": "Folikel", "ovulation": "Ovulasi", "luteal": "Luteal" };
 const privacy = { "badge": "Peribadi dan Dienkripsi", "disclaimer": "Maklumat ini tidak menggantikan nasihat perubatan profesional. Sentiasa berjumpa dengan pembekal penjagaan kesihatan yang berkelayakan untuk masalah perubatan." };
 const settings = { "title": "Tetapan", "cycleLength": "Panjang Kitaran", "periodLength": "Panjang Period", "lastPeriod": "Tarikh Period Terakhir", "save": "Simpan", "saved": "Tetapan disimpan" };
+const contact = { "title": "Hubungi kami", "close": "Tutup", "back": "Kembali", "send": "Hantar", "messageAriaLabel": "Mesej anda", "sentTitle": "Mesej dihantar!", "sentBody": "Terima kasih, kami membaca setiap mesej.", "typeImprovement": "Penambahbaikan", "typeFeedback": "Maklum balas", "typeBug": "Bug", "placeholderImprovement": "Alangkah bagus jika…", "placeholderFeedback": "Pendapat anda penting…", "placeholderBug": "Bila saya… berlaku…" };
 const ms = {
   app,
   phases,
   privacy,
-  settings
+  settings,
+  contact
 };
 export {
   app,
+  contact,
   ms as default,
   phases,
   privacy,

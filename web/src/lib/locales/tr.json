@@ -1,6 +1,39 @@
 {
-  "app": { "name": "Luna", "tagline": "Adet döngünüzü anlayın" },
-  "phases": { "menstrual": "Menstrüasyon", "follicular": "Foliküler", "ovulation": "Ovülasyon", "luteal": "Luteal" },
-  "privacy": { "badge": "Gizli ve şifreli", "disclaimer": "Bu bilgiler profesyonel tıbbi tavsiyenin yerini tutmaz. Her zaman nitelikli bir sağlık uzmanına danışın." },
-  "settings": { "title": "Ayarlar", "cycleLength": "Döngü uzunluğu", "periodLength": "Regl süresi", "lastPeriod": "Son regl tarihi", "save": "Kaydet", "saved": "Ayarlar kaydedildi" }
+  "app": {
+    "name": "Luna",
+    "tagline": "Adet döngünüzü anlayın"
+  },
+  "phases": {
+    "menstrual": "Menstrüasyon",
+    "follicular": "Foliküler",
+    "ovulation": "Ovülasyon",
+    "luteal": "Luteal"
+  },
+  "privacy": {
+    "badge": "Gizli ve şifreli",
+    "disclaimer": "Bu bilgiler profesyonel tıbbi tavsiyenin yerini tutmaz. Her zaman nitelikli bir sağlık uzmanına danışın."
+  },
+  "settings": {
+    "title": "Ayarlar",
+    "cycleLength": "Döngü uzunluğu",
+    "periodLength": "Regl süresi",
+    "lastPeriod": "Son regl tarihi",
+    "save": "Kaydet",
+    "saved": "Ayarlar kaydedildi"
+  },
+  "contact": {
+    "title": "İletişim",
+    "close": "Kapat",
+    "back": "Geri",
+    "send": "Gönder",
+    "messageAriaLabel": "Mesajınız",
+    "sentTitle": "Mesaj gönderildi!",
+    "sentBody": "Teşekkürler, her mesajı okuyoruz.",
+    "typeImprovement": "Geliştirme",
+    "typeFeedback": "Geri bildirim",
+    "typeBug": "Hata",
+    "placeholderImprovement": "Şöyle olsaydı harika olurdu…",
+    "placeholderFeedback": "Görüşünüz önemli…",
+    "placeholderBug": "Şunu yapınca… oluyor"
+  }
 }

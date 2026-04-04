@@ -2,14 +2,17 @@ const app = { "name": "Luna", "tagline": "Jouw cyclus, begrepen" };
 const phases = { "menstrual": "Menstruatie", "follicular": "Folliculaire fase", "ovulation": "Ovulatie", "luteal": "Luteale fase" };
 const privacy = { "badge": "Privé en versleuteld", "disclaimer": "Deze informatie vervangt geen professioneel medisch advies. Raadpleeg altijd een gekwalificeerde zorgverlener." };
 const settings = { "title": "Instellingen", "cycleLength": "Cycluslengte", "periodLength": "Menstruatieduur", "lastPeriod": "Datum laatste menstruatie", "save": "Opslaan", "saved": "Instellingen opgeslagen" };
+const contact = { "title": "Contact", "close": "Sluiten", "back": "Terug", "send": "Verzenden", "messageAriaLabel": "Uw bericht", "sentTitle": "Bericht verzonden!", "sentBody": "Bedankt, we lezen elk bericht.", "typeImprovement": "Verbetering", "typeFeedback": "Feedback", "typeBug": "Bug", "placeholderImprovement": "Het zou geweldig zijn als…", "placeholderFeedback": "Uw mening telt…", "placeholderBug": "Wanneer ik… gebeurt er…" };
 const nl = {
   app,
   phases,
   privacy,
-  settings
+  settings,
+  contact
 };
 export {
   app,
+  contact,
   nl as default,
   phases,
   privacy,

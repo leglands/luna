@@ -1,6 +1,39 @@
 {
-  "app": { "name": "Luna", "tagline": "Tvoj cyklus, pochopený" },
-  "phases": { "menstrual": "Menštruácia", "follicular": "Folikulárna", "ovulation": "Ovulácia", "luteal": "Luteálna" },
-  "privacy": { "badge": "Súkromné a šifrované", "disclaimer": "Táto informácia nenahrádza odbornú lekársku pomoc. Vždy sa konzultujte s kvalifikovaným poskytovateľom zdravotnej starostlivosti pre akékoľvek zdravotné otázky." },
-  "settings": { "title": "Nastavenia", "cycleLength": "Dĺžka cyklu", "periodLength": "Dĺžka menštruácie", "lastPeriod": "Dátum poslednej menštruácie", "save": "Uložiť", "saved": "Nastavenia uložené" }
+  "app": {
+    "name": "Luna",
+    "tagline": "Tvoj cyklus, pochopený"
+  },
+  "phases": {
+    "menstrual": "Menštruácia",
+    "follicular": "Folikulárna",
+    "ovulation": "Ovulácia",
+    "luteal": "Luteálna"
+  },
+  "privacy": {
+    "badge": "Súkromné a šifrované",
+    "disclaimer": "Táto informácia nenahrádza odbornú lekársku pomoc. Vždy sa konzultujte s kvalifikovaným poskytovateľom zdravotnej starostlivosti pre akékoľvek zdravotné otázky."
+  },
+  "settings": {
+    "title": "Nastavenia",
+    "cycleLength": "Dĺžka cyklu",
+    "periodLength": "Dĺžka menštruácie",
+    "lastPeriod": "Dátum poslednej menštruácie",
+    "save": "Uložiť",
+    "saved": "Nastavenia uložené"
+  },
+  "contact": {
+    "title": "Kontaktujte nás",
+    "close": "Zavrieť",
+    "back": "Späť",
+    "send": "Odoslať",
+    "messageAriaLabel": "Vaša správa",
+    "sentTitle": "Správa odoslaná!",
+    "sentBody": "Ďakujeme, čítame každú správu.",
+    "typeImprovement": "Vylepšenie",
+    "typeFeedback": "Spätná väzba",
+    "typeBug": "Chyba",
+    "placeholderImprovement": "Bolo by skvelé, keby…",
+    "placeholderFeedback": "Váš názor je dôležitý…",
+    "placeholderBug": "Keď robím… stane sa…"
+  }
 }

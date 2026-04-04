@@ -1,6 +1,8 @@
-import { e as escape_html, d as attr_class, f as attr_style, b as stringify } from "../../../chunks/index2.js";
+import { c as escape_html, a as attr_class, f as attr_style, s as stringify } from "../../../chunks/root.js";
 import { g as goto } from "../../../chunks/client.js";
-import { P as PebbleButton } from "../../../chunks/DSOnboarding.svelte_svelte_type_style_lang.js";
+import "../../../chunks/PebbleButton.svelte_svelte_type_style_lang.js";
+import { P as PebbleButton } from "../../../chunks/PebbleButton.js";
+/* empty css                                                           */
 import { D as DSFloatingNav, a as DaisyMenu } from "../../../chunks/DaisyMenu.js";
 function _page($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {

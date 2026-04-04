@@ -1,6 +1,39 @@
 {
-  "app": { "name": "Luna", "tagline": "چرخه شما، فهمیده شد" },
-  "phases": { "menstrual": "قاعدگی", "follicular": "فولیکولی", "ovulation": "تخمک‌گذاری", "luteal": "لوتئال" },
-  "privacy": { "badge": "خصوصی و رمزگذاری شده", "disclaimer": "این اطلاعات جایگزین توصیه پزشکی حرفه‌ای نیست. همیشه برای نگرانی‌های پزشکی با یک ارائه‌دهنده مراقبت‌های بهداشتی واجد شرایط مشورت کنید." },
-  "settings": { "title": "تنظیمات", "cycleLength": "طول چرخه", "periodLength": "طول قاعدگی", "lastPeriod": "تاریخ آخرین قاعدگی", "save": "ذخیره", "saved": "تنظیمات ذخیره شد" }
+  "app": {
+    "name": "Luna",
+    "tagline": "چرخه شما، فهمیده شد"
+  },
+  "phases": {
+    "menstrual": "قاعدگی",
+    "follicular": "فولیکولی",
+    "ovulation": "تخمک‌گذاری",
+    "luteal": "لوتئال"
+  },
+  "privacy": {
+    "badge": "خصوصی و رمزگذاری شده",
+    "disclaimer": "این اطلاعات جایگزین توصیه پزشکی حرفه‌ای نیست. همیشه برای نگرانی‌های پزشکی با یک ارائه‌دهنده مراقبت‌های بهداشتی واجد شرایط مشورت کنید."
+  },
+  "settings": {
+    "title": "تنظیمات",
+    "cycleLength": "طول چرخه",
+    "periodLength": "طول قاعدگی",
+    "lastPeriod": "تاریخ آخرین قاعدگی",
+    "save": "ذخیره",
+    "saved": "تنظیمات ذخیره شد"
+  },
+  "contact": {
+    "title": "تماس با ما",
+    "close": "بستن",
+    "back": "بازگشت",
+    "send": "ارسال",
+    "messageAriaLabel": "پیام شما",
+    "sentTitle": "پیام ارسال شد!",
+    "sentBody": "ممنون، هر پیامی را می‌خوانیم.",
+    "typeImprovement": "بهبود",
+    "typeFeedback": "بازخورد",
+    "typeBug": "باگ",
+    "placeholderImprovement": "عالی می‌شد اگر…",
+    "placeholderFeedback": "نظر شما مهم است…",
+    "placeholderBug": "وقتی… می‌کنم، … اتفاق می‌افتد"
+  }
 }
