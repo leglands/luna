@@ -1,18 +1,11 @@
 <script>
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { PebbleButton, Icon, SegmentedRing, DSFloatingNav, DaisyMenu, DSPebbleDrawer, DSSettingsSlide } from '$ds/index.js';
+  import { PebbleButton, Icon, SegmentedRing } from '$ds/index.js';
   import { loadData, getCurrentPhase } from '$lib/cycle-engine.js';
   import FeatureTour from '$lib/components/FeatureTour.svelte';
 
   const BRAND = '#6B3FA0';
-  const TABS = [
-    { id: 'home',     label: 'Home',     icon: 'home'      },
-    { id: 'cycle',    label: 'Cycle',    icon: 'calendar'  },
-    { id: 'fertility',label: 'Fertile',  icon: 'heart'     },
-    { id: 'insights', label: 'Insights', icon: 'bar-chart' },
-    { id: 'settings', label: 'Settings', icon: 'settings'  },
-  ];
   const PHASE_COLORS  = { menstrual:'#E57373', follicular:'#F48FB1', ovulation:'#CE93D8', luteal:'#9FA8DA', unknown:'#9D7BC9' };
   const PHASE_LABELS  = { menstrual:'Menstrual', follicular:'Follicular', ovulation:'Ovulation', luteal:'Luteal', unknown:'—' };
   const DAY_NAMES = ['Su','Mo','Tu','We','Th','Fr','Sa'];
@@ -100,203 +93,163 @@
     }
     if (localStorage.getItem('life-luna-tour-pending') === '1') showTour = true;
   });
-
-  let settingsOpen = $state(false);
-  let activeProfile = $state('me');
-  let locationLabel = $state('');
-
-  // Fetch city name from browser geolocation + Nominatim reverse geocode
-  onMount(() => {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(async (pos) => {
-        try {
-          const r = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&format=json`,
-            { headers: { 'Accept-Language': 'en' } }
-          );
-          const d = await r.json();
-          locationLabel = d.address?.city ?? d.address?.town ?? d.address?.village ?? d.address?.county ?? '';
-        } catch { locationLabel = ''; }
-      }, () => { locationLabel = ''; });
-    }
-  });
-
-  let daisyOpen = $state(false);
-  const DAISY_ITEMS = [
-    { icon: 'droplet',    label: 'Règles',    onclick: () => goto('/cycle') },
-    { icon: 'thermometer',label: 'Symptôme',  onclick: () => goto('/cycle') },
-    { icon: 'smile',      label: 'Humeur',    onclick: () => goto('/insights') },
-    { icon: 'moon',       label: 'Ovulation', onclick: () => goto('/fertility') },
-  ];
 </script>
 
 <div class="page" data-app="luna">
-  <main class="content">
+  <div class="wide-grid">
+    <main class="content wide-screen-1">
 
-    {#if !hasData}
-      <!-- Setup banner (compact) — ring still shows with default 28-day cycle -->
-      <div class="setup-banner">
-        <div class="setup-text">
-          <p class="setup-msg">Set up your cycle to get personalised predictions</p>
-        </div>
-        <PebbleButton label="Get started" size="sm" onclick={() => goto('/onboarding')} />
-      </div>
-    {/if}
-
-    <!-- ── 1. Cycle ring card — always visible ── -->
-    <div class="card ring-card">
-      <SegmentedRing
-        segments={segments}
-        currentIndex={phaseIndex}
-        centerText={hasData ? String(cycleInfo.dayOfCycle) : '?'}
-        centerSubtext="Day"
-        size={200}
-      />
-      {#if hasData}
-        <p class="phase-name" style="color:{PHASE_COLORS[cycleInfo.phase]}">{PHASE_LABELS[cycleInfo.phase]}</p>
-        {#if cycleInfo.daysUntilNextPeriod > 0}
-          <p class="next-hint">Next period in {cycleInfo.daysUntilNextPeriod} days</p>
-        {:else if cycleInfo.daysUntilNextPeriod === 0}
-          <p class="next-hint" style="color:#E57373">Period expected today</p>
-        {/if}
-      {:else}
-        <p class="phase-name" style="color:var(--c-text-secondary)">—</p>
-        <p class="next-hint">Add your last period date to see predictions</p>
-      {/if}
-    </div>
-
-    {#if hasData}
-
-      <!-- ── 2. Week strip ── -->
-      <div class="card week-strip" role="list" aria-label="This week">
-        {#each weekDays as day (fmtDate(day))}
-          <div class="wd" class:wd-today={isToday(day)} role="listitem">
-            <span class="wd-name">{DAY_NAMES[day.getDay()]}</span>
-            <div class="wd-num" class:wd-num-today={isToday(day)}>{day.getDate()}</div>
-            <div class="wd-dot" style="background:{dotColor(day)}"></div>
+      {#if !hasData}
+        <!-- Setup banner (compact) — ring still shows with default 28-day cycle -->
+        <div class="setup-banner">
+          <div class="setup-text">
+            <p class="setup-msg">Set up your cycle to get personalised predictions</p>
           </div>
-        {/each}
+          <PebbleButton label="Get started" size="sm" onclick={() => goto('/onboarding')} />
+        </div>
+      {/if}
+
+      <!-- ── 1. Cycle ring card — always visible ── -->
+      <div class="card ring-card">
+        <SegmentedRing
+          segments={segments}
+          currentIndex={phaseIndex}
+          centerText={hasData ? String(cycleInfo.dayOfCycle) : '?'}
+          centerSubtext="Day"
+          size={200}
+        />
+        {#if hasData}
+          <p class="phase-name" style="color:{PHASE_COLORS[cycleInfo.phase]}">{PHASE_LABELS[cycleInfo.phase]}</p>
+          {#if cycleInfo.daysUntilNextPeriod > 0}
+            <p class="next-hint">Next period in {cycleInfo.daysUntilNextPeriod} days</p>
+          {:else if cycleInfo.daysUntilNextPeriod === 0}
+            <p class="next-hint" style="color:#E57373">Period expected today</p>
+          {/if}
+        {:else}
+          <p class="phase-name" style="color:var(--c-text-secondary)">—</p>
+          <p class="next-hint">Add your last period date to see predictions</p>
+        {/if}
       </div>
 
-      <!-- ── 3. Quick log ── -->
-      <div class="card">
-        <p class="section-title">Quick log</p>
-        <div class="qa-row">
-          {#each QUICK as qa}
-            <button class="qa-btn" onclick={() => goto('/log?type=' + qa.type)} aria-label="Log {qa.label}">
-              <span class="qa-icon" style="background:{qa.bg}">
-                <Icon name={qa.icon} size={22} color={qa.fg} />
-              </span>
-              <span class="qa-label">{qa.label}</span>
-            </button>
+      {#if hasData}
+
+        <!-- ── 2. Week strip ── -->
+        <div class="card week-strip" role="list" aria-label="This week">
+          {#each weekDays as day (fmtDate(day))}
+            <div class="wd" class:wd-today={isToday(day)} role="listitem">
+              <span class="wd-name">{DAY_NAMES[day.getDay()]}</span>
+              <div class="wd-num" class:wd-num-today={isToday(day)}>{day.getDate()}</div>
+              <div class="wd-dot" style="background:{dotColor(day)}"></div>
+            </div>
           {/each}
         </div>
+
+        <!-- ── 3. Quick log ── -->
+        <div class="card">
+          <p class="section-title">Quick log</p>
+          <div class="qa-row">
+            {#each QUICK as qa}
+              <button class="qa-btn" onclick={() => goto('/log?type=' + qa.type)} aria-label="Log {qa.label}">
+                <span class="qa-icon" style="background:{qa.bg}">
+                  <Icon name={qa.icon} size={22} color={qa.fg} />
+                </span>
+                <span class="qa-label">{qa.label}</span>
+              </button>
+            {/each}
+          </div>
+        </div>
+
+        <!-- ── 4. Empathy ── -->
+        <div class="empathy-card">
+          <p class="empathy-msg">{empathy}</p>
+        </div>
+
+      {/if}
+
+      <div class="log-cta">
+        <PebbleButton label="Log today" onclick={() => goto('/log')} />
       </div>
+    </main>
 
-      <!-- ── 4. Empathy ── -->
-      <div class="empathy-card">
-        <p class="empathy-msg">{empathy}</p>
+    <!-- ── Screen 2: Calendar preview (wide ≥1024px) ── -->
+    <aside class="wide-screen-2">
+      <div class="card calendar-preview">
+        <p class="section-title">This month</p>
+        {#if hasData}
+          <p class="preview-hint">Phase: <strong style="color:{PHASE_COLORS[cycleInfo.phase]}">{PHASE_LABELS[cycleInfo.phase]}</strong></p>
+          <p class="preview-hint">Day {cycleInfo.dayOfCycle} of {settings.cycleLength}</p>
+          {#if cycleInfo.daysUntilNextPeriod > 0}
+            <p class="preview-hint">Next period in <strong>{cycleInfo.daysUntilNextPeriod}</strong> days</p>
+          {/if}
+        {:else}
+          <p class="preview-hint">Log your last period to see calendar predictions.</p>
+        {/if}
+        <div class="preview-cta">
+          <PebbleButton label="View calendar" size="sm" onclick={() => goto('/calendar')} />
+        </div>
       </div>
+    </aside>
+  </div>
 
-    {/if}
-
-    <div class="log-cta">
-      <PebbleButton label="Log today" onclick={() => goto('/log')} />
-    </div>
-  </main>
-
-  <DSPebbleDrawer
-    brand="luna"
-    items={[
-      ...(locationLabel ? [{ id: 'location', label: locationLabel, type: 'location' }] : []),
-      { id: 'me', label: 'Me', type: 'profile' },
-      { id: 'settings', label: 'Settings', type: 'action' },
-    ]}
-    activeId={activeProfile}
-    onselect={(id) => activeProfile = id}
-    onsettings={() => settingsOpen = true}
-  />
-  <DSFloatingNav
-  tabs={TABS}
-  active="home"
-  brand="luna"
-  onchange={(id) => goto('/' + (id === 'home' ? '' : id))}
-  onfab={() => daisyOpen = !daisyOpen}
-  bind:daisyOpen
-/>
-<DaisyMenu open={daisyOpen} onclose={() => daisyOpen = false} items={DAISY_ITEMS} />
   {#if showTour}<FeatureTour onDone={() => showTour = false} />{/if}
 </div>
 
-<DSSettingsSlide
-  open={settingsOpen}
-  brand="luna"
-  title="Settings"
-  onclose={() => settingsOpen = false}
->
-  <p class="settings-section-title">General</p>
-  <div class="settings-row">
-    <div>
-      <p class="settings-row-label">Theme</p>
-      <p class="settings-row-sub">System default</p>
-    </div>
-  </div>
-  <p class="settings-section-title">Privacy</p>
-  <div class="settings-row">
-    <div>
-      <p class="settings-row-label">Data encryption</p>
-      <p class="settings-row-sub">End-to-end encrypted</p>
-    </div>
-  </div>
-  <p class="settings-section-title">About</p>
-  <div class="settings-row">
-    <div>
-      <p class="settings-row-label">Version</p>
-      <p class="settings-row-sub">1.0.0</p>
-    </div>
-  </div>
-  <button class="settings-danger-btn">Delete my data</button>
-</DSSettingsSlide>
-
 <style>
-  .page { min-height:100dvh; background:var(--c-bg); color:var(--c-text); max-width:780px; margin:0 auto; display:flex; flex-direction:column; }
-  .content { flex:1; display:flex; flex-direction:column; gap:var(--space-4); padding:var(--space-6) var(--space-4) calc(100px + env(safe-area-inset-bottom,0px)); }
+  .page { min-height: 100dvh; background: var(--c-bg); color: var(--c-text); }
+  .content { flex: 1; display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-6) var(--space-4) calc(80px + env(safe-area-inset-bottom, 0px)); }
+
+  @media (min-width: 768px) {
+    .content { padding-bottom: var(--space-8, 32px); }
+  }
+
+  /* Wide 2-column split */
+  .wide-grid { display: flex; flex-direction: column; }
+
+  @media (min-width: 1024px) {
+    .wide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6, 24px); align-items: start; padding: var(--space-6); }
+  }
+
+  /* Screen 2: hidden below 1024px */
+  .wide-screen-2 { display: none; }
+  @media (min-width: 1024px) { .wide-screen-2 { display: block; } }
 
   /* Cards */
-  .card { background:var(--c-surface); border-radius:var(--radius-lg); padding:var(--space-5); }
+  .card { background: var(--c-surface); border-radius: var(--radius-lg); padding: var(--space-5); }
 
   /* Ring card */
-  .ring-card { display:flex; flex-direction:column; align-items:center; gap:var(--space-3); }
-  .phase-name { font-size:var(--text-xl); font-weight:var(--weight-bold); margin:0; }
-  .next-hint  { font-size:var(--text-sm); color:var(--c-text-secondary); margin:var(--space-1) 0 0; }
+  .ring-card { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); }
+  .phase-name { font-size: var(--text-xl); font-weight: var(--weight-bold); margin: 0; }
+  .next-hint  { font-size: var(--text-sm); color: var(--c-text-secondary); margin: var(--space-1) 0 0; }
 
   /* Week strip */
-  .week-strip { display:flex; justify-content:space-between; padding:var(--space-3) var(--space-2); }
-  .wd { display:flex; flex-direction:column; align-items:center; gap:3px; flex:1; }
-  .wd-name { font-size:10px; font-weight:600; text-transform:uppercase; color:var(--c-text-secondary); letter-spacing:.04em; }
-  .wd-num { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; }
-  .wd-num-today { background:rgba(107,63,160,.12); color:#6B3FA0; font-weight:700; outline:2px solid #6B3FA0; outline-offset:-2px; }
-  .wd-dot { width:6px; height:6px; border-radius:50%; }
+  .week-strip { display: flex; justify-content: space-between; padding: var(--space-3) var(--space-2); }
+  .wd { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
+  .wd-name { font-size: 10px; font-weight: 600; text-transform: uppercase; color: var(--c-text-secondary); letter-spacing: .04em; }
+  .wd-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  .wd-num-today { background: rgba(107,63,160,.12); color: #6B3FA0; font-weight: 700; outline: 2px solid #6B3FA0; outline-offset: -2px; }
+  .wd-dot { width: 6px; height: 6px; border-radius: 50%; }
 
   /* Quick actions */
-  .section-title { font-size:var(--text-sm); font-weight:var(--weight-semibold); text-transform:uppercase; letter-spacing:.06em; color:var(--c-text-secondary); margin:0 0 var(--space-3); }
-  .qa-row { display:grid; grid-template-columns:repeat(4,1fr); gap:var(--space-2); }
-  .qa-btn { display:flex; flex-direction:column; align-items:center; gap:var(--space-2); background:none; border:none; cursor:pointer; padding:0; }
-  .qa-icon { width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center; }
-  .qa-label { font-size:11px; font-weight:500; color:var(--c-text-secondary); }
+  .section-title { font-size: var(--text-sm); font-weight: var(--weight-semibold); text-transform: uppercase; letter-spacing: .06em; color: var(--c-text-secondary); margin: 0 0 var(--space-3); }
+  .qa-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-2); }
+  .qa-btn { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); background: none; border: none; cursor: pointer; padding: 0; }
+  .qa-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; }
+  .qa-label { font-size: 11px; font-weight: 500; color: var(--c-text-secondary); }
 
   /* Empathy */
-  .empathy-card { background:rgba(107,63,160,.06); border-radius:var(--radius-lg); padding:var(--space-4) var(--space-5); border-left:3px solid #6B3FA0; }
-  .empathy-msg { font-size:var(--text-base); font-style:italic; color:var(--c-text); margin:0; line-height:1.5; }
+  .empathy-card { background: color-mix(in srgb, var(--c-brand) 6%, transparent); border-radius: var(--radius-lg); padding: var(--space-4) var(--space-5); border-left: 3px solid var(--c-brand); }
+  .empathy-msg { font-size: var(--text-base); font-style: italic; color: var(--c-text); margin: 0; line-height: 1.5; }
 
   /* CTA */
-  .log-cta { display:flex; justify-content:center; padding-top:var(--space-2); }
+  .log-cta { display: flex; justify-content: center; padding-top: var(--space-2); }
 
-  /* Empty state */
-  .setup-banner { display:flex; align-items:center; gap:var(--space-3); background:var(--c-surface); border-radius:var(--radius-lg); padding:var(--space-3) var(--space-4); }
-  .setup-text { flex:1; }
-  .setup-msg { font-size:var(--text-sm); color:var(--c-text-secondary); margin:0; line-height:1.4; }
-  .empty-state { display:flex; flex-direction:column; align-items:center; gap:var(--space-5); padding:var(--space-12) 0; text-align:center; }
-  .ring-ph { width:200px; height:200px; border-radius:50%; border:12px solid var(--c-border); opacity:.35; }
-  .empty-msg { color:var(--c-text-secondary); max-width:260px; }
+  /* Setup banner */
+  .setup-banner { display: flex; align-items: center; gap: var(--space-3); background: var(--c-surface); border-radius: var(--radius-lg); padding: var(--space-3) var(--space-4); }
+  .setup-text { flex: 1; }
+  .setup-msg { font-size: var(--text-sm); color: var(--c-text-secondary); margin: 0; line-height: 1.4; }
+
+  /* Calendar preview (screen 2) */
+  .calendar-preview { display: flex; flex-direction: column; gap: var(--space-3); }
+  .preview-hint { font-size: var(--text-sm); color: var(--c-text-secondary); margin: 0; }
+  .preview-cta { margin-top: var(--space-3); }
 </style>
