@@ -1,4 +1,6 @@
-const STORAGE_KEY = 'life-luna-data';
+import { LifeSecureStore } from '$ds/secure-storage.js';
+
+export const store = new LifeSecureStore('luna');
 
 const DEFAULT_SETTINGS = {
   cycleLength: 28,
@@ -13,20 +15,27 @@ const DEFAULT_LOG = {
   mood: []
 };
 
+const DEFAULT_DATA = { settings: DEFAULT_SETTINGS, log: DEFAULT_LOG };
+
+/** Call once in +layout.svelte onMount — migrates legacy localStorage data */
+export async function initStorage() {
+  await store.init(async () => {
+    if (typeof localStorage === 'undefined') return;
+    const raw = localStorage.getItem('life-luna-data');
+    if (!raw) return;
+    try {
+      store.setItem('data', JSON.parse(raw));
+      localStorage.removeItem('life-luna-data');
+    } catch {}
+  });
+}
+
 export function loadData() {
-  if (typeof localStorage === 'undefined') return { settings: DEFAULT_SETTINGS, log: DEFAULT_LOG };
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { settings: DEFAULT_SETTINGS, log: DEFAULT_LOG };
-    return JSON.parse(raw);
-  } catch {
-    return { settings: DEFAULT_SETTINGS, log: DEFAULT_LOG };
-  }
+  return store.getItem('data') ?? DEFAULT_DATA;
 }
 
 export function saveData(data) {
-  if (typeof localStorage === 'undefined') return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  store.setItem('data', data);
 }
 
 export function updateSettings(updates) {

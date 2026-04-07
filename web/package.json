@@ -18,6 +18,7 @@
     "vite": "^6.0.0"
   },
   "dependencies": {
+    "cbor-x": "^1.6.4",
     "lucide-svelte": "^0.500.0",
     "svelte-i18n": "^4.0.0"
   }

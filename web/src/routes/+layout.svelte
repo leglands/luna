@@ -33,7 +33,12 @@
     goto('/' + (id === 'home' ? '' : id));
   }
 
-  onMount(() => {
+  import { initStorage } from '$lib/cycle-engine.js';
+
+  onMount(async () => {
+    // Init encrypted storage first — migrates legacy localStorage if needed
+    await initStorage();
+
     document.documentElement.setAttribute('data-app', 'luna');
     function applyTheme() {
       const s = localStorage.getItem('life-theme');
