@@ -17,11 +17,13 @@ import androidx.navigation.ui.setupWithNavController
 import app.luna.R
 import app.luna.databinding.ActivityMainBinding
 import app.luna.services.VaultService
+import com.google.android.material.navigation.NavigationBarView
 
 /**
  * MainActivity — point d'entrée de l'app.
  * NavHostFragment gère Home / Calendar / Insights / Settings.
- * Le BottomNavigationView suit les fragments via NavController.
+ * Phone: BottomNavigationView; Tablet (≥600dp): NavigationRailView (same ID).
+ * Both extend NavigationBarView — setupWithNavController works for both.
  */
 class MainActivity : AppCompatActivity() {
 
@@ -37,15 +39,17 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHost.navController
 
-        binding.bottomNavigation.setupWithNavController(navController)
+        // Use NavigationBarView (common supertype for phone + tablet layouts).
+        val navBar = findViewById<NavigationBarView>(R.id.bottom_navigation)
+        navBar.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             binding.topAppBar.title = destination.label ?: getString(R.string.app_name)
             binding.topAppBar.subtitle = getString(R.string.toolbar_private_subtitle)
         }
 
         // a11y : annoncer le changement de section sans casser la navigation native.
-        binding.bottomNavigation.setOnItemReselectedListener {
-            binding.bottomNavigation.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
+        navBar.setOnItemReselectedListener {
+            navBar.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_FOCUSED)
         }
     }
 
