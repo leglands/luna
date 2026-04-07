@@ -41,6 +41,7 @@
 		E90D12F906C66CD9279B09BC /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8448DAD08E1716509BAE559A /* PrivacyInfo.xcprivacy */; };
 		EB0026149A5F76602AF9637C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 452F7FFADD478A7E635F6835 /* Assets.xcassets */; };
 		EF89EB700260C49A84E4DC7F /* LunaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D7F716B081BDC93C413177 /* LunaTests.swift */; };
+		F34F3B1E524D99C8E67177D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A294C1FC2A4EC6EBF1A91E8E /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +93,7 @@
 		971DBB1CE53C346B5E17EF54 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		9FE78934C1502AE1AE0A2986 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		A12F5D9BF76797E0D6C6DFC8 /* LunaBrand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LunaBrand.swift; sourceTree = "<group>"; };
+		A294C1FC2A4EC6EBF1A91E8E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A8908907B6731F42285BE505 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		B1FA0AA4B394293CD8D2B6BA /* UndoToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoToastView.swift; sourceTree = "<group>"; };
 		B7F9EB795651E29F4D40C3CE /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 		9120FD3A910BE97801A50E99 /* LunaApp */ = {
 			isa = PBXGroup;
 			children = (
+				A294C1FC2A4EC6EBF1A91E8E /* Assets.xcassets */,
 				9409D2A3AD2210B433B1170F /* Info.plist */,
 				100A0AECDEFF3DEA7303F3BB /* LunaApp.entitlements */,
 				914FFDD94F8F144CC9770FE4 /* LunaApp.swift */,
@@ -349,7 +352,6 @@
 				};
 			};
 			buildConfigurationList = 3A9E79CCB60B3AF1BAA6CAD1 /* Build configuration list for PBXProject "LunaApp" */;
-			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -363,6 +365,7 @@
 				93FB5CE62745F23078387615 /* XCLocalSwiftPackageReference "../../life-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
+			productRefGroup = FA83959789E2C0959454512A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -378,6 +381,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F34F3B1E524D99C8E67177D5 /* Assets.xcassets in Resources */,
 				EB0026149A5F76602AF9637C /* Assets.xcassets in Resources */,
 				403BDA1F6BB3BCC55766BA3A /* Localizable.xcstrings in Resources */,
 				E90D12F906C66CD9279B09BC /* PrivacyInfo.xcprivacy in Resources */,
