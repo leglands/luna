@@ -312,7 +312,12 @@ struct SettingsView: View {
                 ShareSheet(items: shareItems)
             }
             .sheet(isPresented: $showContact) {
-                DSMailContactSheet<LunaBrand>(appName: "Luna")
+                if #available(iOS 16.4, *) {
+                    DSMailContactSheet<LunaBrand>(appName: "Luna")
+                } else {
+                    Text("Contact us at support@macaron-software.com")
+                        .padding()
+                }
             }
         }
     }
