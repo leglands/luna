@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offline — Luna</title>
+  <style>
+    :root { --brand: #6B3FA0; --bg: #f8f9fb; --text: #1a1a2e; --muted: #6b7280; --surface: #fff; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #0f172a; --text: #e2e8f0; --muted: #94a3b8; --surface: #1e293b; }
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; min-height: 100dvh; display: flex; align-items: center; justify-content: center; padding: 2rem 1.5rem; }
+    .card { max-width: 340px; width: 100%; background: var(--surface); border-radius: 24px; padding: 2.5rem 2rem 2rem; box-shadow: 0 4px 32px rgba(0,0,0,.08),0 1px 4px rgba(0,0,0,.04); display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .icon { color: var(--brand); margin-bottom: 1.25rem; opacity: .85; }
+    h1 { font-size: 1.15rem; font-weight: 700; letter-spacing: -.02em; margin-bottom: .75rem; line-height: 1.3; }
+    p { color: var(--muted); font-size: .9rem; line-height: 1.6; margin-bottom: 2rem; }
+    button { background: var(--brand); color: #fff; border: none; border-radius: 24px 28px 26px 22px; padding: .875rem 2.5rem; font-size: .9375rem; font-weight: 600; cursor: pointer; width: 100%; min-height: 44px; font-family: inherit; transition: opacity 120ms, transform 120ms; }
+    button:hover { opacity: .9; }
+    button:active { transform: scale(.97); opacity: .85; }
+    @media (prefers-reduced-motion: reduce) { button { transition: none; } }
+  </style>
+</head>
+<body>
+  <div class="card" id="card">
+    <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="2" y1="2" x2="22" y2="22"/><path d="M8.5 16.5a5 5 0 0 1 7 0"/><path d="M2 8.82a15 15 0 0 1 4.17-2.65"/><path d="M10.66 5c4.01-.36 8.14.9 11.34 3.76"/><path d="M16.85 11.25a10 10 0 0 1 2.22 1.68"/><path d="M5 12.55a10 10 0 0 1 5.17-2.39"/><circle cx="12" cy="20" r="1" fill="currentColor" stroke="none"/></svg></div>
+    <h1 id="t"></h1>
+    <p id="b"></p>
+    <button onclick="window.location.reload()" id="btn"></button>
+  </div>
+  <script>
+    const T = {
+  'en': ['No connection right now', 'Your data is safe. Luna saves everything on your device and syncs automatically when you\'re back online.', 'Try again'],
+  'fr': ['Pas de connexion pour l\'instant', 'Vos données sont en sécurité. Luna enregistre tout sur votre appareil et synchronise dès que vous reconnectez.', 'Réessayer'],
+  'es': ['Sin conexión por ahora', 'Sus datos están seguros. Luna guarda todo en su dispositivo y sincroniza al reconectarse.', 'Intentar de nuevo'],
+  'de': ['Keine Verbindung gerade', 'Ihre Daten sind sicher. Luna speichert alles auf Ihrem Gerät und synchronisiert, sobald Sie wieder online sind.', 'Erneut versuchen'],
+  'it': ['Nessuna connessione ora', 'I tuoi dati sono al sicuro. Luna salva tutto sul dispositivo e sincronizza automaticamente quando sei di nuovo online.', 'Riprova'],
+  'pt': ['Sem conexão agora', 'Seus dados estão seguros. Luna salva tudo no dispositivo e sincroniza automaticamente ao reconectar.', 'Tentar novamente'],
+  'nl': ['Geen verbinding nu', 'Uw gegevens zijn veilig. Luna slaat alles op uw apparaat op en synchroniseert automatisch als u opnieuw verbinding maakt.', 'Opnieuw proberen'],
+  'pl': ['Brak połączenia', 'Twoje dane są bezpieczne. Luna zapisuje wszystko na urządzeniu i synchronizuje automatycznie po przywróceniu połączenia.', 'Spróbuj ponownie'],
+  'ru': ['Нет подключения', 'Ваши данные в безопасности. Luna сохраняет всё на устройстве и синхронизирует автоматически при восстановлении соединения.', 'Попробовать снова'],
+  'uk': ['Немає з\'єднання', 'Ваші дані в безпеці. Luna зберігає все на пристрої і синхронізує автоматично після відновлення з\'єднання.', 'Спробувати знову'],
+  'ar': ['لا يوجد اتصال الآن', 'بياناتك آمنة. تحفظ Luna كل شيء على جهازك وتزامن تلقائياً عند عودة الاتصال.', 'حاول مجدداً'],
+  'he': ['אין חיבור כרגע', 'הנתונים שלך בטוחים. Luna שומרת הכל במכשיר ומסנכרנת אוטומטית כשתחזור לאינטרנט.', 'נסה שוב'],
+  'zh': ['暂无网络连接', '您的数据很安全。Luna 将一切保存在您的设备上，恢复网络后自动同步。', '重试'],
+  'ja': ['接続なし', 'データは安全です。Luna はすべてデバイスに保存し、オンラインに戻ると自動同期します。', '再試行'],
+  'ko': ['연결 없음', '데이터는 안전합니다. Luna는 모든 것을 기기에 저장하며, 다시 온라인이 되면 자동으로 동기화됩니다.', '다시 시도'],
+  'tr': ['Şu an bağlantı yok', 'Verileriniz güvende. Luna her şeyi cihazınıza kaydeder ve yeniden bağlandığınızda otomatik senkronize eder.', 'Tekrar dene'],
+  'hi': ['अभी कोई कनेक्शन नहीं', 'आपका डेटा सुरक्षित है। Luna सब कुछ आपके डिवाइस पर सेव करता है और ऑनलाइन होने पर ऑटो-सिंक करता है।', 'पुनः प्रयास करें'],
+  'bn': ['এখন সংযোগ নেই', 'আপনার ডেটা নিরাপদ। Luna সব কিছু ডিভাইসে সংরক্ষণ করে এবং সংযুক্ত হলে স্বয়ংক্রিয়ভাবে সিঙ্ক হয়।', 'আবার চেষ্টা করুন'],
+  'ur': ['ابھی کوئی کنکشن نہیں', 'آپ کا ڈیٹا محفوظ ہے۔ Luna سب کچھ آپ کے آلے پر محفوظ کرتا ہے اور دوبارہ آن لائن ہونے پر sync ہو جاتا ہے۔', 'دوبارہ کوشش کریں'],
+  'fa': ['اکنون اتصالی وجود ندارد', 'داده‌های شما در امنیت هستند. Luna همه چیز را روی دستگاه ذخیره می‌کند و پس از اتصال مجدد به‌طور خودکار همگام می‌شود.', 'دوباره تلاش کنید'],
+  'id': ['Tidak ada koneksi sekarang', 'Data Anda aman. Luna menyimpan segalanya di perangkat dan sinkronisasi otomatis saat Anda terhubung kembali.', 'Coba lagi'],
+  'ms': ['Tiada sambungan sekarang', 'Data anda selamat. Luna menyimpan semua pada peranti dan menyegerakkan secara automatik apabila anda kembali dalam talian.', 'Cuba lagi'],
+  'sw': ['Hakuna muunganisho sasa hivi', 'Data yako iko salama. Luna inahifadhi kila kitu kwenye kifaa chako na inasawazisha moja kwa moja unapounganika tena.', 'Jaribu tena'],
+  'th': ['ไม่มีการเชื่อมต่อตอนนี้', 'ข้อมูลของคุณปลอดภัย Luna บันทึกทุกอย่างบนอุปกรณ์และซิงค์อัตโนมัติเมื่อคุณกลับมาออนไลน์', 'ลองอีกครั้ง'],
+  'vi': ['Không có kết nối ngay bây giờ', 'Dữ liệu của bạn an toàn. Luna lưu tất cả trên thiết bị và tự động đồng bộ khi bạn kết nối lại.', 'Thử lại'],
+  'sv': ['Ingen anslutning just nu', 'Dina data är säkra. Luna sparar allt på enheten och synkroniserar automatiskt när du är online igen.', 'Försök igen'],
+  'da': ['Ingen forbindelse nu', 'Dine data er sikre. Luna gemmer alt på enheden og synkroniserer automatisk, når du er online igen.', 'Prøv igen'],
+  'fi': ['Ei yhteyttä nyt', 'Tietosi ovat turvassa. Luna tallentaa kaiken laitteelle ja synkronoi automaattisesti, kun olet taas verkossa.', 'Yritä uudelleen'],
+  'nb': ['Ingen tilkobling nå', 'Dataene dine er trygge. Luna lagrer alt på enheten og synkroniserer automatisk når du er tilkoblet igjen.', 'Prøv igjen'],
+  'cs': ['Žádné připojení právě teď', 'Vaše data jsou v bezpečí. Luna ukládá vše v zařízení a automaticky synchronizuje, až budete opět online.', 'Zkusit znovu'],
+  'sk': ['Žiadne pripojenie práve teraz', 'Vaše údaje sú v bezpečí. Luna ukladá všetko na zariadení a automaticky synchronizuje, keď ste opäť online.', 'Skúsiť znova'],
+  'ro': ['Nicio conexiune acum', 'Datele dvs. sunt în siguranță. Luna salvează totul pe dispozitiv și sincronizează automat când vă reconectați.', 'Încearcă din nou'],
+  'bg': ['Няма връзка в момента', 'Данните ви са в безопасност. Luna запазва всичко на устройството и синхронизира автоматично при свързване.', 'Опитай отново'],
+  'el': ['Δεν υπάρχει σύνδεση τώρα', 'Τα δεδομένα σας είναι ασφαλή. Η Luna αποθηκεύει τα πάντα στη συσκευή και συγχρονίζει αυτόματα όταν συνδεθείτε.', 'Δοκιμάστε ξανά'],
+  'hr': ['Nema veze sada', 'Vaši podaci su sigurni. Luna sprema sve na uređaj i automatski sinkronizira kada se povežete.', 'Pokušaj ponovo'],
+  'sr': ['Нема везе сада', 'Ваши подаци су безбедни. Luna чува све на уређају и аутоматски синхронизује када се повежете.', 'Покушај поново'],
+  'hu': ['Nincs kapcsolat most', 'Az adataid biztonságban vannak. A Luna mindent az eszközön ment, és automatikusan szinkronizál, ha újra online vagy.', 'Próbáld újra'],
+  'lt': ['Nėra ryšio dabar', 'Jūsų duomenys saugūs. Luna viską išsaugo įrenginyje ir automatiškai sinchronizuoja, kai vėl esate prisijungę.', 'Bandykite dar kartą'],
+  'lv': ['Nav savienojuma tagad', 'Jūsu dati ir drošībā. Luna saglabā visu ierīcē un automātiski sinhronizē, kad atkal esat tiešsaistē.', 'Mēģini vēlreiz'],
+  'et': ['Ühendust pole praegu', 'Teie andmed on kaitstud. Luna salvestab kõik seadmesse ja sünkroonib automaatselt, kui olete jälle võrgus.', 'Proovi uuesti'],
+  'sl': ['Ni povezave zdaj', 'Vaši podatki so varni. Luna shrani vse na napravo in samodejno sinhronizira, ko ste spet v spletu.', 'Poskusi znova'],
+  'mk': ['Нема врска сега', 'Вашите податоци се безбедни. Luna зачувува сè на уредот и автоматски синхронизира кога ќе се поврзете.', 'Обиди се повторно'],
+  'ka': ['კავშირი არ არის', 'თქვენი მონაცემები უსაფრთხოა. Luna ინახავს ყველაფერს მოწყობილობაზე და ავტომატურად სინქრონიზდება.', 'კვლავ სცადეთ'],
+  'ca': ['Sense connexió ara', 'Les teves dades estan segures. Luna ho desa tot al dispositiu i sincronitza automàticament quan et reconnectes.', 'Torna a intentar-ho'],
+  'fil': ['Walang koneksyon ngayon', 'Ligtas ang iyong data. Sine-save ng Luna ang lahat sa iyong device at awtomatikong nag-o-sync kapag nakakonekta ka na.', 'Subukan muli'],
+};
+    const RTL = new Set(['ar', 'fa', 'he', 'ur']);
+    const lang = (navigator.language || 'en').slice(0, 2).toLowerCase();
+    const t = T[lang] || T['en'];
+    document.getElementById('t').textContent   = t[0];
+    document.getElementById('b').textContent   = t[1];
+    document.getElementById('btn').textContent = t[2];
+    document.documentElement.lang = lang;
+    if (RTL.has(lang)) { document.documentElement.dir = 'rtl'; document.getElementById('card').style.textAlign = 'right'; }
+    const theme = localStorage.getItem('life-theme') || '';
+    if (theme) document.documentElement.setAttribute('data-theme', theme);
+  </script>
+</body>
+</html>

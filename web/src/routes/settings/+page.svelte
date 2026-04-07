@@ -2,6 +2,11 @@
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
   import { PebbleButton, DSFloatingNav, DaisyMenu } from '$ds/index.js';
+  import DSShareSheet from '$ds/DSShareSheet.svelte';
+  import { getShareConfig } from '$ds/share-config.js';
+
+  const shareConfig = getShareConfig('luna');
+  let shareOpen = $state(false);
 
   const TABS = [{id:'home',label:'Home',icon:'home'},{id:'cycle',label:'Cycle',icon:'calendar'},{id:'fertility',label:'Fertile',icon:'heart'},{id:'insights',label:'Insights',icon:'bar-chart'},{id:'settings',label:'Settings',icon:'settings'}];
 
@@ -71,8 +76,24 @@
         <span class="export-hint">CSV for gynecologist →</span>
       </button>
     </div>
+    <div class="rows" style="margin-top:0">
+      <button class="share-row" onclick={() => shareOpen = true} aria-label="Recommander l'app">
+        <span class="share-row-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        </span>
+        <span class="share-row-label">Recommander l'app</span>
+        <svg class="share-row-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
     <PebbleButton label="Save" size="lg" onclick={save} />
   </main>
+  <DSShareSheet
+    bind:open={shareOpen}
+    url={shareConfig.url}
+    title={shareConfig.title}
+    text={shareConfig.text}
+    onclose={() => shareOpen = false}
+  />
   <DSFloatingNav
   tabs={TABS}
   active="settings"
@@ -96,5 +117,11 @@
   .unit { color: var(--c-text-secondary); font-size: var(--text-sm); }
   .export-row { background: none; border: none; cursor: pointer; color: var(--c-text); text-align: left; width: 100%; padding: 0; }
   .export-hint { color: #E91E8C; font-size: var(--text-sm); }
+  .share-row { display: flex; align-items: center; gap: 12px; width: 100%; padding: 14px 16px; background: var(--c-surface-raised, #f5f5f5); border: none; border-radius: 16px; cursor: pointer; text-align: left; color: var(--c-text); font-size: var(--text-base, 15px); transition: background 120ms ease; min-height: 44px; }
+  .share-row:hover { background: var(--c-surface-container, #ebebeb); }
+  .share-row:focus-visible { outline: 2px solid var(--c-brand); outline-offset: 2px; }
+  .share-row-icon { color: var(--c-brand); flex-shrink: 0; }
+  .share-row-label { flex: 1; font-weight: 500; }
+  .share-row-chevron { color: var(--c-text-secondary); flex-shrink: 0; }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>

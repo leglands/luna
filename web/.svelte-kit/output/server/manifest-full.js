@@ -7,10 +7,10 @@ function __memo(fn) {
 return {
 	appDir: "_app",
 	appPath: "_app",
-	assets: new Set(["apple-touch-icon.png","favicon.png","favicon.svg","icon-512.png","manifest.json","robots.txt","tokens.css"]),
-	mimeTypes: {".png":"image/png",".svg":"image/svg+xml",".json":"application/json",".txt":"text/plain",".css":"text/css"},
+	assets: new Set(["apple-touch-icon.png","favicon.png","favicon.svg","icon-512.png","manifest.json","offline.html","robots.txt","tokens.css"]),
+	mimeTypes: {".png":"image/png",".svg":"image/svg+xml",".json":"application/json",".html":"text/html",".txt":"text/plain",".css":"text/css"},
 	_: {
-		client: {start:"_app/immutable/entry/start.CQHxQfTd.js",app:"_app/immutable/entry/app.D1m1DYvs.js",imports:["_app/immutable/entry/start.CQHxQfTd.js","_app/immutable/chunks/LAVnm9UB.js","_app/immutable/chunks/D1v1btO3.js","_app/immutable/entry/app.D1m1DYvs.js","_app/immutable/chunks/D1v1btO3.js"],stylesheets:[],fonts:[],uses_env_dynamic_public:false},
+		client: {start:"_app/immutable/entry/start.oVkL8V4F.js",app:"_app/immutable/entry/app.DcOrngCf.js",imports:["_app/immutable/entry/start.oVkL8V4F.js","_app/immutable/chunks/CYPEFcWe.js","_app/immutable/chunks/D1v1btO3.js","_app/immutable/entry/app.DcOrngCf.js","_app/immutable/chunks/D1v1btO3.js"],stylesheets:[],fonts:[],uses_env_dynamic_public:false},
 		nodes: [
 			__memo(() => import('./nodes/0.js')),
 			__memo(() => import('./nodes/1.js')),

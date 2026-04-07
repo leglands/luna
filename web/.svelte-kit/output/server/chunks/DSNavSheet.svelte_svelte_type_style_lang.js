@@ -1,0 +1,2 @@
+new TextEncoder();
+new TextDecoder();

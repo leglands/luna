@@ -6,7 +6,7 @@ function PebbleButton($$renderer, $$props) {
       luna: "#6B3FA0",
       aura: "#00897B",
       sienna: "#33D298",
-      alma: "#5E35B1",
+      alma: "#4CAF9B",
       nova: "#23003D",
       aida: "#1565C0",
       stella: "#F57F17",

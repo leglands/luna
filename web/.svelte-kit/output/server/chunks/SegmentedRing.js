@@ -1,5 +1,5 @@
 import { a as attr_class, f as attr_style, b as attr, e as ensure_array_like, c as escape_html, d as derived, s as stringify } from "./root.js";
-/* empty css                                             */
+import "./DSNavSheet.svelte_svelte_type_style_lang.js";
 function SegmentedRing($$renderer, $$props) {
   $$renderer.component(($$renderer2) => {
     let {
