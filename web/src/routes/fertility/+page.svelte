@@ -4,7 +4,6 @@
   import { goto } from '$app/navigation';
   import { PebbleButton, DSFloatingNav, DaisyMenu } from '$ds/index.js';
 
-  const BRAND = '#E91E8C';
   const KEY = 'life-luna-data';
   const TABS = [
     {id:'home',label:'Home',icon:'home'},
@@ -88,7 +87,7 @@
 <div class="screen" data-app="luna">
   <main class="hero">
     <p class="label">Cycle day {cycleDay}</p>
-    <p class="hero-val" class:fertile={isFertileNow} style="color:{BRAND}">{heroValue}</p>
+    <p class="hero-val brand-text" class:fertile={isFertileNow}>{heroValue}</p>
     <p class="hero-lbl">{heroLabel}</p>
     <p class="status">{statusLine}</p>
 
@@ -106,7 +105,7 @@
     </div>
 
     <p class="disclaimer">Prediction based on average cycle. Use for awareness, not contraception.</p>
-    <PebbleButton label="Log today" onclick={() => goto('/log')} style="--pebble-brand:{BRAND}" />
+    <PebbleButton label="Log today" onclick={() => goto('/log')} style="--pebble-brand:var(--c-brand)" />
   </main>
 
   <DSFloatingNav
@@ -131,7 +130,8 @@
   .info-cards { display: flex; gap: 12px; width: 100%; margin: 8px 0 12px; }
   .card { flex: 1; background: #FFF0F7; border-radius: var(--radius-lg); padding: 14px; text-align: left; }
   .card.highlight { background: #FCE4EC; }
-  .card-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #E91E8C; margin: 0 0 4px; font-weight: 600; }
+  .brand-text { color: var(--c-brand); }
+  .card-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--c-brand); margin: 0 0 4px; font-weight: 600; }
   .card-value { font-size: var(--text-base); font-weight: 700; margin: 0 0 2px; }
   .card-sub { font-size: 11px; color: #aaa; margin: 0; }
   .disclaimer { font-size: 11px; color: #bbb; text-align: center; max-width: 280px; margin: 4px 0; }

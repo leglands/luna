@@ -5,7 +5,6 @@
   import { loadData, getCurrentPhase } from '$lib/cycle-engine.js';
   import FeatureTour from '$lib/components/FeatureTour.svelte';
 
-  const BRAND = '#6B3FA0';
   const PHASE_COLORS  = { menstrual:'#E57373', follicular:'#F48FB1', ovulation:'#CE93D8', luteal:'#9FA8DA', unknown:'#9D7BC9' };
   const PHASE_LABELS  = { menstrual:'Menstrual', follicular:'Follicular', ovulation:'Ovulation', luteal:'Luteal', unknown:'—' };
   const DAY_NAMES = ['Su','Mo','Tu','We','Th','Fr','Sa'];
@@ -226,7 +225,7 @@
   .wd { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
   .wd-name { font-size: 10px; font-weight: 600; text-transform: uppercase; color: var(--c-text-secondary); letter-spacing: .04em; }
   .wd-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
-  .wd-num-today { background: rgba(107,63,160,.12); color: #6B3FA0; font-weight: 700; outline: 2px solid #6B3FA0; outline-offset: -2px; }
+  .wd-num-today { background: color-mix(in srgb, var(--c-brand) 12%, transparent); color: var(--c-brand); font-weight: 700; outline: 2px solid var(--c-brand); outline-offset: -2px; }
   .wd-dot { width: 6px; height: 6px; border-radius: 50%; }
 
   /* Quick actions */

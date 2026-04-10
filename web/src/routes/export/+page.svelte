@@ -4,7 +4,6 @@
   import { goto } from '$app/navigation';
   import { PebbleButton } from '$ds/index.js';
 
-  const BRAND = '#E91E8C';
   const KEY = 'life-luna-data';
 
   let periodCount = $state(0);
@@ -58,7 +57,7 @@
   </header>
 
   <main class="hero">
-    <p class="hero-val" style="color:{BRAND}">{periodCount}</p>
+    <p class="hero-val brand-text">{periodCount}</p>
     <p class="hero-lbl">Period entries</p>
     <p class="status">{symptomDays} symptom days · {tempDays} temp readings</p>
 
@@ -69,7 +68,7 @@
       </div>
     </div>
 
-    <PebbleButton label="Download CSV" onclick={exportCSV} style="--pebble-brand:{BRAND}" />
+    <PebbleButton label="Download CSV" onclick={exportCSV} style="--pebble-brand:var(--c-brand)" />
     <button class="cancel" onclick={() => goto('/settings')}>Cancel</button>
   </main>
 </div>
@@ -79,7 +78,8 @@
     width: 100%;
     min-width: 360px; margin: 0 auto; }
   header { display: flex; align-items: center; gap: 12px; padding: var(--space-4); border-bottom: 1px solid #f0f0f0; }
-  .back { background: none; border: none; color: #E91E8C; cursor: pointer; font-size: var(--text-base); padding: 0; }
+  .brand-text { color: var(--c-brand); }
+  .back { background: none; border: none; color: var(--c-brand); cursor: pointer; font-size: var(--text-base); padding: 0; }
   .title { font-size: var(--text-lg); font-weight: 600; margin: 0; }
   .hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px 16px; gap: var(--space-2); text-align: center; }
   .hero-val { font-size: clamp(52px,14vw,96px); font-weight: 700; line-height: 1; margin: 0; }
