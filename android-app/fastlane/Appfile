@@ -1,0 +1,2 @@
+json_key_file ""  # Set GOOGLE_PLAY_JSON_KEY env var instead
+package_name "com.macaron.luna"

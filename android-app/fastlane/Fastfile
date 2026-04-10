@@ -1,68 +1,74 @@
 default_platform(:android)
 
-APP_PACKAGE = "com.macaron.luna"
+APP_PACKAGE    = "com.macaron.luna".freeze
+APP_NAME       = "Luna".freeze
+APP_UPPER      = "LUNA".freeze
+KEY_ALIAS_NAME = "luna".freeze
 
 platform :android do
-  desc "Build Release AAB"
+
+  desc "Build release AAB (signed)"
   lane :build do
-    ks_path = ENV["KEYSTORE_PATH"] || File.expand_path("keystore/release.jks", "#{__dir__}/..")
+    ks_path = ENV["KEYSTORE_PATH"] || File.expand_path("keystore/release.jks",
+                File.join(__dir__, ".."))
     gradle(
-      task: "bundle",
-      build_type: "Release",
+      task:        "bundle",
+      build_type:  "Release",
       project_dir: ".",
       properties: {
-        "android.injected.signing.store.file" => ks_path,
-        "android.injected.signing.store.password" => ENV["KEYSTORE_PASSWORD"] || "",
-        "android.injected.signing.key.alias" => ENV["KEY_ALIAS"] || "luna",
-        "android.injected.signing.key.password" => ENV["KEY_PASSWORD"] || ""
+        "android.injected.signing.store.file"     => ks_path,
+        "android.injected.signing.store.password" => ENV.fetch("KEYSTORE_PASSWORD", ""),
+        "android.injected.signing.key.alias"      => ENV.fetch("KEY_ALIAS", KEY_ALIAS_NAME),
+        "android.injected.signing.key.password"   => ENV.fetch("KEY_PASSWORD",  "")
       }
     )
   end
 
-  desc "Build Debug APK"
+  desc "Build debug APK"
   lane :debug do
     gradle(task: "assemble", build_type: "Debug", project_dir: ".")
   end
 
-  desc "Upload to Play Store internal track"
+  desc "Upload AAB to Play Store — internal track"
   lane :beta do
     build
     upload_to_play_store(
-      package_name: APP_PACKAGE,
-      track: "internal",
-      aab: "app/build/outputs/bundle/release/app-release.aab",
-      json_key_data: ENV["GOOGLE_PLAY_JSON_KEY"],
-      skip_upload_metadata: true,
-      skip_upload_images: true,
+      package_name:          APP_PACKAGE,
+      track:                 "internal",
+      aab:                   "app/build/outputs/bundle/release/app-release.aab",
+      json_key_data:         ENV.fetch("GOOGLE_PLAY_JSON_KEY", ""),
+      skip_upload_metadata:  true,
+      skip_upload_images:    true,
       skip_upload_screenshots: true,
-      release_status: "draft"
+      release_status:        "draft"
     )
-    UI.success("Luna uploaded to Google Play Internal track")
+    UI.success "#{APP_NAME} uploaded to Google Play internal track"
   end
 
   desc "Promote internal → production"
   lane :release do
     upload_to_play_store(
-      package_name: APP_PACKAGE,
-      track: "internal",
-      track_promote_to: "production",
-      json_key_data: ENV["GOOGLE_PLAY_JSON_KEY"],
+      package_name:      APP_PACKAGE,
+      track:             "internal",
+      track_promote_to:  "production",
+      json_key_data:     ENV.fetch("GOOGLE_PLAY_JSON_KEY", ""),
+      rollout:           "0.1",
       skip_upload_changelogs: false
     )
-    UI.success("Luna promoted to Google Play Production — review pending")
+    UI.success "#{APP_NAME} promoted to production (10% rollout)"
   end
 
-  desc "Promote internal to production"
-  lane :promote do
+  desc "Upload metadata + screenshots (all locales)"
+  lane :metadata do
     upload_to_play_store(
-      package_name: APP_PACKAGE,
-      track: "internal",
-      track_promote_to: "production",
-      json_key_data: ENV["GOOGLE_PLAY_JSON_KEY"],
-      skip_upload_aab: true,
-      skip_upload_metadata: true,
-      skip_upload_images: true,
-      skip_upload_screenshots: true
+      package_name:       APP_PACKAGE,
+      track:              "production",
+      json_key_data:      ENV.fetch("GOOGLE_PLAY_JSON_KEY", ""),
+      skip_upload_apk:    true,
+      skip_upload_aab:    true,
+      skip_upload_changelogs: false,
+      metadata_path:      "./fastlane/metadata/android"
     )
   end
+
 end
