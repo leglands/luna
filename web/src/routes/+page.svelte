@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { PebbleButton, Icon, SegmentedRing } from '$ds/index.js';
+  import { PebbleButton, Icon, SegmentedRing, DSCard } from '$ds/index.js';
   import { loadData, getCurrentPhase } from '$lib/cycle-engine.js';
   import FeatureTour from '$lib/components/FeatureTour.svelte';
 
@@ -109,7 +109,7 @@
       {/if}
 
       <!-- ── 1. Cycle ring card — always visible ── -->
-      <div class="card ring-card">
+      <DSCard class="ring-card" padding>
         <SegmentedRing
           segments={segments}
           currentIndex={phaseIndex}
@@ -128,12 +128,12 @@
           <p class="phase-name" style="color:var(--c-text-secondary)">—</p>
           <p class="next-hint">Add your last period date to see predictions</p>
         {/if}
-      </div>
+      </DSCard>
 
       {#if hasData}
 
         <!-- ── 2. Week strip ── -->
-        <div class="card week-strip" role="list" aria-label="This week">
+        <DSCard class="week-strip" role="list" aria-label="This week">
           {#each weekDays as day (fmtDate(day))}
             <div class="wd" class:wd-today={isToday(day)} role="listitem">
               <span class="wd-name">{DAY_NAMES[day.getDay()]}</span>
@@ -141,10 +141,10 @@
               <div class="wd-dot" style="background:{dotColor(day)}"></div>
             </div>
           {/each}
-        </div>
+        </DSCard>
 
         <!-- ── 3. Quick log ── -->
-        <div class="card">
+        <DSCard padding>
           <p class="section-title">Quick log</p>
           <div class="qa-row">
             {#each QUICK as qa}
@@ -156,7 +156,7 @@
               </button>
             {/each}
           </div>
-        </div>
+        </DSCard>
 
         <!-- ── 4. Empathy ── -->
         <div class="empathy-card">
@@ -172,7 +172,7 @@
 
     <!-- ── Screen 2: Calendar preview (wide ≥1024px) ── -->
     <aside class="wide-screen-2">
-      <div class="card calendar-preview">
+      <DSCard class="calendar-preview" padding>
         <p class="section-title">This month</p>
         {#if hasData}
           <p class="preview-hint">Phase: <strong style="color:{PHASE_COLORS[cycleInfo.phase]}">{PHASE_LABELS[cycleInfo.phase]}</strong></p>
@@ -186,7 +186,7 @@
         <div class="preview-cta">
           <PebbleButton label="View calendar" size="sm" onclick={() => goto('/calendar')} />
         </div>
-      </div>
+      </DSCard>
     </aside>
   </div>
 
@@ -212,16 +212,13 @@
   .wide-screen-2 { display: none; }
   @media (min-width: 1024px) { .wide-screen-2 { display: block; } }
 
-  /* Cards */
-  .card { background: var(--c-surface); border-radius: var(--radius-lg); padding: var(--space-5); }
-
   /* Ring card */
-  .ring-card { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); }
+  :global(.ring-card) { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); }
   .phase-name { font-size: var(--text-xl); font-weight: var(--weight-bold); margin: 0; }
   .next-hint  { font-size: var(--text-sm); color: var(--c-text-secondary); margin: var(--space-1) 0 0; }
 
   /* Week strip */
-  .week-strip { display: flex; justify-content: space-between; padding: var(--space-3) var(--space-2); }
+  :global(.week-strip) { display: flex; justify-content: space-between; padding: var(--space-3) var(--space-2); }
   .wd { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
   .wd-name { font-size: 10px; font-weight: 600; text-transform: uppercase; color: var(--c-text-secondary); letter-spacing: .04em; }
   .wd-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; }
@@ -248,7 +245,7 @@
   .setup-msg { font-size: var(--text-sm); color: var(--c-text-secondary); margin: 0; line-height: 1.4; }
 
   /* Calendar preview (screen 2) */
-  .calendar-preview { display: flex; flex-direction: column; gap: var(--space-3); }
+  :global(.calendar-preview) { display: flex; flex-direction: column; gap: var(--space-3); }
   .preview-hint { font-size: var(--text-sm); color: var(--c-text-secondary); margin: 0; }
   .preview-cta { margin-top: var(--space-3); }
 </style>

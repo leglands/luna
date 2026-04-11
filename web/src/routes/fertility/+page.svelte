@@ -2,7 +2,7 @@
   // Luna Fertility - LEAN: hero = days to ovulation, fertile window
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { PebbleButton, DSFloatingNav, DaisyMenu } from '$ds/index.js';
+  import { PebbleButton, DSCard, DSFloatingNav, DaisyMenu } from '$ds/index.js';
 
   const KEY = 'life-luna-data';
   const TABS = [
@@ -92,16 +92,16 @@
     <p class="status">{statusLine}</p>
 
     <div class="info-cards">
-      <div class="card">
+      <DSCard padding>
         <p class="card-label">Fertile window</p>
         <p class="card-value">{fertileStart} – {fertileEnd}</p>
         <p class="card-sub">6 days of peak fertility</p>
-      </div>
-      <div class="card" class:highlight={!isInPeriod && !isFertileNow}>
+      </DSCard>
+      <DSCard padding class={!isInPeriod && !isFertileNow ? 'highlight' : ''}>
         <p class="card-label">Ovulation</p>
         <p class="card-value">{ovulationDate}</p>
         <p class="card-sub">Predicted (ACOG method)</p>
-      </div>
+      </DSCard>
     </div>
 
     <p class="disclaimer">Prediction based on average cycle. Use for awareness, not contraception.</p>
@@ -127,9 +127,9 @@
   .hero-val.fertile { font-size: clamp(52px,14vw,80px); }
   .hero-lbl { font-size: 14px; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin: 0; }
   .status { font-size: var(--text-lg); font-weight: 600; margin: 4px 0 16px; }
-  .info-cards { display: flex; gap: 12px; width: 100%; margin: 8px 0 12px; }
-  .card { flex: 1; background: #FFF0F7; border-radius: var(--radius-lg); padding: 14px; text-align: left; }
-  .card.highlight { background: #FCE4EC; }
+  .info-cards { display: flex; gap: 12px; width: 100%; margin: 8px 0 12px; text-align: left; }
+  .info-cards :global(.ds-card) { flex: 1; }
+  .info-cards :global(.ds-card.highlight) { background: #FCE4EC; }
   .brand-text { color: var(--c-brand); }
   .card-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--c-brand); margin: 0 0 4px; font-weight: 600; }
   .card-value { font-size: var(--text-base); font-weight: 700; margin: 0 0 2px; }

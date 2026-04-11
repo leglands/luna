@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { SegmentedRing, Icon, PebbleButton, DSFloatingNav, DaisyMenu } from '$ds/index.js';
+  import { SegmentedRing, Icon, PebbleButton, DSCard, DSFloatingNav, DaisyMenu } from '$ds/index.js';
 
   let data = $state({
     settings: { cycleLength: 28, periodLength: 5, lastPeriodDate: null },
@@ -142,17 +142,17 @@
   <main class="calendar-page">
 
     <!-- Phase summary (compact, no extra ring here) -->
-    <div class="card phase-summary">
+    <DSCard class="phase-summary">
       <p class="phase-name">{PHASE_LABELS[cycleInfo.phase] || 'Unknown'}</p>
       {#if cycleInfo.daysUntilNextPeriod > 0}
         <p class="phase-hint">Next period in {cycleInfo.daysUntilNextPeriod} days</p>
       {:else}
         <p class="phase-hint">Period expected today</p>
       {/if}
-    </div>
+    </DSCard>
 
     <!-- Calendar card -->
-    <div class="card calendar-card">
+    <DSCard class="calendar-card" padding>
 
       <div class="month-header">
         <button class="month-nav" onclick={prevMonth} aria-label="Previous month">
@@ -217,7 +217,7 @@
         <p class="ring-phase">{PHASE_LABELS[cycleInfo.phase] || 'Unknown'} — day {cycleInfo.dayOfCycle}</p>
       </div>
 
-    </div><!-- /calendar-card -->
+    </DSCard><!-- /calendar-card -->
   </main>
 
   <DSFloatingNav
@@ -252,31 +252,8 @@
     overflow-y: auto;
   }
 
-  /* ── Cards ── */
-  .card {
-    background: var(--c-surface);
-    border-radius: var(--radius-lg);
-    padding: var(--space-4);
-  }
-
-  /* ── Overview card ── */
-  .overview-card {
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
-  }
-
-  /* ── Overview card ── */
-  .overview-card {
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
-  }
-
-  .phase-info { flex: 1; }
-
   /* ── Phase summary (compact) ── */
-  .phase-summary {
+  :global(.phase-summary) {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -298,7 +275,7 @@
   }
 
   /* ── Calendar card ── */
-  .calendar-card { display: flex; flex-direction: column; }
+  :global(.calendar-card) { display: flex; flex-direction: column; }
 
   .month-header {
     display: flex;
