@@ -72,3 +72,18 @@
 - WHO — menstrual health guidelines
 - Fehring et al. 2006 — BBT charting accuracy
 - Crawford et al. 2018 — symptom logging app engagement
+
+---
+
+## DS
+- Shared lib: `life-sdk/ds/web/` (63 comps) via `$ds/` alias (`svelte.config.js`: `alias: { '$ds': '../../life-sdk/ds/web' }`)
+- Tokens: `$ds/tokens.css` — colors, typography, spacing, radius, motion (never redefine in app)
+- DSButton: organic primary CTA → `$ds/DSButton.svelte`
+- Modal: `$ds/Modal.svelte` (`$bindable`, focus-trap, size sm/md/lg)
+- DSAlert: `$ds/DSAlert.svelte` (severity: warn/error/critical) — late-period / heavy-flow warnings
+- DSEmptyState: `$ds/DSEmptyState.svelte` — illustrated + CTA, never raw empty
+- DSCard, Badge, Avatar, DSSkeleton, DSSpinner, DSToast, DSSwitch: all from `$ds/`
+- DSProgressRing, DSSuccessCheck: cycle completion + log confirmation
+- DSTabs, DSSegmented: phase/insight navigation
+- DSFormField, DSCoachMark: log form fields + onboarding tips
+- No local DS copies — `$ds/` imports only
