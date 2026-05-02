@@ -77,10 +77,16 @@ ALL_LOCALES.forEach((code) => {
 
 let _initDone = false;
 
-export function setupI18n() {
+function ensureI18n() {
   if (_initDone) return;
   _initDone = true;
-  return init({ fallbackLocale: 'en', initialLocale: 'en' });
+  init({ fallbackLocale: 'en', initialLocale: 'en' });
+}
+
+ensureI18n();
+
+export function setupI18n() {
+  ensureI18n();
 }
 
 function matchLocale(navLang) {

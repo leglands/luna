@@ -3,6 +3,20 @@
     "name": "Luna",
     "tagline": "Votre cycle, compris"
   },
+  "nav": {
+    "home": "Accueil",
+    "cycle": "Cycle",
+    "fertility": "Fertilité",
+    "insights": "Aperçus",
+    "settings": "Réglages"
+  },
+  "common": {
+    "optional": "Optionnel",
+    "days": "jours",
+    "cancel": "Annuler",
+    "undo": "Annuler",
+    "delete": "Supprimer"
+  },
   "phases": {
     "menstrual": "Menstruelle",
     "follicular": "Folliculaire",
@@ -18,34 +32,111 @@
   "cycle": {
     "day": "Jour {day}",
     "ofCycle": "de votre cycle",
+    "dayOfLength": "Jour {day} sur {length}",
     "nextPeriod": "Prochaines règles dans {days} jours",
     "periodExpected": "Règles prévues dans {days} jours",
+    "periodExpectedToday": "Règles prévues aujourd'hui",
     "fertileWindow": "Fenêtre fertile",
     "predictedOvulation": "Ovulation prévue"
+  },
+  "home": {
+    "setupBanner": "Configurez votre cycle pour obtenir des prédictions personnalisées",
+    "getStarted": "Commencer",
+    "quickLog": "Journal rapide",
+    "logToday": "Noter aujourd'hui",
+    "thisMonth": "Ce mois-ci",
+    "addLastPeriod": "Ajoutez la date de vos dernières règles pour voir les prédictions",
+    "logLastPeriod": "Notez vos dernières règles pour voir les prédictions du cycle.",
+    "viewCycle": "Voir le cycle"
+  },
+  "onboarding": {
+    "title": "Bienvenue dans Luna",
+    "subtitle": "Votre cycle, sur votre appareil. Privé par conception.",
+    "lastPeriodStart": "Début des dernières règles",
+    "cycleLength": "Durée du cycle",
+    "periodLength": "Durée des règles",
+    "startTracking": "Commencer le suivi",
+    "skipForNow": "Passer pour le moment"
+  },
+  "fertility": {
+    "daysToOvulation": "Jours avant l'ovulation",
+    "daysToFertileWindow": "Jours avant la fenêtre fertile",
+    "daysToNextCycle": "Jours avant le prochain cycle",
+    "currentlyInPeriod": "Règles en cours",
+    "ovulationDay": "Jour d'ovulation",
+    "mostFertileDays": "Jours les plus fertiles",
+    "ovulationPassed": "Ovulation passée",
+    "peakWindow": "6 jours de fertilité maximale",
+    "predictedMethod": "Prédit (méthode ACOG)",
+    "disclaimer": "Prédiction basée sur le cycle moyen. À utiliser pour la connaissance de soi, pas comme contraception."
+  },
+  "history": {
+    "title": "Cycles suivis",
+    "startLogging": "Commencez à noter pour voir l'historique",
+    "since": "Depuis {month}",
+    "back": "Retour"
+  },
+  "export": {
+    "title": "Exporter les données",
+    "periodEntries": "Entrées de règles",
+    "status": "{symptoms} jours avec symptômes · {temps} relevés de température",
+    "body": "Exportez vos données de cycle en CSV pour les partager avec votre gynécologue ou les importer dans une autre app.",
+    "privacy": "Les données ne quittent jamais votre appareil. L'export est généré localement.",
+    "download": "Télécharger le CSV"
   },
   "logging": {
     "period": "Règles",
     "symptoms": "Symptômes",
     "temperature": "Température",
     "mood": "Humeur",
+    "energy": "Énergie",
     "logPeriod": "Noter les règles",
     "logSymptoms": "Noter les symptômes",
     "logTemperature": "Noter la température",
-    "logMood": "Noter l'humeur"
+    "logMood": "Noter l'humeur",
+    "title": "Noter",
+    "date": "Date",
+    "periodStartedToday": "Les règles ont commencé aujourd'hui",
+    "flowIntensity": "Intensité du flux",
+    "notes": "Notes",
+    "notesPlaceholder": "Ajouter une note...",
+    "saveEntry": "Enregistrer l'entrée",
+    "flowLight": "Léger",
+    "flowMedium": "Moyen",
+    "flowHeavy": "Abondant",
+    "flowSpotting": "Spotting",
+    "energyVeryLow": "Très faible",
+    "energyLow": "Faible",
+    "energyNeutral": "Neutre",
+    "energyGood": "Bonne",
+    "energyHigh": "Élevée",
+    "symptomCramps": "Crampes",
+    "symptomHeadache": "Maux de tête",
+    "symptomBloating": "Ballonnements",
+    "symptomMoodSwings": "Sautes d'humeur",
+    "symptomFatigue": "Fatigue",
+    "symptomTenderBreasts": "Seins sensibles",
+    "symptomAcne": "Acné",
+    "symptomBackPain": "Douleur dorsale"
   },
   "calendar": {
     "title": "Calendrier",
     "insights": "Aperçus",
     "today": "Aujourd'hui",
     "logged": "Noté",
-    "predicted": "Prédit"
+    "predicted": "Prédit",
+    "previousMonth": "Mois précédent",
+    "nextMonth": "Mois suivant"
   },
   "insights": {
     "title": "Aperçus",
     "avgCycle": "Durée moyenne du cycle",
     "avgPeriod": "Durée moyenne des règles",
     "symptomCorrelations": "Corrélations des symptômes",
-    "noData": "Notez plus de jours pour voir les aperçus"
+    "noData": "Notez plus de jours pour voir les aperçus",
+    "basedOnCycles": "Basé sur {count} cycle{suffix}",
+    "lastCycle": "Dernier cycle : {days} jours",
+    "seeHistory": "Voir l'historique"
   },
   "promo": {
     "ttcTitle": "Vous essayez de concevoir?",
@@ -67,6 +158,14 @@
     "cycleLength": "Durée du cycle",
     "periodLength": "Durée des règles",
     "lastPeriod": "Date des dernières règles",
+    "language": "Langue",
+    "exportData": "Exporter les données",
+    "exportHint": "CSV pour votre gynécologue",
+    "shareApp": "Recommander l'app",
+    "deleteData": "Supprimer mes données",
+    "deleteBody": "Cela supprime vos données de cycle de cet appareil. Le thème et la langue restent inchangés.",
+    "deleteConfirm": "Supprimer les données",
+    "deleted": "Vos données Luna ont été supprimées de cet appareil.",
     "save": "Enregistrer",
     "saved": "Paramètres enregistrés"
   },

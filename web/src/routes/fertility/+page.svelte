@@ -2,19 +2,20 @@
   // Luna Fertility - LEAN: hero = days to ovulation, fertile window
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
+  import { _, locale } from 'svelte-i18n';
   import { PebbleButton, DSCard, DSFloatingNav, DaisyMenu } from '$ds/index.js';
+  import { loadData } from '$lib/cycle-engine.js';
 
-  const KEY = 'life-luna-data';
-  const TABS = [
-    {id:'home',label:'Home',icon:'home'},
-    {id:'cycle',label:'Cycle',icon:'calendar'},
-    {id:'fertility',label:'Fertile',icon:'heart'},
-    {id:'insights',label:'Insights',icon:'bar-chart'},
-    {id:'settings',label:'Settings',icon:'settings'}
-  ];
+  const TABS = $derived([
+    {id:'home',label:$_('nav.home', { default: 'Home' }),icon:'home'},
+    {id:'cycle',label:$_('nav.cycle', { default: 'Cycle' }),icon:'calendar'},
+    {id:'fertility',label:$_('nav.fertility', { default: 'Fertility' }),icon:'heart'},
+    {id:'insights',label:$_('nav.insights', { default: 'Insights' }),icon:'bar-chart'},
+    {id:'settings',label:$_('nav.settings', { default: 'Settings' }),icon:'settings'}
+  ]);
 
   let heroValue = $state('—');
-  let heroLabel = $state('Days to ovulation');
+  let heroLabel = $state('');
   let statusLine = $state('');
   let fertileStart = $state('');
   let fertileEnd = $state('');
@@ -24,7 +25,7 @@
   let cycleDay = $state(0);
 
   onMount(() => {
-    const d = JSON.parse(localStorage.getItem(KEY) ?? '{}');
+    const d = loadData();
     if (!d.settings?.lastPeriodDate) {  return; }
 
     const { cycleLength = 28, lastPeriodDate } = d.settings;
@@ -47,9 +48,9 @@
     const fEnd = new Date(lastPeriod);
     fEnd.setDate(fEnd.getDate() + fertileEndDay);
 
-    ovulationDate = ovDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-    fertileStart = fStart.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-    fertileEnd = fEnd.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+    ovulationDate = ovDate.toLocaleDateString($locale ?? 'en', { day: 'numeric', month: 'short' });
+    fertileStart = fStart.toLocaleDateString($locale ?? 'en', { day: 'numeric', month: 'short' });
+    fertileEnd = fEnd.toLocaleDateString($locale ?? 'en', { day: 'numeric', month: 'short' });
 
     isFertileNow = pos >= fertileStartDay && pos <= fertileEndDay;
     isInPeriod = pos < (d.settings.periodLength ?? 5);
@@ -58,54 +59,56 @@
 
     if (isInPeriod) {
       heroValue = String(cycleLength - 14 - pos);
-      heroLabel = 'Days to fertile window';
-      statusLine = 'Currently in period';
+      heroLabel = $_('fertility.daysToFertileWindow', { default: 'Days to fertile window' });
+      statusLine = $_('fertility.currentlyInPeriod', { default: 'Currently in period' });
     } else if (isFertileNow) {
       heroValue = '✦';
-      heroLabel = 'Fertile window';
-      statusLine = pos === ovulationDay ? 'Ovulation day' : 'Most fertile days';
+      heroLabel = $_('cycle.fertileWindow', { default: 'Fertile window' });
+      statusLine = pos === ovulationDay
+        ? $_('fertility.ovulationDay', { default: 'Ovulation day' })
+        : $_('fertility.mostFertileDays', { default: 'Most fertile days' });
     } else if (daysToOv > 0) {
       heroValue = String(daysToOv);
-      heroLabel = 'Days to ovulation';
-      statusLine = `Fertile window: ${fertileStart} – ${fertileEnd}`;
+      heroLabel = $_('fertility.daysToOvulation', { default: 'Days to ovulation' });
+      statusLine = `${$_('cycle.fertileWindow', { default: 'Fertile window' })}: ${fertileStart} – ${fertileEnd}`;
     } else {
       heroValue = String(cycleLength - pos);
-      heroLabel = 'Days to next cycle';
-      statusLine = 'Ovulation passed';
+      heroLabel = $_('fertility.daysToNextCycle', { default: 'Days to next cycle' });
+      statusLine = $_('fertility.ovulationPassed', { default: 'Ovulation passed' });
     }
   });
 
   let daisyOpen = $state(false);
-  const DAISY_ITEMS = [
-    { icon: 'droplet',    label: 'Règles',    onclick: () => goto('/cycle') },
-    { icon: 'thermometer',label: 'Symptôme',  onclick: () => goto('/cycle') },
-    { icon: 'smile',      label: 'Humeur',    onclick: () => goto('/insights') },
-    { icon: 'moon',       label: 'Ovulation', onclick: () => goto('/fertility') },
-  ];
+  const DAISY_ITEMS = $derived([
+    { icon: 'droplet', label: $_('logging.period', { default: 'Period' }), onclick: () => goto('/cycle') },
+    { icon: 'thermometer', label: $_('logging.symptoms', { default: 'Symptoms' }), onclick: () => goto('/cycle') },
+    { icon: 'smile', label: $_('logging.mood', { default: 'Mood' }), onclick: () => goto('/insights') },
+    { icon: 'moon', label: $_('phases.ovulation', { default: 'Ovulation' }), onclick: () => goto('/fertility') },
+  ]);
 </script>
 
 <div class="screen" data-app="luna">
   <main class="hero">
-    <p class="label">Cycle day {cycleDay}</p>
+    <p class="label">{$_('cycle.day', { values: { day: cycleDay }, default: `Day ${cycleDay}` })}</p>
     <p class="hero-val brand-text" class:fertile={isFertileNow}>{heroValue}</p>
     <p class="hero-lbl">{heroLabel}</p>
     <p class="status">{statusLine}</p>
 
     <div class="info-cards">
       <DSCard padding>
-        <p class="card-label">Fertile window</p>
+        <p class="card-label">{$_('cycle.fertileWindow', { default: 'Fertile window' })}</p>
         <p class="card-value">{fertileStart} – {fertileEnd}</p>
-        <p class="card-sub">6 days of peak fertility</p>
+        <p class="card-sub">{$_('fertility.peakWindow', { default: '6 days of peak fertility' })}</p>
       </DSCard>
       <DSCard padding class={!isInPeriod && !isFertileNow ? 'highlight' : ''}>
-        <p class="card-label">Ovulation</p>
+        <p class="card-label">{$_('phases.ovulation', { default: 'Ovulation' })}</p>
         <p class="card-value">{ovulationDate}</p>
-        <p class="card-sub">Predicted (ACOG method)</p>
+        <p class="card-sub">{$_('fertility.predictedMethod', { default: 'Predicted (ACOG method)' })}</p>
       </DSCard>
     </div>
 
-    <p class="disclaimer">Prediction based on average cycle. Use for awareness, not contraception.</p>
-    <PebbleButton label="Log today" onclick={() => goto('/log')} style="--pebble-brand:var(--c-brand)" />
+    <p class="disclaimer">{$_('fertility.disclaimer', { default: 'Prediction based on average cycle. Use for awareness, not contraception.' })}</p>
+    <PebbleButton label={$_('home.logToday', { default: 'Log today' })} onclick={() => goto('/log')} style="--pebble-brand:var(--c-brand)" />
   </main>
 
   <DSFloatingNav

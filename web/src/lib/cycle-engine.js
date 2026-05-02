@@ -22,11 +22,22 @@ export async function initStorage() {
   await store.init(async () => {
     if (typeof localStorage === 'undefined') return;
     const raw = localStorage.getItem('life-luna-data');
-    if (!raw) return;
-    try {
-      store.setItem('data', JSON.parse(raw));
-      localStorage.removeItem('life-luna-data');
-    } catch {}
+    if (raw) {
+      try {
+        store.setItem('data', JSON.parse(raw));
+        localStorage.removeItem('life-luna-data');
+      } catch {}
+    }
+    const settingsRaw = localStorage.getItem('life-luna-settings');
+    if (settingsRaw) {
+      try {
+        const settings = JSON.parse(settingsRaw);
+        const existing = store.getItem('data') ?? {};
+        existing.settings = { ...existing.settings, ...settings };
+        store.setItem('data', existing);
+        localStorage.removeItem('life-luna-settings');
+      } catch {}
+    }
   });
 }
 
@@ -36,6 +47,20 @@ export function loadData() {
 
 export function saveData(data) {
   store.setItem('data', data);
+}
+
+export async function clearStoredData() {
+  await store.clear();
+  if (typeof localStorage !== 'undefined') {
+    localStorage.removeItem('life-luna-data');
+    localStorage.removeItem('life-luna-settings');
+  }
+}
+
+export async function restoreStoredData(data) {
+  if (!data) return;
+  store.setItem('data', data);
+  await store.flush();
 }
 
 export function updateSettings(updates) {

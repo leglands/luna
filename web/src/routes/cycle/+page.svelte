@@ -1,7 +1,9 @@
 <script>
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { SegmentedRing, Icon, PebbleButton, DSCard, DSFloatingNav, DaisyMenu } from '$ds/index.js';
+  import { _, locale } from 'svelte-i18n';
+  import { DSCycleGraph, Icon, PebbleButton, DSCard, DSFloatingNav, DaisyMenu } from '$ds/index.js';
+  import { loadData } from '$lib/cycle-engine.js';
 
   let data = $state({
     settings: { cycleLength: 28, periodLength: 5, lastPeriodDate: null },
@@ -10,25 +12,24 @@
   let displayMonth = $state(new Date());
   let selectedDate = $state(null);
 
-  const TABS = [
-    { id: 'home',      label: 'Home',     icon: 'home' },
-    { id: 'cycle',     label: 'Cycle',    icon: 'calendar' },
-    { id: 'fertility', label: 'Fertile',  icon: 'heart' },
-    { id: 'insights',  label: 'Insights', icon: 'bar-chart' },
-    { id: 'settings',  label: 'Settings', icon: 'settings' }
-  ];
+  const TABS = $derived([
+    { id: 'home',      label: $_('nav.home', { default: 'Home' }), icon: 'home' },
+    { id: 'cycle',     label: $_('nav.cycle', { default: 'Cycle' }), icon: 'calendar' },
+    { id: 'fertility', label: $_('nav.fertility', { default: 'Fertility' }), icon: 'heart' },
+    { id: 'insights',  label: $_('nav.insights', { default: 'Insights' }), icon: 'bar-chart' },
+    { id: 'settings',  label: $_('nav.settings', { default: 'Settings' }), icon: 'settings' }
+  ]);
 
-  const PHASE_LABELS = {
-    menstrual: 'Menstrual', follicular: 'Follicular',
-    ovulation: 'Ovulation', luteal: 'Luteal', unknown: 'Unknown'
-  };
-
-  const PHASE_IDX = { menstrual: 0, follicular: 1, ovulation: 2, luteal: 3, unknown: 0 };
+  const PHASE_LABELS = $derived({
+    menstrual: $_('phases.menstrual', { default: 'Menstrual' }),
+    follicular: $_('phases.follicular', { default: 'Follicular' }),
+    ovulation: $_('phases.ovulation', { default: 'Ovulation' }),
+    luteal: $_('phases.luteal', { default: 'Luteal' }),
+    unknown: '—'
+  });
 
   onMount(() => {
-    const raw = localStorage.getItem('life-luna-data');
-    if (!raw) { data = { settings: { cycleLength: 28, periodLength: 5 }, log: {} }; }
-    data = JSON.parse(raw);
+    data = loadData();
     displayMonth = new Date();
   });
 
@@ -64,7 +65,6 @@
     return { phase, dayOfCycle: diffDays + 1, daysUntilNextPeriod: cl - pos };
   });
 
-  const phaseIndex  = $derived(PHASE_IDX[cycleInfo.phase] ?? 0);
   const periodLength = $derived(data.settings?.periodLength ?? 5);
   const cycleLength  = $derived(data.settings?.cycleLength ?? 28);
 
@@ -111,7 +111,14 @@
   });
 
   const monthTitle = $derived(
-    displayMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+    displayMonth.toLocaleDateString($locale ?? 'en', { month: 'long', year: 'numeric' })
+  );
+
+  const weekdayLabels = $derived(
+    Array.from({ length: 7 }, (_, index) => {
+      const base = new Date(Date.UTC(2024, 0, 1 + index));
+      return new Intl.DateTimeFormat($locale ?? 'en', { weekday: 'short' }).format(base);
+    })
   );
 
   function prevMonth() {
@@ -130,12 +137,12 @@
   }
 
   let daisyOpen = $state(false);
-  const DAISY_ITEMS = [
-    { icon: 'droplet',    label: 'Règles',    onclick: () => goto('/cycle') },
-    { icon: 'thermometer',label: 'Symptôme',  onclick: () => goto('/cycle') },
-    { icon: 'smile',      label: 'Humeur',    onclick: () => goto('/insights') },
-    { icon: 'moon',       label: 'Ovulation', onclick: () => goto('/fertility') },
-  ];
+  const DAISY_ITEMS = $derived([
+    { icon: 'droplet', label: $_('logging.period', { default: 'Period' }), onclick: () => goto('/cycle') },
+    { icon: 'thermometer', label: $_('logging.symptoms', { default: 'Symptoms' }), onclick: () => goto('/cycle') },
+    { icon: 'smile', label: $_('logging.mood', { default: 'Mood' }), onclick: () => goto('/insights') },
+    { icon: 'moon', label: $_('phases.ovulation', { default: 'Ovulation' }), onclick: () => goto('/fertility') },
+  ]);
 </script>
 
 <div class="screen" data-app="luna">
@@ -143,11 +150,11 @@
 
     <!-- Phase summary (compact, no extra ring here) -->
     <DSCard class="phase-summary">
-      <p class="phase-name">{PHASE_LABELS[cycleInfo.phase] || 'Unknown'}</p>
+      <p class="phase-name">{PHASE_LABELS[cycleInfo.phase] || '—'}</p>
       {#if cycleInfo.daysUntilNextPeriod > 0}
-        <p class="phase-hint">Next period in {cycleInfo.daysUntilNextPeriod} days</p>
+        <p class="phase-hint">{$_('cycle.nextPeriod', { values: { days: cycleInfo.daysUntilNextPeriod }, default: `Next period in ${cycleInfo.daysUntilNextPeriod} days` })}</p>
       {:else}
-        <p class="phase-hint">Period expected today</p>
+        <p class="phase-hint">{$_('cycle.periodExpectedToday', { default: 'Period expected today' })}</p>
       {/if}
     </DSCard>
 
@@ -155,17 +162,17 @@
     <DSCard class="calendar-card" padding>
 
       <div class="month-header">
-        <button class="month-nav" onclick={prevMonth} aria-label="Previous month">
+        <button class="month-nav" onclick={prevMonth} aria-label={$_('calendar.previousMonth', { default: 'Previous month' })}>
           <Icon name="chevron-left" size={20} />
         </button>
         <h2 class="month-title">{monthTitle}</h2>
-        <button class="month-nav" onclick={nextMonth} aria-label="Next month">
+        <button class="month-nav" onclick={nextMonth} aria-label={$_('calendar.nextMonth', { default: 'Next month' })}>
           <Icon name="chevron-right" size={20} />
         </button>
       </div>
 
       <div class="weekday-header">
-        {#each ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'] as d}
+        {#each weekdayLabels as d}
           <span>{d}</span>
         {/each}
       </div>
@@ -192,29 +199,22 @@
       </div>
 
       <div class="legend">
-        <span class="leg-item"><span class="leg-dot" style="background:#E57373"></span>Period</span>
-        <span class="leg-item"><span class="leg-dot" style="background:#F8BBD9;border:1px solid #f0b0c8"></span>Fertile</span>
-        <span class="leg-item"><span class="leg-dot" style="background:#CE93D8"></span>Ovulation</span>
+        <span class="leg-item"><span class="leg-dot" style="background:#E57373"></span>{$_('logging.period', { default: 'Period' })}</span>
+        <span class="leg-item"><span class="leg-dot" style="background:#F8BBD9;border:1px solid #f0b0c8"></span>{$_('cycle.fertileWindow', { default: 'Fertile window' })}</span>
+        <span class="leg-item"><span class="leg-dot" style="background:#CE93D8"></span>{$_('phases.ovulation', { default: 'Ovulation' })}</span>
       </div>
 
       <div class="cal-cta">
-        <PebbleButton label="Log today" size="lg" onclick={() => goto('/log')} />
+        <PebbleButton label={$_('home.logToday', { default: 'Log today' })} size="lg" onclick={() => goto('/log')} />
       </div>
 
       <div class="ring-section">
-        <SegmentedRing
-          segments={[
-            { label: 'Menstrual', color: '#E57373', value: periodLength },
-            { label: 'Follicular', color: '#F48FB1', value: Math.floor(cycleLength * 0.35) },
-            { label: 'Ovulation', color: '#CE93D8', value: Math.floor(cycleLength * 0.14) },
-            { label: 'Luteal',    color: '#9FA8DA', value: cycleLength - periodLength - Math.floor(cycleLength * 0.49) },
-          ]}
-          currentIndex={phaseIndex}
-          centerText={String(cycleInfo.dayOfCycle)}
-          centerSubtext="Day"
-          size={160}
+        <DSCycleGraph
+          cycleLength={cycleLength}
+          currentDay={cycleInfo.dayOfCycle}
+          size={180}
         />
-        <p class="ring-phase">{PHASE_LABELS[cycleInfo.phase] || 'Unknown'} — day {cycleInfo.dayOfCycle}</p>
+        <p class="ring-phase">{PHASE_LABELS[cycleInfo.phase] || '—'} — {$_('cycle.day', { values: { day: cycleInfo.dayOfCycle }, default: `Day ${cycleInfo.dayOfCycle}` })}</p>
       </div>
 
     </DSCard><!-- /calendar-card -->

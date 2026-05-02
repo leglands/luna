@@ -3,6 +3,20 @@
     "name": "Luna",
     "tagline": "Your cycle, understood"
   },
+  "nav": {
+    "home": "Home",
+    "cycle": "Cycle",
+    "fertility": "Fertility",
+    "insights": "Insights",
+    "settings": "Settings"
+  },
+  "common": {
+    "optional": "Optional",
+    "days": "days",
+    "cancel": "Cancel",
+    "undo": "Undo",
+    "delete": "Delete"
+  },
   "phases": {
     "menstrual": "Menstrual",
     "follicular": "Follicular",
@@ -18,34 +32,111 @@
   "cycle": {
     "day": "Day {day}",
     "ofCycle": "of your cycle",
+    "dayOfLength": "Day {day} of {length}",
     "nextPeriod": "Next period in {days} days",
     "periodExpected": "Period expected in {days} days",
+    "periodExpectedToday": "Period expected today",
     "fertileWindow": "Fertile window",
     "predictedOvulation": "Predicted ovulation"
+  },
+  "home": {
+    "setupBanner": "Set up your cycle to get personalised predictions",
+    "getStarted": "Get started",
+    "quickLog": "Quick log",
+    "logToday": "Log today",
+    "thisMonth": "This month",
+    "addLastPeriod": "Add your last period date to see predictions",
+    "logLastPeriod": "Log your last period to see calendar predictions.",
+    "viewCycle": "View cycle"
+  },
+  "onboarding": {
+    "title": "Welcome to Luna",
+    "subtitle": "Your cycle, on your device. Private by design.",
+    "lastPeriodStart": "Last period start",
+    "cycleLength": "Cycle length",
+    "periodLength": "Period length",
+    "startTracking": "Start tracking",
+    "skipForNow": "Skip for now"
+  },
+  "fertility": {
+    "daysToOvulation": "Days to ovulation",
+    "daysToFertileWindow": "Days to fertile window",
+    "daysToNextCycle": "Days to next cycle",
+    "currentlyInPeriod": "Currently in period",
+    "ovulationDay": "Ovulation day",
+    "mostFertileDays": "Most fertile days",
+    "ovulationPassed": "Ovulation passed",
+    "peakWindow": "6 days of peak fertility",
+    "predictedMethod": "Predicted (ACOG method)",
+    "disclaimer": "Prediction based on average cycle. Use for awareness, not contraception."
+  },
+  "history": {
+    "title": "Cycles tracked",
+    "startLogging": "Start logging to see history",
+    "since": "Since {month}",
+    "back": "Back"
+  },
+  "export": {
+    "title": "Export data",
+    "periodEntries": "Period entries",
+    "status": "{symptoms} symptom days · {temps} temp readings",
+    "body": "Export your cycle data as CSV to share with your gynecologist or import into another app.",
+    "privacy": "Data never leaves your device. Export is generated locally.",
+    "download": "Download CSV"
   },
   "logging": {
     "period": "Period",
     "symptoms": "Symptoms",
     "temperature": "Temperature",
     "mood": "Mood",
+    "energy": "Energy",
     "logPeriod": "Log Period",
     "logSymptoms": "Log Symptoms",
     "logTemperature": "Log Temperature",
-    "logMood": "Log Mood"
+    "logMood": "Log Mood",
+    "title": "Log",
+    "date": "Date",
+    "periodStartedToday": "Period started today",
+    "flowIntensity": "Flow intensity",
+    "notes": "Notes",
+    "notesPlaceholder": "Add a note...",
+    "saveEntry": "Save entry",
+    "flowLight": "Light",
+    "flowMedium": "Medium",
+    "flowHeavy": "Heavy",
+    "flowSpotting": "Spotting",
+    "energyVeryLow": "Very low",
+    "energyLow": "Low",
+    "energyNeutral": "Neutral",
+    "energyGood": "Good",
+    "energyHigh": "High",
+    "symptomCramps": "Cramps",
+    "symptomHeadache": "Headache",
+    "symptomBloating": "Bloating",
+    "symptomMoodSwings": "Mood swings",
+    "symptomFatigue": "Fatigue",
+    "symptomTenderBreasts": "Tender breasts",
+    "symptomAcne": "Acne",
+    "symptomBackPain": "Back pain"
   },
   "calendar": {
     "title": "Calendar",
     "insights": "Insights",
     "today": "Today",
     "logged": "Logged",
-    "predicted": "Predicted"
+    "predicted": "Predicted",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month"
   },
   "insights": {
     "title": "Insights",
     "avgCycle": "Average cycle length",
     "avgPeriod": "Average period length",
     "symptomCorrelations": "Symptom correlations",
-    "noData": "Log more days to see insights"
+    "noData": "Log more days to see insights",
+    "basedOnCycles": "Based on {count} cycle{suffix}",
+    "lastCycle": "Last cycle: {days} days",
+    "seeHistory": "See history"
   },
   "promo": {
     "ttcTitle": "Trying to conceive?",
@@ -67,6 +158,14 @@
     "cycleLength": "Cycle Length",
     "periodLength": "Period Length",
     "lastPeriod": "Last Period Date",
+    "language": "Language",
+    "exportData": "Export data",
+    "exportHint": "CSV for your doctor",
+    "shareApp": "Recommend the app",
+    "deleteData": "Delete my data",
+    "deleteBody": "This removes your cycle data from this device. Theme and language stay unchanged.",
+    "deleteConfirm": "Delete data",
+    "deleted": "Your Luna data was deleted from this device.",
     "save": "Save",
     "saved": "Settings saved"
   },

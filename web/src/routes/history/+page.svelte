@@ -1,26 +1,31 @@
 <script>
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
+  import { _ } from 'svelte-i18n';
   import { PebbleButton } from '$ds/index.js';
+  import { loadData } from '$lib/cycle-engine.js';
 
   let heroValue = $state('0');
-  let statusLine = $state('Start logging to see history');
+  let statusLine = $state('');
   let cycles = $state([]);
 
   onMount(() => {
-    const raw = localStorage.getItem('life-luna-data');
-    if (!raw) return;
-    const d = JSON.parse(raw);
+    const d = loadData();
     const periods = (d.log?.period ?? []).slice().sort((a, b) => new Date(a.date) - new Date(b.date));
     heroValue = String(periods.length);
     if (periods.length > 0) {
       const earliest = new Date(periods[0].date);
-      statusLine = `Since ${earliest.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' })}`;
+      statusLine = $_('history.since', {
+        values: { month: earliest.toLocaleDateString(undefined, { month: 'long', year: 'numeric' }) },
+        default: `Since ${earliest.toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}`
+      });
+    } else {
+      statusLine = $_('history.startLogging', { default: 'Start logging to see history' });
     }
     cycles = periods.map((p, i) => {
       if (i === 0) return null;
       const len = Math.round((new Date(p.date) - new Date(periods[i-1].date)) / 86400000);
-      const label = new Date(p.date).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+      const label = new Date(p.date).toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
       return { label, len };
     }).filter(Boolean).reverse();
   });
@@ -28,22 +33,22 @@
 
 <div class="screen" data-app="luna">
   <header>
-    <button class="back" onclick={() => goto('/insights')}>Back</button>
+    <button class="back" onclick={() => goto('/insights')}>{$_('history.back', { default: 'Back' })}</button>
   </header>
   <main class="hero">
     <div class="hero-display">
       <span class="hero-value">{heroValue}</span>
-      <span class="hero-label">Cycles tracked</span>
+      <span class="hero-label">{$_('history.title', { default: 'Cycles tracked' })}</span>
     </div>
     <p class="status">{statusLine}</p>
     {#if cycles.length === 0}
-      <PebbleButton label="Log today" size="lg" onclick={() => goto('/log')} />
+      <PebbleButton label={$_('home.logToday', { default: 'Log today' })} size="lg" onclick={() => goto('/log')} />
     {:else}
       <ul class="list">
         {#each cycles as c}
           <li class="row">
             <span class="row-label">{c.label}</span>
-            <span class="row-value">{c.len} days</span>
+            <span class="row-value">{c.len} {$_('common.days', { default: 'days' })}</span>
           </li>
         {/each}
       </ul>

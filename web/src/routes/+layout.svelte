@@ -8,21 +8,22 @@
   import TabBar from '$ds/TabBar.svelte';
   import DSPebbleDrawer from '$ds/DSPebbleDrawer.svelte';
   import { DSContactModal } from '$ds/index.js';
+  import { purgeLegacyCachesOnce } from '$sdk/src/stale-recovery.js';
   setupI18n();
 
-  const NAV_TABS = [
-    { id: 'home',      label: 'Accueil',    icon: 'home'      },
-    { id: 'calendar',  label: 'Calendrier', icon: 'calendar'  },
-    { id: 'insights',  label: 'Insights',   icon: 'bar-chart' },
-    { id: 'settings',  label: 'Réglages',   icon: 'settings'  },
-  ];
+  const NAV_TABS = $derived([
+    { id: 'home',     label: $_('nav.home', { default: 'Home' }),         icon: 'home'      },
+    { id: 'cycle',    label: $_('nav.cycle', { default: 'Cycle' }),       icon: 'calendar'  },
+    { id: 'insights', label: $_('nav.insights', { default: 'Insights' }), icon: 'bar-chart' },
+    { id: 'settings', label: $_('nav.settings', { default: 'Settings' }), icon: 'settings'  },
+  ]);
 
   let width = $state(0);
   let contactOpen = $state(false);
 
   const activeTab = $derived(
     $page.url.pathname === '/' ? 'home' :
-    $page.url.pathname.startsWith('/calendar') ? 'calendar' :
+    $page.url.pathname.startsWith('/cycle') ? 'cycle' :
     $page.url.pathname.startsWith('/insights') ? 'insights' :
     $page.url.pathname.startsWith('/settings') ? 'settings' : 'home'
   );
@@ -36,6 +37,8 @@
   import { initStorage } from '$lib/cycle-engine.js';
 
   onMount(async () => {
+    if (await purgeLegacyCachesOnce('luna')) return;
+
     // Init encrypted storage first — migrates legacy localStorage if needed
     await initStorage();
 
@@ -168,9 +171,9 @@
         {/each}
       </nav>
       <div class="sidebar-contact">
-        <button class="sidebar-contact-btn" onclick={() => contactOpen = true} aria-label="Nous contacter">
+        <button class="sidebar-contact-btn" onclick={() => contactOpen = true} aria-label={$_('contact.title', { default: 'Contact us' })}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          <span>Nous contacter</span>
+          <span>{$_('contact.title', { default: 'Contact us' })}</span>
         </button>
       </div>
     </aside>
@@ -256,14 +259,14 @@
   }
 
   .sidebar-header {
-    padding: 20px 16px 12px;
+    padding: var(--space-5) var(--space-4) var(--space-3);
     border-bottom: 1px solid var(--c-border, #f3f4f6);
   }
 
   .sidebar-brand {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: var(--space-2);
   }
 
   .sidebar-app-name {
@@ -359,7 +362,7 @@
 
   /* ── Page-level screen container ─────────────────────────────────── */
   :global(.screen) {
-    max-width: 780px;
+    max-width: 390px;
     width: 100%;
     min-width: 360px;
     margin: 0 auto;
@@ -384,7 +387,7 @@
     :global(.wide-grid) {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: var(--space-6, 24px);
+      gap: var(--space-6);
       align-items: start;
     }
   }
@@ -394,7 +397,7 @@
   }
 
   .sidebar-contact {
-    padding: 8px 8px 16px;
+    padding: var(--space-2) var(--space-2) var(--space-4);
     border-top: 1px solid var(--c-border, #f3f4f6);
   }
   .sidebar-contact-btn {

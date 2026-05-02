@@ -1,19 +1,25 @@
-<script>
+  <script>
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
-  import { PebbleButton, Icon, SegmentedRing, DSCard } from '$ds/index.js';
+  import { PebbleButton, Icon, DSCycleGraph, DSCard } from '$ds/index.js';
+  import { _, locale } from 'svelte-i18n';
   import { loadData, getCurrentPhase } from '$lib/cycle-engine.js';
   import FeatureTour from '$lib/components/FeatureTour.svelte';
 
   const PHASE_COLORS  = { menstrual:'#E57373', follicular:'#F48FB1', ovulation:'#CE93D8', luteal:'#9FA8DA', unknown:'#9D7BC9' };
-  const PHASE_LABELS  = { menstrual:'Menstrual', follicular:'Follicular', ovulation:'Ovulation', luteal:'Luteal', unknown:'—' };
-  const DAY_NAMES = ['Su','Mo','Tu','We','Th','Fr','Sa'];
-  const QUICK = [
-    { icon:'droplets',    label:'Period',      bg:'#FFCDD2', fg:'#C62828', type:'period'      },
-    { icon:'activity',    label:'Symptoms',    bg:'#FCE4EC', fg:'#AD1457', type:'symptoms'    },
-    { icon:'thermometer', label:'Temperature', bg:'#EDE7F6', fg:'#5E35B1', type:'temperature' },
-    { icon:'smile',       label:'Mood',        bg:'#FFF9C4', fg:'#F57F17', type:'mood'        },
-  ];
+  const PHASE_LABELS  = $derived({
+    menstrual: $_('phases.menstrual', { default: 'Menstrual' }),
+    follicular: $_('phases.follicular', { default: 'Follicular' }),
+    ovulation: $_('phases.ovulation', { default: 'Ovulation' }),
+    luteal: $_('phases.luteal', { default: 'Luteal' }),
+    unknown: '—'
+  });
+  const QUICK = $derived([
+    { icon:'droplets',    label: $_('logging.period', { default: 'Period' }),           bg:'#FFCDD2', fg:'#C62828', type:'period'      },
+    { icon:'activity',    label: $_('logging.symptoms', { default: 'Symptoms' }),       bg:'#FCE4EC', fg:'#AD1457', type:'symptoms'    },
+    { icon:'thermometer', label: $_('logging.temperature', { default: 'Temperature' }), bg:'#EDE7F6', fg:'#5E35B1', type:'temperature' },
+    { icon:'smile',       label: $_('logging.mood', { default: 'Mood' }),               bg:'#FFF9C4', fg:'#F57F17', type:'mood'        },
+  ]);
   const EMPATHY = [
     'Your body, your rhythm.',
     'Take a moment for yourself.',
@@ -37,18 +43,12 @@
   const weekDays = $derived(Array.from({length:7}, (_,i) => {
     const d = new Date(today);
     d.setDate(today.getDate() - 3 + i);
-    return d;
+    return {
+      date: d,
+      label: new Intl.DateTimeFormat($locale ?? 'en', { weekday: 'short' }).format(d)
+    };
   }));
 
-  const segments = $derived([
-    { label:'Menstrual',  color:'#E57373', value: settings.periodLength },
-    { label:'Follicular', color:'#F48FB1', value: Math.floor(settings.cycleLength * 0.35) },
-    { label:'Ovulation',  color:'#CE93D8', value: Math.floor(settings.cycleLength * 0.14) },
-    { label:'Luteal',     color:'#9FA8DA', value: Math.max(1, settings.cycleLength - settings.periodLength - Math.floor(settings.cycleLength * 0.49)) },
-  ]);
-
-  const PHASE_IDX = { menstrual:0, follicular:1, ovulation:2, luteal:3, unknown:0 };
-  const phaseIndex = $derived(PHASE_IDX[cycleInfo.phase] ?? 0);
   const empathy    = $derived(EMPATHY[today.getDay()]);
 
   function dotColor(d) {
@@ -102,31 +102,29 @@
         <!-- Setup banner (compact) — ring still shows with default 28-day cycle -->
         <div class="setup-banner">
           <div class="setup-text">
-            <p class="setup-msg">Set up your cycle to get personalised predictions</p>
+            <p class="setup-msg">{$_('home.setupBanner', { default: 'Set up your cycle to get personalised predictions' })}</p>
           </div>
-          <PebbleButton label="Get started" size="sm" onclick={() => goto('/onboarding')} />
+          <PebbleButton label={$_('home.getStarted', { default: 'Get started' })} size="sm" onclick={() => goto('/onboarding')} />
         </div>
       {/if}
 
       <!-- ── 1. Cycle ring card — always visible ── -->
       <DSCard class="ring-card" padding>
-        <SegmentedRing
-          segments={segments}
-          currentIndex={phaseIndex}
-          centerText={hasData ? String(cycleInfo.dayOfCycle) : '?'}
-          centerSubtext="Day"
-          size={200}
+        <DSCycleGraph
+          cycleLength={settings.cycleLength}
+          currentDay={hasData ? cycleInfo.dayOfCycle : null}
+          size={210}
         />
         {#if hasData}
           <p class="phase-name" style="color:{PHASE_COLORS[cycleInfo.phase]}">{PHASE_LABELS[cycleInfo.phase]}</p>
           {#if cycleInfo.daysUntilNextPeriod > 0}
-            <p class="next-hint">Next period in {cycleInfo.daysUntilNextPeriod} days</p>
+            <p class="next-hint">{$_('cycle.nextPeriod', { values: { days: cycleInfo.daysUntilNextPeriod }, default: `Next period in ${cycleInfo.daysUntilNextPeriod} days` })}</p>
           {:else if cycleInfo.daysUntilNextPeriod === 0}
-            <p class="next-hint" style="color:#E57373">Period expected today</p>
+            <p class="next-hint" style="color:#E57373">{$_('cycle.periodExpectedToday', { default: 'Period expected today' })}</p>
           {/if}
         {:else}
           <p class="phase-name" style="color:var(--c-text-secondary)">—</p>
-          <p class="next-hint">Add your last period date to see predictions</p>
+          <p class="next-hint">{$_('home.addLastPeriod', { default: 'Add your last period date to see predictions' })}</p>
         {/if}
       </DSCard>
 
@@ -134,18 +132,18 @@
 
         <!-- ── 2. Week strip ── -->
         <DSCard class="week-strip" role="list" aria-label="This week">
-          {#each weekDays as day (fmtDate(day))}
-            <div class="wd" class:wd-today={isToday(day)} role="listitem">
-              <span class="wd-name">{DAY_NAMES[day.getDay()]}</span>
-              <div class="wd-num" class:wd-num-today={isToday(day)}>{day.getDate()}</div>
-              <div class="wd-dot" style="background:{dotColor(day)}"></div>
+          {#each weekDays as day (fmtDate(day.date))}
+            <div class="wd" class:wd-today={isToday(day.date)} role="listitem">
+              <span class="wd-name">{day.label}</span>
+              <div class="wd-num" class:wd-num-today={isToday(day.date)}>{day.date.getDate()}</div>
+              <div class="wd-dot" style="background:{dotColor(day.date)}"></div>
             </div>
           {/each}
         </DSCard>
 
         <!-- ── 3. Quick log ── -->
         <DSCard padding>
-          <p class="section-title">Quick log</p>
+          <p class="section-title">{$_('home.quickLog', { default: 'Quick log' })}</p>
           <div class="qa-row">
             {#each QUICK as qa}
               <button class="qa-btn" onclick={() => goto('/log?type=' + qa.type)} aria-label="Log {qa.label}">
@@ -166,25 +164,25 @@
       {/if}
 
       <div class="log-cta">
-        <PebbleButton label="Log today" onclick={() => goto('/log')} />
+        <PebbleButton label={$_('home.logToday', { default: 'Log today' })} onclick={() => goto('/log')} />
       </div>
     </main>
 
     <!-- ── Screen 2: Calendar preview (wide ≥1024px) ── -->
     <aside class="wide-screen-2">
       <DSCard class="calendar-preview" padding>
-        <p class="section-title">This month</p>
+        <p class="section-title">{$_('home.thisMonth', { default: 'This month' })}</p>
         {#if hasData}
           <p class="preview-hint">Phase: <strong style="color:{PHASE_COLORS[cycleInfo.phase]}">{PHASE_LABELS[cycleInfo.phase]}</strong></p>
-          <p class="preview-hint">Day {cycleInfo.dayOfCycle} of {settings.cycleLength}</p>
+          <p class="preview-hint">{$_('cycle.dayOfLength', { values: { day: cycleInfo.dayOfCycle, length: settings.cycleLength }, default: `Day ${cycleInfo.dayOfCycle} of ${settings.cycleLength}` })}</p>
           {#if cycleInfo.daysUntilNextPeriod > 0}
-            <p class="preview-hint">Next period in <strong>{cycleInfo.daysUntilNextPeriod}</strong> days</p>
+            <p class="preview-hint">{$_('cycle.nextPeriod', { values: { days: cycleInfo.daysUntilNextPeriod }, default: `Next period in ${cycleInfo.daysUntilNextPeriod} days` })}</p>
           {/if}
         {:else}
-          <p class="preview-hint">Log your last period to see calendar predictions.</p>
+          <p class="preview-hint">{$_('home.logLastPeriod', { default: 'Log your last period to see calendar predictions.' })}</p>
         {/if}
         <div class="preview-cta">
-          <PebbleButton label="View calendar" size="sm" onclick={() => goto('/calendar')} />
+          <PebbleButton label={$_('home.viewCycle', { default: 'View cycle' })} size="sm" onclick={() => goto('/cycle')} />
         </div>
       </DSCard>
     </aside>
@@ -194,7 +192,7 @@
 </div>
 
 <style>
-  .page { min-height: 100dvh; background: var(--c-bg); color: var(--c-text); }
+  .page { max-width: 390px; margin: 0 auto; min-height: 100dvh; display: flex; flex-direction: column; background: var(--c-bg); color: var(--c-text); }
   .content { flex: 1; display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-6) var(--space-4) calc(80px + env(safe-area-inset-bottom, 0px)); }
 
   @media (min-width: 768px) {
@@ -205,6 +203,7 @@
   .wide-grid { display: flex; flex-direction: column; }
 
   @media (min-width: 1024px) {
+    .page { max-width: none; }
     .wide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6, 24px); align-items: start; padding: var(--space-6); }
   }
 

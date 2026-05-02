@@ -2,23 +2,23 @@
   // Luna Export - LEAN: hero = data points, CTA = download CSV
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
+  import { _ } from 'svelte-i18n';
   import { PebbleButton } from '$ds/index.js';
-
-  const KEY = 'life-luna-data';
+  import { loadData } from '$lib/cycle-engine.js';
 
   let periodCount = $state(0);
   let symptomDays = $state(0);
   let tempDays = $state(0);
 
   onMount(() => {
-    const d = JSON.parse(localStorage.getItem(KEY) ?? '{}');
+    const d = loadData();
     periodCount = (d.log?.period ?? []).length;
     symptomDays = (d.log?.symptoms ?? []).length;
     tempDays = (d.log?.temperature ?? []).length;
   });
 
   function exportCSV() {
-    const d = JSON.parse(localStorage.getItem(KEY) ?? '{}');
+    const d = loadData();
     const rows = [['Date', 'Flow', 'Mood', 'Energy', 'Symptoms', 'Temperature_C']];
 
     const allDates = new Set([
@@ -52,24 +52,27 @@
 
 <div class="screen" data-app="luna">
   <header>
-    <button class="back" onclick={() => goto('/settings')}>Back</button>
-    <h1 class="title">Export data</h1>
+    <button class="back" onclick={() => goto('/settings')}>{$_('history.back', { default: 'Back' })}</button>
+    <h1 class="title">{$_('export.title', { default: 'Export data' })}</h1>
   </header>
 
   <main class="hero">
     <p class="hero-val brand-text">{periodCount}</p>
-    <p class="hero-lbl">Period entries</p>
-    <p class="status">{symptomDays} symptom days · {tempDays} temp readings</p>
+    <p class="hero-lbl">{$_('export.periodEntries', { default: 'Period entries' })}</p>
+    <p class="status">{$_('export.status', {
+      values: { symptoms: symptomDays, temps: tempDays },
+      default: `${symptomDays} symptom days · ${tempDays} temp readings`
+    })}</p>
 
     <div class="info">
-      <p class="info-text">Export your cycle data as CSV to share with your gynecologist or import into another app.</p>
+      <p class="info-text">{$_('export.body', { default: 'Export your cycle data as CSV to share with your gynecologist or import into another app.' })}</p>
       <div class="privacy-note">
-        <p>Data never leaves your device. Export is generated locally.</p>
+        <p>{$_('export.privacy', { default: 'Data never leaves your device. Export is generated locally.' })}</p>
       </div>
     </div>
 
-    <PebbleButton label="Download CSV" onclick={exportCSV} style="--pebble-brand:var(--c-brand)" />
-    <button class="cancel" onclick={() => goto('/settings')}>Cancel</button>
+    <PebbleButton label={$_('export.download', { default: 'Download CSV' })} onclick={exportCSV} style="--pebble-brand:var(--c-brand)" />
+    <button class="cancel" onclick={() => goto('/settings')}>{$_('common.cancel', { default: 'Cancel' })}</button>
   </main>
 </div>
 

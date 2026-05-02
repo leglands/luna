@@ -1,9 +1,16 @@
 <script>
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
+  import { _ } from 'svelte-i18n';
   import { PebbleButton, DSFloatingNav, DaisyMenu } from '$ds/index.js';
+  import { loadData } from '$lib/cycle-engine.js';
 
-  const TABS = [{id:'home',label:'Home',icon:'home'},{id:'cycle',label:'Cycle',icon:'calendar'},{id:'insights',label:'Insights',icon:'bar-chart'},{id:'settings',label:'Settings',icon:'settings'}];
+  const TABS = $derived([
+    { id:'home', label: $_('nav.home', { default: 'Home' }), icon:'home' },
+    { id:'cycle', label: $_('nav.cycle', { default: 'Cycle' }), icon:'calendar' },
+    { id:'insights', label: $_('nav.insights', { default: 'Insights' }), icon:'bar-chart' },
+    { id:'settings', label: $_('nav.settings', { default: 'Settings' }), icon:'settings' }
+  ]);
 
   let heroValue = $state('—');
   let statusLine = $state('Based on 0 cycles');
@@ -19,9 +26,7 @@
   }
 
   onMount(() => {
-    const raw = localStorage.getItem('life-luna-data');
-    if (!raw) return;
-    const d = JSON.parse(raw);
+    const d = loadData();
     const periods = d.log?.period ?? [];
     const sorted = [...periods].sort((a, b) => new Date(a.date) - new Date(b.date));
     const avg = avgLen(sorted);
@@ -29,28 +34,38 @@
       ? Math.round((new Date(sorted[sorted.length-1].date) - new Date(sorted[sorted.length-2].date)) / 86400000)
       : null;
     heroValue = avg ? String(avg) : '—';
-    statusLine = `Based on ${sorted.length} cycle${sorted.length !== 1 ? 's' : ''}`;
-    if (d.settings?.periodLength) hint1 = `Avg period: ${d.settings.periodLength} days`;
-    if (lastCycleLen) hint2 = `Last cycle: ${lastCycleLen} days`;
+    statusLine = $_('insights.basedOnCycles', {
+      values: { count: sorted.length, suffix: sorted.length !== 1 ? 's' : '' },
+      default: `Based on ${sorted.length} cycle${sorted.length !== 1 ? 's' : ''}`
+    });
+    if (d.settings?.periodLength) {
+      hint1 = `${$_('insights.avgPeriod', { default: 'Average period length' })}: ${d.settings.periodLength} ${$_('common.days', { default: 'days' })}`;
+    }
+    if (lastCycleLen) {
+      hint2 = $_('insights.lastCycle', {
+        values: { days: lastCycleLen },
+        default: `Last cycle: ${lastCycleLen} days`
+      });
+    }
   });
 
   let daisyOpen = $state(false);
-  const DAISY_ITEMS = [
-    { icon: 'droplet',    label: 'Règles',    onclick: () => goto('/cycle') },
-    { icon: 'thermometer',label: 'Symptôme',  onclick: () => goto('/cycle') },
-    { icon: 'smile',      label: 'Humeur',    onclick: () => goto('/insights') },
-    { icon: 'moon',       label: 'Ovulation', onclick: () => goto('/fertility') },
-  ];
+  const DAISY_ITEMS = $derived([
+    { icon: 'droplet', label: $_('logging.period', { default: 'Period' }), onclick: () => goto('/cycle') },
+    { icon: 'thermometer', label: $_('logging.symptoms', { default: 'Symptoms' }), onclick: () => goto('/cycle') },
+    { icon: 'smile', label: $_('logging.mood', { default: 'Mood' }), onclick: () => goto('/insights') },
+    { icon: 'moon', label: $_('phases.ovulation', { default: 'Ovulation' }), onclick: () => goto('/fertility') },
+  ]);
 </script>
 
 <div class="screen" data-app="luna">
   <main class="hero">
     <div class="hero-display">
       <span class="hero-value">{heroValue}</span>
-      <span class="hero-label">Avg cycle (days)</span>
+      <span class="hero-label">{$_('insights.avgCycle', { default: 'Average cycle length' })}</span>
     </div>
     <p class="status">{statusLine}</p>
-    <PebbleButton label="See history" size="lg" onclick={() => goto('/history')} />
+    <PebbleButton label={$_('insights.seeHistory', { default: 'See history' })} size="lg" onclick={() => goto('/history')} />
     {#if hint1}<p class="hint">{hint1}</p>{/if}
     {#if hint2}<p class="hint secondary">{hint2}</p>{/if}
   </main>

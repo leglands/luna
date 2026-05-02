@@ -1,15 +1,13 @@
 <script>
   import { goto } from '$app/navigation';
+  import { _ } from 'svelte-i18n';
   import PebbleButton from '$ds/PebbleButton.svelte';
   import Icon from '$ds/Icon.svelte';
+  import { loadData, saveData } from '$lib/cycle-engine.js';
 
   // Symptoms: ACOG PMS criteria (Am J Obstet Gynecol 2000)
-  const KEY = 'life-luna-data';
   const BRAND = 'luna';
   const todayISO = new Date().toISOString().slice(0, 10);
-  const todayObj = new Date();
-  const weekday = todayObj.toLocaleDateString('en-US', { weekday: 'long' });
-  const dateStr = todayObj.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
 
   let date = todayISO;
   let periodStart = false;
@@ -18,24 +16,31 @@
   let mood = 0;
   let energy = 0;
   let notes = '';
-  const ENERGY_LABELS = ['', 'Very low', 'Low', 'Neutral', 'Good', 'High'];
+  const ENERGY_LABELS = $derived([
+    '',
+    $_('logging.energyVeryLow', { default: 'Very low' }),
+    $_('logging.energyLow', { default: 'Low' }),
+    $_('logging.energyNeutral', { default: 'Neutral' }),
+    $_('logging.energyGood', { default: 'Good' }),
+    $_('logging.energyHigh', { default: 'High' })
+  ]);
 
-  const FLOW_OPTIONS = [
-    { value: 'light', label: 'Light' },
-    { value: 'medium', label: 'Medium' },
-    { value: 'heavy', label: 'Heavy' },
-    { value: 'spotting', label: 'Spotting' },
-  ];
-  const SYMPTOMS = [
-    { id: 'cramps', label: 'Cramps' },
-    { id: 'headache', label: 'Headache' },
-    { id: 'bloating', label: 'Bloating' },
-    { id: 'mood_swings', label: 'Mood swings' },
-    { id: 'fatigue', label: 'Fatigue' },
-    { id: 'tender_breasts', label: 'Tender breasts' },
-    { id: 'acne', label: 'Acne' },
-    { id: 'back_pain', label: 'Back pain' },
-  ];
+  const FLOW_OPTIONS = $derived([
+    { value: 'light', label: $_('logging.flowLight', { default: 'Light' }) },
+    { value: 'medium', label: $_('logging.flowMedium', { default: 'Medium' }) },
+    { value: 'heavy', label: $_('logging.flowHeavy', { default: 'Heavy' }) },
+    { value: 'spotting', label: $_('logging.flowSpotting', { default: 'Spotting' }) },
+  ]);
+  const SYMPTOMS = $derived([
+    { id: 'cramps', label: $_('logging.symptomCramps', { default: 'Cramps' }) },
+    { id: 'headache', label: $_('logging.symptomHeadache', { default: 'Headache' }) },
+    { id: 'bloating', label: $_('logging.symptomBloating', { default: 'Bloating' }) },
+    { id: 'mood_swings', label: $_('logging.symptomMoodSwings', { default: 'Mood swings' }) },
+    { id: 'fatigue', label: $_('logging.symptomFatigue', { default: 'Fatigue' }) },
+    { id: 'tender_breasts', label: $_('logging.symptomTenderBreasts', { default: 'Tender breasts' }) },
+    { id: 'acne', label: $_('logging.symptomAcne', { default: 'Acne' }) },
+    { id: 'back_pain', label: $_('logging.symptomBackPain', { default: 'Back pain' }) },
+  ]);
   const MOOD_COLORS = ['#D9D9D9', '#B0E0A8', '#A7D8F0', '#FFD580', '#FFB3B3'];
 
   function toggleSymptom(id) {
@@ -43,9 +48,8 @@
   }
 
   function save() {
-    let data = JSON.parse(localStorage.getItem(KEY) || '{"entries":[]}');
+    let data = loadData();
     if (!data.entries) data.entries = [];
-    // Remove existing entry for date
     data.entries = data.entries.filter(e => e.date !== date);
     data.entries.push({
       date,
@@ -56,30 +60,30 @@
       energy,
       notes: notes.trim()
     });
-    localStorage.setItem(KEY, JSON.stringify(data));
+    saveData(data);
     goto('/');
   }
 </script>
 
 <div class="screen" data-app="luna">
   <header>
-    <button class="back" aria-label="Back" onclick={() => goto('/')}><Icon name="arrow-left" size={22} color="var(--c-brand)" /></button>
-    <h1 class="title">Log</h1>
+    <button class="back" aria-label={$_('history.back', { default: 'Back' })} onclick={() => goto('/')}><Icon name="arrow-left" size={22} color="var(--c-brand)" /></button>
+    <h1 class="title">{$_('logging.title', { default: 'Log' })}</h1>
   </header>
 
   <main class="content">
     <section class="date-section">
-      <label class="section-label">Date</label>
+      <label class="section-label">{$_('logging.date', { default: 'Date' })}</label>
       <input class="date-input" type="date" bind:value={date} max={todayISO} />
     </section>
     <section class="section">
       <button class="period-toggle" class:active={periodStart} onclick={() => periodStart = !periodStart}>
-        Period started today
+        {$_('logging.periodStartedToday', { default: 'Period started today' })}
       </button>
     </section>
     {#if periodStart}
     <section class="section">
-      <label class="section-label">Flow intensity</label>
+      <label class="section-label">{$_('logging.flowIntensity', { default: 'Flow intensity' })}</label>
       <div class="chip-row">
         {#each FLOW_OPTIONS as opt}
           <button class="chip" class:active={flow === opt.value} onclick={() => flow = opt.value}>{opt.label}</button>
@@ -89,7 +93,7 @@
     {/if}
 
     <section class="section">
-      <label class="section-label">Mood</label>
+      <label class="section-label">{$_('logging.mood', { default: 'Mood' })}</label>
       <div class="mood-row">
         {#each [1,2,3,4,5] as i}
           <button class="mood-dot" class:active={mood === i} style="background:{mood === i ? 'var(--c-brand)' : MOOD_COLORS[i-1]};" onclick={() => mood = mood === i ? 0 : i}></button>
@@ -98,7 +102,7 @@
     </section>
 
     <section class="section">
-      <p class="section-label">Energy {energy > 0 ? '— ' + ENERGY_LABELS[energy] : ''}</p>
+      <p class="section-label">{$_('logging.energy', { default: 'Energy' })}{energy > 0 ? ` — ${ENERGY_LABELS[energy]}` : ''}</p>
       <div class="scale-row">
         {#each [1,2,3,4,5] as i}
           <button
@@ -111,7 +115,7 @@
     </section>
 
     <section class="section">
-      <label class="section-label">Symptoms</label>
+      <label class="section-label">{$_('logging.symptoms', { default: 'Symptoms' })}</label>
       <div class="chip-row wrap">
         {#each SYMPTOMS as s}
           <button class="chip" class:active={symptoms.includes(s.id)} onclick={() => toggleSymptom(s.id)}>{s.label}</button>
@@ -120,11 +124,11 @@
     </section>
 
     <section class="section">
-      <label class="section-label">Notes</label>
-      <textarea class="notes" bind:value={notes} rows="2" maxlength="200" placeholder="Add a note..."></textarea>
+      <label class="section-label">{$_('logging.notes', { default: 'Notes' })}</label>
+      <textarea class="notes" bind:value={notes} rows="2" maxlength="200" placeholder={$_('logging.notesPlaceholder', { default: 'Add a note...' })}></textarea>
     </section>
     <div class="cta">
-      <PebbleButton brand={BRAND} label="Save entry" onclick={save} />
+      <PebbleButton brand={BRAND} label={$_('logging.saveEntry', { default: 'Save entry' })} onclick={save} />
     </div>
   </main>
 </div>

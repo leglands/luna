@@ -1,11 +1,14 @@
 <script>
   import { goto } from '$app/navigation';
+  import { _ } from 'svelte-i18n';
   import { PebbleButton } from '$ds/index.js';
 
   const today = new Date().toISOString().split('T')[0];
   let lastPeriodDate = $state('');
   let cycleLength    = $state(28);
   let periodLength   = $state(5);
+
+  import { saveData } from '$lib/cycle-engine.js';
 
   function complete() {
     const data = {
@@ -16,7 +19,7 @@
       },
       log: { period: [], symptoms: [], temperature: [], mood: [], energy: [] },
     };
-    localStorage.setItem('life-luna-data', JSON.stringify(data));
+    saveData(data);
     localStorage.setItem('life-luna-onboarded', '1');
     goto('/');
   }
@@ -35,16 +38,16 @@
         <path d="M50 14 A28 28 0 1 0 50 66 A18 18 0 1 1 50 14Z"
               fill="none" stroke="var(--c-brand)" stroke-width="2" stroke-linecap="round"/>
       </svg>
-      <h1 class="ob-title">Welcome to Luna</h1>
-      <p class="ob-sub">Your cycle, on your device. Private by design.</p>
+      <h1 class="ob-title">{$_('onboarding.title', { default: 'Welcome to Luna' })}</h1>
+      <p class="ob-sub">{$_('onboarding.subtitle', { default: 'Your cycle, on your device. Private by design.' })}</p>
     </div>
 
     <div class="ob-form">
 
       <div class="field">
         <label class="field-label" for="last-period">
-          Last period start
-          <span class="field-hint">Optional</span>
+          {$_('onboarding.lastPeriodStart', { default: 'Last period start' })}
+          <span class="field-hint">{$_('common.optional', { default: 'Optional' })}</span>
         </label>
         <input
           id="last-period"
@@ -57,8 +60,8 @@
 
       <div class="field">
         <label class="field-label" for="cycle-len">
-          Cycle length
-          <span class="field-value">{cycleLength} days</span>
+          {$_('onboarding.cycleLength', { default: 'Cycle length' })}
+          <span class="field-value">{cycleLength} {$_('common.days', { default: 'days' })}</span>
         </label>
         <input
           id="cycle-len"
@@ -75,8 +78,8 @@
 
       <div class="field">
         <label class="field-label" for="period-len">
-          Period length
-          <span class="field-value">{periodLength} days</span>
+          {$_('onboarding.periodLength', { default: 'Period length' })}
+          <span class="field-value">{periodLength} {$_('common.days', { default: 'days' })}</span>
         </label>
         <input
           id="period-len"
@@ -94,8 +97,8 @@
     </div>
 
     <div class="ob-actions">
-      <PebbleButton label="Start tracking" onclick={complete} />
-      <button class="skip-btn" onclick={skip}>Skip for now</button>
+      <PebbleButton label={$_('onboarding.startTracking', { default: 'Start tracking' })} onclick={complete} />
+      <button class="skip-btn" onclick={skip}>{$_('onboarding.skipForNow', { default: 'Skip for now' })}</button>
     </div>
 
   </div>
