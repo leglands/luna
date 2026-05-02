@@ -123,7 +123,6 @@
             <p class="next-hint" style="color:#E57373">{$_('cycle.periodExpectedToday', { default: 'Period expected today' })}</p>
           {/if}
         {:else}
-          <p class="phase-name" style="color:var(--c-text-secondary)">—</p>
           <p class="next-hint">{$_('home.addLastPeriod', { default: 'Add your last period date to see predictions' })}</p>
         {/if}
       </DSCard>
