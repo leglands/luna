@@ -1,18 +1,15 @@
 <script>
-  import { onMount } from 'svelte';
+  import { browser } from '$app/environment';
   import { goto } from '$app/navigation';
   import { _ } from 'svelte-i18n';
-  import { PebbleButton, DSFloatingNav, DaisyMenu, Modal, DSButton, DSUndoToast } from '$ds/index.js';
-  import DSShareSheet from '$ds/DSShareSheet.svelte';
-  import Icon from '$ds/Icon.svelte';
+  import { PebbleButton, DSFloatingNav, DaisyMenu } from '$ds/index.js';
   import { getShareConfig } from '$ds/share-config.js';
-  import { loadData, updateSettings, clearStoredData, restoreStoredData } from '$lib/cycle-engine.js';
+  import { initStorage, loadData, updateSettings, clearStoredData, restoreStoredData } from '$lib/cycle-engine.js';
   import { LOCALES, detectLocale, setLocale, setupI18n } from '$lib/i18n.js';
 
   setupI18n();
 
   const shareConfig = getShareConfig('luna');
-  let shareOpen = $state(false);
 
   const TABS = $derived([
     { id:'home',      label: $_('nav.home', { default: 'Home' }),         icon:'home' },
@@ -29,6 +26,8 @@
   let deleteModalOpen = $state(false);
   let undoDeleteOpen = $state(false);
   let undoSnapshot = $state(null);
+  let undoTimer = $state(null);
+  let didBoot = false;
 
   function applyForm(data) {
     cycleLength = data.settings?.cycleLength ?? 28;
@@ -36,9 +35,14 @@
     cycleStartDate = data.settings?.lastPeriodDate ?? '';
   }
 
-  onMount(() => {
-    applyForm(loadData());
-    selectedLocale = detectLocale();
+  $effect(() => {
+    if (!browser || didBoot) return;
+    didBoot = true;
+    void (async () => {
+      await initStorage();
+      applyForm(loadData());
+      selectedLocale = detectLocale();
+    })();
   });
 
   function save() {
@@ -50,6 +54,18 @@
   function changeLocale(code) {
     selectedLocale = code;
     setLocale(code);
+  }
+
+  async function shareApp() {
+    try {
+      if (navigator.share) {
+        await navigator.share(shareConfig);
+        return;
+      }
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(shareConfig.url);
+      }
+    } catch {}
   }
 
   function snapshotLocalFlag(key) {
@@ -77,20 +93,29 @@
     applyForm({ settings: { cycleLength: 28, periodLength: 5, lastPeriodDate: null } });
     deleteModalOpen = false;
     undoDeleteOpen = true;
+    if (undoTimer) clearTimeout(undoTimer);
+    undoTimer = setTimeout(() => {
+      finalizeDeleteData();
+    }, 30000);
   }
 
   async function undoDeleteData() {
     if (!undoSnapshot) return;
+    if (undoTimer) clearTimeout(undoTimer);
     await restoreStoredData(undoSnapshot.data);
     restoreLocalFlag('life-luna-onboarded', undoSnapshot.onboarded);
     restoreLocalFlag('life-luna-tour-pending', undoSnapshot.tourPending);
     restoreLocalFlag('life-luna-tour-done', undoSnapshot.tourDone);
     applyForm(undoSnapshot.data);
     undoSnapshot = null;
+    undoDeleteOpen = false;
   }
 
   function finalizeDeleteData() {
+    if (undoTimer) clearTimeout(undoTimer);
+    undoTimer = null;
     undoSnapshot = null;
+    undoDeleteOpen = false;
     goto('/onboarding');
   }
 
@@ -135,32 +160,36 @@
       </button>
     </div>
     <div class="rows" style="margin-top:0">
-      <button class="share-row" onclick={() => shareOpen = true} aria-label={$_('settings.shareApp', { default: 'Recommend the app' })}>
-        <span class="share-row-icon">
-          <Icon name="share-2" size={20} />
-        </span>
+      <button class="share-row" onclick={() => { void shareApp(); }} aria-label={$_('settings.shareApp', { default: 'Recommend the app' })}>
+        <span class="share-row-icon" aria-hidden="true">↗</span>
         <span class="share-row-label">{$_('settings.shareApp', { default: 'Recommend the app' })}</span>
-        <Icon name="chevron-right" size={16} class="share-row-chevron" />
+        <span class="share-row-chevron" aria-hidden="true">›</span>
       </button>
     </div>
     <div class="rows rows--danger" style="margin-top:0">
       <button class="share-row share-row--danger" onclick={() => deleteModalOpen = true}>
-        <span class="share-row-icon">
-          <Icon name="trash-2" size={20} />
-        </span>
+        <span class="share-row-icon" aria-hidden="true">×</span>
         <span class="share-row-label">{$_('settings.deleteData', { default: 'Delete my data' })}</span>
-        <Icon name="chevron-right" size={16} class="share-row-chevron" />
+        <span class="share-row-chevron" aria-hidden="true">›</span>
       </button>
     </div>
+    {#if deleteModalOpen}
+      <div class="danger-card">
+        <p class="danger-copy">{$_('settings.deleteBody', { default: 'This removes your cycle data from this device. Theme and language stay unchanged.' })}</p>
+        <div class="danger-actions">
+          <button class="secondary-btn" onclick={() => deleteModalOpen = false}>{$_('common.cancel', { default: 'Cancel' })}</button>
+          <button class="danger-btn" onclick={() => { void confirmDeleteData(); }}>{$_('settings.deleteConfirm', { default: 'Delete data' })}</button>
+        </div>
+      </div>
+    {/if}
+    {#if undoDeleteOpen}
+      <div class="undo-banner" role="status" aria-live="polite">
+        <span>{$_('settings.deleted', { default: 'Your Luna data was deleted from this device.' })}</span>
+        <button class="undo-btn" onclick={() => { void undoDeleteData(); }}>{$_('common.undo', { default: 'Undo' })}</button>
+      </div>
+    {/if}
     <PebbleButton label={$_('settings.save', { default: 'Save' })} size="lg" onclick={save} />
   </main>
-  <DSShareSheet
-    bind:open={shareOpen}
-    url={shareConfig.url}
-    title={shareConfig.title}
-    text={shareConfig.text}
-    onclose={() => shareOpen = false}
-  />
   <DSFloatingNav
   tabs={TABS}
   active="settings"
@@ -170,29 +199,6 @@
    bind:daisyOpen
 />
 <DaisyMenu open={daisyOpen} onclose={() => daisyOpen = false} items={DAISY_ITEMS} />
-<Modal
-  title={$_('settings.deleteData', { default: 'Delete my data' })}
-  bind:open={deleteModalOpen}
-  onclose={() => deleteModalOpen = false}
->
-  {#snippet children()}
-    <p class="modal-copy">{$_('settings.deleteBody', { default: 'This removes your cycle data from this device. Theme and language stay unchanged.' })}</p>
-  {/snippet}
-  {#snippet footer()}
-    <DSButton variant="secondary" onclick={() => deleteModalOpen = false}>{$_('common.cancel', { default: 'Cancel' })}</DSButton>
-    <DSButton variant="danger" onclick={() => { void confirmDeleteData(); }}>{$_('settings.deleteConfirm', { default: 'Delete data' })}</DSButton>
-  {/snippet}
-</Modal>
-<div class="undo-wrap">
-  <DSUndoToast
-    bind:open={undoDeleteOpen}
-    message={$_('settings.deleted', { default: 'Your Luna data was deleted from this device.' })}
-    undoLabel={$_('common.undo', { default: 'Undo' })}
-    duration={30000}
-    onundo={() => { void undoDeleteData(); }}
-    ondismiss={finalizeDeleteData}
-  />
-</div>
 </div>
 
 <style>
@@ -219,8 +225,13 @@
   .share-row--danger { background: color-mix(in srgb, var(--c-error) 8%, var(--c-surface-raised, #f5f5f5)); }
   .share-row--danger .share-row-icon,
   .share-row--danger .share-row-label { color: var(--c-error); }
-  .modal-copy { margin: 0; line-height: 1.5; color: var(--c-text); }
-  .undo-wrap { position: fixed; inset-inline: 0; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); display: flex; justify-content: center; pointer-events: none; z-index: var(--z-modal); }
-  .undo-wrap :global(.undo-toast) { pointer-events: auto; }
+  .danger-card { width: 100%; max-width: 320px; border: 1px solid color-mix(in srgb, var(--c-error) 20%, var(--c-border)); border-radius: 16px; padding: 16px; background: color-mix(in srgb, var(--c-error) 6%, var(--c-surface)); display: flex; flex-direction: column; gap: 12px; }
+  .danger-copy { margin: 0; line-height: 1.5; color: var(--c-text); }
+  .danger-actions { display: flex; gap: 10px; justify-content: flex-end; }
+  .secondary-btn, .danger-btn, .undo-btn { min-height: 44px; border-radius: 999px; border: none; padding: 0 16px; font: inherit; cursor: pointer; }
+  .secondary-btn { background: var(--c-surface-raised); color: var(--c-text); }
+  .danger-btn { background: var(--c-error); color: white; }
+  .undo-banner { width: 100%; max-width: 320px; border-radius: 16px; padding: 14px 16px; background: var(--c-surface-raised); box-shadow: var(--shadow-md); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .undo-btn { background: transparent; color: var(--c-brand); padding-inline: 0; }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
