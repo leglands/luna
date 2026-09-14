@@ -107,6 +107,11 @@
     publisher: { '@type': 'Organization', name: 'Macaron Software', url: 'https://macaron-software.com' },
   });
 
+  const canonicalPath = $derived(
+    $page.url.pathname === '/' ? '/' : `/${$page.url.pathname.replace(/^\/+|\/+$/g, '')}/`
+  );
+  const canonicalUrl = $derived(`${BASE_URL}${canonicalPath}`);
+
   onMount(() => {
     const detected = detectLocale();
     setLocale(detected);
@@ -118,9 +123,9 @@
 <svelte:head>
   <title>{SEO_TITLE[$locale ?? 'en'] ?? SEO_TITLE['en']}</title>
   <meta name="description" content={SEO_DESC[$locale ?? 'en'] ?? SEO_DESC['en']} />
-  <link rel="canonical" href={BASE_URL} />
+  <link rel="canonical" href={canonicalUrl} />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content={BASE_URL} />
+  <meta property="og:url" content={canonicalUrl} />
   <meta property="og:site_name" content="Luna" />
   <meta property="og:title" content={SEO_TITLE[$locale ?? 'en'] ?? SEO_TITLE['en']} />
   <meta property="og:description" content={SEO_DESC[$locale ?? 'en'] ?? SEO_DESC['en']} />
@@ -131,9 +136,9 @@
   <meta name="twitter:description" content={SEO_DESC[$locale ?? 'en'] ?? SEO_DESC['en']} />
   <meta name="twitter:image" content="{BASE_URL}/og-image.png" />
   {#each ALL_LOCALES as lang}
-    <link rel="alternate" hreflang={lang} href={BASE_URL} />
+    <link rel="alternate" hreflang={lang} href={canonicalUrl} />
   {/each}
-  <link rel="alternate" hreflang="x-default" href={BASE_URL} />
+  <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
   {@html `<script type="application/ld+json">${jsonLd}</script>`}
 </svelte:head>
 

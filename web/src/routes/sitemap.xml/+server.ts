@@ -1,5 +1,7 @@
 import type { RequestHandler } from './$types';
 
+export const prerender = true;
+
 const BASE = 'https://luna.macaron-software.com';
 
 const LOCALES = [
