@@ -7,6 +7,7 @@
     <string name="log_today_button">Log today</string>
     <string name="privacy_local_badge">Local data</string>
     <string name="privacy_badge_a11y">All your data is stored locally on this device</string>
+    <string name="toolbar_private_subtitle">비공개 · 이 기기에서</string>
     <string name="cycle_day_label">Day %d</string>
     <string name="next_period_in">In %d days</string>
     <string name="cycle_progress_a11y">Cycle day %1$d. Next period in %2$d days.</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">Great</string>
     <string name="energy_label">Energy</string>
     <string name="flow_label">Flow</string>
+    <string name="flow_option_a11y">생리량: %1$s</string>
     <string name="flow_none">None</string>
     <string name="flow_spotting">Spotting</string>
     <string name="flow_light">Light</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">Free text note, encrypted and stored locally</string>
     <string name="save_button">Save</string>
     <string name="cancel_button">Cancel</string>
+    <string name="open_button">열기</string>
     <string name="log_saved_a11y">Day logged</string>
     <string name="symptom_cramps">Cramps</string>
     <string name="symptom_bloating">Bloating</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">Migraine</string>
     <string name="symptom_hot_flash">Hot flash</string>
     <string name="symptom_night_sweats">Night sweats</string>
+    <string name="symptom_vaginal_dryness">질 건조증</string>
     <string name="bbt_label">Basal body temperature (BBT)</string>
     <string name="bbt_hint">Measured upon waking, before any movement</string>
     <string name="bbt_placeholder">36.7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">Delete all data</string>
     <string name="settings_delete_all_a11y">Delete all data from this device</string>
     <string name="settings_delete_all_hint_a11y">This action is irreversible and will permanently delete all your data</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">개인정보 및 보안</string>
+    <string name="settings_section_tracking">기록 및 알림</string>
+    <string name="settings_section_data">내보내기 및 복구</string>
     <string name="export_csv_label">Export to CSV</string>
     <string name="export_encrypted_backup_label">Encrypted backup</string>
+    <string name="restore_encrypted_backup_label">암호화된 백업 복원</string>
+    <string name="backup_pin_unavailable">이 기기에서는 PIN을 사용할 수 없습니다</string>
+    <string name="backup_restore_success">백업을 복원했습니다</string>
+    <string name="backup_restore_error">백업을 복원할 수 없습니다</string>
+    <string name="backup_export_error">백업을 내보낼 수 없습니다</string>
     <string name="panic_wipe_confirm_title">Delete all data?</string>
     <string name="panic_wipe_confirm_message">This will permanently delete all your cycle data from this device. This action cannot be undone.</string>
     <string name="panic_wipe_confirm_button">Delete everything</string>
     <string name="panic_wipe_done_a11y">All data has been deleted</string>
     <string name="lock_biometric_title">Luna</string>
     <string name="lock_biometric_subtitle">Unlock to access your data</string>
+    <string name="lock_subtitle">잠금을 해제하려면 PIN을 입력하세요</string>
     <string name="lock_use_pin">Use PIN</string>
     <string name="lock_wrong_pin">Incorrect PIN</string>
     <string name="lock_max_attempts">Too many attempts. Please try again later.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">Confirm PIN</string>
     <string name="onboarding_pin_mismatch">PINs do not match</string>
     <string name="onboarding_pin_too_short">PIN must be 6–8 digits</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">이름 (선택 사항)</string>
+    <string name="onboarding_skip">건너뛰기</string>
+    <string name="onboarding_period_duration_label">생리는 보통 며칠 동안 계속되나요?</string>
+    <string name="onboarding_regularity_label">주기가 얼마나 규칙적인가요?</string>
+    <string name="regularity_very_regular">매우 규칙적</string>
+    <string name="regularity_regular">규칙적</string>
+    <string name="regularity_irregular">불규칙적</string>
+    <string name="regularity_unknown">잘 모르겠어요</string>
+    <string name="day_abbr">일</string>
+    <string name="goal_track">주기 기록하기</string>
+    <string name="goal_understand_symptoms">증상 이해하기</string>
+    <string name="goal_avoid_pregnancy">임신 피하기</string>
+    <string name="goal_try_to_conceive">임신 시도하기</string>
+    <string name="goal_track_pregnancy">임신 기록하기</string>
+    <string name="goal_perimenopause">폐경 이행기</string>
+    <string name="creating_vault_loading">안전한 보관함을 만드는 중…</string>
     <string name="notif_channel_period">Cycle reminder</string>
     <string name="notif_channel_fertile">Fertile window</string>
     <string name="notif_channel_pill">Contraception reminder</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">Tracking mode</string>
     <string name="charts_cycle_lengths_a11y">Cycle lengths bar chart</string>
     <string name="charts_bbt_a11y">Basal body temperature chart</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">평균 주기 길이: %1$s일</string>
+    <string name="stats_avg_period_a11y">평균 생리 기간: %1$s일</string>
     <string name="settings_pill_reminder">Daily pill reminder</string>
     <string name="perimeno_banner_title">Perimenopause Mode — Tap to open dashboard</string>
     <string name="perimeno_banner_a11y">Open perimenopause dashboard</string>
     <string name="ttc_banner_title">TTC Mode — Fertile window highlighted</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">임신 일지</string>
+    <string name="hcg_test_label">hCG 검사</string>
+    <string name="hcg_not_done">미시행</string>
+    <string name="hcg_positive">양성</string>
+    <string name="hcg_negative">음성</string>
+    <string name="kicks_label">태동</string>
+    <string name="kicks_decrease">태동 줄이기</string>
+    <string name="kicks_increase">태동 늘리기</string>
+    <string name="nausea_label">메스꺼움 정도</string>
+    <string name="nausea_slider_a11y">메스꺼움 정도 0~5</string>
+    <string name="weight_label">체중</string>
+    <string name="symptom_logged_a11y">증상이 기록되었습니다</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">폐경 이행기</string>
+    <string name="perimenopause_quick_log_title">증상 빠르게 기록</string>
+    <string name="perimenopause_variability_title">주기 변동</string>
+    <string name="perimenopause_need_more_data">변동을 보려면 최소 2회의 주기를 기록하세요</string>
+    <string name="perimenopause_variability_summary">평균 %1$d일 (범위: %2$d~%3$d)</string>
+    <string name="perimenopause_info_title">폐경 이행기 안내</string>
+    <string name="perimenopause_info_body">폐경 이행기는 보통 40대에 시작되어 몇 년간 이어질 수 있습니다. 주기 길이가 크게 달라질 수 있으며, 안면 홍조와 야간 발한 같은 증상이 흔합니다. 기록하면 몸의 변화를 이해하는 데 도움이 됩니다.</string>
     <plurals name="days_until_period">
         <item quantity="one">In %d day</item>
         <item quantity="other">In %d days</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d day</item>
         <item quantity="other">%d days</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Health Connect와 동기화</string>
+    <string name="health_connect_rationale_body">LUNA는 Health Connect와 주기 데이터를 공유할 수 있습니다.</string>
+    <string name="health_connect_privacy_policy_button">개인정보 처리방침</string>
 </resources>

@@ -7,6 +7,7 @@
     <string name="log_today_button">今天登录</string>
     <string name="privacy_local_badge">本地数据</string>
     <string name="privacy_badge_a11y">您的所有数据都存储在该设备本地</string>
+    <string name="toolbar_private_subtitle">私密 · 仅在本机</string>
     <string name="cycle_day_label">天%d</string>
     <string name="next_period_in">在%d天内</string>
     <string name="cycle_progress_a11y">周期日 %1$d。下次月经在 %2$d 天后。</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">伟大的</string>
     <string name="energy_label">活力</string>
     <string name="flow_label">流动</string>
+    <string name="flow_option_a11y">流量：%1$s</string>
     <string name="flow_none">没有任何</string>
     <string name="flow_spotting">发现</string>
     <string name="flow_light">光</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">自由文本注释，加密并存储在本地</string>
     <string name="save_button">节省</string>
     <string name="cancel_button">取消</string>
+    <string name="open_button">打开</string>
     <string name="log_saved_a11y">记录天数</string>
     <string name="symptom_cramps">抽筋</string>
     <string name="symptom_bloating">腹胀</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">偏头痛</string>
     <string name="symptom_hot_flash">潮热</string>
     <string name="symptom_night_sweats">盗汗</string>
+    <string name="symptom_vaginal_dryness">阴道干涩</string>
     <string name="bbt_label">基础体温 (BBT)</string>
     <string name="bbt_hint">醒来时、任何运动之前测量</string>
     <string name="bbt_placeholder">36.7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">删除所有数据</string>
     <string name="settings_delete_all_a11y">删除该设备上的所有数据</string>
     <string name="settings_delete_all_hint_a11y">此操作不可逆转，将永久删除您的所有数据</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">隐私与安全</string>
+    <string name="settings_section_tracking">追踪与提醒</string>
+    <string name="settings_section_data">导出与恢复</string>
     <string name="export_csv_label">导出为 CSV</string>
     <string name="export_encrypted_backup_label">加密备份</string>
+    <string name="restore_encrypted_backup_label">恢复加密备份</string>
+    <string name="backup_pin_unavailable">此设备不支持 PIN 码</string>
+    <string name="backup_restore_success">备份已成功恢复</string>
+    <string name="backup_restore_error">无法恢复备份</string>
+    <string name="backup_export_error">无法导出备份</string>
     <string name="panic_wipe_confirm_title">删除所有数据？</string>
     <string name="panic_wipe_confirm_message">这将从该设备中永久删除您的所有周期数据。此操作无法撤消。</string>
     <string name="panic_wipe_confirm_button">删除所有内容</string>
     <string name="panic_wipe_done_a11y">所有数据均已删除</string>
     <string name="lock_biometric_title">Luna</string>
     <string name="lock_biometric_subtitle">解锁以访问您的数据</string>
+    <string name="lock_subtitle">输入 PIN 码以解锁</string>
     <string name="lock_use_pin">使用 PIN</string>
     <string name="lock_wrong_pin">PIN 码不正确</string>
     <string name="lock_max_attempts">尝试次数过多。请稍后重试。</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">确认PIN</string>
     <string name="onboarding_pin_mismatch">PIN 码不匹配</string>
     <string name="onboarding_pin_too_short">PIN 码必须为 6-8 位数字</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">名字（可选）</string>
+    <string name="onboarding_skip">跳过</string>
+    <string name="onboarding_period_duration_label">你的经期通常持续几天？</string>
+    <string name="onboarding_regularity_label">你的周期有多规律？</string>
+    <string name="regularity_very_regular">非常规律</string>
+    <string name="regularity_regular">规律</string>
+    <string name="regularity_irregular">不规律</string>
+    <string name="regularity_unknown">我不确定</string>
+    <string name="day_abbr">天</string>
+    <string name="goal_track">记录我的周期</string>
+    <string name="goal_understand_symptoms">了解我的症状</string>
+    <string name="goal_avoid_pregnancy">避孕</string>
+    <string name="goal_try_to_conceive">尝试备孕</string>
+    <string name="goal_track_pregnancy">记录孕期</string>
+    <string name="goal_perimenopause">围绝经期</string>
+    <string name="creating_vault_loading">正在创建你的安全保险库…</string>
     <string name="notif_channel_period">经期提醒</string>
     <string name="notif_channel_fertile">易孕窗口</string>
     <string name="notif_channel_pill">避孕提醒</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">追踪模式</string>
     <string name="charts_cycle_lengths_a11y">周期长度条形图</string>
     <string name="charts_bbt_a11y">基础体温图表</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">平均周期长度：%1$s 天</string>
+    <string name="stats_avg_period_a11y">平均经期长度：%1$s 天</string>
     <string name="settings_pill_reminder">每日服药提醒</string>
     <string name="perimeno_banner_title">围绝经期模式 — 点击打开仪表板</string>
     <string name="perimeno_banner_a11y">打开围绝经期仪表板</string>
     <string name="ttc_banner_title">TTC 模式 — 受孕窗口突出显示</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">孕期日志</string>
+    <string name="hcg_test_label">hCG 检测</string>
+    <string name="hcg_not_done">未做</string>
+    <string name="hcg_positive">阳性</string>
+    <string name="hcg_negative">阴性</string>
+    <string name="kicks_label">胎动</string>
+    <string name="kicks_decrease">减少胎动</string>
+    <string name="kicks_increase">增加胎动</string>
+    <string name="nausea_label">孕吐程度</string>
+    <string name="nausea_slider_a11y">孕吐程度从 0 到 5</string>
+    <string name="weight_label">体重</string>
+    <string name="symptom_logged_a11y">症状已记录</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">围绝经期</string>
+    <string name="perimenopause_quick_log_title">快速记录症状</string>
+    <string name="perimenopause_variability_title">周期波动</string>
+    <string name="perimenopause_need_more_data">至少记录 2 个周期才能看到波动</string>
+    <string name="perimenopause_variability_summary">平均 %1$d 天（范围：%2$d–%3$d）</string>
+    <string name="perimenopause_info_title">关于围绝经期</string>
+    <string name="perimenopause_info_body">围绝经期通常从 40 多岁开始，可能持续数年。周期长度可能明显波动，潮热和盗汗等症状也很常见。坚持记录有助于你了解身体的这一转变过程。</string>
     <plurals name="days_until_period">
         <item quantity="one">%d 天</item>
         <item quantity="other">%d 天</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d 天</item>
         <item quantity="other">%d 天</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">与 Health Connect 同步</string>
+    <string name="health_connect_rationale_body">LUNA可将周期数据共享到 Health Connect。</string>
+    <string name="health_connect_privacy_policy_button">隐私政策</string>
 </resources>

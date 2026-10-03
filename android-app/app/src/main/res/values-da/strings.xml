@@ -7,6 +7,7 @@
     <string name="log_today_button">Log i dag</string>
     <string name="privacy_local_badge">Lokale data</string>
     <string name="privacy_badge_a11y">Alle dine data gemmes lokalt på denne enhed</string>
+    <string name="toolbar_private_subtitle">Privat · På denne enhed</string>
     <string name="cycle_day_label">Dag %d</string>
     <string name="next_period_in">Om %d dage</string>
     <string name="cycle_progress_a11y">Cyklusdag %1$d. Næste periode om %2$d dage.</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">Stor</string>
     <string name="energy_label">Energi</string>
     <string name="flow_label">Flyde</string>
+    <string name="flow_option_a11y">Flow: %1$s</string>
     <string name="flow_none">Ingen</string>
     <string name="flow_spotting">Spotting</string>
     <string name="flow_light">Lys</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">Gratis tekstnotat, krypteret og gemt lokalt</string>
     <string name="save_button">Spare</string>
     <string name="cancel_button">Ophæve</string>
+    <string name="open_button">Åbn</string>
     <string name="log_saved_a11y">Dag logget</string>
     <string name="symptom_cramps">Kramper</string>
     <string name="symptom_bloating">Oppustethed</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">Migræne</string>
     <string name="symptom_hot_flash">Hot flash</string>
     <string name="symptom_night_sweats">Nattesved</string>
+    <string name="symptom_vaginal_dryness">Tørhed i skeden</string>
     <string name="bbt_label">Basal kropstemperatur (BBT)</string>
     <string name="bbt_hint">Målt ved opvågning, før enhver bevægelse</string>
     <string name="bbt_placeholder">36,7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">Slet alle data</string>
     <string name="settings_delete_all_a11y">Slet alle data fra denne enhed</string>
     <string name="settings_delete_all_hint_a11y">Denne handling er irreversibel og vil permanent slette alle dine data</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">Privatliv og sikkerhed</string>
+    <string name="settings_section_tracking">Sporing og påmindelser</string>
+    <string name="settings_section_data">Eksport og gendannelse</string>
     <string name="export_csv_label">Eksporter til CSV</string>
     <string name="export_encrypted_backup_label">Krypteret backup</string>
+    <string name="restore_encrypted_backup_label">Gendan krypteret sikkerhedskopi</string>
+    <string name="backup_pin_unavailable">PIN er ikke tilgængelig på denne enhed</string>
+    <string name="backup_restore_success">Sikkerhedskopien blev gendannet</string>
+    <string name="backup_restore_error">Sikkerhedskopien kan ikke gendannes</string>
+    <string name="backup_export_error">Sikkerhedskopien kan ikke eksporteres</string>
     <string name="panic_wipe_confirm_title">Vil du slette alle data?</string>
     <string name="panic_wipe_confirm_message">Dette vil permanent slette alle dine cyklusdata fra denne enhed. Denne handling kan ikke fortrydes.</string>
     <string name="panic_wipe_confirm_button">Slet alt</string>
     <string name="panic_wipe_done_a11y">Alle data er blevet slettet</string>
     <string name="lock_biometric_title">Luna</string>
     <string name="lock_biometric_subtitle">Lås op for at få adgang til dine data</string>
+    <string name="lock_subtitle">Indtast din pinkode for at låse op</string>
     <string name="lock_use_pin">Brug PIN-kode</string>
     <string name="lock_wrong_pin">Forkert pinkode</string>
     <string name="lock_max_attempts">For mange forsøg. Prøv venligst igen senere.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">Bekræft PIN-kode</string>
     <string name="onboarding_pin_mismatch">PIN-koder stemmer ikke overens</string>
     <string name="onboarding_pin_too_short">PIN-koden skal være på 6-8 cifre</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">Fornavn (valgfrit)</string>
+    <string name="onboarding_skip">Spring over</string>
+    <string name="onboarding_period_duration_label">Hvor længe varer din menstruation normalt?</string>
+    <string name="onboarding_regularity_label">Hvor regelmæssig er din cyklus?</string>
+    <string name="regularity_very_regular">Meget regelmæssig</string>
+    <string name="regularity_regular">Regelmæssig</string>
+    <string name="regularity_irregular">Uregelmæssig</string>
+    <string name="regularity_unknown">Det ved jeg ikke</string>
+    <string name="day_abbr">d</string>
+    <string name="goal_track">Følg min cyklus</string>
+    <string name="goal_understand_symptoms">Forstå mine symptomer</string>
+    <string name="goal_avoid_pregnancy">Undgå graviditet</string>
+    <string name="goal_try_to_conceive">Prøv at blive gravid</string>
+    <string name="goal_track_pregnancy">Følg graviditeten</string>
+    <string name="goal_perimenopause">Perimenopause</string>
+    <string name="creating_vault_loading">Opretter din sikre boks…</string>
     <string name="notif_channel_period">Påmindelse om cyklus</string>
     <string name="notif_channel_fertile">Frugtbar vindue</string>
     <string name="notif_channel_pill">Påmindelse om prævention</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">Sporingstilstand</string>
     <string name="charts_cycle_lengths_a11y">Cykluslængder søjlediagram</string>
     <string name="charts_bbt_a11y">Basal kropstemperatur diagram</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">Gennemsnitlig cykluslængde: %1$s dage</string>
+    <string name="stats_avg_period_a11y">Gennemsnitlig menstruationslængde: %1$s dage</string>
     <string name="settings_pill_reminder">Daglig pillepåmindelse</string>
     <string name="perimeno_banner_title">Perimenopause-tilstand — Tryk for at åbne dashboard</string>
     <string name="perimeno_banner_a11y">Åben perimenopause dashboard</string>
     <string name="ttc_banner_title">TTC Mode — Frugtbar vindue fremhævet</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">Graviditetslog</string>
+    <string name="hcg_test_label">hCG-test</string>
+    <string name="hcg_not_done">Ikke taget</string>
+    <string name="hcg_positive">Positiv</string>
+    <string name="hcg_negative">Negativ</string>
+    <string name="kicks_label">Fosterbevægelser</string>
+    <string name="kicks_decrease">Færre spark</string>
+    <string name="kicks_increase">Flere spark</string>
+    <string name="nausea_label">Kvalmeniveau</string>
+    <string name="nausea_slider_a11y">Kvalmeniveau fra 0 til 5</string>
+    <string name="weight_label">Vægt</string>
+    <string name="symptom_logged_a11y">Symptom registreret</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">Perimenopause</string>
+    <string name="perimenopause_quick_log_title">Hurtig registrering af symptomer</string>
+    <string name="perimenopause_variability_title">Variation i cyklus</string>
+    <string name="perimenopause_need_more_data">Registrér mindst 2 cyklusser for at se variationen</string>
+    <string name="perimenopause_variability_summary">Gennemsnitligt %1$d dage (interval: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">Om perimenopause</string>
+    <string name="perimenopause_info_body">Perimenopause begynder typisk i 40\'erne og kan vare flere år. Cykluslængden kan variere betydeligt, og symptomer som hedeture og nattesved er almindelige. Sporing hjælper dig med at forstå din krops overgang.</string>
     <plurals name="days_until_period">
         <item quantity="one">I %d dag</item>
         <item quantity="other">Om %d dage</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d dag</item>
         <item quantity="other">%d dage</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Synkroniser med Health Connect</string>
+    <string name="health_connect_rationale_body">LUNA kan dele cyklusdata med Health Connect.</string>
+    <string name="health_connect_privacy_policy_button">Privatlivspolitik</string>
 </resources>

@@ -203,4 +203,10 @@
     <string name="perimenopause_info_title">About perimenopause</string>
     <string name="perimenopause_info_body">Perimenopause typically begins in your 40s and can last several years. Cycle lengths may vary significantly, and symptoms like hot flashes and night sweats are common. Tracking helps you understand your body\'s transition.</string>
 
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Sync with Health Connect</string>
+    <string name="health_connect_rationale_body">LUNA can share cycle data with Health Connect.</string>
+    <string name="health_connect_privacy_policy_button">Privacy policy</string>
 </resources>

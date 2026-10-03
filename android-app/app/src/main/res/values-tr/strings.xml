@@ -7,6 +7,7 @@
     <string name="log_today_button">Bugün oturum aç</string>
     <string name="privacy_local_badge">Yerel veriler</string>
     <string name="privacy_badge_a11y">Tüm verileriniz bu cihazda yerel olarak depolanıyor</string>
+    <string name="toolbar_private_subtitle">Gizli · Bu cihazda</string>
     <string name="cycle_day_label">Gün %d</string>
     <string name="next_period_in">%d\'de gün</string>
     <string name="cycle_progress_a11y">Döngü günü %1$d. Sonraki dönem %2$d gün sonra.</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">Harika</string>
     <string name="energy_label">Enerji</string>
     <string name="flow_label">Akış</string>
+    <string name="flow_option_a11y">Akış: %1$s</string>
     <string name="flow_none"> Yok</string>
     <string name="flow_spotting">Lekelenme</string>
     <string name="flow_light">Hafif</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">Serbest metin notu, şifrelenmiş ve yerel olarak saklanmış</string>
     <string name="save_button">Kaydet</string>
     <string name="cancel_button">İptal</string>
+    <string name="open_button">Aç</string>
     <string name="log_saved_a11y">Gün kaydedilen</string>
     <string name="symptom_cramps">Kramplar</string>
     <string name="symptom_bloating">Şişkinlik</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">Migren</string>
     <string name="symptom_hot_flash">Sıcak flash</string>
     <string name="symptom_night_sweats">Gece terlemeleri</string>
+    <string name="symptom_vaginal_dryness">Vajinal kuruluk</string>
     <string name="bbt_label">Bazal vücut sıcaklığı (BBT)</string>
     <string name="bbt_hint">Herhangi bir hareketten önce uyandıktan sonra ölçülür</string>
     <string name="bbt_placeholder">36,7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">Tüm verileri sil</string>
     <string name="settings_delete_all_a11y">Bu cihazdaki tüm verileri sil</string>
     <string name="settings_delete_all_hint_a11y">Bu eylem geri alınamaz ve tüm verilerinizi kalıcı olarak silecektir</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">Gizlilik ve güvenlik</string>
+    <string name="settings_section_tracking">Takip ve hatırlatıcılar</string>
+    <string name="settings_section_data">Dışa aktarma ve kurtarma</string>
     <string name="export_csv_label">CSV\'ye aktar</string>
     <string name="export_encrypted_backup_label">Şifreli yedekleme</string>
+    <string name="restore_encrypted_backup_label">Şifreli yedeği geri yükle</string>
+    <string name="backup_pin_unavailable">PIN bu cihazda kullanılamıyor</string>
+    <string name="backup_restore_success">Yedek başarıyla geri yüklendi</string>
+    <string name="backup_restore_error">Yedek geri yüklenemedi</string>
+    <string name="backup_export_error">Yedek dışa aktarılamadı</string>
     <string name="panic_wipe_confirm_title">Tüm veriler silinsin mi?</string>
     <string name="panic_wipe_confirm_message">Bu, tüm döngü verilerinizi bu cihazdan kalıcı olarak silecektir. Bu eylem geri alınamaz.</string>
     <string name="panic_wipe_confirm_button">Her şeyi sil</string>
     <string name="panic_wipe_done_a11y">Tüm veriler silindi</string>
     <string name="lock_biometric_title">Luna</string>
     <string name="lock_biometric_subtitle">Verilerinize erişmek için kilidi açın</string>
+    <string name="lock_subtitle">Kilidi açmak için PIN\'inizi girin</string>
     <string name="lock_use_pin">PIN kullan</string>
     <string name="lock_wrong_pin">Yanlış PIN</string>
     <string name="lock_max_attempts">Çok fazla deneme. Lütfen daha sonra tekrar deneyin.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">Onayla PIN</string>
     <string name="onboarding_pin_mismatch">PIN\'ler eşleşmiyor</string>
     <string name="onboarding_pin_too_short">PIN 6–8 haneli olmalıdır</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">Ad (isteğe bağlı)</string>
+    <string name="onboarding_skip">Atla</string>
+    <string name="onboarding_period_duration_label">Adetiniz genellikle kaç gün sürer?</string>
+    <string name="onboarding_regularity_label">Döngünüz ne kadar düzenli?</string>
+    <string name="regularity_very_regular">Çok düzenli</string>
+    <string name="regularity_regular">Düzenli</string>
+    <string name="regularity_irregular">Düzensiz</string>
+    <string name="regularity_unknown">Bilmiyorum</string>
+    <string name="day_abbr">g</string>
+    <string name="goal_track">Döngümü takip et</string>
+    <string name="goal_understand_symptoms">Belirtilerimi anla</string>
+    <string name="goal_avoid_pregnancy">Gebelikten kaçın</string>
+    <string name="goal_try_to_conceive">Gebe kalmayı dene</string>
+    <string name="goal_track_pregnancy">Gebeliği takip et</string>
+    <string name="goal_perimenopause">Perimenopoz</string>
+    <string name="creating_vault_loading">Güvenli kasanız oluşturuluyor…</string>
     <string name="notif_channel_period">Döngülü hatırlatıcı</string>
     <string name="notif_channel_fertile">Bereketli pencere</string>
     <string name="notif_channel_pill">Doğum kontrolü hatırlatıcı</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">Takip modu</string>
     <string name="charts_cycle_lengths_a11y">Döngü uzunlukları çubuk grafiği</string>
     <string name="charts_bbt_a11y">Bazal vücut sıcaklığı tablosu</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">Ortalama döngü uzunluğu: %1$s gün</string>
+    <string name="stats_avg_period_a11y">Ortalama adet süresi: %1$s gün</string>
     <string name="settings_pill_reminder">Günlük hap hatırlatıcısı</string>
     <string name="perimeno_banner_title">Perimenopoz Modu — Açmak için dokunun gösterge paneli</string>
     <string name="perimeno_banner_a11y">Perimenopoz kontrol panelini aç</string>
     <string name="ttc_banner_title">TTC Modu — Verimli dönem vurgulandı</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">Gebelik günlüğü</string>
+    <string name="hcg_test_label">hCG testi</string>
+    <string name="hcg_not_done">Yapılmadı</string>
+    <string name="hcg_positive">Pozitif</string>
+    <string name="hcg_negative">Negatif</string>
+    <string name="kicks_label">Bebek hareketleri</string>
+    <string name="kicks_decrease">Hareketleri azalt</string>
+    <string name="kicks_increase">Hareketleri artır</string>
+    <string name="nausea_label">Bulantı düzeyi</string>
+    <string name="nausea_slider_a11y">Bulantı düzeyi 0 ile 5 arasında</string>
+    <string name="weight_label">Kilo</string>
+    <string name="symptom_logged_a11y">Belirti kaydedildi</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">Perimenopoz</string>
+    <string name="perimenopause_quick_log_title">Belirtileri hızlı kaydet</string>
+    <string name="perimenopause_variability_title">Döngü değişkenliği</string>
+    <string name="perimenopause_need_more_data">Değişkenliği görmek için en az 2 döngü kaydedin</string>
+    <string name="perimenopause_variability_summary">Ortalama %1$d gün (aralık: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">Perimenopoz hakkında</string>
+    <string name="perimenopause_info_body">Perimenopoz genellikle 40\'lı yaşlarda başlar ve birkaç yıl sürebilir. Döngü uzunluğu belirgin şekilde değişebilir ve sıcak basması ile gece terlemeleri gibi belirtiler yaygındır. Takip etmek, bedeninizdeki geçişi anlamanıza yardımcı olur.</string>
     <plurals name="days_until_period">
         <item quantity="one">%d günde</item>
         <item quantity="other">%d gün içinde</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d gün</item>
         <item quantity="other">%d gün</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Health Connect ile eşitle</string>
+    <string name="health_connect_rationale_body">LUNA döngü verilerini Health Connect ile paylaşabilir.</string>
+    <string name="health_connect_privacy_policy_button">Gizlilik politikası</string>
 </resources>

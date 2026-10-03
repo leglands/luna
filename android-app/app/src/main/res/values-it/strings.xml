@@ -7,6 +7,7 @@
     <string name="log_today_button">Accedi oggi</string>
     <string name="privacy_local_badge">Dati locali</string>
     <string name="privacy_badge_a11y">Tutti i tuoi dati sono archiviati localmente su questo dispositivo</string>
+    <string name="toolbar_private_subtitle">Privato · Su questo dispositivo</string>
     <string name="cycle_day_label">Giorno %d</string>
     <string name="next_period_in">In %d giorni</string>
     <string name="cycle_progress_a11y">Giorno del ciclo %1$d. Prossimo ciclo tra %2$d giorni.</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">Ottimo</string>
     <string name="energy_label">Energia</string>
     <string name="flow_label">Flusso</string>
+    <string name="flow_option_a11y">Flusso: %1$s</string>
     <string name="flow_none"> Nessuno</string>
     <string name="flow_spotting">Spotting</string>
     <string name="flow_light">Leggero</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">Nota di testo libero, crittografata e archiviata localmente</string>
     <string name="save_button">Salva</string>
     <string name="cancel_button">Annulla</string>
+    <string name="open_button">Apri</string>
     <string name="log_saved_a11y">Giorno registrato</string>
     <string name="symptom_cramps">Crampi</string>
     <string name="symptom_bloating">Gonfiore</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">Emicrania</string>
     <string name="symptom_hot_flash">Caldo lampeggia</string>
     <string name="symptom_night_sweats">Sudorazione notturna</string>
+    <string name="symptom_vaginal_dryness">Secchezza vaginale</string>
     <string name="bbt_label">Temperatura corporea basale (BBT)</string>
     <string name="bbt_hint">Misurata al risveglio, prima di qualsiasi movimento</string>
     <string name="bbt_placeholder">36.7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">Elimina tutti i dati</string>
     <string name="settings_delete_all_a11y">Elimina tutti i dati da questo dispositivo</string>
     <string name="settings_delete_all_hint_a11y">Questa azione è irreversibile ed eliminerà definitivamente tutti i tuoi dati</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">Privacy e sicurezza</string>
+    <string name="settings_section_tracking">Monitoraggio e promemoria</string>
+    <string name="settings_section_data">Esportazioni e ripristino</string>
     <string name="export_csv_label">Esporta in CSV</string>
     <string name="export_encrypted_backup_label">Backup crittografato</string>
+    <string name="restore_encrypted_backup_label">Ripristina backup cifrato</string>
+    <string name="backup_pin_unavailable">PIN non disponibile su questo dispositivo</string>
+    <string name="backup_restore_success">Backup ripristinato correttamente</string>
+    <string name="backup_restore_error">Impossibile ripristinare il backup</string>
+    <string name="backup_export_error">Impossibile esportare il backup</string>
     <string name="panic_wipe_confirm_title">Elimina tutti i dati?</string>
     <string name="panic_wipe_confirm_message">Questa operazione eliminerà permanentemente tutti i dati del tuo ciclo da questo dispositivo. Questa azione non può essere annullata.</string>
     <string name="panic_wipe_confirm_button">Elimina tutto</string>
     <string name="panic_wipe_done_a11y">Tutti i dati sono stati cancellati</string>
     <string name="lock_biometric_title">Luna</string>
     <string name="lock_biometric_subtitle">Sblocca per accedere ai tuoi dati</string>
+    <string name="lock_subtitle">Inserisci il PIN per sbloccare</string>
     <string name="lock_use_pin">Usa PIN</string>
     <string name="lock_wrong_pin">PIN errato</string>
     <string name="lock_max_attempts">Troppi tentativi. Riprova più tardi.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">Conferma PIN</string>
     <string name="onboarding_pin_mismatch">I PIN non corrispondono</string>
     <string name="onboarding_pin_too_short">Il PIN deve essere composto da 6–8 cifre</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">Nome (facoltativo)</string>
+    <string name="onboarding_skip">Salta</string>
+    <string name="onboarding_period_duration_label">Quanto dura di solito il tuo ciclo mestruale?</string>
+    <string name="onboarding_regularity_label">Quanto è regolare il tuo ciclo?</string>
+    <string name="regularity_very_regular">Molto regolare</string>
+    <string name="regularity_regular">Regolare</string>
+    <string name="regularity_irregular">Irregolare</string>
+    <string name="regularity_unknown">Non lo so</string>
+    <string name="day_abbr">g</string>
+    <string name="goal_track">Monitora il mio ciclo</string>
+    <string name="goal_understand_symptoms">Capire i miei sintomi</string>
+    <string name="goal_avoid_pregnancy">Evitare una gravidanza</string>
+    <string name="goal_try_to_conceive">Provare a concepire</string>
+    <string name="goal_track_pregnancy">Monitorare la gravidanza</string>
+    <string name="goal_perimenopause">Perimenopausa</string>
+    <string name="creating_vault_loading">Creazione della tua cassaforte sicura…</string>
     <string name="notif_channel_period">Promemoria ciclo</string>
     <string name="notif_channel_fertile">Finestra fertile</string>
     <string name="notif_channel_pill">Promemoria contraccezione</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">Modalità di monitoraggio</string>
     <string name="charts_cycle_lengths_a11y">Grafico a barre della durata del ciclo</string>
     <string name="charts_bbt_a11y">Grafico della temperatura corporea basale</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">Durata media del ciclo: %1$s giorni</string>
+    <string name="stats_avg_period_a11y">Durata media del ciclo mestruale: %1$s giorni</string>
     <string name="settings_pill_reminder">Promemoria pillola giornaliera</string>
     <string name="perimeno_banner_title">Modalità perimenopausa: tocca per aprire il dashboard</string>
     <string name="perimeno_banner_a11y">Apri dashboard perimenopausa</string>
     <string name="ttc_banner_title">Modalità TTC: finestra fertile evidenziata</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">Diario della gravidanza</string>
+    <string name="hcg_test_label">Test hCG</string>
+    <string name="hcg_not_done">Non eseguito</string>
+    <string name="hcg_positive">Positivo</string>
+    <string name="hcg_negative">Negativo</string>
+    <string name="kicks_label">Movimenti del feto</string>
+    <string name="kicks_decrease">Meno movimenti</string>
+    <string name="kicks_increase">Più movimenti</string>
+    <string name="nausea_label">Livello di nausea</string>
+    <string name="nausea_slider_a11y">Livello di nausea da 0 a 5</string>
+    <string name="weight_label">Peso</string>
+    <string name="symptom_logged_a11y">Sintomo registrato</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">Perimenopausa</string>
+    <string name="perimenopause_quick_log_title">Registra rapidamente i sintomi</string>
+    <string name="perimenopause_variability_title">Variabilità del ciclo</string>
+    <string name="perimenopause_need_more_data">Registra almeno 2 cicli per vedere la variabilità</string>
+    <string name="perimenopause_variability_summary">Media di %1$d giorni (intervallo: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">Informazioni sulla perimenopausa</string>
+    <string name="perimenopause_info_body">La perimenopausa inizia di solito intorno ai 40 anni e può durare diversi anni. La durata del ciclo può variare molto e sintomi come le vampate di calore e le sudorazioni notturne sono comuni. Monitorare ti aiuta a capire la transizione del tuo corpo.</string>
     <plurals name="days_until_period">
         <item quantity="one">Tra %d giorno</item>
         <item quantity="other">Tra %d giorni</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d giorno</item>
         <item quantity="other">%d giorni</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Sincronizza con Health Connect</string>
+    <string name="health_connect_rationale_body">LUNA può condividere i dati del ciclo con Health Connect.</string>
+    <string name="health_connect_privacy_policy_button">Informativa sulla privacy</string>
 </resources>

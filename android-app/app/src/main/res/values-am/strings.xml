@@ -7,6 +7,7 @@
     <string name="log_today_button">ዛሬ ይመዝገቡ</string>
     <string name="privacy_local_badge">የአካባቢ ውሂብ</string>
     <string name="privacy_badge_a11y">ሁሉም የእርስዎ ውሂብ በዚህ መሣሪያ ላይ በአካባቢው ተከማችቷል።</string>
+    <string name="toolbar_private_subtitle">የግል · በዚህ መሣሪያ ላይ</string>
     <string name="cycle_day_label">ቀን %d</string>
     <string name="next_period_in">በ%d ቀናት ውስጥ</string>
     <string name="cycle_progress_a11y">የዑደት ቀን %1$d። ቀጣዩ ጊዜ በ%2$d ቀናት ውስጥ።</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">በጣም ጥሩ</string>
     <string name="energy_label">ጉልበት</string>
     <string name="flow_label">ፍሰት</string>
+    <string name="flow_option_a11y">ፍሰት፦ %1$s</string>
     <string name="flow_none">ምንም</string>
     <string name="flow_spotting">ስፖት ማድረግ</string>
     <string name="flow_light">ብርሃን</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">ነፃ የጽሑፍ ማስታወሻ፣ የተመሰጠረ እና በአገር ውስጥ ተከማችቷል።</string>
     <string name="save_button">አስቀምጥ</string>
     <string name="cancel_button">ሰርዝ</string>
+    <string name="open_button">ክፈት</string>
     <string name="log_saved_a11y">ቀን ተመዝግቧል</string>
     <string name="symptom_cramps">ቁርጠት</string>
     <string name="symptom_bloating">እብጠት</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">ማይግሬን</string>
     <string name="symptom_hot_flash">ትኩስ ብልጭታ</string>
     <string name="symptom_night_sweats">የምሽት ላብ</string>
+    <string name="symptom_vaginal_dryness">የሴት ብልት ድርቀት</string>
     <string name="bbt_label">ባሳል የሰውነት ሙቀት (ቢቢቲ)</string>
     <string name="bbt_hint">ከእንቅልፉ ሲነቃ ፣ ከማንኛውም እንቅስቃሴ በፊት ይለካል</string>
     <string name="bbt_placeholder">36.7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">ሁሉንም ውሂብ ሰርዝ</string>
     <string name="settings_delete_all_a11y">ሁሉንም ውሂብ ከዚህ መሳሪያ ሰርዝ</string>
     <string name="settings_delete_all_hint_a11y">ይህ እርምጃ የማይቀለበስ እና ሁሉንም ውሂብዎን በቋሚነት ይሰርዛል</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">ግላዊነት እና ደህንነት</string>
+    <string name="settings_section_tracking">ክትትል እና አስታዋሾች</string>
+    <string name="settings_section_data">ወደ ውጭ መላክ እና መመለስ</string>
     <string name="export_csv_label">ወደ CSV ላክ</string>
     <string name="export_encrypted_backup_label">የተመሰጠረ ምትኬ</string>
+    <string name="restore_encrypted_backup_label">የተመሰጠረ ምትኬ መመለስ</string>
+    <string name="backup_pin_unavailable">ፒን በዚህ መሣሪያ ላይ አይገኝም</string>
+    <string name="backup_restore_success">ምትኬው በተሳካ ሁኔታ ተመልሷል</string>
+    <string name="backup_restore_error">ምትኬውን መመለስ አልተቻለም</string>
+    <string name="backup_export_error">ምትኬውን ወደ ውጭ መላክ አልተቻለም</string>
     <string name="panic_wipe_confirm_title">ሁሉም ውሂብ ይሰረዝ?</string>
     <string name="panic_wipe_confirm_message">ይህ ሁሉንም የዑደት ውሂብዎን ከዚህ መሳሪያ እስከመጨረሻው ይሰርዘዋል። ይህ እርምጃ ሊቀለበስ አይችልም።</string>
     <string name="panic_wipe_confirm_button">ሁሉንም ነገር ሰርዝ</string>
     <string name="panic_wipe_done_a11y">ሁሉም ውሂብ ተሰርዟል።</string>
     <string name="lock_biometric_title">ሉና</string>
     <string name="lock_biometric_subtitle">የእርስዎን ውሂብ ለመድረስ ይክፈቱ</string>
+    <string name="lock_subtitle">ለመክፈት ፒንዎን ያስገቡ</string>
     <string name="lock_use_pin">ፒን ተጠቀም</string>
     <string name="lock_wrong_pin">የተሳሳተ ፒን</string>
     <string name="lock_max_attempts">በጣም ብዙ ሙከራዎች። እባክዎ ቆይተው እንደገና ይሞክሩ።</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">ፒን ያረጋግጡ</string>
     <string name="onboarding_pin_mismatch">ፒኖች አይዛመዱም።</string>
     <string name="onboarding_pin_too_short">ፒን ከ6-8 አሃዞች መሆን አለበት።</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">ስም (አማራጭ)</string>
+    <string name="onboarding_skip">ዝለል</string>
+    <string name="onboarding_period_duration_label">የወር አበባዎ ብዙውን ጊዜ ስንት ቀናት ይቆያል?</string>
+    <string name="onboarding_regularity_label">የዑደትዎ መደበኛነት እንዴት ነው?</string>
+    <string name="regularity_very_regular">በጣም መደበኛ</string>
+    <string name="regularity_regular">መደበኛ</string>
+    <string name="regularity_irregular">መደበኛ ያልሆነ</string>
+    <string name="regularity_unknown">አላውቅም</string>
+    <string name="day_abbr">ቀ</string>
+    <string name="goal_track">ዑደቴን መከታተል</string>
+    <string name="goal_understand_symptoms">ምልክቶቼን መረዳት</string>
+    <string name="goal_avoid_pregnancy">እርግዝናን ማስወገድ</string>
+    <string name="goal_try_to_conceive">ለመፀነስ መሞከር</string>
+    <string name="goal_track_pregnancy">እርግዝናን መከታተል</string>
+    <string name="goal_perimenopause">ፔሪሜኖፓዝ</string>
+    <string name="creating_vault_loading">ደህንነቱ የተጠበቀ ማከማቻዎን በመፍጠር ላይ…</string>
     <string name="notif_channel_period">የዑደት አስታዋሽ</string>
     <string name="notif_channel_fertile">ፍሬያማ መስኮት</string>
     <string name="notif_channel_pill">የእርግዝና መከላከያ አስታዋሽ</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">የመከታተያ ሁነታ</string>
     <string name="charts_cycle_lengths_a11y">የዑደት ርዝመት አሞሌ ገበታ</string>
     <string name="charts_bbt_a11y">Basal የሰውነት ሙቀት ሰንጠረዥ</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">አማካይ የዑደት ርዝመት፦ %1$s ቀናት</string>
+    <string name="stats_avg_period_a11y">አማካይ የወር አበባ ርዝመት፦ %1$s ቀናት</string>
     <string name="settings_pill_reminder">ዕለታዊ ክኒን አስታዋሽ</string>
     <string name="perimeno_banner_title">Perimenopause ሁነታ — ዳሽቦርድን ለመክፈት ነካ ያድርጉ</string>
     <string name="perimeno_banner_a11y">የፔርሜኖፓውዝ ዳሽቦርድ</string>
     <string name="ttc_banner_title">TTC ሁነታ - ፍሬያማ መስኮት ደመቀ</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">የእርግዝና መዝገብ</string>
+    <string name="hcg_test_label">የ hCG ምርመራ</string>
+    <string name="hcg_not_done">አልተከናወነም</string>
+    <string name="hcg_positive">አዎንታዊ</string>
+    <string name="hcg_negative">አሉታዊ</string>
+    <string name="kicks_label">የፅንስ ምቶች</string>
+    <string name="kicks_decrease">ምቶችን መቀነስ</string>
+    <string name="kicks_increase">ምቶችን መጨመር</string>
+    <string name="nausea_label">የማቅለሽለሽ መጠን</string>
+    <string name="nausea_slider_a11y">የማቅለሽለሽ መጠን ከ 0 እስከ 5</string>
+    <string name="weight_label">ክብደት</string>
+    <string name="symptom_logged_a11y">ምልክት ተመዝግቧል</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">ፔሪሜኖፓዝ</string>
+    <string name="perimenopause_quick_log_title">ምልክቶችን በፍጥነት መመዝገብ</string>
+    <string name="perimenopause_variability_title">የዑደት ልዩነት</string>
+    <string name="perimenopause_need_more_data">ልዩነቱን ለማየት ቢያንስ 2 ዑደቶችን ይመዝግቡ</string>
+    <string name="perimenopause_variability_summary">አማካይ %1$d ቀናት (ከ %2$d እስከ %3$d)</string>
+    <string name="perimenopause_info_title">ስለ ፔሪሜኖፓዝ</string>
+    <string name="perimenopause_info_body">ፔሪሜኖፓዝ አብዛኛውን ጊዜ ከ40 ዓመት በኋላ ይጀምራል፤ ለብዙ ዓመታትም ሊቆይ ይችላል። የዑደት ርዝመት በእጅጉ ሊለያይ ይችላል፤ እንደ ሙቀት መንፋት እና የሌሊት ላብ ያሉ ምልክቶችም የተለመዱ ናቸው። መከታተል የሰውነትዎን ሽግግር ለመረዳት ይረዳዎታል።</string>
     <plurals name="days_until_period">
         <item quantity="one">በ%d ቀን</item>
         <item quantity="other">በ%d ቀናት</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d ቀን</item>
         <item quantity="other">%d ቀናት ውስጥ</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">ከHealth Connect ጋር አመሳስል</string>
+    <string name="health_connect_rationale_body">LUNA የዑደት ውሂብን ከHealth Connect ጋር ማጋራት ይችላል።</string>
+    <string name="health_connect_privacy_policy_button">የግላዊነት መመሪያ</string>
 </resources>

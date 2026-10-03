@@ -7,6 +7,7 @@
     <string name="log_today_button">เข้าสู่ระบบวันนี้</string>
     <string name="privacy_local_badge">ข้อมูลท้องถิ่น</string>
     <string name="privacy_badge_a11y">ข้อมูลทั้งหมดของคุณจะถูกจัดเก็บไว้ในอุปกรณ์นี้</string>
+    <string name="toolbar_private_subtitle">ส่วนตัว · บนอุปกรณ์นี้</string>
     <string name="cycle_day_label">วัน __ปริญญาเอก__</string>
     <string name="next_period_in">ในอีก %d วัน</string>
     <string name="cycle_progress_a11y">รอบวัน %1$d ช่วงถัดไปใน %2$d วัน</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">ยอดเยี่ยม</string>
     <string name="energy_label">พลังงาน</string>
     <string name="flow_label">ไหล</string>
+    <string name="flow_option_a11y">ปริมาณเลือด: %1$s</string>
     <string name="flow_none">ไม่มี</string>
     <string name="flow_spotting">การจำ</string>
     <string name="flow_light">แสงสว่าง</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">บันทึกข้อความฟรี เข้ารหัสและจัดเก็บไว้ในเครื่อง</string>
     <string name="save_button">บันทึก</string>
     <string name="cancel_button">ยกเลิก</string>
+    <string name="open_button">เปิด</string>
     <string name="log_saved_a11y">บันทึกประจำวัน</string>
     <string name="symptom_cramps">ตะคริว</string>
     <string name="symptom_bloating">ท้องอืด</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">ไมเกรน</string>
     <string name="symptom_hot_flash">ร้อนวูบวาบ</string>
     <string name="symptom_night_sweats">เหงื่อออกตอนกลางคืน</string>
+    <string name="symptom_vaginal_dryness">ช่องคลอดแห้ง</string>
     <string name="bbt_label">อุณหภูมิร่างกายปกติ (BBT)</string>
     <string name="bbt_hint">วัดจาก ตื่นก่อนมีการเคลื่อนไหวใดๆ</string>
     <string name="bbt_placeholder">36.7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">ลบข้อมูลทั้งหมด</string>
     <string name="settings_delete_all_a11y">ลบข้อมูลทั้งหมดออกจากอุปกรณ์นี้</string>
     <string name="settings_delete_all_hint_a11y">การกระทำนี้คือ ไม่สามารถย้อนกลับได้และจะลบข้อมูลทั้งหมดของคุณอย่างถาวร</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">ความเป็นส่วนตัวและความปลอดภัย</string>
+    <string name="settings_section_tracking">การติดตามและเตือนความจำ</string>
+    <string name="settings_section_data">การส่งออกและการกู้คืน</string>
     <string name="export_csv_label">ส่งออกเป็น CSV</string>
     <string name="export_encrypted_backup_label">การสำรองข้อมูลที่เข้ารหัส</string>
+    <string name="restore_encrypted_backup_label">กู้คืนข้อมูลสำรองที่เข้ารหัส</string>
+    <string name="backup_pin_unavailable">PIN ใช้ไม่ได้บนอุปกรณ์นี้</string>
+    <string name="backup_restore_success">กู้คืนข้อมูลสำรองสำเร็จ</string>
+    <string name="backup_restore_error">ไม่สามารถกู้คืนข้อมูลสำรองได้</string>
+    <string name="backup_export_error">ไม่สามารถส่งออกข้อมูลสำรองได้</string>
     <string name="panic_wipe_confirm_title">ลบข้อมูลทั้งหมดใช่ไหม</string>
     <string name="panic_wipe_confirm_message">การดำเนินการนี้จะลบข้อมูลวงจรทั้งหมดของคุณออกจากอุปกรณ์นี้อย่างถาวร การดำเนินการนี้ไม่สามารถยกเลิกได้</string>
     <string name="panic_wipe_confirm_button">ลบทุกอย่าง</string>
     <string name="panic_wipe_done_a11y">ข้อมูลทั้งหมดถูกลบแล้ว</string>
     <string name="lock_biometric_title">Luna</string>
     <string name="lock_biometric_subtitle">ปลดล็อกเพื่อเข้าถึงข้อมูลของคุณ</string>
+    <string name="lock_subtitle">ป้อน PIN เพื่อปลดล็อก</string>
     <string name="lock_use_pin">ใช้ PIN</string>
     <string name="lock_wrong_pin">PIN ไม่ถูกต้อง</string>
     <string name="lock_max_attempts">พยายามหลายครั้งเกินไป โปรดลองอีกครั้งในภายหลัง</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">ยืนยัน PIN</string>
     <string name="onboarding_pin_mismatch">PIN ไม่ตรงกัน</string>
     <string name="onboarding_pin_too_short">ต้อง PIN มีตัวเลข 6–8 หลัก</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">ชื่อ (ไม่บังคับ)</string>
+    <string name="onboarding_skip">ข้าม</string>
+    <string name="onboarding_period_duration_label">ประจำเดือนของคุณมักจะมาประมาณกี่วัน?</string>
+    <string name="onboarding_regularity_label">รอบเดือนของคุณสม่ำเสมอแค่ไหน?</string>
+    <string name="regularity_very_regular">สม่ำเสมอมาก</string>
+    <string name="regularity_regular">สม่ำเสมอ</string>
+    <string name="regularity_irregular">ไม่สม่ำเสมอ</string>
+    <string name="regularity_unknown">ไม่ทราบ</string>
+    <string name="day_abbr">ว</string>
+    <string name="goal_track">ติดตามรอบเดือนของฉัน</string>
+    <string name="goal_understand_symptoms">เข้าใจอาการของฉัน</string>
+    <string name="goal_avoid_pregnancy">หลีกเลี่ยงการตั้งครรภ์</string>
+    <string name="goal_try_to_conceive">พยายามตั้งครรภ์</string>
+    <string name="goal_track_pregnancy">ติดตามการตั้งครรภ์</string>
+    <string name="goal_perimenopause">วัยใกล้หมดประจำเดือน</string>
+    <string name="creating_vault_loading">กำลังสร้างคลังข้อมูลที่ปลอดภัยของคุณ…</string>
     <string name="notif_channel_period">เตือนรอบเดือน</string>
     <string name="notif_channel_fertile">ช่วงไข่เจริญพันธุ์</string>
     <string name="notif_channel_pill">เตือนการคุมกำเนิด</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">โหมดการติดตาม</string>
     <string name="charts_cycle_lengths_a11y">แผนภูมิแท่งความยาวรอบเดือน</string>
     <string name="charts_bbt_a11y">อุณหภูมิร่างกายขั้นพื้นฐาน แผนภูมิ</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">ความยาวรอบเดือนเฉลี่ย: %1$s วัน</string>
+    <string name="stats_avg_period_a11y">ระยะเวลาประจำเดือนเฉลี่ย: %1$s วัน</string>
     <string name="settings_pill_reminder">การแจ้งเตือนการกินยารายวัน</string>
     <string name="perimeno_banner_title">โหมดรอบหมดประจำเดือน — แตะเพื่อเปิดแดชบอร์ด</string>
     <string name="perimeno_banner_a11y">เปิดแดชบอร์ดช่วงวัยหมดประจำเดือน</string>
     <string name="ttc_banner_title">โหมด TTC — ไฮไลต์หน้าต่างเจริญพันธุ์</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">บันทึกการตั้งครรภ์</string>
+    <string name="hcg_test_label">ตรวจ hCG</string>
+    <string name="hcg_not_done">ยังไม่ได้ทำ</string>
+    <string name="hcg_positive">ผลบวก</string>
+    <string name="hcg_negative">ผลลบ</string>
+    <string name="kicks_label">การดิ้นของทารก</string>
+    <string name="kicks_decrease">ลดการดิ้น</string>
+    <string name="kicks_increase">เพิ่มการดิ้น</string>
+    <string name="nausea_label">ระดับอาการคลื่นไส้</string>
+    <string name="nausea_slider_a11y">ระดับอาการคลื่นไส้ตั้งแต่ 0 ถึง 5</string>
+    <string name="weight_label">น้ำหนัก</string>
+    <string name="symptom_logged_a11y">บันทึกอาการแล้ว</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">วัยใกล้หมดประจำเดือน</string>
+    <string name="perimenopause_quick_log_title">บันทึกอาการอย่างรวดเร็ว</string>
+    <string name="perimenopause_variability_title">ความแปรปรวนของรอบเดือน</string>
+    <string name="perimenopause_need_more_data">บันทึกอย่างน้อย 2 รอบเดือนเพื่อดูความแปรปรวน</string>
+    <string name="perimenopause_variability_summary">เฉลี่ย %1$d วัน (ช่วง: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">เกี่ยวกับวัยใกล้หมดประจำเดือน</string>
+    <string name="perimenopause_info_body">วัยใกล้หมดประจำเดือนมักเริ่มในช่วงอายุ 40 ปี และอาจเป็นต่อเนื่องหลายปี ความยาวของรอบเดือนอาจเปลี่ยนแปลงได้มาก และอาการเช่นร้อนวูบวาบและเหงื่อออกตอนกลางคืนก็พบได้บ่อย การบันทึกข้อมูลช่วยให้คุณเข้าใจการเปลี่ยนแปลงของร่างกาย</string>
     <plurals name="days_until_period">
         <item quantity="one">ใน %d วัน</item>
         <item quantity="other">ใน %d วัน</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d วัน</item>
         <item quantity="other">%d วัน</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">ซิงค์กับแอป Health Connect</string>
+    <string name="health_connect_rationale_body">LUNA สามารถแชร์ข้อมูลรอบเดือนกับ Health Connect ได้</string>
+    <string name="health_connect_privacy_policy_button">นโยบายความเป็นส่วนตัว</string>
 </resources>

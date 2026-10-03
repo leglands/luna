@@ -7,6 +7,7 @@
     <string name="log_today_button">Đăng nhập hôm nay</string>
     <string name="privacy_local_badge">Dữ liệu cục bộ</string>
     <string name="privacy_badge_a11y">Tất cả dữ liệu của bạn được lưu trữ cục bộ trên thiết bị này</string>
+    <string name="toolbar_private_subtitle">Riêng tư · Trên thiết bị này</string>
     <string name="cycle_day_label">Ngày %d</string>
     <string name="next_period_in">Trong %d ngày</string>
     <string name="cycle_progress_a11y">Chu kỳ ngày %1$d. Giai đoạn tiếp theo sau %2$d ngày.</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">Tuyệt</string>
     <string name="energy_label">Năng lượng</string>
     <string name="flow_label">Dòng chảy</string>
+    <string name="flow_option_a11y">Lượng kinh: %1$s</string>
     <string name="flow_none"> Không</string>
     <string name="flow_spotting">Đốm</string>
     <string name="flow_light">Nhẹ</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">Ghi chú văn bản miễn phí, được mã hóa và lưu trữ cục bộ</string>
     <string name="save_button">Tiết kiệm</string>
     <string name="cancel_button">Hủy</string>
+    <string name="open_button">Mở</string>
     <string name="log_saved_a11y">Ngày được ghi lại</string>
     <string name="symptom_cramps">Chuột rút</string>
     <string name="symptom_bloating">Đầy hơi</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">Đau nửa đầu</string>
     <string name="symptom_hot_flash">Nóng flash</string>
     <string name="symptom_night_sweats">Đổ mồ hôi ban đêm</string>
+    <string name="symptom_vaginal_dryness">Khô âm đạo</string>
     <string name="bbt_label">Nhiệt độ cơ thể cơ bản (BBT)</string>
     <string name="bbt_hint">Được đo khi thức dậy, trước khi có bất kỳ chuyển động nào</string>
     <string name="bbt_placeholder">36,7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">Xóa tất cả dữ liệu</string>
     <string name="settings_delete_all_a11y">Xóa tất cả dữ liệu khỏi thiết bị này</string>
     <string name="settings_delete_all_hint_a11y">Hành động này không thể thay đổi được và sẽ xóa vĩnh viễn tất cả dữ liệu của bạn</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">Quyền riêng tư và bảo mật</string>
+    <string name="settings_section_tracking">Theo dõi và nhắc nhở</string>
+    <string name="settings_section_data">Xuất và khôi phục</string>
     <string name="export_csv_label">Xuất sang CSV</string>
     <string name="export_encrypted_backup_label">Sao lưu được mã hóa</string>
+    <string name="restore_encrypted_backup_label">Khôi phục bản sao lưu đã mã hóa</string>
+    <string name="backup_pin_unavailable">PIN không khả dụng trên thiết bị này</string>
+    <string name="backup_restore_success">Đã khôi phục bản sao lưu thành công</string>
+    <string name="backup_restore_error">Không thể khôi phục bản sao lưu</string>
+    <string name="backup_export_error">Không thể xuất bản sao lưu</string>
     <string name="panic_wipe_confirm_title">Xóa tất cả dữ liệu?</string>
     <string name="panic_wipe_confirm_message">Việc này sẽ xóa vĩnh viễn tất cả dữ liệu chu kỳ của bạn khỏi thiết bị này. Không thể hoàn tác hành động này.</string>
     <string name="panic_wipe_confirm_button">Xóa mọi thứ</string>
     <string name="panic_wipe_done_a11y">Tất cả dữ liệu đã bị xóa</string>
     <string name="lock_biometric_title">Luna</string>
     <string name="lock_biometric_subtitle">Mở khóa để truy cập dữ liệu của bạn</string>
+    <string name="lock_subtitle">Nhập mã PIN để mở khóa</string>
     <string name="lock_use_pin">Sử dụng mã PIN</string>
     <string name="lock_wrong_pin">Mã PIN không chính xác</string>
     <string name="lock_max_attempts">Quá nhiều lần thử. Vui lòng thử lại sau.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">Xác nhận PIN</string>
     <string name="onboarding_pin_mismatch">PIN không khớp</string>
     <string name="onboarding_pin_too_short">PIN phải có 6–8 chữ số</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">Tên (không bắt buộc)</string>
+    <string name="onboarding_skip">Bỏ qua</string>
+    <string name="onboarding_period_duration_label">Kỳ kinh của bạn thường kéo dài bao lâu?</string>
+    <string name="onboarding_regularity_label">Chu kỳ của bạn đều đặn đến mức nào?</string>
+    <string name="regularity_very_regular">Rất đều đặn</string>
+    <string name="regularity_regular">Đều đặn</string>
+    <string name="regularity_irregular">Không đều</string>
+    <string name="regularity_unknown">Tôi không biết</string>
+    <string name="day_abbr">n</string>
+    <string name="goal_track">Theo dõi chu kỳ của tôi</string>
+    <string name="goal_understand_symptoms">Hiểu rõ triệu chứng của tôi</string>
+    <string name="goal_avoid_pregnancy">Tránh mang thai</string>
+    <string name="goal_try_to_conceive">Cố gắng thụ thai</string>
+    <string name="goal_track_pregnancy">Theo dõi thai kỳ</string>
+    <string name="goal_perimenopause">Tiền mãn kinh</string>
+    <string name="creating_vault_loading">Đang tạo kho lưu trữ an toàn của bạn…</string>
     <string name="notif_channel_period">Nhắc chu kỳ</string>
     <string name="notif_channel_fertile">Cửa sổ màu mỡ</string>
     <string name="notif_channel_pill">Nhắc nhở tránh thai</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">Chế độ theo dõi</string>
     <string name="charts_cycle_lengths_a11y">Biểu đồ thanh độ dài chu kỳ</string>
     <string name="charts_bbt_a11y">Biểu đồ nhiệt độ cơ thể cơ bản</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">Độ dài chu kỳ trung bình: %1$s ngày</string>
+    <string name="stats_avg_period_a11y">Độ dài kỳ kinh trung bình: %1$s ngày</string>
     <string name="settings_pill_reminder">Nhắc nhở dùng thuốc hàng ngày</string>
     <string name="perimeno_banner_title">Chế độ tiền mãn kinh — Nhấn để mở bảng điều khiển</string>
     <string name="perimeno_banner_a11y">Mở bảng điều khiển tiền mãn kinh</string>
     <string name="ttc_banner_title">Chế độ TTC — Cửa sổ màu mỡ được đánh dấu</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">Nhật ký thai kỳ</string>
+    <string name="hcg_test_label">Xét nghiệm hCG</string>
+    <string name="hcg_not_done">Chưa thực hiện</string>
+    <string name="hcg_positive">Dương tính</string>
+    <string name="hcg_negative">Âm tính</string>
+    <string name="kicks_label">Thai máy</string>
+    <string name="kicks_decrease">Giảm thai máy</string>
+    <string name="kicks_increase">Tăng thai máy</string>
+    <string name="nausea_label">Mức độ buồn nôn</string>
+    <string name="nausea_slider_a11y">Mức độ buồn nôn từ 0 đến 5</string>
+    <string name="weight_label">Cân nặng</string>
+    <string name="symptom_logged_a11y">Đã ghi triệu chứng</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">Tiền mãn kinh</string>
+    <string name="perimenopause_quick_log_title">Ghi nhanh triệu chứng</string>
+    <string name="perimenopause_variability_title">Chu kỳ thay đổi thất thường</string>
+    <string name="perimenopause_need_more_data">Ghi ít nhất 2 chu kỳ để xem mức độ thay đổi</string>
+    <string name="perimenopause_variability_summary">Trung bình %1$d ngày (khoảng: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">Về tiền mãn kinh</string>
+    <string name="perimenopause_info_body">Tiền mãn kinh thường bắt đầu ở độ tuổi 40 và có thể kéo dài vài năm. Độ dài chu kỳ có thể thay đổi rõ rệt, và các triệu chứng như bốc hỏa và đổ mồ hôi ban đêm khá phổ biến. Việc theo dõi giúp bạn hiểu rõ sự chuyển biến của cơ thể mình.</string>
     <plurals name="days_until_period">
         <item quantity="one">Trong %d ngày</item>
         <item quantity="other">Trong %d ngày</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d ngày</item>
         <item quantity="other">%d ngày</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Đồng bộ với Health Connect</string>
+    <string name="health_connect_rationale_body">LUNA có thể chia sẻ dữ liệu chu kỳ với ứng dụng Health Connect.</string>
+    <string name="health_connect_privacy_policy_button">Chính sách quyền riêng tư</string>
 </resources>

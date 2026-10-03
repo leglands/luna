@@ -7,6 +7,7 @@
     <string name="log_today_button">আজ লগ করুন</string>
     <string name="privacy_local_badge">স্থানীয় তথ্য</string>
     <string name="privacy_badge_a11y">আপনার সমস্ত ডেটা এই ডিভাইসে স্থানীয়ভাবে সংরক্ষণ করা হয়</string>
+    <string name="toolbar_private_subtitle">ব্যক্তিগত · এই ডিভাইসে</string>
     <string name="cycle_day_label">দিন %d</string>
     <string name="next_period_in">%d দিনের মধ্যে</string>
     <string name="cycle_progress_a11y">সাইকেল দিন %1$d। পরবর্তী সময়কাল %2$d দিনের মধ্যে।</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">দারুণ</string>
     <string name="energy_label">শক্তি</string>
     <string name="flow_label">প্রবাহ</string>
+    <string name="flow_option_a11y">প্রবাহ: %1$s</string>
     <string name="flow_none">কোনোটিই নয়</string>
     <string name="flow_spotting">স্পটিং</string>
     <string name="flow_light">আলো</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">বিনামূল্যে টেক্সট নোট, এনক্রিপ্ট করা এবং স্থানীয়ভাবে সংরক্ষিত</string>
     <string name="save_button">সংরক্ষণ করুন</string>
     <string name="cancel_button">বাতিল করুন</string>
+    <string name="open_button">খুলুন</string>
     <string name="log_saved_a11y">দিন লগ</string>
     <string name="symptom_cramps">ক্র্যাম্প</string>
     <string name="symptom_bloating">ফোলা</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">মাইগ্রেন</string>
     <string name="symptom_hot_flash">হট ফ্ল্যাশ</string>
     <string name="symptom_night_sweats">রাতে ঘামছে</string>
+    <string name="symptom_vaginal_dryness">যোনিপথের শুষ্কতা</string>
     <string name="bbt_label">বেসাল শরীরের তাপমাত্রা (BBT)</string>
     <string name="bbt_hint">জেগে ওঠার পর পরিমাপ করা হয়, কোনো আন্দোলনের আগে</string>
     <string name="bbt_placeholder">36.7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">সমস্ত ডেটা মুছুন</string>
     <string name="settings_delete_all_a11y">এই ডিভাইস থেকে সমস্ত ডেটা মুছুন৷</string>
     <string name="settings_delete_all_hint_a11y">এই ক্রিয়াটি অপরিবর্তনীয় এবং স্থায়ীভাবে আপনার সমস্ত ডেটা মুছে ফেলবে৷</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">গোপনীয়তা ও নিরাপত্তা</string>
+    <string name="settings_section_tracking">ট্র্যাকিং ও অনুস্মারক</string>
+    <string name="settings_section_data">রপ্তানি ও পুনরুদ্ধার</string>
     <string name="export_csv_label">CSV-এ রপ্তানি করুন</string>
     <string name="export_encrypted_backup_label">এনক্রিপ্ট করা ব্যাকআপ</string>
+    <string name="restore_encrypted_backup_label">এনক্রিপ্ট করা ব্যাকআপ পুনরুদ্ধার করুন</string>
+    <string name="backup_pin_unavailable">এই ডিভাইসে পিন পাওয়া যায় না</string>
+    <string name="backup_restore_success">ব্যাকআপ সফলভাবে পুনরুদ্ধার হয়েছে</string>
+    <string name="backup_restore_error">ব্যাকআপ পুনরুদ্ধার করা যায়নি</string>
+    <string name="backup_export_error">ব্যাকআপ রপ্তানি করা যায়নি</string>
     <string name="panic_wipe_confirm_title">সব তথ্য মুছে ফেলবেন?</string>
     <string name="panic_wipe_confirm_message">এটি এই ডিভাইস থেকে আপনার সমস্ত চক্র ডেটা স্থায়ীভাবে মুছে ফেলবে৷ এই ক্রিয়াটি পূর্বাবস্থায় ফেরানো যাবে না৷</string>
     <string name="panic_wipe_confirm_button">সবকিছু মুছে ফেলুন</string>
     <string name="panic_wipe_done_a11y">সমস্ত তথ্য মুছে ফেলা হয়েছে</string>
     <string name="lock_biometric_title">লুনা</string>
     <string name="lock_biometric_subtitle">আপনার ডেটা অ্যাক্সেস করতে আনলক করুন</string>
+    <string name="lock_subtitle">আনলক করতে আপনার পিন লিখুন</string>
     <string name="lock_use_pin">পিন ব্যবহার করুন</string>
     <string name="lock_wrong_pin">ভুল পিন</string>
     <string name="lock_max_attempts">অনেক প্রচেষ্টা. পরে আবার চেষ্টা করুন.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">পিন নিশ্চিত করুন</string>
     <string name="onboarding_pin_mismatch">পিন মেলে না</string>
     <string name="onboarding_pin_too_short">পিন অবশ্যই ৬-৮ সংখ্যার হতে হবে</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">নাম (ঐচ্ছিক)</string>
+    <string name="onboarding_skip">এড়িয়ে যান</string>
+    <string name="onboarding_period_duration_label">আপনার পিরিয়ড সাধারণত কত দিন স্থায়ী হয়?</string>
+    <string name="onboarding_regularity_label">আপনার চক্র কতটা নিয়মিত?</string>
+    <string name="regularity_very_regular">খুব নিয়মিত</string>
+    <string name="regularity_regular">নিয়মিত</string>
+    <string name="regularity_irregular">অনিয়মিত</string>
+    <string name="regularity_unknown">আমি জানি না</string>
+    <string name="day_abbr">দিন</string>
+    <string name="goal_track">আমার চক্র ট্র্যাক করা</string>
+    <string name="goal_understand_symptoms">আমার উপসর্গ বোঝা</string>
+    <string name="goal_avoid_pregnancy">গর্ভধারণ এড়ানো</string>
+    <string name="goal_try_to_conceive">সন্তান ধারণের চেষ্টা</string>
+    <string name="goal_track_pregnancy">গর্ভাবস্থা ট্র্যাক করা</string>
+    <string name="goal_perimenopause">পেরিমেনোপজ</string>
+    <string name="creating_vault_loading">আপনার নিরাপদ ভল্ট তৈরি করা হচ্ছে…</string>
     <string name="notif_channel_period">সাইকেল রিমাইন্ডার</string>
     <string name="notif_channel_fertile">উর্বর জানালা</string>
     <string name="notif_channel_pill">গর্ভনিরোধ অনুস্মারক</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">ট্র্যাকিং মোড</string>
     <string name="charts_cycle_lengths_a11y">সাইকেলের দৈর্ঘ্যের বার চার্ট</string>
     <string name="charts_bbt_a11y">বেসাল শরীরের তাপমাত্রা চার্ট</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">গড় চক্রের দৈর্ঘ্য: %1$s দিন</string>
+    <string name="stats_avg_period_a11y">গড় পিরিয়ডের দৈর্ঘ্য: %1$s দিন</string>
     <string name="settings_pill_reminder">দৈনিক পিলের অনুস্মারক</string>
     <string name="perimeno_banner_title">পেরিমেনোপজ মোড — ড্যাশবোর্ড খুলতে আলতো চাপুন</string>
     <string name="perimeno_banner_a11y">পেরিমেনোপজ ড্যাশবোর্ড খুলুন</string>
     <string name="ttc_banner_title">TTC মোড — উর্বর উইন্ডো হাইলাইট করা হয়েছে</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">গর্ভাবস্থার লগ</string>
+    <string name="hcg_test_label">hCG পরীক্ষা</string>
+    <string name="hcg_not_done">করা হয়নি</string>
+    <string name="hcg_positive">পজিটিভ</string>
+    <string name="hcg_negative">নেগেটিভ</string>
+    <string name="kicks_label">ভ্রূণের লাথি</string>
+    <string name="kicks_decrease">লাথি কমান</string>
+    <string name="kicks_increase">লাথি বাড়ান</string>
+    <string name="nausea_label">বমিভাবের মাত্রা</string>
+    <string name="nausea_slider_a11y">বমিভাবের মাত্রা 0 থেকে 5</string>
+    <string name="weight_label">ওজন</string>
+    <string name="symptom_logged_a11y">উপসর্গ লগ করা হয়েছে</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">পেরিমেনোপজ</string>
+    <string name="perimenopause_quick_log_title">দ্রুত উপসর্গ লগ করুন</string>
+    <string name="perimenopause_variability_title">চক্রের পরিবর্তনশীলতা</string>
+    <string name="perimenopause_need_more_data">পরিবর্তনশীলতা দেখতে অন্তত 2টি চক্র লগ করুন</string>
+    <string name="perimenopause_variability_summary">গড় %1$d দিন (পরিসীমা: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">পেরিমেনোপজ সম্পর্কে</string>
+    <string name="perimenopause_info_body">পেরিমেনোপজ সাধারণত ৪০-এর ঘরে শুরু হয় এবং কয়েক বছর ধরে চলতে পারে। চক্রের দৈর্ঘ্য অনেকটাই বদলাতে পারে, আর গরম লাগা ও রাতের ঘামের মতো উপসর্গ সাধারণ। ট্র্যাকিং আপনার শরীরের এই পরিবর্তন বুঝতে সাহায্য করে।</string>
     <plurals name="days_until_period">
         <item quantity="one">%d দিনে</item>
         <item quantity="other">%d দিনের মধ্যে</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d দিন</item>
         <item quantity="other">%d দিন</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Health Connect-এর সঙ্গে সিঙ্ক</string>
+    <string name="health_connect_rationale_body">LUNA Health Connect-এর সঙ্গে চক্রের ডেটা ভাগ করতে পারে।</string>
+    <string name="health_connect_privacy_policy_button">গোপনীয়তা নীতি</string>
 </resources>

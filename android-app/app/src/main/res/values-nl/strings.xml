@@ -7,6 +7,7 @@
     <string name="log_today_button">Log vandaag nog</string>
     <string name="privacy_local_badge">Lokale gegevens</string>
     <string name="privacy_badge_a11y">Al uw gegevens worden lokaal op dit apparaat opgeslagen</string>
+    <string name="toolbar_private_subtitle">Privé · Op dit apparaat</string>
     <string name="cycle_day_label">Dag %d</string>
     <string name="next_period_in">In %d dagen</string>
     <string name="cycle_progress_a11y">Cyclusdag %1$d. Volgende periode over %2$d dagen.</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">Geweldig</string>
     <string name="energy_label">Energie</string>
     <string name="flow_label">Flow</string>
+    <string name="flow_option_a11y">Doorstroming: %1$s</string>
     <string name="flow_none"> Geen</string>
     <string name="flow_spotting">Spotting</string>
     <string name="flow_light">Licht</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">Notitie met vrije tekst, gecodeerd en lokaal opgeslagen</string>
     <string name="save_button">Opslaan</string>
     <string name="cancel_button">Annuleren</string>
+    <string name="open_button">Openen</string>
     <string name="log_saved_a11y">Gelogde dag</string>
     <string name="symptom_cramps">Krampen</string>
     <string name="symptom_bloating">Opgeblazen gevoel</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">Migraine</string>
     <string name="symptom_hot_flash">Heet flash</string>
     <string name="symptom_night_sweats">Nachtelijk zweten</string>
+    <string name="symptom_vaginal_dryness">Vaginale droogheid</string>
     <string name="bbt_label">Basale lichaamstemperatuur (BBT)</string>
     <string name="bbt_hint">Gemeten bij het ontwaken, vóór enige beweging</string>
     <string name="bbt_placeholder">36,7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">Alle gegevens verwijderen</string>
     <string name="settings_delete_all_a11y">Alle gegevens van dit apparaat verwijderen</string>
     <string name="settings_delete_all_hint_a11y">Deze actie is onomkeerbaar en zal al uw gegevens permanent verwijderen</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">Privacy en beveiliging</string>
+    <string name="settings_section_tracking">Tracking en herinneringen</string>
+    <string name="settings_section_data">Exports en herstel</string>
     <string name="export_csv_label">Exporteren naar CSV</string>
     <string name="export_encrypted_backup_label">Gecodeerde back-up</string>
+    <string name="restore_encrypted_backup_label">Versleutelde back-up herstellen</string>
+    <string name="backup_pin_unavailable">Pincode niet beschikbaar op dit apparaat</string>
+    <string name="backup_restore_success">Back-up is hersteld</string>
+    <string name="backup_restore_error">Back-up kan niet worden hersteld</string>
+    <string name="backup_export_error">Back-up kan niet worden geëxporteerd</string>
     <string name="panic_wipe_confirm_title">Alle gegevens verwijderen?</string>
     <string name="panic_wipe_confirm_message">Hiermee worden al uw cyclusgegevens permanent van dit apparaat verwijderd. Deze actie kan niet ongedaan worden gemaakt.</string>
     <string name="panic_wipe_confirm_button">Alles verwijderen</string>
     <string name="panic_wipe_done_a11y">Alle gegevens zijn verwijderd</string>
     <string name="lock_biometric_title">Luna</string>
     <string name="lock_biometric_subtitle">Ontgrendelen om toegang te krijgen tot uw gegevens</string>
+    <string name="lock_subtitle">Voer uw pincode in om te ontgrendelen</string>
     <string name="lock_use_pin">Gebruik PIN</string>
     <string name="lock_wrong_pin">Onjuiste PIN</string>
     <string name="lock_max_attempts">Te veel pogingen. Probeer het later opnieuw.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">Bevestigen PIN</string>
     <string name="onboarding_pin_mismatch">PIN\'s komen niet overeen</string>
     <string name="onboarding_pin_too_short">PIN moet uit 6-8 cijfers bestaan</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">Voornaam (optioneel)</string>
+    <string name="onboarding_skip">Overslaan</string>
+    <string name="onboarding_period_duration_label">Hoe lang duurt uw menstruatie meestal?</string>
+    <string name="onboarding_regularity_label">Hoe regelmatig is uw cyclus?</string>
+    <string name="regularity_very_regular">Zeer regelmatig</string>
+    <string name="regularity_regular">Regelmatig</string>
+    <string name="regularity_irregular">Onregelmatig</string>
+    <string name="regularity_unknown">Ik weet het niet</string>
+    <string name="day_abbr">d</string>
+    <string name="goal_track">Mijn cyclus volgen</string>
+    <string name="goal_understand_symptoms">Mijn symptomen begrijpen</string>
+    <string name="goal_avoid_pregnancy">Zwangerschap vermijden</string>
+    <string name="goal_try_to_conceive">Proberen zwanger te worden</string>
+    <string name="goal_track_pregnancy">Zwangerschap volgen</string>
+    <string name="goal_perimenopause">Perimenopauze</string>
+    <string name="creating_vault_loading">Uw beveiligde kluis wordt aangemaakt…</string>
     <string name="notif_channel_period">Cyclusherinnering</string>
     <string name="notif_channel_fertile">Vruchtbare periode</string>
     <string name="notif_channel_pill">Herinnering aan anticonceptie</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">Volgmodus</string>
     <string name="charts_cycle_lengths_a11y">Cycluslengtes staafdiagram</string>
     <string name="charts_bbt_a11y">Grafiek van de basale lichaamstemperatuur</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">Gemiddelde cycluslengte: %1$s dagen</string>
+    <string name="stats_avg_period_a11y">Gemiddelde menstruatieduur: %1$s dagen</string>
     <string name="settings_pill_reminder">Dagelijkse pilherinnering</string>
     <string name="perimeno_banner_title">Perimenopauzemodus — Tik om te openen dashboard</string>
     <string name="perimeno_banner_a11y">Perimenopauze-dashboard openen</string>
     <string name="ttc_banner_title">TTC-modus - Vruchtbaar venster gemarkeerd</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">Zwangerschapsdagboek</string>
+    <string name="hcg_test_label">hCG-test</string>
+    <string name="hcg_not_done">Niet uitgevoerd</string>
+    <string name="hcg_positive">Positief</string>
+    <string name="hcg_negative">Negatief</string>
+    <string name="kicks_label">Bewegingen van de foetus</string>
+    <string name="kicks_decrease">Minder bewegingen</string>
+    <string name="kicks_increase">Meer bewegingen</string>
+    <string name="nausea_label">Misselijkheidsniveau</string>
+    <string name="nausea_slider_a11y">Misselijkheidsniveau van 0 tot 5</string>
+    <string name="weight_label">Gewicht</string>
+    <string name="symptom_logged_a11y">Symptoom geregistreerd</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">Perimenopauze</string>
+    <string name="perimenopause_quick_log_title">Symptomen snel registreren</string>
+    <string name="perimenopause_variability_title">Variatie in de cyclus</string>
+    <string name="perimenopause_need_more_data">Registreer minstens 2 cycli om de variatie te zien</string>
+    <string name="perimenopause_variability_summary">Gemiddeld %1$d dagen (bereik: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">Over de perimenopauze</string>
+    <string name="perimenopause_info_body">De perimenopauze begint meestal rond je veertigste en kan meerdere jaren duren. De cycluslengte kan sterk variëren, en symptomen zoals opvliegers en nachtelijk zweten komen vaak voor. Bijhouden helpt u de overgang van uw lichaam te begrijpen.</string>
     <plurals name="days_until_period">
         <item quantity="one">Over %d dag</item>
         <item quantity="other">Over %d dagen</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d dag</item>
         <item quantity="other">%d dagen</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Synchroniseren met Health Connect</string>
+    <string name="health_connect_rationale_body">LUNA kan cyclusgegevens delen met Health Connect.</string>
+    <string name="health_connect_privacy_policy_button">Privacybeleid</string>
 </resources>

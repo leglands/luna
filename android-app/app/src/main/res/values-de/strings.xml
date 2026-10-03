@@ -7,6 +7,7 @@
     <string name="log_today_button">Heute protokollieren</string>
     <string name="privacy_local_badge">Lokale Daten</string>
     <string name="privacy_badge_a11y">Alle Ihre Daten werden lokal auf diesem Gerät gespeichert</string>
+    <string name="toolbar_private_subtitle">Privat · Auf diesem Gerät</string>
     <string name="cycle_day_label">Tag %d</string>
     <string name="next_period_in">In %d Tagen</string>
     <string name="cycle_progress_a11y">Zyklustag %1$d. Nächste Periode in %2$d Tagen.</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">Großartig</string>
     <string name="energy_label">Energie</string>
     <string name="flow_label">Durchfluss</string>
+    <string name="flow_option_a11y">Durchfluss: %1$s</string>
     <string name="flow_none"> Keine</string>
     <string name="flow_spotting">Fleckenbildung</string>
     <string name="flow_light">Leicht</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">Freie Textnotiz, verschlüsselt und lokal gespeichert</string>
     <string name="save_button">Speichern</string>
     <string name="cancel_button">Abbrechen</string>
+    <string name="open_button">Öffnen</string>
     <string name="log_saved_a11y">Tag protokolliert</string>
     <string name="symptom_cramps">Krämpfe</string>
     <string name="symptom_bloating">Blähungen</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">Migräne</string>
     <string name="symptom_hot_flash">Hitzewallung</string>
     <string name="symptom_night_sweats">Nachtschweiß</string>
+    <string name="symptom_vaginal_dryness">Vaginale Trockenheit</string>
     <string name="bbt_label">Basalkörpertemperatur (BBT)</string>
     <string name="bbt_hint">Gemessen beim Aufwachen, vor jeder Bewegung</string>
     <string name="bbt_placeholder">36,7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">Alle löschen Daten</string>
     <string name="settings_delete_all_a11y">Alle Daten von diesem Gerät löschen</string>
     <string name="settings_delete_all_hint_a11y">Diese Aktion ist irreversibel und löscht alle Ihre Daten dauerhaft</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">Datenschutz &amp; Sicherheit</string>
+    <string name="settings_section_tracking">Tracking &amp; Erinnerungen</string>
+    <string name="settings_section_data">Exporte &amp; Wiederherstellung</string>
     <string name="export_csv_label">Als CSV exportieren</string>
     <string name="export_encrypted_backup_label">Verschlüsseltes Backup</string>
+    <string name="restore_encrypted_backup_label">Verschlüsseltes Backup wiederherstellen</string>
+    <string name="backup_pin_unavailable">PIN auf diesem Gerät nicht verfügbar</string>
+    <string name="backup_restore_success">Backup erfolgreich wiederhergestellt</string>
+    <string name="backup_restore_error">Backup konnte nicht wiederhergestellt werden</string>
+    <string name="backup_export_error">Backup konnte nicht exportiert werden</string>
     <string name="panic_wipe_confirm_title">Alle Daten löschen?</string>
     <string name="panic_wipe_confirm_message">Dadurch werden alle Ihre Zyklusdaten dauerhaft von diesem Gerät gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.</string>
     <string name="panic_wipe_confirm_button">Alles löschen</string>
     <string name="panic_wipe_done_a11y">Alle Daten wurden gelöscht</string>
     <string name="lock_biometric_title">Luna</string>
     <string name="lock_biometric_subtitle">Entsperren, um auf Ihre Daten zuzugreifen</string>
+    <string name="lock_subtitle">Geben Sie Ihre PIN zum Entsperren ein</string>
     <string name="lock_use_pin">PIN verwenden</string>
     <string name="lock_wrong_pin">Falsche PIN</string>
     <string name="lock_max_attempts">Zu viele Versuche. Bitte versuchen Sie es später erneut.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">Bestätigen Sie die PIN</string>
     <string name="onboarding_pin_mismatch">PINs nicht Übereinstimmung</string>
     <string name="onboarding_pin_too_short">PIN muss 6–8 Ziffern lang sein</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">Vorname (optional)</string>
+    <string name="onboarding_skip">Überspringen</string>
+    <string name="onboarding_period_duration_label">Wie lange dauert Ihre Periode normalerweise?</string>
+    <string name="onboarding_regularity_label">Wie regelmäßig ist Ihr Zyklus?</string>
+    <string name="regularity_very_regular">Sehr regelmäßig</string>
+    <string name="regularity_regular">Regelmäßig</string>
+    <string name="regularity_irregular">Unregelmäßig</string>
+    <string name="regularity_unknown">Ich weiß es nicht</string>
+    <string name="day_abbr">T</string>
+    <string name="goal_track">Meinen Zyklus verfolgen</string>
+    <string name="goal_understand_symptoms">Meine Symptome verstehen</string>
+    <string name="goal_avoid_pregnancy">Schwangerschaft vermeiden</string>
+    <string name="goal_try_to_conceive">Schwangerschaft anstreben</string>
+    <string name="goal_track_pregnancy">Schwangerschaft begleiten</string>
+    <string name="goal_perimenopause">Perimenopause</string>
+    <string name="creating_vault_loading">Ihr sicherer Tresor wird erstellt…</string>
     <string name="notif_channel_period">Zykluserinnerung</string>
     <string name="notif_channel_fertile">Fruchtbarkeitsfenster</string>
     <string name="notif_channel_pill">Empfängnisverhütungserinnerung</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">Tracking-Modus</string>
     <string name="charts_cycle_lengths_a11y">Zyklus Längen-Balkendiagramm</string>
     <string name="charts_bbt_a11y">Basaltemperaturdiagramm</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">Durchschnittliche Zykluslänge: %1$s Tage</string>
+    <string name="stats_avg_period_a11y">Durchschnittliche Periodendauer: %1$s Tage</string>
     <string name="settings_pill_reminder">Tägliche Pillenerinnerung</string>
     <string name="perimeno_banner_title">Perimenopause-Modus – Tippen Sie, um das Dashboard zu öffnen</string>
     <string name="perimeno_banner_a11y">Perimenopause-Dashboard öffnen</string>
     <string name="ttc_banner_title">TTC-Modus – Fruchtbares Fenster hervorgehoben</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">Schwangerschaftstagebuch</string>
+    <string name="hcg_test_label">hCG-Test</string>
+    <string name="hcg_not_done">Nicht durchgeführt</string>
+    <string name="hcg_positive">Positiv</string>
+    <string name="hcg_negative">Negativ</string>
+    <string name="kicks_label">Kindsbewegungen</string>
+    <string name="kicks_decrease">Weniger Kindsbewegungen</string>
+    <string name="kicks_increase">Mehr Kindsbewegungen</string>
+    <string name="nausea_label">Stärke der Übelkeit</string>
+    <string name="nausea_slider_a11y">Stärke der Übelkeit von 0 bis 5</string>
+    <string name="weight_label">Gewicht</string>
+    <string name="symptom_logged_a11y">Symptom protokolliert</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">Perimenopause</string>
+    <string name="perimenopause_quick_log_title">Symptome schnell protokollieren</string>
+    <string name="perimenopause_variability_title">Zyklusschwankungen</string>
+    <string name="perimenopause_need_more_data">Protokollieren Sie mindestens 2 Zyklen, um Schwankungen zu sehen</string>
+    <string name="perimenopause_variability_summary">Durchschnittlich %1$d Tage (Spanne: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">Über die Perimenopause</string>
+    <string name="perimenopause_info_body">Die Perimenopause beginnt typischerweise in den 40ern und kann mehrere Jahre dauern. Die Zykluslänge kann stark schwanken, und Symptome wie Hitzewallungen und Nachtschweiß sind häufig. Das Protokollieren hilft Ihnen, den Übergang Ihres Körpers zu verstehen.</string>
     <plurals name="days_until_period">
         <item quantity="one">In %d Tagen</item>
         <item quantity="other">In %d Tagen</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d Tag</item>
         <item quantity="other">%d Tagen</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Mit Health Connect synchronisieren</string>
+    <string name="health_connect_rationale_body">LUNA kann Zyklusdaten mit Health Connect teilen.</string>
+    <string name="health_connect_privacy_policy_button">Datenschutzerklärung</string>
 </resources>

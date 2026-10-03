@@ -7,6 +7,7 @@
     <string name="log_today_button">התחבר היום</string>
     <string name="privacy_local_badge">נתונים מקומיים</string>
     <string name="privacy_badge_a11y">כל הנתונים שלך מאוחסנים באופן מקומי במכשיר זה</string>
+    <string name="toolbar_private_subtitle">פרטי · במכשיר הזה</string>
     <string name="cycle_day_label">יום %d</string>
     <string name="next_period_in">בעוד %d ימים</string>
     <string name="cycle_progress_a11y">יום מחזור %1$d. התקופה הבאה בעוד %2$d ימים.</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">גָדוֹל</string>
     <string name="energy_label">אֵנֶרְגִיָה</string>
     <string name="flow_label">זְרִימָה</string>
+    <string name="flow_option_a11y">זרימה: %1$s</string>
     <string name="flow_none">אַף לֹא אֶחָד</string>
     <string name="flow_spotting">תַצְפִּית</string>
     <string name="flow_light">אוֹר</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">הערת טקסט חופשית, מוצפנת ומאוחסנת באופן מקומי</string>
     <string name="save_button">לְהַצִיל</string>
     <string name="cancel_button">לְבַטֵל</string>
+    <string name="open_button">פתח</string>
     <string name="log_saved_a11y">יום נרשם</string>
     <string name="symptom_cramps">התכווצויות</string>
     <string name="symptom_bloating">נפיחות</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">מִיגרֶנָה</string>
     <string name="symptom_hot_flash">מבזק חם</string>
     <string name="symptom_night_sweats">הזעות לילה</string>
+    <string name="symptom_vaginal_dryness">יובש בנרתיק</string>
     <string name="bbt_label">טמפרטורת גוף בסיסית (BBT)</string>
     <string name="bbt_hint">נמדד עם היקיצה, לפני כל תנועה</string>
     <string name="bbt_placeholder">36.7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">מחק את כל הנתונים</string>
     <string name="settings_delete_all_a11y">מחק את כל הנתונים מהמכשיר הזה</string>
     <string name="settings_delete_all_hint_a11y">פעולה זו היא בלתי הפיכה והיא תמחק לצמיתות את כל הנתונים שלך</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">פרטיות ואבטחה</string>
+    <string name="settings_section_tracking">מעקב ותזכורות</string>
+    <string name="settings_section_data">ייצוא ושחזור</string>
     <string name="export_csv_label">ייצוא ל-CSV</string>
     <string name="export_encrypted_backup_label">גיבוי מוצפן</string>
+    <string name="restore_encrypted_backup_label">שחזר גיבוי מוצפן</string>
+    <string name="backup_pin_unavailable">PIN אינו זמין במכשיר הזה</string>
+    <string name="backup_restore_success">הגיבוי שוחזר בהצלחה</string>
+    <string name="backup_restore_error">לא ניתן לשחזר את הגיבוי</string>
+    <string name="backup_export_error">לא ניתן לייצא את הגיבוי</string>
     <string name="panic_wipe_confirm_title">מחק את כל הנתונים?</string>
     <string name="panic_wipe_confirm_message">זה ימחק לצמיתות את כל נתוני המחזור שלך מהמכשיר הזה. לא ניתן לבטל פעולה זו.</string>
     <string name="panic_wipe_confirm_button">מחק הכל</string>
     <string name="panic_wipe_done_a11y">כל הנתונים נמחקו</string>
     <string name="lock_biometric_title">Luna</string>
     <string name="lock_biometric_subtitle">בטל את הנעילה כדי לגשת לנתונים שלך</string>
+    <string name="lock_subtitle">הזן את ה-PIN כדי לפתוח</string>
     <string name="lock_use_pin">השתמש ב-PIN</string>
     <string name="lock_wrong_pin">PIN שגוי</string>
     <string name="lock_max_attempts"> אנא נסה שוב מאוחר יותר.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">אשר את ה-PIN</string>
     <string name="onboarding_pin_mismatch">מספרי ה-PIN אינם תואמים</string>
     <string name="onboarding_pin_too_short">PIN חייב להיות בן 6-8 ספרות</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">שם (אופציונלי)</string>
+    <string name="onboarding_skip">דלג</string>
+    <string name="onboarding_period_duration_label">כמה זמן הווסת שלך נמשכת בדרך כלל?</string>
+    <string name="onboarding_regularity_label">עד כמה המחזור שלך סדיר?</string>
+    <string name="regularity_very_regular">סדיר מאוד</string>
+    <string name="regularity_regular">סדיר</string>
+    <string name="regularity_irregular">לא סדיר</string>
+    <string name="regularity_unknown">אני לא יודעת</string>
+    <string name="day_abbr">י</string>
+    <string name="goal_track">לעקוב אחרי המחזור שלי</string>
+    <string name="goal_understand_symptoms">להבין את התסמינים שלי</string>
+    <string name="goal_avoid_pregnancy">להימנע מהיריון</string>
+    <string name="goal_try_to_conceive">לנסות להיכנס להיריון</string>
+    <string name="goal_track_pregnancy">לעקוב אחרי ההיריון</string>
+    <string name="goal_perimenopause">טרום-מנופאוזה</string>
+    <string name="creating_vault_loading">יוצר את הכספת המאובטחת שלך…</string>
     <string name="notif_channel_period">תזכורת למחזור</string>
     <string name="notif_channel_fertile">חלון פורה</string>
     <string name="notif_channel_pill">תזכורת למניעת הריון</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">מצב מעקב</string>
     <string name="charts_cycle_lengths_a11y">תרשים עמודות של אורכי מחזור</string>
     <string name="charts_bbt_a11y">טבלת טמפרטורת גוף בסיסית</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">אורך מחזור ממוצע: %1$s ימים</string>
+    <string name="stats_avg_period_a11y">אורך וסת ממוצע: %1$s ימים</string>
     <string name="settings_pill_reminder">תזכורת לגלולה יומית</string>
     <string name="perimeno_banner_title">מצב גיל המעבר - הקש כדי לפתוח את לוח המחוונים</string>
     <string name="perimeno_banner_a11y">פתח את לוח המחוונים בתקופת המנופאוזה</string>
     <string name="ttc_banner_title">מצב TTC - חלון פורה מודגש</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">יומן היריון</string>
+    <string name="hcg_test_label">בדיקת hCG</string>
+    <string name="hcg_not_done">לא בוצע</string>
+    <string name="hcg_positive">חיובי</string>
+    <string name="hcg_negative">שלילי</string>
+    <string name="kicks_label">תנועות עובר</string>
+    <string name="kicks_decrease">פחות תנועות</string>
+    <string name="kicks_increase">יותר תנועות</string>
+    <string name="nausea_label">רמת בחילה</string>
+    <string name="nausea_slider_a11y">רמת בחילה מ-0 עד 5</string>
+    <string name="weight_label">משקל</string>
+    <string name="symptom_logged_a11y">התסמין נרשם</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">טרום-מנופאוזה</string>
+    <string name="perimenopause_quick_log_title">רישום מהיר של תסמינים</string>
+    <string name="perimenopause_variability_title">שונות המחזור</string>
+    <string name="perimenopause_need_more_data">רשמי לפחות 2 מחזורים כדי לראות את השונות</string>
+    <string name="perimenopause_variability_summary">ממוצע %1$d ימים (טווח: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">אודות טרום-מנופאוזה</string>
+    <string name="perimenopause_info_body">טרום-מנופאוזה מתחילה בדרך כלל בשנות ה-40 לחיים ויכולה להימשך כמה שנים. אורך המחזור עשוי להשתנות במידה ניכרת, ותסמינים כמו גלי חום והזעות לילה נפוצים. תיעוד עוזר לך להבין את המעבר של הגוף שלך.</string>
     <plurals name="days_until_period">
         <item quantity="one">בעוד %d יום</item>
         <item quantity="other">בעוד %d ימים</item>
@@ -130,4 +185,10 @@
         <item quantity="one">יום %d</item>
         <item quantity="other">%d ימים</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">סנכרון עם Health Connect</string>
+    <string name="health_connect_rationale_body">LUNA יכולה לשתף נתוני מחזור עם Health Connect.</string>
+    <string name="health_connect_privacy_policy_button">מדיניות פרטיות</string>
 </resources>

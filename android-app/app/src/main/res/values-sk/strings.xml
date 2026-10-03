@@ -7,6 +7,7 @@
     <string name="log_today_button">Prihláste sa ešte dnes</string>
     <string name="privacy_local_badge">Miestne údaje</string>
     <string name="privacy_badge_a11y">Všetky vaše údaje sú uložené lokálne v tomto zariadení</string>
+    <string name="toolbar_private_subtitle">Súkromné · V tomto zariadení</string>
     <string name="cycle_day_label">Deň %d</string>
     <string name="next_period_in">O %d dní</string>
     <string name="cycle_progress_a11y">Deň cyklu %1$d. Ďalšie obdobie o %2$d dní.</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">Skvelé</string>
     <string name="energy_label">Energia</string>
     <string name="flow_label">Prietok</string>
+    <string name="flow_option_a11y">Tok: %1$s</string>
     <string name="flow_none">žiadne</string>
     <string name="flow_spotting">Spotting</string>
     <string name="flow_light">Svetlo</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">Voľná ​​textová poznámka, zašifrovaná a uložená lokálne</string>
     <string name="save_button">Uložiť</string>
     <string name="cancel_button">Zrušiť</string>
+    <string name="open_button">Otvoriť</string>
     <string name="log_saved_a11y">Deň prihlásený</string>
     <string name="symptom_cramps">Kŕče</string>
     <string name="symptom_bloating">Nadúvanie</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">Migréna</string>
     <string name="symptom_hot_flash">Horúci záblesk</string>
     <string name="symptom_night_sweats">Nočné potenie</string>
+    <string name="symptom_vaginal_dryness">Suchosť pošvy</string>
     <string name="bbt_label">Bazálna telesná teplota (BBT)</string>
     <string name="bbt_hint">Merané po prebudení, pred akýmkoľvek pohybom</string>
     <string name="bbt_placeholder">36.7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">Vymažte všetky údaje</string>
     <string name="settings_delete_all_a11y">Odstráňte všetky údaje z tohto zariadenia</string>
     <string name="settings_delete_all_hint_a11y">Táto akcia je nevratná a natrvalo odstráni všetky vaše údaje</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">Súkromie a zabezpečenie</string>
+    <string name="settings_section_tracking">Sledovanie a pripomienky</string>
+    <string name="settings_section_data">Exporty a obnovenie</string>
     <string name="export_csv_label">Exportovať do CSV</string>
     <string name="export_encrypted_backup_label">Šifrovaná záloha</string>
+    <string name="restore_encrypted_backup_label">Obnoviť šifrovanú zálohu</string>
+    <string name="backup_pin_unavailable">PIN nie je v tomto zariadení k dispozícii</string>
+    <string name="backup_restore_success">Záloha bola úspešne obnovená</string>
+    <string name="backup_restore_error">Zálohu nebolo možné obnoviť</string>
+    <string name="backup_export_error">Zálohu nebolo možné exportovať</string>
     <string name="panic_wipe_confirm_title">Chcete odstrániť všetky údaje?</string>
     <string name="panic_wipe_confirm_message">Týmto sa natrvalo vymažú všetky údaje o vašom cykle z tohto zariadenia. Túto akciu nie je možné vrátiť späť.</string>
     <string name="panic_wipe_confirm_button">Vymazať všetko</string>
     <string name="panic_wipe_done_a11y">Všetky údaje boli vymazané</string>
     <string name="lock_biometric_title">Luna</string>
     <string name="lock_biometric_subtitle">Odomknite, aby ste mali prístup k svojim údajom</string>
+    <string name="lock_subtitle">Zadajte PIN na odomknutie</string>
     <string name="lock_use_pin">Použite PIN</string>
     <string name="lock_wrong_pin">Nesprávny PIN</string>
     <string name="lock_max_attempts">Príliš veľa pokusov. Skúste to znova neskôr.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">Potvrďte PIN</string>
     <string name="onboarding_pin_mismatch">Kódy PIN sa nezhodujú</string>
     <string name="onboarding_pin_too_short">PIN musí mať 6 až 8 číslic</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">Krstné meno (nepovinné)</string>
+    <string name="onboarding_skip">Preskočiť</string>
+    <string name="onboarding_period_duration_label">Ako dlho zvyčajne trvá vaša menštruácia?</string>
+    <string name="onboarding_regularity_label">Ako pravidelný je váš cyklus?</string>
+    <string name="regularity_very_regular">Veľmi pravidelný</string>
+    <string name="regularity_regular">Pravidelný</string>
+    <string name="regularity_irregular">Nepravidelný</string>
+    <string name="regularity_unknown">Neviem</string>
+    <string name="day_abbr">d</string>
+    <string name="goal_track">Sledovať môj cyklus</string>
+    <string name="goal_understand_symptoms">Porozumieť mojim príznakom</string>
+    <string name="goal_avoid_pregnancy">Vyhnúť sa otehotneniu</string>
+    <string name="goal_try_to_conceive">Pokúsiť sa otehotnieť</string>
+    <string name="goal_track_pregnancy">Sledovať tehotenstvo</string>
+    <string name="goal_perimenopause">Perimenopauza</string>
+    <string name="creating_vault_loading">Vytvárame vaše zabezpečené úložisko…</string>
     <string name="notif_channel_period">Pripomenutie cyklu</string>
     <string name="notif_channel_fertile">Úrodné okno</string>
     <string name="notif_channel_pill">Pripomenutie antikoncepcie</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">Režim sledovania</string>
     <string name="charts_cycle_lengths_a11y">Stĺpcový graf dĺžok cyklov</string>
     <string name="charts_bbt_a11y">Tabuľka bazálnej telesnej teploty</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">Priemerná dĺžka cyklu: %1$s dní</string>
+    <string name="stats_avg_period_a11y">Priemerná dĺžka menštruácie: %1$s dní</string>
     <string name="settings_pill_reminder">Denné pripomenutie piluliek</string>
     <string name="perimeno_banner_title">Režim perimenopauzy — Klepnutím otvoríte informačný panel</string>
     <string name="perimeno_banner_a11y">Otvorte panel perimenopauzy</string>
     <string name="ttc_banner_title">Režim TTC — Zvýraznené okno Plodné</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">Záznam tehotenstva</string>
+    <string name="hcg_test_label">Test hCG</string>
+    <string name="hcg_not_done">Nevykonané</string>
+    <string name="hcg_positive">Pozitívny</string>
+    <string name="hcg_negative">Negatívny</string>
+    <string name="kicks_label">Pohyby plodu</string>
+    <string name="kicks_decrease">Menej pohybov</string>
+    <string name="kicks_increase">Viac pohybov</string>
+    <string name="nausea_label">Miera nevoľnosti</string>
+    <string name="nausea_slider_a11y">Miera nevoľnosti od 0 do 5</string>
+    <string name="weight_label">Hmotnosť</string>
+    <string name="symptom_logged_a11y">Príznak zaznamenaný</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">Perimenopauza</string>
+    <string name="perimenopause_quick_log_title">Rýchly záznam príznakov</string>
+    <string name="perimenopause_variability_title">Kolísanie cyklu</string>
+    <string name="perimenopause_need_more_data">Na zobrazenie kolísania zaznamenajte aspoň 2 cykly</string>
+    <string name="perimenopause_variability_summary">Priemerne %1$d dní (rozsah: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">O perimenopauze</string>
+    <string name="perimenopause_info_body">Perimenopauza sa zvyčajne začína po štyridsiatke a môže trvať niekoľko rokov. Dĺžka cyklu sa môže výrazne meniť a príznaky ako návaly tepla a nočné potenie sú bežné. Sledovanie vám pomôže porozumieť premene vášho tela.</string>
     <plurals name="days_until_period">
         <item quantity="one">Za %d deň</item>
         <item quantity="other">O %d dní</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d deň</item>
         <item quantity="other">%d dní</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Synchronizovať s Health Connect</string>
+    <string name="health_connect_rationale_body">LUNA môže zdieľať údaje o cykle s Health Connect.</string>
+    <string name="health_connect_privacy_policy_button">Zásady ochrany osobných údajov</string>
 </resources>

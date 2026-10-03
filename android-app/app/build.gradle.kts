@@ -3,6 +3,7 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
 }
 
 // Load signing credentials from key.properties (not committed)
@@ -69,6 +70,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
     }
 
     signingConfigs {
@@ -163,14 +165,27 @@ dependencies {
     // Material Design
     implementation(libs.material)
 
+    // Design System partagé life-sdk (com.macaron.lifeds) — module Gradle incluse dans settings.gradle.kts
+    implementation(project(":life-ds"))
+
+    // Jetpack Compose — écrans Luna (CalendarScreen, HomeScreen, InsightsScreen, SettingsScreen…)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.activity.compose)
+
     // Biométrie
     implementation(libs.androidx.biometric)
 
     // WorkManager — notifications locales
     implementation("androidx.work:work-runtime-ktx:2.9.0")
 
-    // Health Connect (optionnel phase 2)
-    // implementation(libs.androidx.health.connect.client)
+    // Health Connect — opt-in explicite (parité iOS HealthKit, service + réglages).
+    // minSdk lib = 26 → tools:overrideLibrary dans le manifest ; gardé au runtime sur API < 26.
+    implementation(libs.androidx.health.connect.client)
 
     // Tests
     testImplementation(libs.junit)

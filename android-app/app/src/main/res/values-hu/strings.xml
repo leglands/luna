@@ -7,6 +7,7 @@
     <string name="log_today_button">Jelentkezzen még ma</string>
     <string name="privacy_local_badge">Helyi adatok</string>
     <string name="privacy_badge_a11y">Az összes adatot helyileg tároljuk ezen az eszközön</string>
+    <string name="toolbar_private_subtitle">Privát · Ezen az eszközön</string>
     <string name="cycle_day_label">%d nap</string>
     <string name="next_period_in">%d napon belül</string>
     <string name="cycle_progress_a11y">Ciklusnap %1$d. Következő időszak %2$d nap múlva.</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">Nagy</string>
     <string name="energy_label">Energia</string>
     <string name="flow_label">Folyik</string>
+    <string name="flow_option_a11y">Folyás: %1$s</string>
     <string name="flow_none">Egyik sem</string>
     <string name="flow_spotting">Kiszúrás</string>
     <string name="flow_light">Fény</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">Szabad szövegű jegyzet, titkosítva és helyben tárolva</string>
     <string name="save_button">Megtakarítás</string>
     <string name="cancel_button">Mégse</string>
+    <string name="open_button">Megnyitás</string>
     <string name="log_saved_a11y">Nap naplózva</string>
     <string name="symptom_cramps">Görcsök</string>
     <string name="symptom_bloating">Puffadás</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">Migrén</string>
     <string name="symptom_hot_flash">Hot flash</string>
     <string name="symptom_night_sweats">Éjszakai izzadás</string>
+    <string name="symptom_vaginal_dryness">Hüvelyszárazság</string>
     <string name="bbt_label">Bázális testhőmérséklet (BBT)</string>
     <string name="bbt_hint">Ébredéskor, minden mozgás előtt mérve</string>
     <string name="bbt_placeholder">36.7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">Minden adat törlése</string>
     <string name="settings_delete_all_a11y">Törölje az összes adatot erről az eszközről</string>
     <string name="settings_delete_all_hint_a11y">Ez a művelet visszafordíthatatlan, és véglegesen törli az összes adatot</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">Adatvédelem és biztonság</string>
+    <string name="settings_section_tracking">Követés és emlékeztetők</string>
+    <string name="settings_section_data">Exportálás és helyreállítás</string>
     <string name="export_csv_label">Exportálás CSV-be</string>
     <string name="export_encrypted_backup_label">Titkosított biztonsági mentés</string>
+    <string name="restore_encrypted_backup_label">Titkosított mentés visszaállítása</string>
+    <string name="backup_pin_unavailable">A PIN nem érhető el ezen az eszközön</string>
+    <string name="backup_restore_success">A mentés sikeresen visszaállt</string>
+    <string name="backup_restore_error">A mentést nem sikerült visszaállítani</string>
+    <string name="backup_export_error">A mentést nem sikerült exportálni</string>
     <string name="panic_wipe_confirm_title">Törli az összes adatot?</string>
     <string name="panic_wipe_confirm_message">Ezzel véglegesen törli az összes ciklusadatát erről az eszközről. Ez a művelet nem vonható vissza.</string>
     <string name="panic_wipe_confirm_button">Töröljön mindent</string>
     <string name="panic_wipe_done_a11y">Minden adat törölve lett</string>
     <string name="lock_biometric_title">Luna</string>
     <string name="lock_biometric_subtitle">Oldja fel a zárolást az adatok eléréséhez</string>
+    <string name="lock_subtitle">A feloldáshoz adja meg a PIN-kódot</string>
     <string name="lock_use_pin">Használja a PIN-kódot</string>
     <string name="lock_wrong_pin">Helytelen PIN-kód</string>
     <string name="lock_max_attempts">Túl sok próbálkozás. Kérjük, próbálja újra később.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">Erősítse meg a PIN kódot</string>
     <string name="onboarding_pin_mismatch">A PIN-kódok nem egyeznek</string>
     <string name="onboarding_pin_too_short">A PIN-kódnak 6–8 számjegyből kell állnia</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">Keresztnév (nem kötelező)</string>
+    <string name="onboarding_skip">Kihagyás</string>
+    <string name="onboarding_period_duration_label">A menstruációja általában mennyi ideig tart?</string>
+    <string name="onboarding_regularity_label">Mennyire rendszeres a ciklusa?</string>
+    <string name="regularity_very_regular">Nagyon rendszeres</string>
+    <string name="regularity_regular">Rendszeres</string>
+    <string name="regularity_irregular">Rendszertelen</string>
+    <string name="regularity_unknown">Nem tudom</string>
+    <string name="day_abbr">n</string>
+    <string name="goal_track">A ciklusom követése</string>
+    <string name="goal_understand_symptoms">A tüneteim megértése</string>
+    <string name="goal_avoid_pregnancy">Terhesség elkerülése</string>
+    <string name="goal_try_to_conceive">Teherbe esés megkísérlése</string>
+    <string name="goal_track_pregnancy">A terhesség követése</string>
+    <string name="goal_perimenopause">Perimenopauza</string>
+    <string name="creating_vault_loading">A biztonságos széf létrehozása…</string>
     <string name="notif_channel_period">Ciklus emlékeztető</string>
     <string name="notif_channel_fertile">Termékeny ablak</string>
     <string name="notif_channel_pill">Fogamzásgátlási emlékeztető</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">Követési mód</string>
     <string name="charts_cycle_lengths_a11y">Ciklushosszúság oszlopdiagram</string>
     <string name="charts_bbt_a11y">Basális testhőmérséklet diagram</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">Átlagos ciklushossz: %1$s nap</string>
+    <string name="stats_avg_period_a11y">Átlagos menstruációhossz: %1$s nap</string>
     <string name="settings_pill_reminder">Napi tabletta emlékeztető</string>
     <string name="perimeno_banner_title">Perimenopause mód — Érintse meg az irányítópult megnyitásához</string>
     <string name="perimeno_banner_a11y">Perimenopause irányítópult megnyitása</string>
     <string name="ttc_banner_title">TTC mód – Termékeny ablak kiemelve</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">Terhességi napló</string>
+    <string name="hcg_test_label">hCG-teszt</string>
+    <string name="hcg_not_done">Nem történt meg</string>
+    <string name="hcg_positive">Pozitív</string>
+    <string name="hcg_negative">Negatív</string>
+    <string name="kicks_label">Magzatmozgások</string>
+    <string name="kicks_decrease">Kevesebb mozgás</string>
+    <string name="kicks_increase">Több mozgás</string>
+    <string name="nausea_label">Hányinger szintje</string>
+    <string name="nausea_slider_a11y">Hányinger szintje 0 és 5 között</string>
+    <string name="weight_label">Testsúly</string>
+    <string name="symptom_logged_a11y">Tünet rögzítve</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">Perimenopauza</string>
+    <string name="perimenopause_quick_log_title">Tünetek gyors rögzítése</string>
+    <string name="perimenopause_variability_title">Ciklus ingadozása</string>
+    <string name="perimenopause_need_more_data">Az ingadozás megtekintéséhez rögzítsen legalább 2 ciklust</string>
+    <string name="perimenopause_variability_summary">Átlagosan %1$d nap (tartomány: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">A perimenopauzáról</string>
+    <string name="perimenopause_info_body">A perimenopauza általában a 40-es években kezdődik, és több évig is eltarthat. A ciklus hossza jelentősen ingadozhat, és az olyan tünetek, mint a hőhullámok és az éjszakai izzadás, gyakoriak. A követés segít megérteni a teste átalakulását.</string>
     <plurals name="days_until_period">
         <item quantity="one">%d nap múlva</item>
         <item quantity="other">%d nap múlva</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d nap</item>
         <item quantity="other">%d nap</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Szinkronizálás a Health Connecttel</string>
+    <string name="health_connect_rationale_body">A LUNA megoszthatja a ciklusadatait a Health Connect alkalmazással.</string>
+    <string name="health_connect_privacy_policy_button">Adatvédelmi szabályzat</string>
 </resources>

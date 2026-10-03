@@ -7,6 +7,7 @@
     <string name="log_today_button">Přihlaste se ještě dnes</string>
     <string name="privacy_local_badge">Místní data</string>
     <string name="privacy_badge_a11y">Všechna vaše data jsou uložena lokálně na tomto zařízení</string>
+    <string name="toolbar_private_subtitle">Soukromé · V tomto zařízení</string>
     <string name="cycle_day_label">Den %d</string>
     <string name="next_period_in">Za %d dní</string>
     <string name="cycle_progress_a11y">Den cyklu %1$d. Další období za %2$d dní.</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">Velký</string>
     <string name="energy_label">Energie</string>
     <string name="flow_label">Tok</string>
+    <string name="flow_option_a11y">Tok: %1$s</string>
     <string name="flow_none">Žádný</string>
     <string name="flow_spotting">špinění</string>
     <string name="flow_light">Světlo</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">Volná textová poznámka, zašifrovaná a uložená lokálně</string>
     <string name="save_button">Uložit</string>
     <string name="cancel_button">Zrušit</string>
+    <string name="open_button">Otevřít</string>
     <string name="log_saved_a11y">Den přihlášen</string>
     <string name="symptom_cramps">Křeče</string>
     <string name="symptom_bloating">Nadýmání</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">Migréna</string>
     <string name="symptom_hot_flash">Horký záblesk</string>
     <string name="symptom_night_sweats">Noční pocení</string>
+    <string name="symptom_vaginal_dryness">Vaginální suchost</string>
     <string name="bbt_label">Bazální tělesná teplota (BBT)</string>
     <string name="bbt_hint">Měřeno po probuzení, před jakýmkoli pohybem</string>
     <string name="bbt_placeholder">36.7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">Smažte všechna data</string>
     <string name="settings_delete_all_a11y">Smažte všechna data z tohoto zařízení</string>
     <string name="settings_delete_all_hint_a11y">Tato akce je nevratná a trvale smaže všechna vaše data</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">Soukromí a zabezpečení</string>
+    <string name="settings_section_tracking">Sledování a připomínky</string>
+    <string name="settings_section_data">Exporty a obnovení</string>
     <string name="export_csv_label">Export do CSV</string>
     <string name="export_encrypted_backup_label">Šifrovaná záloha</string>
+    <string name="restore_encrypted_backup_label">Obnovit šifrovanou zálohu</string>
+    <string name="backup_pin_unavailable">PIN není v tomto zařízení k dispozici</string>
+    <string name="backup_restore_success">Záloha byla úspěšně obnovena</string>
+    <string name="backup_restore_error">Zálohu nelze obnovit</string>
+    <string name="backup_export_error">Zálohu nelze exportovat</string>
     <string name="panic_wipe_confirm_title">Smazat všechna data?</string>
     <string name="panic_wipe_confirm_message">Tím trvale smažete všechna data vašeho cyklu z tohoto zařízení. Tuto akci nelze vrátit zpět.</string>
     <string name="panic_wipe_confirm_button">Smazat vše</string>
     <string name="panic_wipe_done_a11y">Všechna data byla smazána</string>
     <string name="lock_biometric_title">Luna</string>
     <string name="lock_biometric_subtitle">Odemkněte pro přístup ke svým datům</string>
+    <string name="lock_subtitle">Zadejte PIN pro odemknutí</string>
     <string name="lock_use_pin">Použijte PIN</string>
     <string name="lock_wrong_pin">Nesprávný PIN</string>
     <string name="lock_max_attempts">Příliš mnoho pokusů. Zkuste to znovu později.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">Potvrďte PIN</string>
     <string name="onboarding_pin_mismatch">Kódy PIN se neshodují</string>
     <string name="onboarding_pin_too_short">PIN musí mít 6–8 číslic</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">Křestní jméno (nepovinné)</string>
+    <string name="onboarding_skip">Přeskočit</string>
+    <string name="onboarding_period_duration_label">Jak dlouho obvykle trvá vaše menstruace?</string>
+    <string name="onboarding_regularity_label">Jak pravidelný je váš cyklus?</string>
+    <string name="regularity_very_regular">Velmi pravidelný</string>
+    <string name="regularity_regular">Pravidelný</string>
+    <string name="regularity_irregular">Nepravidelný</string>
+    <string name="regularity_unknown">Nevím</string>
+    <string name="day_abbr">d</string>
+    <string name="goal_track">Sledovat můj cyklus</string>
+    <string name="goal_understand_symptoms">Porozumět mým příznakům</string>
+    <string name="goal_avoid_pregnancy">Vyhnout se otěhotnění</string>
+    <string name="goal_try_to_conceive">Snažit se otěhotnět</string>
+    <string name="goal_track_pregnancy">Sledovat těhotenství</string>
+    <string name="goal_perimenopause">Perimenopauza</string>
+    <string name="creating_vault_loading">Vytváříme vaše zabezpečené úložiště…</string>
     <string name="notif_channel_period">Připomenutí cyklu</string>
     <string name="notif_channel_fertile">Úrodné okno</string>
     <string name="notif_channel_pill">Připomenutí antikoncepce</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">Režim sledování</string>
     <string name="charts_cycle_lengths_a11y">Sloupcový graf délek cyklů</string>
     <string name="charts_bbt_a11y">Tabulka bazální tělesné teploty</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">Průměrná délka cyklu: %1$s dní</string>
+    <string name="stats_avg_period_a11y">Průměrná délka menstruace: %1$s dní</string>
     <string name="settings_pill_reminder">Denní připomenutí pilulky</string>
     <string name="perimeno_banner_title">Režim perimenopauze – Klepnutím otevřete řídicí panel</string>
     <string name="perimeno_banner_a11y">Otevřít panel perimenopause</string>
     <string name="ttc_banner_title">Režim TTC – zvýrazněné okno Úrodné</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">Záznam těhotenství</string>
+    <string name="hcg_test_label">Test hCG</string>
+    <string name="hcg_not_done">Neprovedeno</string>
+    <string name="hcg_positive">Pozitivní</string>
+    <string name="hcg_negative">Negativní</string>
+    <string name="kicks_label">Pohyby plodu</string>
+    <string name="kicks_decrease">Méně pohybů</string>
+    <string name="kicks_increase">Více pohybů</string>
+    <string name="nausea_label">Míra nevolnosti</string>
+    <string name="nausea_slider_a11y">Míra nevolnosti od 0 do 5</string>
+    <string name="weight_label">Hmotnost</string>
+    <string name="symptom_logged_a11y">Příznak zaznamenán</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">Perimenopauza</string>
+    <string name="perimenopause_quick_log_title">Rychlý záznam příznaků</string>
+    <string name="perimenopause_variability_title">Kolísání cyklu</string>
+    <string name="perimenopause_need_more_data">Pro zobrazení kolísání zaznamenejte alespoň 2 cykly</string>
+    <string name="perimenopause_variability_summary">Průměrně %1$d dní (rozmezí: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">O perimenopauze</string>
+    <string name="perimenopause_info_body">Perimenopauza obvykle začíná po čtyřicítce a může trvat několik let. Délka cyklu se může výrazně měnit a příznaky jako návaly horka a noční pocení jsou běžné. Sledování vám pomůže porozumět proměně vašeho těla.</string>
     <plurals name="days_until_period">
         <item quantity="one">Za %d den</item>
         <item quantity="other">Za %d dnů</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d den</item>
         <item quantity="other">%d dnů|</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Synchronizovat s Health Connect</string>
+    <string name="health_connect_rationale_body">LUNA může sdílet data o cyklu s Health Connect.</string>
+    <string name="health_connect_privacy_policy_button">Zásady ochrany osobních údajů</string>
 </resources>

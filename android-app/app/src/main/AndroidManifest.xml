@@ -12,7 +12,22 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <!-- ZÉRO permissions réseau — aucun ACCESS_NETWORK_STATE ni INTERNET -->
-    <!-- ZÉRO permissions santé — données 100% locales, aucun partage externe -->
+
+    <!-- Health Connect (opt-in explicite, service API 26+) — parité iOS HealthKit :
+         écriture du flux menstruel, lecture du flux menstruel + température basale.
+         Aucune autre permission santé ; données locales, aucun envoi serveur. -->
+    <uses-permission android:name="android.permission.health.WRITE_MENSTRUATION" />
+    <uses-permission android:name="android.permission.health.READ_MENSTRUATION" />
+    <uses-permission android:name="android.permission.health.READ_BASAL_BODY_TEMPERATURE" />
+
+    <!-- Visibilité du package Health Connect (API 30+) pour HealthConnectClient.getSdkStatus(). -->
+    <queries>
+        <package android:name="com.google.android.apps.healthdata" />
+    </queries>
+
+    <!-- life-ds (com.macaron.lifeds) déclare minSdk 26 ; Luna garde minSdk 23 (desugaring activé).
+         Le DS est du Compose pur (aucune API 26 obligatoire au runtime sur API 23-25). -->
+    <uses-sdk tools:overrideLibrary="com.macaron.lifeds,androidx.health.connect.client" />
 
     <application
         android:name=".LunaApplication"
@@ -69,6 +84,28 @@
             android:name=".ui.TrackingModeActivity"
             android:label="@string/settings_tracking_mode"
             android:exported="false" />
+
+        <!-- Health Connect — politique de confidentialité / rationale (exigé par Health Connect).
+             Cible du lien « politique de confidentialité » sur l'écran de permissions. -->
+        <activity
+            android:name=".ui.HealthConnectRationaleActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+            </intent-filter>
+        </activity>
+
+        <!-- Android 14+ : accès à l'historique d'utilisation des permissions santé. -->
+        <activity-alias
+            android:name="ViewPermissionUsageActivity"
+            android:exported="true"
+            android:targetActivity=".ui.HealthConnectRationaleActivity"
+            android:permission="android.permission.START_VIEW_PERMISSION_USAGE">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+                <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
+            </intent-filter>
+        </activity-alias>
 
         <!-- FileProvider pour export CSV -->
         <provider

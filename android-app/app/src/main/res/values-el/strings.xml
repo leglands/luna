@@ -7,6 +7,7 @@
     <string name="log_today_button">Καταγραφή σήμερα</string>
     <string name="privacy_local_badge">Τοπικά δεδομένα</string>
     <string name="privacy_badge_a11y">Όλα τα δεδομένα σας αποθηκεύονται τοπικά σε αυτήν τη συσκευή</string>
+    <string name="toolbar_private_subtitle">Ιδιωτικό · Σε αυτή τη συσκευή</string>
     <string name="cycle_day_label">Ημέρα %d</string>
     <string name="next_period_in">Σε %d ημέρες</string>
     <string name="cycle_progress_a11y">Ημέρα κύκλου %1$d. Επόμενη περίοδος σε %2$d ημέρες.</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">Μεγάλος</string>
     <string name="energy_label">Ενέργεια</string>
     <string name="flow_label">Ροή</string>
+    <string name="flow_option_a11y">Ροή: %1$s</string>
     <string name="flow_none">Κανένας</string>
     <string name="flow_spotting">Εντοπισμός</string>
     <string name="flow_light">Φως</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">Δωρεάν σημείωση κειμένου, κρυπτογραφημένη και αποθηκευμένη τοπικά</string>
     <string name="save_button">Εκτός</string>
     <string name="cancel_button">Ματαίωση</string>
+    <string name="open_button">Άνοιγμα</string>
     <string name="log_saved_a11y">Ημέρα καταγεγραμμένη</string>
     <string name="symptom_cramps">Κράμπες</string>
     <string name="symptom_bloating">Φούσκωμα</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">Ημικρανία</string>
     <string name="symptom_hot_flash">Hot flash</string>
     <string name="symptom_night_sweats">Νυχτερινές εφιδρώσεις</string>
+    <string name="symptom_vaginal_dryness">Ξηρότητα κόλπου</string>
     <string name="bbt_label">Βασική θερμοκρασία σώματος (BBT)</string>
     <string name="bbt_hint">Μετράται κατά την αφύπνιση, πριν από οποιαδήποτε κίνηση</string>
     <string name="bbt_placeholder">36.7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">Διαγραφή όλων των δεδομένων</string>
     <string name="settings_delete_all_a11y">Διαγράψτε όλα τα δεδομένα από αυτήν τη συσκευή</string>
     <string name="settings_delete_all_hint_a11y">Αυτή η ενέργεια είναι μη αναστρέψιμη και θα διαγράψει οριστικά όλα τα δεδομένα σας</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">Απόρρητο και ασφάλεια</string>
+    <string name="settings_section_tracking">Παρακολούθηση και υπενθυμίσεις</string>
+    <string name="settings_section_data">Εξαγωγές και ανάκτηση</string>
     <string name="export_csv_label">Εξαγωγή σε CSV</string>
     <string name="export_encrypted_backup_label">Κρυπτογραφημένο αντίγραφο ασφαλείας</string>
+    <string name="restore_encrypted_backup_label">Επαναφορά κρυπτογραφημένου αντιγράφου</string>
+    <string name="backup_pin_unavailable">Το PIN δεν είναι διαθέσιμο σε αυτή τη συσκευή</string>
+    <string name="backup_restore_success">Το αντίγραφο ασφαλείας επαναφέρθηκε με επιτυχία</string>
+    <string name="backup_restore_error">Δεν ήταν δυνατή η επαναφορά του αντιγράφου</string>
+    <string name="backup_export_error">Δεν ήταν δυνατή η εξαγωγή του αντιγράφου</string>
     <string name="panic_wipe_confirm_title">Διαγραφή όλων των δεδομένων;</string>
     <string name="panic_wipe_confirm_message">Αυτό θα διαγράψει οριστικά όλα τα δεδομένα του κύκλου σας από αυτήν τη συσκευή. Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.</string>
     <string name="panic_wipe_confirm_button">Διαγράψτε τα πάντα</string>
     <string name="panic_wipe_done_a11y">Όλα τα δεδομένα έχουν διαγραφεί</string>
     <string name="lock_biometric_title">Σελήνη</string>
     <string name="lock_biometric_subtitle">Ξεκλειδώστε για πρόσβαση στα δεδομένα σας</string>
+    <string name="lock_subtitle">Εισαγάγετε το PIN σας για ξεκλείδωμα</string>
     <string name="lock_use_pin">Χρησιμοποιήστε το PIN</string>
     <string name="lock_wrong_pin">Λανθασμένο PIN</string>
     <string name="lock_max_attempts">Πάρα πολλές προσπάθειες. Δοκιμάστε ξανά αργότερα.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">Επιβεβαίωση PIN</string>
     <string name="onboarding_pin_mismatch">Τα PIN δεν ταιριάζουν</string>
     <string name="onboarding_pin_too_short">Το PIN πρέπει να είναι 6-8 ψηφία</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">Όνομα (προαιρετικό)</string>
+    <string name="onboarding_skip">Παράλειψη</string>
+    <string name="onboarding_period_duration_label">Πόσο διαρκεί συνήθως η περίοδός σας;</string>
+    <string name="onboarding_regularity_label">Πόσο σταθερός είναι ο κύκλος σας;</string>
+    <string name="regularity_very_regular">Πολύ σταθερός</string>
+    <string name="regularity_regular">Σταθερός</string>
+    <string name="regularity_irregular">Ασταθής</string>
+    <string name="regularity_unknown">Δεν ξέρω</string>
+    <string name="day_abbr">ημ</string>
+    <string name="goal_track">Παρακολούθηση του κύκλου μου</string>
+    <string name="goal_understand_symptoms">Κατανόηση των συμπτωμάτων μου</string>
+    <string name="goal_avoid_pregnancy">Αποφυγή εγκυμοσύνης</string>
+    <string name="goal_try_to_conceive">Προσπάθεια σύλληψης</string>
+    <string name="goal_track_pregnancy">Παρακολούθηση εγκυμοσύνης</string>
+    <string name="goal_perimenopause">Περιεμμηνόπαυση</string>
+    <string name="creating_vault_loading">Δημιουργία του ασφαλούς θησαυροφυλακίου σας…</string>
     <string name="notif_channel_period">Υπενθύμιση κύκλου</string>
     <string name="notif_channel_fertile">Γόνιμο παράθυρο</string>
     <string name="notif_channel_pill">Υπενθύμιση αντισύλληψης</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">Λειτουργία παρακολούθησης</string>
     <string name="charts_cycle_lengths_a11y">Διάγραμμα ράβδων μηκών κύκλου</string>
     <string name="charts_bbt_a11y">Διάγραμμα βασικής θερμοκρασίας σώματος</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">Μέση διάρκεια κύκλου: %1$s ημέρες</string>
+    <string name="stats_avg_period_a11y">Μέση διάρκεια περιόδου: %1$s ημέρες</string>
     <string name="settings_pill_reminder">Καθημερινή υπενθύμιση χαπιών</string>
     <string name="perimeno_banner_title">Λειτουργία περιεμμηνόπαυσης — Πατήστε για να ανοίξετε τον πίνακα εργαλείων</string>
     <string name="perimeno_banner_a11y">Ανοίξτε τον πίνακα ελέγχου περιεμμηνόπαυσης</string>
     <string name="ttc_banner_title">Λειτουργία TTC — Επισημαίνεται το εύφορο παράθυρο</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">Ημερολόγιο εγκυμοσύνης</string>
+    <string name="hcg_test_label">Εξέταση hCG</string>
+    <string name="hcg_not_done">Δεν έγινε</string>
+    <string name="hcg_positive">Θετικό</string>
+    <string name="hcg_negative">Αρνητικό</string>
+    <string name="kicks_label">Κλωτσιές εμβρύου</string>
+    <string name="kicks_decrease">Λιγότερες κλωτσιές</string>
+    <string name="kicks_increase">Περισσότερες κλωτσιές</string>
+    <string name="nausea_label">Επίπεδο ναυτίας</string>
+    <string name="nausea_slider_a11y">Επίπεδο ναυτίας από 0 έως 5</string>
+    <string name="weight_label">Βάρος</string>
+    <string name="symptom_logged_a11y">Το σύμπτωμα καταγράφηκε</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">Περιεμμηνόπαυση</string>
+    <string name="perimenopause_quick_log_title">Γρήγορη καταγραφή συμπτωμάτων</string>
+    <string name="perimenopause_variability_title">Μεταβλητότητα κύκλου</string>
+    <string name="perimenopause_need_more_data">Καταγράψτε τουλάχιστον 2 κύκλους για να δείτε τη μεταβλητότητα</string>
+    <string name="perimenopause_variability_summary">Μέσος όρος %1$d ημέρες (εύρος: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">Σχετικά με την περιεμμηνόπαυση</string>
+    <string name="perimenopause_info_body">Η περιεμμηνόπαυση ξεκινά συνήθως στην τέταρτη δεκαετία της ζωής και μπορεί να διαρκέσει αρκετά χρόνια. Η διάρκεια του κύκλου μπορεί να ποικίλλει σημαντικά και συμπτώματα όπως οι εξάψεις και οι νυχτερινές εφιδρώσεις είναι συχνά. Η παρακολούθηση σας βοηθά να κατανοήσετε τη μετάβαση του σώματός σας.</string>
     <plurals name="days_until_period">
         <item quantity="one">Σε %d ημέρα</item>
         <item quantity="other">Σε %d ημέρες</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d ημέρα</item>
         <item quantity="other">%d ημέρες</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Συγχρονισμός με Health Connect</string>
+    <string name="health_connect_rationale_body">Το LUNA μπορεί να μοιράζεται τα δεδομένα κύκλου με Health Connect.</string>
+    <string name="health_connect_privacy_policy_button">Πολιτική απορρήτου</string>
 </resources>

@@ -7,6 +7,7 @@
     <string name="log_today_button">आज ही लॉग इन करें</string>
     <string name="privacy_local_badge">स्थानीय डेटा</string>
     <string name="privacy_badge_a11y">आपका सारा डेटा इस डिवाइस पर स्थानीय रूप से संग्रहीत है</string>
+    <string name="toolbar_private_subtitle">निजी · इस डिवाइस पर</string>
     <string name="cycle_day_label">दिन %d</string>
     <string name="next_period_in">%d दिनों में</string>
     <string name="cycle_progress_a11y">साइकिल दिवस %1$d. अगली अवधि %2$d दिनों में।</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">महान</string>
     <string name="energy_label">ऊर्जा</string>
     <string name="flow_label">प्रवाह</string>
+    <string name="flow_option_a11y">प्रवाह: %1$s</string>
     <string name="flow_none">कोई नहीं</string>
     <string name="flow_spotting">खोलना</string>
     <string name="flow_light">रोशनी</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">मुफ़्त टेक्स्ट नोट, एन्क्रिप्टेड और स्थानीय रूप से संग्रहीत</string>
     <string name="save_button">बचाना</string>
     <string name="cancel_button">रद्द करना</string>
+    <string name="open_button">खोलें</string>
     <string name="log_saved_a11y">दिन लॉग किया गया</string>
     <string name="symptom_cramps">ऐंठन</string>
     <string name="symptom_bloating">सूजन</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">माइग्रेन</string>
     <string name="symptom_hot_flash">हॉट फ़्लैश</string>
     <string name="symptom_night_sweats">रात का पसीना</string>
+    <string name="symptom_vaginal_dryness">योनि में सूखापन</string>
     <string name="bbt_label">बेसल शरीर का तापमान (बीबीटी)</string>
     <string name="bbt_hint">जागने पर, किसी भी गतिविधि से पहले मापा जाता है</string>
     <string name="bbt_placeholder">36.7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">सारा डेटा हटा दें</string>
     <string name="settings_delete_all_a11y">इस डिवाइस से सारा डेटा हटा दें</string>
     <string name="settings_delete_all_hint_a11y">यह क्रिया अपरिवर्तनीय है और आपके सभी डेटा को स्थायी रूप से हटा देगी</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">गोपनीयता और सुरक्षा</string>
+    <string name="settings_section_tracking">ट्रैकिंग और रिमाइंडर</string>
+    <string name="settings_section_data">निर्यात और पुनर्प्राप्ति</string>
     <string name="export_csv_label">सीएसवी को निर्यात करें</string>
     <string name="export_encrypted_backup_label">एन्क्रिप्टेड बैकअप</string>
+    <string name="restore_encrypted_backup_label">एन्क्रिप्टेड बैकअप पुनर्स्थापित करें</string>
+    <string name="backup_pin_unavailable">इस डिवाइस पर पिन उपलब्ध नहीं है</string>
+    <string name="backup_restore_success">बैकअप सफलतापूर्वक पुनर्स्थापित हुआ</string>
+    <string name="backup_restore_error">बैकअप पुनर्स्थापित नहीं हो सका</string>
+    <string name="backup_export_error">बैकअप निर्यात नहीं हो सका</string>
     <string name="panic_wipe_confirm_title">सारा डेटा मिटा दें?</string>
     <string name="panic_wipe_confirm_message">यह इस डिवाइस से आपके सभी चक्र डेटा को स्थायी रूप से हटा देगा। इस एक्शन को वापस नहीं किया जा सकता।</string>
     <string name="panic_wipe_confirm_button">सब कुछ मिटा दो</string>
     <string name="panic_wipe_done_a11y">सारा डेटा हटा दिया गया है</string>
     <string name="lock_biometric_title">लूना</string>
     <string name="lock_biometric_subtitle">अपने डेटा तक पहुंचने के लिए अनलॉक करें</string>
+    <string name="lock_subtitle">अनलॉक करने के लिए अपना पिन डालें</string>
     <string name="lock_use_pin">पिन का प्रयोग करें</string>
     <string name="lock_wrong_pin">ग़लत पिन</string>
     <string name="lock_max_attempts">बहुत सारे प्रयास. कृपया बाद में पुन: प्रयास करें।</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">पिन की पुष्टि करें</string>
     <string name="onboarding_pin_mismatch">पिन मेल नहीं खाते</string>
     <string name="onboarding_pin_too_short">पिन 6-8 अंकों का होना चाहिए</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">नाम (वैकल्पिक)</string>
+    <string name="onboarding_skip">छोड़ें</string>
+    <string name="onboarding_period_duration_label">आपकी पीरियड आमतौर पर कितने दिन चलती है?</string>
+    <string name="onboarding_regularity_label">आपका चक्र कितना नियमित है?</string>
+    <string name="regularity_very_regular">बहुत नियमित</string>
+    <string name="regularity_regular">नियमित</string>
+    <string name="regularity_irregular">अनियमित</string>
+    <string name="regularity_unknown">मुझे नहीं पता</string>
+    <string name="day_abbr">दि</string>
+    <string name="goal_track">मेरा चक्र ट्रैक करें</string>
+    <string name="goal_understand_symptoms">मेरे लक्षण समझें</string>
+    <string name="goal_avoid_pregnancy">गर्भधारण से बचें</string>
+    <string name="goal_try_to_conceive">गर्भधारण का प्रयास करें</string>
+    <string name="goal_track_pregnancy">गर्भावस्था ट्रैक करें</string>
+    <string name="goal_perimenopause">पेरिमेनोपॉज़</string>
+    <string name="creating_vault_loading">आपका सुरक्षित वॉल्ट बनाया जा रहा है…</string>
     <string name="notif_channel_period">साइकिल अनुस्मारक</string>
     <string name="notif_channel_fertile">उपजाऊ खिड़की</string>
     <string name="notif_channel_pill">गर्भनिरोधक अनुस्मारक</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">ट्रैकिंग मोड</string>
     <string name="charts_cycle_lengths_a11y">साइकिल की लंबाई बार चार्ट</string>
     <string name="charts_bbt_a11y">बेसल शरीर का तापमान चार्ट</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">औसत चक्र लंबाई: %1$s दिन</string>
+    <string name="stats_avg_period_a11y">औसत पीरियड लंबाई: %1$s दिन</string>
     <string name="settings_pill_reminder">दैनिक गोली अनुस्मारक</string>
     <string name="perimeno_banner_title">पेरीमेनोपॉज़ मोड - डैशबोर्ड खोलने के लिए टैप करें</string>
     <string name="perimeno_banner_a11y">पेरिमेनोपॉज़ डैशबोर्ड खोलें</string>
     <string name="ttc_banner_title">TTC मोड - उपजाऊ विंडो हाइलाइट की गई</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">गर्भावस्था लॉग</string>
+    <string name="hcg_test_label">hCG टेस्ट</string>
+    <string name="hcg_not_done">नहीं किया</string>
+    <string name="hcg_positive">पॉज़िटिव</string>
+    <string name="hcg_negative">निगेटिव</string>
+    <string name="kicks_label">भ्रूण की हलचल</string>
+    <string name="kicks_decrease">हलचल कम करें</string>
+    <string name="kicks_increase">हलचल बढ़ाएँ</string>
+    <string name="nausea_label">जी मिचलाने का स्तर</string>
+    <string name="nausea_slider_a11y">जी मिचलाने का स्तर 0 से 5 तक</string>
+    <string name="weight_label">वज़न</string>
+    <string name="symptom_logged_a11y">लक्षण दर्ज हुआ</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">पेरिमेनोपॉज़</string>
+    <string name="perimenopause_quick_log_title">लक्षण जल्दी दर्ज करें</string>
+    <string name="perimenopause_variability_title">चक्र में उतार-चढ़ाव</string>
+    <string name="perimenopause_need_more_data">उतार-चढ़ाव देखने के लिए कम से कम 2 चक्र दर्ज करें</string>
+    <string name="perimenopause_variability_summary">औसत %1$d दिन (सीमा: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">पेरिमेनोपॉज़ के बारे में</string>
+    <string name="perimenopause_info_body">पेरिमेनोपॉज़ आमतौर पर 40 की उम्र के आसपास शुरू होता है और कई वर्षों तक चल सकता है। चक्र की लंबाई काफी बदल सकती है, और गर्म लहरें व रात में पसीना जैसे लक्षण आम हैं। ट्रैकिंग आपको अपने शरीर के इस बदलाव को समझने में मदद करती है।</string>
     <plurals name="days_until_period">
         <item quantity="one">%d दिन में</item>
         <item quantity="other">%d दिनों में</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d दिन</item>
         <item quantity="other">%d दिन</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Health Connect के साथ सिंक करें</string>
+    <string name="health_connect_rationale_body">LUNA Health Connect के साथ चक्र डेटा साझा कर सकता है।</string>
+    <string name="health_connect_privacy_policy_button">गोपनीयता नीति</string>
 </resources>

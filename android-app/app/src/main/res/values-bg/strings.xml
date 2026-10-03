@@ -7,6 +7,7 @@
     <string name="log_today_button">Влезте днес</string>
     <string name="privacy_local_badge">Локални данни</string>
     <string name="privacy_badge_a11y">Всички ваши данни се съхраняват локално на това устройство</string>
+    <string name="toolbar_private_subtitle">Лично · На това устройство</string>
     <string name="cycle_day_label">Ден %d</string>
     <string name="next_period_in">След %d дни</string>
     <string name="cycle_progress_a11y">Цикъл ден %1$d. Следващ период след %2$d дни.</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">страхотно</string>
     <string name="energy_label">енергия</string>
     <string name="flow_label">Поток</string>
+    <string name="flow_option_a11y">Поток: %1$s</string>
     <string name="flow_none">Няма</string>
     <string name="flow_spotting">Зацапване</string>
     <string name="flow_light">светлина</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">Безплатна текстова бележка, криптирана и съхранявана локално</string>
     <string name="save_button">Запазване</string>
     <string name="cancel_button">Отказ</string>
+    <string name="open_button">Отвори</string>
     <string name="log_saved_a11y">Ден регистриран</string>
     <string name="symptom_cramps">Крампи</string>
     <string name="symptom_bloating">Подуване</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">Мигрена</string>
     <string name="symptom_hot_flash">Горещо flash</string>
     <string name="symptom_night_sweats">Нощно изпотяване</string>
+    <string name="symptom_vaginal_dryness">Сухота във влагалището</string>
     <string name="bbt_label">Базална телесна температура (BBT)</string>
     <string name="bbt_hint">Измерена при събуждане, преди всяко движение</string>
     <string name="bbt_placeholder">36,7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">Изтриване на всички данни</string>
     <string name="settings_delete_all_a11y">Изтриване на всички данни от това устройство</string>
     <string name="settings_delete_all_hint_a11y">Това действие е необратимо и ще изтрие завинаги всичките ви данни</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">Поверителност и сигурност</string>
+    <string name="settings_section_tracking">Проследяване и напомняния</string>
+    <string name="settings_section_data">Експортиране и възстановяване</string>
     <string name="export_csv_label">Експортиране в CSV</string>
     <string name="export_encrypted_backup_label">Шифровано архивиране</string>
+    <string name="restore_encrypted_backup_label">Възстановяване на криптирано копие</string>
+    <string name="backup_pin_unavailable">PIN кодът не е наличен на това устройство</string>
+    <string name="backup_restore_success">Копието е възстановено успешно</string>
+    <string name="backup_restore_error">Копието не може да бъде възстановено</string>
+    <string name="backup_export_error">Копието не може да бъде експортирано</string>
     <string name="panic_wipe_confirm_title">Изтриване на всички данни?</string>
     <string name="panic_wipe_confirm_message">Това ще изтрие завинаги всичките ви данни от цикъла от това устройство. Това действие не може да бъде отменено.</string>
     <string name="panic_wipe_confirm_button">Изтриване на всичко</string>
     <string name="panic_wipe_done_a11y">Всички данни са изтрити</string>
     <string name="lock_biometric_title">Luna</string>
     <string name="lock_biometric_subtitle">Отключете за достъп до вашите данни</string>
+    <string name="lock_subtitle">Въведете своя PIN, за да отключите</string>
     <string name="lock_use_pin">Използвайте PIN</string>
     <string name="lock_wrong_pin">Неправилен PIN</string>
     <string name="lock_max_attempts">Твърде много опити. Моля, опитайте отново по-късно.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">Потвърдете PIN</string>
     <string name="onboarding_pin_mismatch">PIN-овете не съвпадат</string>
     <string name="onboarding_pin_too_short">PIN-ът трябва да бъде 6–8 цифри</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">Име (по избор)</string>
+    <string name="onboarding_skip">Пропускане</string>
+    <string name="onboarding_period_duration_label">Колко дълго обикновено продължава менструацията ви?</string>
+    <string name="onboarding_regularity_label">Колко редовен е цикълът ви?</string>
+    <string name="regularity_very_regular">Много редовен</string>
+    <string name="regularity_regular">Редовен</string>
+    <string name="regularity_irregular">Нерегулярен</string>
+    <string name="regularity_unknown">Не знам</string>
+    <string name="day_abbr">д</string>
+    <string name="goal_track">Проследяване на цикъла ми</string>
+    <string name="goal_understand_symptoms">Разбиране на симптомите ми</string>
+    <string name="goal_avoid_pregnancy">Избягване на бременност</string>
+    <string name="goal_try_to_conceive">Опит за зачеване</string>
+    <string name="goal_track_pregnancy">Проследяване на бременността</string>
+    <string name="goal_perimenopause">Перименопауза</string>
+    <string name="creating_vault_loading">Създаване на защитеното ви хранилище…</string>
     <string name="notif_channel_period">Напомняне за цикъл</string>
     <string name="notif_channel_fertile">Фертилен прозорец</string>
     <string name="notif_channel_pill">Напомняне за контрацепция</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">Режим на проследяване</string>
     <string name="charts_cycle_lengths_a11y">Стълбовидна диаграма на продължителността на цикъла</string>
     <string name="charts_bbt_a11y">Диаграма на базалната телесна температура</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">Средна дължина на цикъла: %1$s дни</string>
+    <string name="stats_avg_period_a11y">Средна продължителност на менструацията: %1$s дни</string>
     <string name="settings_pill_reminder">Ежедневно напомняне за хапчета</string>
     <string name="perimeno_banner_title">Режим за перименопауза — Докоснете, за да отворите таблото за управление</string>
     <string name="perimeno_banner_a11y">Отворете таблото за управление на перименопаузата</string>
     <string name="ttc_banner_title">Режим TTC — Маркиран фертилен прозорец</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">Дневник на бременността</string>
+    <string name="hcg_test_label">Тест за hCG</string>
+    <string name="hcg_not_done">Не е направен</string>
+    <string name="hcg_positive">Положителен</string>
+    <string name="hcg_negative">Отрицателен</string>
+    <string name="kicks_label">Ритници на плода</string>
+    <string name="kicks_decrease">По-малко ритници</string>
+    <string name="kicks_increase">Повече ритници</string>
+    <string name="nausea_label">Степен на гадене</string>
+    <string name="nausea_slider_a11y">Степен на гадене от 0 до 5</string>
+    <string name="weight_label">Тегло</string>
+    <string name="symptom_logged_a11y">Симптомът е записан</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">Перименопауза</string>
+    <string name="perimenopause_quick_log_title">Бързо записване на симптоми</string>
+    <string name="perimenopause_variability_title">Изменчивост на цикъла</string>
+    <string name="perimenopause_need_more_data">Запишете поне 2 цикъла, за да видите изменчивостта</string>
+    <string name="perimenopause_variability_summary">Средно %1$d дни (диапазон: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">За перименопаузата</string>
+    <string name="perimenopause_info_body">Перименопаузата обикновено започва след 40-годишна възраст и може да продължи няколко години. Дължината на цикъла може да варира значително, а симптоми като горещи вълни и нощно изпотяване са чести. Проследяването ви помага да разберете прехода на тялото си.</string>
     <plurals name="days_until_period">
         <item quantity="one">След %d ден</item>
         <item quantity="other">След %d дни</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d ден</item>
         <item quantity="other">%d дни</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Синхронизиране с Health Connect</string>
+    <string name="health_connect_rationale_body">LUNA може да споделя данни за цикъла с Health Connect.</string>
+    <string name="health_connect_privacy_policy_button">Политика за поверителност</string>
 </resources>

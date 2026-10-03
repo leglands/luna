@@ -13,12 +13,16 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
+import android.widget.CompoundButton
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import app.luna.R
 import app.luna.databinding.ActivitySettingsBinding
+import app.luna.services.HealthConnectManager
 import app.luna.services.KeystoreService
 import app.luna.services.VaultService
 import kotlinx.coroutines.Dispatchers
@@ -32,6 +36,15 @@ import kotlinx.coroutines.withContext
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingsBinding
+
+    /** Launcher Health Connect — enregistré uniquement si l'appareil peut héberger Health Connect. */
+    private var healthPermissionsLauncher: ActivityResultLauncher<Set<String>>? = null
+
+    private val healthConnectToggleListener =
+        CompoundButton.OnCheckedChangeListener { _, isChecked ->
+            if (isChecked) requestHealthConnectAccess() else applyHealthConnectEnabled(false)
+        }
+
     private val createBackupLauncher = registerForActivityResult(
         ActivityResultContracts.CreateDocument("application/octet-stream")
     ) { uri ->
@@ -62,6 +75,7 @@ class SettingsActivity : AppCompatActivity() {
 
         setupToggles()
         setupButtons()
+        setupHealthConnect()
     }
 
     private fun setupToggles() {
@@ -129,6 +143,96 @@ class SettingsActivity : AppCompatActivity() {
         binding.panicWipeButton.apply {
             setOnClickListener { confirmPanicWipe() }
             contentDescription = getString(R.string.settings_delete_all_a11y)
+        }
+    }
+
+    /**
+     * Health Connect (opt-in) — parité iOS HealthKitManager.
+     * Section masquée si l'appareil ne peut pas héberger Health Connect (API < 26, etc.).
+     */
+    private fun setupHealthConnect() {
+        if (HealthConnectManager.availability(this) == HealthConnectManager.Availability.UNAVAILABLE) {
+            binding.healthConnectSection.visibility = View.GONE
+            return
+        }
+
+        healthPermissionsLauncher = registerForActivityResult(
+            HealthConnectManager.permissionRequestContract()
+        ) { granted ->
+            applyHealthConnectEnabled(granted.containsAll(HealthConnectManager.requiredPermissions()))
+        }
+
+        val prefs = getSharedPreferences(HealthConnectManager.PREFS_NAME, Context.MODE_PRIVATE)
+        binding.toggleHealthConnect.isChecked =
+            prefs.getBoolean(HealthConnectManager.PREF_HEALTH_CONNECT_ENABLED, false)
+        binding.toggleHealthConnect.setOnCheckedChangeListener(healthConnectToggleListener)
+
+        // Réconciliation : si l'autorisation a été révoquée dans Health Connect, refléter l'état réel.
+        if (binding.toggleHealthConnect.isChecked) {
+            lifecycleScope.launch {
+                if (!HealthConnectManager.hasAllPermissions(this@SettingsActivity)) {
+                    applyHealthConnectEnabled(false)
+                }
+            }
+        }
+    }
+
+    private fun requestHealthConnectAccess() {
+        when (HealthConnectManager.availability(this)) {
+            HealthConnectManager.Availability.AVAILABLE ->
+                healthPermissionsLauncher
+                    ?.launch(HealthConnectManager.requiredPermissions())
+                    ?: applyHealthConnectEnabled(false)
+
+            HealthConnectManager.Availability.PROVIDER_UPDATE_REQUIRED -> {
+                // Health Connect absent : rediriger vers le Play Store, toggle remis à off.
+                openHealthConnectInstallPage()
+                applyHealthConnectEnabled(false)
+            }
+
+            HealthConnectManager.Availability.UNAVAILABLE ->
+                applyHealthConnectEnabled(false)
+        }
+    }
+
+    /** Persiste l'opt-in (prefs + profil `health_sync`, parité iOS) et synchronise le toggle. */
+    private fun applyHealthConnectEnabled(enabled: Boolean) {
+        HealthConnectManager.setEnabled(this, enabled)
+
+        binding.toggleHealthConnect.setOnCheckedChangeListener(null)
+        binding.toggleHealthConnect.isChecked = enabled
+        binding.toggleHealthConnect.setOnCheckedChangeListener(healthConnectToggleListener)
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                VaultService.engine?.let { engine ->
+                    val profile = engine.getUserProfile()
+                    profile.healthSync = enabled
+                    engine.setUserProfile(profile)
+                }
+            } catch (e: Exception) {
+                // Vault verrouillé/absent — l'opt-in reste porté par luna_prefs.
+            }
+        }
+    }
+
+    private fun openHealthConnectInstallPage() {
+        val market = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("market://details?id=com.google.android.apps.healthdata")
+        )
+        val web = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps.healthdata")
+        )
+        try {
+            startActivity(market)
+        } catch (e: Exception) {
+            try {
+                startActivity(web)
+            } catch (e2: Exception) {
+                // Play Store indisponible : le toggle reste désactivé.
+            }
         }
     }
 

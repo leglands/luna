@@ -7,6 +7,7 @@
     <string name="log_today_button">Logează-te astăzi</string>
     <string name="privacy_local_badge">Date locale</string>
     <string name="privacy_badge_a11y">Toate datele dvs. sunt stocate local pe acest dispozitiv</string>
+    <string name="toolbar_private_subtitle">Privat · Pe acest dispozitiv</string>
     <string name="cycle_day_label">Ziua %d</string>
     <string name="next_period_in">Peste %d zile</string>
     <string name="cycle_progress_a11y">Ziua ciclului %1$d. Următoarea perioadă în %2$d zile.</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">Mare</string>
     <string name="energy_label">Energie</string>
     <string name="flow_label">Flux</string>
+    <string name="flow_option_a11y">Flux: %1$s</string>
     <string name="flow_none">Nici unul</string>
     <string name="flow_spotting">Spotting</string>
     <string name="flow_light">Aprinde</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">Notă text gratuită, criptată și stocată local</string>
     <string name="save_button">Salva</string>
     <string name="cancel_button">Anula</string>
+    <string name="open_button">Deschide</string>
     <string name="log_saved_a11y">Ziua înregistrată</string>
     <string name="symptom_cramps">Crampe</string>
     <string name="symptom_bloating">Balonare</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">Migrenă</string>
     <string name="symptom_hot_flash">Bufful fierbinte</string>
     <string name="symptom_night_sweats">Transpirații nocturne</string>
+    <string name="symptom_vaginal_dryness">Uscăciune vaginală</string>
     <string name="bbt_label">Temperatura bazala a corpului (BBT)</string>
     <string name="bbt_hint">Măsurat la trezire, înainte de orice mișcare</string>
     <string name="bbt_placeholder">36.7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">Ștergeți toate datele</string>
     <string name="settings_delete_all_a11y">Ștergeți toate datele de pe acest dispozitiv</string>
     <string name="settings_delete_all_hint_a11y">Această acțiune este ireversibilă și vă va șterge definitiv toate datele</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">Confidențialitate și securitate</string>
+    <string name="settings_section_tracking">Urmărire și memento-uri</string>
+    <string name="settings_section_data">Exporturi și recuperare</string>
     <string name="export_csv_label">Exportați în CSV</string>
     <string name="export_encrypted_backup_label">Copier de rezervă criptat</string>
+    <string name="restore_encrypted_backup_label">Restaurare copie criptată</string>
+    <string name="backup_pin_unavailable">PIN indisponibil pe acest dispozitiv</string>
+    <string name="backup_restore_success">Copia de siguranță a fost restaurată</string>
+    <string name="backup_restore_error">Copia de siguranță nu a putut fi restaurată</string>
+    <string name="backup_export_error">Copia de siguranță nu a putut fi exportată</string>
     <string name="panic_wipe_confirm_title">Ștergeți toate datele?</string>
     <string name="panic_wipe_confirm_message">Acest lucru va șterge definitiv toate datele ciclului de pe acest dispozitiv. Această acțiune nu poate fi anulată.</string>
     <string name="panic_wipe_confirm_button">Ștergeți totul</string>
     <string name="panic_wipe_done_a11y">Toate datele au fost șterse</string>
     <string name="lock_biometric_title">Luna</string>
     <string name="lock_biometric_subtitle">Deblocați pentru a vă accesa datele</string>
+    <string name="lock_subtitle">Introduceți PIN-ul pentru a debloca</string>
     <string name="lock_use_pin">Folosiți PIN</string>
     <string name="lock_wrong_pin">PIN greșit</string>
     <string name="lock_max_attempts">|SPLIT| Vă rugăm să încercați din nou mai târziu.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">Confirmați codul PIN</string>
     <string name="onboarding_pin_mismatch">PIN-urile nu se potrivesc</string>
     <string name="onboarding_pin_too_short">PIN-ul trebuie să aibă 6–8 cifre</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">Prenume (opțional)</string>
+    <string name="onboarding_skip">Omite</string>
+    <string name="onboarding_period_duration_label">Cât durează de obicei menstruația dumneavoastră?</string>
+    <string name="onboarding_regularity_label">Cât de regulat este ciclul dumneavoastră?</string>
+    <string name="regularity_very_regular">Foarte regulat</string>
+    <string name="regularity_regular">Regulat</string>
+    <string name="regularity_irregular">Neregulat</string>
+    <string name="regularity_unknown">Nu știu</string>
+    <string name="day_abbr">z</string>
+    <string name="goal_track">Urmărește ciclul meu</string>
+    <string name="goal_understand_symptoms">Înțelege-mi simptomele</string>
+    <string name="goal_avoid_pregnancy">Evită sarcina</string>
+    <string name="goal_try_to_conceive">Încearcă să concepi</string>
+    <string name="goal_track_pregnancy">Urmărește sarcina</string>
+    <string name="goal_perimenopause">Perimenopauza</string>
+    <string name="creating_vault_loading">Se creează seiful dumneavoastră sigur…</string>
     <string name="notif_channel_period">Memento de ciclu</string>
     <string name="notif_channel_fertile">Fereastră fertilă</string>
     <string name="notif_channel_pill">Memento de contracepție</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">Modul de urmărire</string>
     <string name="charts_cycle_lengths_a11y">Diagramă cu bare pentru lungimi de ciclu</string>
     <string name="charts_bbt_a11y">Diagrama temperaturii bazale a corpului</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">Durata medie a ciclului: %1$s zile</string>
+    <string name="stats_avg_period_a11y">Durata medie a menstruației: %1$s zile</string>
     <string name="settings_pill_reminder">Memento zilnic pentru pastile</string>
     <string name="perimeno_banner_title">Modul perimenopauză — Atingeți pentru a deschide tabloul de bord</string>
     <string name="perimeno_banner_a11y">Deschideți tabloul de bord perimenopauză</string>
     <string name="ttc_banner_title">TTC Mode — Fereastra Fertilă evidențiată</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">Jurnal de sarcină</string>
+    <string name="hcg_test_label">Test hCG</string>
+    <string name="hcg_not_done">Neefectuat</string>
+    <string name="hcg_positive">Pozitiv</string>
+    <string name="hcg_negative">Negativ</string>
+    <string name="kicks_label">Mișcările fătului</string>
+    <string name="kicks_decrease">Mai puține mișcări</string>
+    <string name="kicks_increase">Mai multe mișcări</string>
+    <string name="nausea_label">Nivelul grețurilor</string>
+    <string name="nausea_slider_a11y">Nivelul grețurilor de la 0 la 5</string>
+    <string name="weight_label">Greutate</string>
+    <string name="symptom_logged_a11y">Simptom înregistrat</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">Perimenopauza</string>
+    <string name="perimenopause_quick_log_title">Înregistrare rapidă a simptomelor</string>
+    <string name="perimenopause_variability_title">Variabilitatea ciclului</string>
+    <string name="perimenopause_need_more_data">Înregistrați cel puțin 2 cicluri pentru a vedea variabilitatea</string>
+    <string name="perimenopause_variability_summary">În medie %1$d zile (interval: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">Despre perimenopauză</string>
+    <string name="perimenopause_info_body">Perimenopauza începe de obicei după 40 de ani și poate dura câțiva ani. Durata ciclului poate varia semnificativ, iar simptome precum bufeurile și transpirațiile nocturne sunt frecvente. Urmărirea vă ajută să înțelegeți tranziția corpului dumneavoastră.</string>
     <plurals name="days_until_period">
         <item quantity="one">În %d zi</item>
         <item quantity="other">În %d zile</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d day</item>
         <item quantity="other">%d zile</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Sincronizează cu Health Connect</string>
+    <string name="health_connect_rationale_body">LUNA poate partaja datele despre ciclu cu Health Connect.</string>
+    <string name="health_connect_privacy_policy_button">Politica de confidențialitate</string>
 </resources>

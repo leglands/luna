@@ -7,6 +7,7 @@
     <string name="log_today_button">今日の記録</string>
     <string name="privacy_local_badge">ローカルデータ</string>
     <string name="privacy_badge_a11y">すべてのデータはこのデバイスにローカルに保存されます</string>
+    <string name="toolbar_private_subtitle">プライベート · このデバイス上</string>
     <string name="cycle_day_label">%d 日</string>
     <string name="next_period_in">%d 日以内</string>
     <string name="cycle_progress_a11y">サイクル日%1$d。次の生理は%2$d日後です。</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">素晴らしい</string>
     <string name="energy_label">エネルギー</string>
     <string name="flow_label">流れ</string>
+    <string name="flow_option_a11y">経血量: %1$s</string>
     <string name="flow_none">なし</string>
     <string name="flow_spotting">スポッティング</string>
     <string name="flow_light">ライト</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">フリーテキストのメモ、暗号化されてローカルに保存</string>
     <string name="save_button">保存</string>
     <string name="cancel_button">キャンセル</string>
+    <string name="open_button">開く</string>
     <string name="log_saved_a11y">記録された日</string>
     <string name="symptom_cramps">痙攣</string>
     <string name="symptom_bloating">膨満感</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">片頭痛</string>
     <string name="symptom_hot_flash">一過性熱感</string>
     <string name="symptom_night_sweats">寝汗</string>
+    <string name="symptom_vaginal_dryness">膣の乾燥</string>
     <string name="bbt_label">基礎体温（BBT）</string>
     <string name="bbt_hint">起床時、体を動かす前に測定</string>
     <string name="bbt_placeholder">36.7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">すべてのデータを削除する</string>
     <string name="settings_delete_all_a11y">このデバイスからすべてのデータを削除します</string>
     <string name="settings_delete_all_hint_a11y">この操作は元に戻すことができず、すべてのデータが完全に削除されます</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">プライバシーとセキュリティ</string>
+    <string name="settings_section_tracking">記録とリマインダー</string>
+    <string name="settings_section_data">エクスポートと復元</string>
     <string name="export_csv_label">CSVにエクスポート</string>
     <string name="export_encrypted_backup_label">暗号化されたバックアップ</string>
+    <string name="restore_encrypted_backup_label">暗号化バックアップを復元</string>
+    <string name="backup_pin_unavailable">このデバイスではPINを利用できません</string>
+    <string name="backup_restore_success">バックアップを復元しました</string>
+    <string name="backup_restore_error">バックアップを復元できませんでした</string>
+    <string name="backup_export_error">バックアップをエクスポートできませんでした</string>
     <string name="panic_wipe_confirm_title">すべてのデータを削除しますか?</string>
     <string name="panic_wipe_confirm_message">これにより、このデバイスからすべてのサイクル データが完全に削除されます。この操作は元に戻すことができません。</string>
     <string name="panic_wipe_confirm_button">すべて削除</string>
     <string name="panic_wipe_done_a11y">すべてのデータが削除されました</string>
     <string name="lock_biometric_title">ルナ</string>
     <string name="lock_biometric_subtitle">ロックを解除してデータにアクセスする</string>
+    <string name="lock_subtitle">ロックを解除するにはPINを入力してください</string>
     <string name="lock_use_pin">PINを使用する</string>
     <string name="lock_wrong_pin">間違ったPIN</string>
     <string name="lock_max_attempts">試行回数が多すぎます。後でもう一度試してください。</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">Confirm PIN</string>
     <string name="onboarding_pin_mismatch">PINs do not match</string>
     <string name="onboarding_pin_too_short">PIN must be 6–8 digits</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">名前（任意）</string>
+    <string name="onboarding_skip">スキップ</string>
+    <string name="onboarding_period_duration_label">生理は通常何日続きますか？</string>
+    <string name="onboarding_regularity_label">周期はどのくらい規則的ですか？</string>
+    <string name="regularity_very_regular">とても規則的</string>
+    <string name="regularity_regular">規則的</string>
+    <string name="regularity_irregular">不規則</string>
+    <string name="regularity_unknown">わからない</string>
+    <string name="day_abbr">日</string>
+    <string name="goal_track">周期を記録する</string>
+    <string name="goal_understand_symptoms">症状を理解する</string>
+    <string name="goal_avoid_pregnancy">妊娠を避ける</string>
+    <string name="goal_try_to_conceive">妊娠を試みる</string>
+    <string name="goal_track_pregnancy">妊娠を記録する</string>
+    <string name="goal_perimenopause">閉経移行期</string>
+    <string name="creating_vault_loading">安全な保管庫を作成しています…</string>
     <string name="notif_channel_period">Cycle reminder</string>
     <string name="notif_channel_fertile">Fertile window</string>
     <string name="notif_channel_pill">Contraception reminder</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">Tracking mode</string>
     <string name="charts_cycle_lengths_a11y">Cycle lengths bar chart</string>
     <string name="charts_bbt_a11y">Basal body temperature chart</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">平均周期日数: %1$s 日</string>
+    <string name="stats_avg_period_a11y">平均生理日数: %1$s 日</string>
     <string name="settings_pill_reminder">Daily pill reminder</string>
     <string name="perimeno_banner_title">Perimenopause Mode — Tap to open dashboard</string>
     <string name="perimeno_banner_a11y">Open perimenopause dashboard</string>
     <string name="ttc_banner_title">TTC Mode — Fertile window highlighted</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">妊娠記録</string>
+    <string name="hcg_test_label">hCG検査</string>
+    <string name="hcg_not_done">未実施</string>
+    <string name="hcg_positive">陽性</string>
+    <string name="hcg_negative">陰性</string>
+    <string name="kicks_label">胎動</string>
+    <string name="kicks_decrease">胎動を減らす</string>
+    <string name="kicks_increase">胎動を増やす</string>
+    <string name="nausea_label">吐き気の程度</string>
+    <string name="nausea_slider_a11y">吐き気の程度（0〜5）</string>
+    <string name="weight_label">体重</string>
+    <string name="symptom_logged_a11y">症状を記録しました</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">閉経移行期</string>
+    <string name="perimenopause_quick_log_title">症状をすばやく記録</string>
+    <string name="perimenopause_variability_title">周期の変動</string>
+    <string name="perimenopause_need_more_data">変動を確認するには2周期以上記録してください</string>
+    <string name="perimenopause_variability_summary">平均 %1$d 日（範囲: %2$d〜%3$d）</string>
+    <string name="perimenopause_info_title">閉経移行期について</string>
+    <string name="perimenopause_info_body">閉経移行期は通常40代に始まり、数年間続くことがあります。周期の長さは大きく変動することがあり、ほてりや寝汗といった症状もよく見られます。記録することで、体の変化を理解しやすくなります。</string>
     <plurals name="days_until_period">
         <item quantity="one">In %d day</item>
         <item quantity="other">In %d days</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d day</item>
         <item quantity="other">%d days</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Health Connectと同期</string>
+    <string name="health_connect_rationale_body">LUNAは周期データを「Health Connect」と共有できます。</string>
+    <string name="health_connect_privacy_policy_button">プライバシーポリシー</string>
 </resources>

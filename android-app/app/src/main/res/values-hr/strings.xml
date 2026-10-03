@@ -7,6 +7,7 @@
     <string name="log_today_button">Prijava danas</string>
     <string name="privacy_local_badge">Lokalni podaci</string>
     <string name="privacy_badge_a11y">Svi vaši podaci pohranjeni su lokalno na ovom uređaju</string>
+    <string name="toolbar_private_subtitle">Privatno · Na ovom uređaju</string>
     <string name="cycle_day_label">Dan %d</string>
     <string name="next_period_in">U %d dana</string>
     <string name="cycle_progress_a11y">Dan ciklusa %1$d. Sljedeća menstruacija za %2$d dana.</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">Odlično</string>
     <string name="energy_label">Energija</string>
     <string name="flow_label">Protok</string>
+    <string name="flow_option_a11y">Protok: %1$s</string>
     <string name="flow_none"> Ništa</string>
     <string name="flow_spotting">Uočenje</string>
     <string name="flow_light">Lagano</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">Besplatna tekstualna bilješka, šifrirana i pohranjena lokalno</string>
     <string name="save_button">Spremi</string>
     <string name="cancel_button">Odustani</string>
+    <string name="open_button">Otvori</string>
     <string name="log_saved_a11y">Dan zabilježen</string>
     <string name="symptom_cramps">Grčevi</string>
     <string name="symptom_bloating">Nadutost</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">Migrena</string>
     <string name="symptom_hot_flash">Vruće flash</string>
     <string name="symptom_night_sweats">Noćno znojenje</string>
+    <string name="symptom_vaginal_dryness">Suhoća rodnice</string>
     <string name="bbt_label">Bazalna tjelesna temperatura (BBT)</string>
     <string name="bbt_hint">Izmjereno nakon buđenja, prije bilo kakvog pokreta</string>
     <string name="bbt_placeholder">36,7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">Izbriši sve podatke</string>
     <string name="settings_delete_all_a11y">Izbriši sve podatke s ovog uređaja</string>
     <string name="settings_delete_all_hint_a11y">Ova radnja je nepovratna i trajno će izbrisati sve vaše podatke</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">Privatnost i sigurnost</string>
+    <string name="settings_section_tracking">Praćenje i podsjetnici</string>
+    <string name="settings_section_data">Izvoz i oporavak</string>
     <string name="export_csv_label">Izvezi u CSV</string>
     <string name="export_encrypted_backup_label">Šifrirana sigurnosna kopija</string>
+    <string name="restore_encrypted_backup_label">Vrati šifriranu sigurnosnu kopiju</string>
+    <string name="backup_pin_unavailable">PIN nije dostupan na ovom uređaju</string>
+    <string name="backup_restore_success">Sigurnosna kopija je uspješno vraćena</string>
+    <string name="backup_restore_error">Sigurnosnu kopiju nije moguće vratiti</string>
+    <string name="backup_export_error">Sigurnosnu kopiju nije moguće izvesti</string>
     <string name="panic_wipe_confirm_title">Izbrisati sve podatke?</string>
     <string name="panic_wipe_confirm_message">Ovo će trajno izbrisati sve vaše podatke o ciklusu s ovog uređaja. Ova radnja se ne može poništiti.</string>
     <string name="panic_wipe_confirm_button">Izbriši sve</string>
     <string name="panic_wipe_done_a11y">Svi podaci su izbrisani</string>
     <string name="lock_biometric_title">Luna</string>
     <string name="lock_biometric_subtitle">Otključaj za pristup svojim podacima</string>
+    <string name="lock_subtitle">Unesite PIN za otključavanje</string>
     <string name="lock_use_pin">Koristi PIN</string>
     <string name="lock_wrong_pin">Neispravan PIN</string>
     <string name="lock_max_attempts">Previše pokušaja. Pokušajte ponovo kasnije.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">Potvrdite PIN</string>
     <string name="onboarding_pin_mismatch">PIN-ovi se ne podudaraju</string>
     <string name="onboarding_pin_too_short">PIN mora imati 6-8 znamenki</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">Ime (neobavezno)</string>
+    <string name="onboarding_skip">Preskoči</string>
+    <string name="onboarding_period_duration_label">Koliko obično traje vaša menstruacija?</string>
+    <string name="onboarding_regularity_label">Koliko je redovan vaš ciklus?</string>
+    <string name="regularity_very_regular">Vrlo redovan</string>
+    <string name="regularity_regular">Redovan</string>
+    <string name="regularity_irregular">Neredovan</string>
+    <string name="regularity_unknown">Ne znam</string>
+    <string name="day_abbr">d</string>
+    <string name="goal_track">Prati moj ciklus</string>
+    <string name="goal_understand_symptoms">Razumjeti moje simptome</string>
+    <string name="goal_avoid_pregnancy">Izbjegavati trudnoću</string>
+    <string name="goal_try_to_conceive">Pokušati zatrudnjeti</string>
+    <string name="goal_track_pregnancy">Pratiti trudnoću</string>
+    <string name="goal_perimenopause">Perimenopauza</string>
+    <string name="creating_vault_loading">Stvaranje vašeg sigurnog trezora…</string>
     <string name="notif_channel_period">Podsjetnik na ciklus</string>
     <string name="notif_channel_fertile">Plodni prozor</string>
     <string name="notif_channel_pill">Podsjetnik na kontracepciju</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">Način praćenja</string>
     <string name="charts_cycle_lengths_a11y">Trakasti dijagram duljina ciklusa</string>
     <string name="charts_bbt_a11y">Grafikon bazalne tjelesne temperature</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">Prosječna duljina ciklusa: %1$s dana</string>
+    <string name="stats_avg_period_a11y">Prosječno trajanje menstruacije: %1$s dana</string>
     <string name="settings_pill_reminder">Dnevni podsjetnik na tablete</string>
     <string name="perimeno_banner_title">Način perimenopauze — Dodirnite za otvaranje nadzorne ploče</string>
     <string name="perimeno_banner_a11y">Otvori nadzornu ploču za perimenopauzu</string>
     <string name="ttc_banner_title">TTC način — Označen plodni prozor</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">Dnevnik trudnoće</string>
+    <string name="hcg_test_label">hCG test</string>
+    <string name="hcg_not_done">Nije obavljen</string>
+    <string name="hcg_positive">Pozitivan</string>
+    <string name="hcg_negative">Negativan</string>
+    <string name="kicks_label">Pokreti ploda</string>
+    <string name="kicks_decrease">Manje pokreta</string>
+    <string name="kicks_increase">Više pokreta</string>
+    <string name="nausea_label">Razina mučnine</string>
+    <string name="nausea_slider_a11y">Razina mučnine od 0 do 5</string>
+    <string name="weight_label">Težina</string>
+    <string name="symptom_logged_a11y">Simptom zabilježen</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">Perimenopauza</string>
+    <string name="perimenopause_quick_log_title">Brzo zabilježi simptome</string>
+    <string name="perimenopause_variability_title">Varijabilnost ciklusa</string>
+    <string name="perimenopause_need_more_data">Zabilježite barem 2 ciklusa da vidite varijabilnost</string>
+    <string name="perimenopause_variability_summary">Prosječno %1$d dana (raspon: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">O perimenopauzi</string>
+    <string name="perimenopause_info_body">Perimenopauza obično počinje u četrdesetima i može trajati nekoliko godina. Duljina ciklusa može znatno varirati, a simptomi poput valova vrućine i noćnog znojenja česti su. Praćenje vam pomaže razumjeti promjene svog tijela.</string>
     <plurals name="days_until_period">
         <item quantity="one">Za %d dan</item>
         <item quantity="other">Za %d dana</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d dan</item>
         <item quantity="other">%d dana</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Sinkroniziraj s Health Connect</string>
+    <string name="health_connect_rationale_body">LUNA može dijeliti podatke o ciklusu s Health Connect.</string>
+    <string name="health_connect_privacy_policy_button">Pravila privatnosti</string>
 </resources>

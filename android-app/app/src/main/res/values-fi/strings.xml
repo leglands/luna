@@ -7,6 +7,7 @@
     <string name="log_today_button">Kirjaudu tänään</string>
     <string name="privacy_local_badge">Paikalliset tiedot</string>
     <string name="privacy_badge_a11y">Kaikki tietosi tallennetaan paikallisesti tälle laitteelle</string>
+    <string name="toolbar_private_subtitle">Yksityinen · Tällä laitteella</string>
     <string name="cycle_day_label">Päivä %d</string>
     <string name="next_period_in">%d päivässä</string>
     <string name="cycle_progress_a11y">Kiertopäivä %1$d. Seuraava jakso %2$d päivän kuluttua.</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">Hienoa</string>
     <string name="energy_label">Energiaa</string>
     <string name="flow_label">Virtaus</string>
+    <string name="flow_option_a11y">Vuoto: %1$s</string>
     <string name="flow_none">Ei mitään</string>
     <string name="flow_spotting">Tarkkailu</string>
     <string name="flow_light">Kevyt</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">Vapaa tekstimuistiinpano, salattu ja tallennettu paikallisesti</string>
     <string name="save_button">Tallentaa</string>
     <string name="cancel_button">Peruuttaa</string>
+    <string name="open_button">Avaa</string>
     <string name="log_saved_a11y">Päivä kirjattu</string>
     <string name="symptom_cramps">Kouristukset</string>
     <string name="symptom_bloating">Turvotus</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">Migreeni</string>
     <string name="symptom_hot_flash">Kuuma salama</string>
     <string name="symptom_night_sweats">Yöhikoilu</string>
+    <string name="symptom_vaginal_dryness">Emättimen kuivuus</string>
     <string name="bbt_label">Peruskehon lämpötila (BBT)</string>
     <string name="bbt_hint">Mitattu herätessä, ennen liikettä</string>
     <string name="bbt_placeholder">36.7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">Poista kaikki tiedot</string>
     <string name="settings_delete_all_a11y">Poista kaikki tiedot tältä laitteelta</string>
     <string name="settings_delete_all_hint_a11y">Tämä toiminto on peruuttamaton ja poistaa pysyvästi kaikki tietosi</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">Tietosuoja ja turvallisuus</string>
+    <string name="settings_section_tracking">Seuranta ja muistutukset</string>
+    <string name="settings_section_data">Viennit ja palautus</string>
     <string name="export_csv_label">Vie CSV-muotoon</string>
     <string name="export_encrypted_backup_label">Salattu varmuuskopio</string>
+    <string name="restore_encrypted_backup_label">Palauta salattu varmuuskopio</string>
+    <string name="backup_pin_unavailable">PIN-koodi ei ole käytettävissä tällä laitteella</string>
+    <string name="backup_restore_success">Varmuuskopio palautettiin onnistuneesti</string>
+    <string name="backup_restore_error">Varmuuskopiota ei voitu palauttaa</string>
+    <string name="backup_export_error">Varmuuskopiota ei voitu viedä</string>
     <string name="panic_wipe_confirm_title">Poistetaanko kaikki tiedot?</string>
     <string name="panic_wipe_confirm_message">Tämä poistaa pysyvästi kaikki syklitietosi tältä laitteelta. Tätä toimintoa ei voi kumota.</string>
     <string name="panic_wipe_confirm_button">Poista kaikki</string>
     <string name="panic_wipe_done_a11y">Kaikki tiedot on poistettu</string>
     <string name="lock_biometric_title">Luna</string>
     <string name="lock_biometric_subtitle">Avaa lukitus päästäksesi tietoihisi</string>
+    <string name="lock_subtitle">Avaa lukitus antamalla PIN-koodi</string>
     <string name="lock_use_pin">Käytä PIN-koodia</string>
     <string name="lock_wrong_pin">Väärä PIN-koodi</string>
     <string name="lock_max_attempts">Liikaa yrityksiä. Yritä myöhemmin uudelleen.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">Vahvista PIN</string>
     <string name="onboarding_pin_mismatch">PIN-koodit eivät täsmää</string>
     <string name="onboarding_pin_too_short">PIN-koodissa on oltava 6–8 numeroa</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">Etunimi (valinnainen)</string>
+    <string name="onboarding_skip">Ohita</string>
+    <string name="onboarding_period_duration_label">Kuinka kauan kuukautisesi yleensä kestävät?</string>
+    <string name="onboarding_regularity_label">Kuinka säännöllinen kiertosi on?</string>
+    <string name="regularity_very_regular">Erittäin säännöllinen</string>
+    <string name="regularity_regular">Säännöllinen</string>
+    <string name="regularity_irregular">Epäsäännöllinen</string>
+    <string name="regularity_unknown">En tiedä</string>
+    <string name="day_abbr">p</string>
+    <string name="goal_track">Seuraa kiertoani</string>
+    <string name="goal_understand_symptoms">Ymmärrä oireitani</string>
+    <string name="goal_avoid_pregnancy">Vältä raskautta</string>
+    <string name="goal_try_to_conceive">Yritä tulla raskaaksi</string>
+    <string name="goal_track_pregnancy">Seuraa raskautta</string>
+    <string name="goal_perimenopause">Perimenopaussi</string>
+    <string name="creating_vault_loading">Luodaan turvallista holviasi…</string>
     <string name="notif_channel_period">Kierrosmuistutus</string>
     <string name="notif_channel_fertile">Hedelmällinen ikkuna</string>
     <string name="notif_channel_pill">Muistutus ehkäisystä</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">Seurantatila</string>
     <string name="charts_cycle_lengths_a11y">Jaksojen pituuksien pylväskaavio</string>
     <string name="charts_bbt_a11y">Peruskehon lämpötilakaavio</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">Kierron keskimääräinen pituus: %1$s päivää</string>
+    <string name="stats_avg_period_a11y">Kuukautisten keskimääräinen kesto: %1$s päivää</string>
     <string name="settings_pill_reminder">Päivittäinen pillerimuistutus</string>
     <string name="perimeno_banner_title">Perimenopause-tila — Napauta avataksesi kojelaudan</string>
     <string name="perimeno_banner_a11y">Avaa perimenopause-hallintapaneeli</string>
     <string name="ttc_banner_title">TTC-tila — hedelmällinen ikkuna korostettuna</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">Raskauspäiväkirja</string>
+    <string name="hcg_test_label">hCG-testi</string>
+    <string name="hcg_not_done">Ei tehty</string>
+    <string name="hcg_positive">Positiivinen</string>
+    <string name="hcg_negative">Negatiivinen</string>
+    <string name="kicks_label">Sikiön liikkeet</string>
+    <string name="kicks_decrease">Vähemmän liikkeitä</string>
+    <string name="kicks_increase">Enemmän liikkeitä</string>
+    <string name="nausea_label">Pahoinvoinnin taso</string>
+    <string name="nausea_slider_a11y">Pahoinvoinnin taso välillä 0–5</string>
+    <string name="weight_label">Paino</string>
+    <string name="symptom_logged_a11y">Oire kirjattu</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">Perimenopaussi</string>
+    <string name="perimenopause_quick_log_title">Kirjaa oireet nopeasti</string>
+    <string name="perimenopause_variability_title">Kierron vaihtelu</string>
+    <string name="perimenopause_need_more_data">Kirjaa vähintään 2 kiertoa nähdäksesi vaihtelun</string>
+    <string name="perimenopause_variability_summary">Keskimäärin %1$d päivää (vaihteluväli: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">Tietoa perimenopaussista</string>
+    <string name="perimenopause_info_body">Perimenopaussi alkaa yleensä 40 ikävuoden jälkeen ja voi kestää useita vuosia. Kierron pituus voi vaihdella huomattavasti, ja oireet kuten kuumat aallot ja yöhikoilu ovat yleisiä. Seuranta auttaa sinua ymmärtämään kehosi muutosta.</string>
     <plurals name="days_until_period">
         <item quantity="one">%d päivässä</item>
         <item quantity="other">%d päivässä</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d päivässä</item>
         <item quantity="other">%d päivää</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Synkronoi Health Connectin kanssa</string>
+    <string name="health_connect_rationale_body">LUNA voi jakaa kiertotietoja Health Connectin kanssa.</string>
+    <string name="health_connect_privacy_policy_button">Tietosuojakäytäntö</string>
 </resources>

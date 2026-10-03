@@ -7,6 +7,7 @@
     <string name="log_today_button">Registreu-vos avui</string>
     <string name="privacy_local_badge">Dades locals</string>
     <string name="privacy_badge_a11y">Totes les teves dades s\'emmagatzemen localment en aquest dispositiu</string>
+    <string name="toolbar_private_subtitle">Privat · En aquest dispositiu</string>
     <string name="cycle_day_label">Dia %d</string>
     <string name="next_period_in">D\'aquí a %d dies</string>
     <string name="cycle_progress_a11y">Dia del cicle %1$d. Proper període d\'aquí a %2$d dies.</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">Genial</string>
     <string name="energy_label">Energia</string>
     <string name="flow_label">Flux</string>
+    <string name="flow_option_a11y">Flux: %1$s</string>
     <string name="flow_none">Cap</string>
     <string name="flow_spotting">Localització</string>
     <string name="flow_light">Llum</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">Nota de text gratuïta, xifrada i emmagatzemada localment</string>
     <string name="save_button">Desa</string>
     <string name="cancel_button">Cancel·la</string>
+    <string name="open_button">Obre</string>
     <string name="log_saved_a11y">Dia registrat</string>
     <string name="symptom_cramps">Rampes</string>
     <string name="symptom_bloating">Inflor</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">migranya</string>
     <string name="symptom_hot_flash">Flash calent</string>
     <string name="symptom_night_sweats">Suors nocturns</string>
+    <string name="symptom_vaginal_dryness">Sequedat vaginal</string>
     <string name="bbt_label">Temperatura corporal basal (BBT)</string>
     <string name="bbt_hint">Es mesura al despertar, abans de qualsevol moviment</string>
     <string name="bbt_placeholder">36.7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">Suprimeix totes les dades</string>
     <string name="settings_delete_all_a11y">Suprimeix totes les dades d\'aquest dispositiu</string>
     <string name="settings_delete_all_hint_a11y">Aquesta acció és irreversible i esborrarà permanentment totes les teves dades</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">Privadesa i seguretat</string>
+    <string name="settings_section_tracking">Seguiment i recordatoris</string>
+    <string name="settings_section_data">Exportacions i recuperació</string>
     <string name="export_csv_label">Exporta a CSV</string>
     <string name="export_encrypted_backup_label">Còpia de seguretat xifrada</string>
+    <string name="restore_encrypted_backup_label">Restaura la còpia de seguretat xifrada</string>
+    <string name="backup_pin_unavailable">PIN no disponible en aquest dispositiu</string>
+    <string name="backup_restore_success">Còpia de seguretat restaurada correctament</string>
+    <string name="backup_restore_error">No es pot restaurar la còpia de seguretat</string>
+    <string name="backup_export_error">No es pot exportar la còpia de seguretat</string>
     <string name="panic_wipe_confirm_title">Vols suprimir totes les dades?</string>
     <string name="panic_wipe_confirm_message">Això suprimirà permanentment totes les dades de cicle d\'aquest dispositiu. Aquesta acció no es pot desfer.</string>
     <string name="panic_wipe_confirm_button">Esborra tot</string>
     <string name="panic_wipe_done_a11y">S\'han suprimit totes les dades</string>
     <string name="lock_biometric_title">Lluna</string>
     <string name="lock_biometric_subtitle">Desbloqueja per accedir a les teves dades</string>
+    <string name="lock_subtitle">Introdueix el PIN per desbloquejar</string>
     <string name="lock_use_pin">Utilitza el PIN</string>
     <string name="lock_wrong_pin">PIN incorrecte</string>
     <string name="lock_max_attempts">Massa intents. Si us plau, torna-ho a provar més tard.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">Confirmeu el PIN</string>
     <string name="onboarding_pin_mismatch">Els PIN no coincideixen</string>
     <string name="onboarding_pin_too_short">El PIN ha de tenir entre 6 i 8 dígits</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">Nom (opcional)</string>
+    <string name="onboarding_skip">Omet</string>
+    <string name="onboarding_period_duration_label">Quant dura normalment la regla?</string>
+    <string name="onboarding_regularity_label">Com de regular és el teu cicle?</string>
+    <string name="regularity_very_regular">Molt regular</string>
+    <string name="regularity_regular">Regular</string>
+    <string name="regularity_irregular">Irregular</string>
+    <string name="regularity_unknown">No ho sé</string>
+    <string name="day_abbr">d</string>
+    <string name="goal_track">Fer el seguiment del meu cicle</string>
+    <string name="goal_understand_symptoms">Entendre els meus símptomes</string>
+    <string name="goal_avoid_pregnancy">Evitar l\'embaràs</string>
+    <string name="goal_try_to_conceive">Intentar concebre</string>
+    <string name="goal_track_pregnancy">Fer el seguiment de l\'embaràs</string>
+    <string name="goal_perimenopause">Perimenopausa</string>
+    <string name="creating_vault_loading">S\'està creant la teva caixa forta segura…</string>
     <string name="notif_channel_period">Recordatori de cicle</string>
     <string name="notif_channel_fertile">Finestra fèrtil</string>
     <string name="notif_channel_pill">Recordatori d\'anticoncepció</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">Mode de seguiment</string>
     <string name="charts_cycle_lengths_a11y">Diagrama de barres de longituds de cicle</string>
     <string name="charts_bbt_a11y">Gràfic de temperatura corporal basal</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">Durada mitjana del cicle: %1$s dies</string>
+    <string name="stats_avg_period_a11y">Durada mitjana de la regla: %1$s dies</string>
     <string name="settings_pill_reminder">Recordatori diari de pastilles</string>
     <string name="perimeno_banner_title">Mode perimenopausa: toqueu per obrir el tauler</string>
     <string name="perimeno_banner_a11y">Obre el tauler de control de la perimenopausa</string>
     <string name="ttc_banner_title">Mode TTC — Finestra fèrtil destacada</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">Registre d\'embaràs</string>
+    <string name="hcg_test_label">Prova d\'hCG</string>
+    <string name="hcg_not_done">No feta</string>
+    <string name="hcg_positive">Positiu</string>
+    <string name="hcg_negative">Negatiu</string>
+    <string name="kicks_label">Puntades del bebè</string>
+    <string name="kicks_decrease">Redueix les puntades</string>
+    <string name="kicks_increase">Augmenta les puntades</string>
+    <string name="nausea_label">Nivell de nàusees</string>
+    <string name="nausea_slider_a11y">Nivell de nàusees de 0 a 5</string>
+    <string name="weight_label">Pes</string>
+    <string name="symptom_logged_a11y">Símptoma registrat</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">Perimenopausa</string>
+    <string name="perimenopause_quick_log_title">Registra símptomes ràpidament</string>
+    <string name="perimenopause_variability_title">Variabilitat del cicle</string>
+    <string name="perimenopause_need_more_data">Registra almenys 2 cicles per veure la variabilitat</string>
+    <string name="perimenopause_variability_summary">Mitjana de %1$d dies (interval: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">Sobre la perimenopausa</string>
+    <string name="perimenopause_info_body">La perimenopausa sol començar als 40 anys i pot durar diversos anys. La durada del cicle pot variar molt, i símptomes com les sufocacions i la suor nocturna són habituals. Fer-ne el seguiment t\'ajuda a entendre la transició del teu cos.</string>
     <plurals name="days_until_period">
         <item quantity="one">En %d dia</item>
         <item quantity="other">Din %d dies</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d dia</item>
         <item quantity="other">%d dies</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Sincronitza amb Health Connect</string>
+    <string name="health_connect_rationale_body">LUNA pot compartir les dades del cicle amb Health Connect.</string>
+    <string name="health_connect_privacy_policy_button">Política de privacitat</string>
 </resources>

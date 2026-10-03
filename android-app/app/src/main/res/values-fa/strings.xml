@@ -7,6 +7,7 @@
     <string name="log_today_button">امروز وارد شوید</string>
     <string name="privacy_local_badge">داده های محلی</string>
     <string name="privacy_badge_a11y">تمام داده های شما به صورت محلی در این دستگاه ذخیره می شود</string>
+    <string name="toolbar_private_subtitle">خصوصی · در این دستگاه</string>
     <string name="cycle_day_label">روز %d</string>
     <string name="next_period_in">در %d روز</string>
     <string name="cycle_progress_a11y">روز چرخه %1$d. دوره بعدی %2$d روز دیگر.</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">عالیه</string>
     <string name="energy_label">انرژی</string>
     <string name="flow_label">جریان</string>
+    <string name="flow_option_a11y">جریان: %1$s</string>
     <string name="flow_none">هیچ کدام</string>
     <string name="flow_spotting">لکه بینی</string>
     <string name="flow_light">نور</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">یادداشت متنی رایگان، رمزگذاری شده و به صورت محلی ذخیره می شود</string>
     <string name="save_button">ذخیره کنید</string>
     <string name="cancel_button">لغو کنید</string>
+    <string name="open_button">باز کردن</string>
     <string name="log_saved_a11y">روز ثبت شده است</string>
     <string name="symptom_cramps">گرفتگی</string>
     <string name="symptom_bloating">نفخ</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">میگرن</string>
     <string name="symptom_hot_flash">گرگرفتگی</string>
     <string name="symptom_night_sweats">عرق شبانه</string>
+    <string name="symptom_vaginal_dryness">خشکی واژن</string>
     <string name="bbt_label">دمای پایه بدن (BBT)</string>
     <string name="bbt_hint">هنگام بیداری، قبل از هر حرکتی اندازه گیری می شود</string>
     <string name="bbt_placeholder">36.7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">تمام داده ها را حذف کنید</string>
     <string name="settings_delete_all_a11y">تمام داده ها را از این دستگاه حذف کنید</string>
     <string name="settings_delete_all_hint_a11y">این عمل غیرقابل برگشت است و تمام داده های شما را برای همیشه حذف می کند</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">حریم خصوصی و امنیت</string>
+    <string name="settings_section_tracking">پیگیری و یادآوری‌ها</string>
+    <string name="settings_section_data">خروجی و بازیابی</string>
     <string name="export_csv_label">صادرات به CSV</string>
     <string name="export_encrypted_backup_label">پشتیبان گیری رمزگذاری شده</string>
+    <string name="restore_encrypted_backup_label">بازیابی پشتیبان رمزگذاری‌شده</string>
+    <string name="backup_pin_unavailable">پین در این دستگاه در دسترس نیست</string>
+    <string name="backup_restore_success">پشتیبان با موفقیت بازیابی شد</string>
+    <string name="backup_restore_error">بازیابی پشتیبان ممکن نشد</string>
+    <string name="backup_export_error">خروجی گرفتن از پشتیبان ممکن نشد</string>
     <string name="panic_wipe_confirm_title">همه داده ها حذف شود؟</string>
     <string name="panic_wipe_confirm_message">با این کار تمام داده های چرخه شما برای همیشه از این دستگاه حذف می شود. این عمل قابل لغو نیست.</string>
     <string name="panic_wipe_confirm_button">همه چیز را حذف کنید</string>
     <string name="panic_wipe_done_a11y">تمام داده ها حذف شده است</string>
     <string name="lock_biometric_title">لونا</string>
     <string name="lock_biometric_subtitle">برای دسترسی به داده های خود قفل را باز کنید</string>
+    <string name="lock_subtitle">برای باز کردن قفل، پین خود را وارد کنید</string>
     <string name="lock_use_pin">از پین استفاده کنید</string>
     <string name="lock_wrong_pin">پین نادرست</string>
     <string name="lock_max_attempts">تلاش های بسیار زیاد لطفاً بعداً دوباره امتحان کنید.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">پین را تایید کنید</string>
     <string name="onboarding_pin_mismatch">پین ها مطابقت ندارند</string>
     <string name="onboarding_pin_too_short">پین باید 6 تا 8 رقمی باشد</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">نام (اختیاری)</string>
+    <string name="onboarding_skip">رد کردن</string>
+    <string name="onboarding_period_duration_label">قاعدگی شما معمولاً چند روز طول می‌کشد؟</string>
+    <string name="onboarding_regularity_label">چرخه شما چقدر منظم است؟</string>
+    <string name="regularity_very_regular">خیلی منظم</string>
+    <string name="regularity_regular">منظم</string>
+    <string name="regularity_irregular">نامنظم</string>
+    <string name="regularity_unknown">نمی‌دانم</string>
+    <string name="day_abbr">ر</string>
+    <string name="goal_track">پیگیری چرخه‌ام</string>
+    <string name="goal_understand_symptoms">درک نشانه‌هایم</string>
+    <string name="goal_avoid_pregnancy">پیشگیری از بارداری</string>
+    <string name="goal_try_to_conceive">تلاش برای باردار شدن</string>
+    <string name="goal_track_pregnancy">پیگیری بارداری</string>
+    <string name="goal_perimenopause">پیش از یائسگی</string>
+    <string name="creating_vault_loading">در حال ساخت گاوصندوق امن شما…</string>
     <string name="notif_channel_period">یادآوری چرخه</string>
     <string name="notif_channel_fertile">پنجره بارور</string>
     <string name="notif_channel_pill">یادآوری پیشگیری از بارداری</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">حالت ردیابی</string>
     <string name="charts_cycle_lengths_a11y">نمودار میله ای طول چرخه</string>
     <string name="charts_bbt_a11y">نمودار دمای پایه بدن</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">میانگین طول چرخه: %1$s روز</string>
+    <string name="stats_avg_period_a11y">میانگین طول قاعدگی: %1$s روز</string>
     <string name="settings_pill_reminder">یادآوری روزانه قرص</string>
     <string name="perimeno_banner_title">حالت پیش از یائسگی - برای باز کردن داشبورد ضربه بزنید</string>
     <string name="perimeno_banner_a11y">داشبورد پیش از یائسگی را باز کنید</string>
     <string name="ttc_banner_title">حالت TTC - پنجره بارور برجسته شده است</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">دفترچه بارداری</string>
+    <string name="hcg_test_label">آزمایش hCG</string>
+    <string name="hcg_not_done">انجام نشده</string>
+    <string name="hcg_positive">مثبت</string>
+    <string name="hcg_negative">منفی</string>
+    <string name="kicks_label">حرکات جنین</string>
+    <string name="kicks_decrease">کاهش حرکات</string>
+    <string name="kicks_increase">افزایش حرکات</string>
+    <string name="nausea_label">میزان تهوع</string>
+    <string name="nausea_slider_a11y">میزان تهوع از 0 تا 5</string>
+    <string name="weight_label">وزن</string>
+    <string name="symptom_logged_a11y">نشانه ثبت شد</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">پیش از یائسگی</string>
+    <string name="perimenopause_quick_log_title">ثبت سریع نشانه‌ها</string>
+    <string name="perimenopause_variability_title">تغییرپذیری چرخه</string>
+    <string name="perimenopause_need_more_data">برای دیدن تغییرپذیری حداقل 2 چرخه را ثبت کنید</string>
+    <string name="perimenopause_variability_summary">میانگین %1$d روز (بازه: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">درباره دوره پیش از یائسگی</string>
+    <string name="perimenopause_info_body">دوره پیش از یائسگی معمولاً در دهه 40 زندگی آغاز می‌شود و می‌تواند چندین سال ادامه یابد. طول چرخه ممکن است به‌طور چشمگیری تغییر کند و نشانه‌هایی مانند گرگرفتگی و تعریق شبانه شایع است. پیگیری به شما کمک می‌کند گذار بدن خود را درک کنید.</string>
     <plurals name="days_until_period">
         <item quantity="one">در %d روز</item>
         <item quantity="other">در %d روز</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d روز</item>
         <item quantity="other">%d روز</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">همگام‌سازی با Health Connect</string>
+    <string name="health_connect_rationale_body">LUNA می‌تواند داده چرخه را با Health Connect به اشتراک بگذارد.</string>
+    <string name="health_connect_privacy_policy_button">سیاست حریم خصوصی</string>
 </resources>

@@ -8,21 +8,34 @@
     <string name="log_today_button">تسجيل اليوم</string>
     <string name="privacy_local_badge">بيانات محلية</string>
     <string name="privacy_badge_a11y">جميع بياناتك محفوظة محلياً على هذا الجهاز</string>
+    <string name="toolbar_private_subtitle">خاص · على هذا الجهاز</string>
     <string name="cycle_day_label">اليوم %d</string>
     <string name="next_period_in">خلال %d يوم</string>
+    <string name="cycle_progress_a11y">يوم الدورة %1$d. الدورة القادمة خلال %2$d يوماً.</string>
+    <string name="cycle_no_data_a11y">لا توجد بيانات دورة بعد</string>
     <string name="log_sheet_title">اليوم</string>
     <string name="mood_label">المزاج</string>
+    <string name="mood_very_bad">سيئ جداً</string>
+    <string name="mood_bad">سيئ</string>
+    <string name="mood_neutral">محايد</string>
+    <string name="mood_good">جيد</string>
+    <string name="mood_great">ممتاز</string>
     <string name="energy_label">الطاقة</string>
     <string name="flow_label">الدورة</string>
+    <string name="flow_option_a11y">النزيف: %1$s</string>
     <string name="flow_none">لا شيء</string>
     <string name="flow_spotting">بقع</string>
     <string name="flow_light">خفيف</string>
     <string name="flow_medium">متوسط</string>
     <string name="flow_heavy">غزير</string>
     <string name="symptoms_section_title">الأعراض</string>
+    <string name="advanced_section_title">متقدم (BBT، LH…)</string>
     <string name="notes_label">ملاحظات</string>
+    <string name="notes_placeholder">أضيفي ملاحظة…</string>
+    <string name="notes_a11y">ملاحظة نصية حرة، مشفرة ومحفوظة محلياً</string>
     <string name="save_button">حفظ</string>
     <string name="cancel_button">إلغاء</string>
+    <string name="open_button">فتح</string>
     <string name="log_saved_a11y">تم تسجيل اليوم</string>
     <string name="symptom_cramps">تقلصات</string>
     <string name="symptom_bloating">انتفاخ</string>
@@ -33,6 +46,22 @@
     <string name="symptom_low_mood">مزاج سيئ</string>
     <string name="symptom_high_energy">طاقة عالية</string>
     <string name="symptom_motivation">دافعية</string>
+    <string name="symptom_nausea">غثيان</string>
+    <string name="symptom_lower_back_pain">ألم أسفل الظهر</string>
+    <string name="symptom_acne">حب الشباب</string>
+    <string name="symptom_anxiety">قلق</string>
+    <string name="symptom_insomnia">أرق</string>
+    <string name="symptom_migraine">صداع نصفي</string>
+    <string name="symptom_hot_flash">هبّات حرارة</string>
+    <string name="symptom_night_sweats">تعرق ليلي</string>
+    <string name="symptom_vaginal_dryness">جفاف المهبل</string>
+    <string name="bbt_label">درجة حرارة الجسم الأساسية (BBT)</string>
+    <string name="bbt_hint">تُقاس عند الاستيقاظ، قبل أي حركة</string>
+    <string name="bbt_placeholder">36.7</string>
+    <string name="bbt_a11y_label">درجة حرارة الجسم الأساسية</string>
+    <string name="bbt_a11y_hint">أدخلي درجة حرارتك بالدرجات المئوية، مقيسة عند الاستيقاظ قبل أي حركة</string>
+    <string name="tap_to_select_a11y">اضغطي مرتين للاختيار</string>
+    <string name="tap_to_deselect_a11y">اضغطي مرتين لإلغاء الاختيار</string>
     <!-- Arabic plurals: 6 forms (zero/one/two/few/many/other) -->
     <plurals name="days_until_period">
         <item quantity="zero">لا أيام</item>
@@ -42,4 +71,140 @@
         <item quantity="many">خلال %d يومًا</item>
         <item quantity="other">خلال %d يوم</item>
     </plurals>
+    <plurals name="cycle_length_days">
+        <item quantity="zero">لا أيام</item>
+        <item quantity="one">يوم واحد</item>
+        <item quantity="two">يومان</item>
+        <item quantity="few">%d أيام</item>
+        <item quantity="many">%d يوماً</item>
+        <item quantity="other">%d يوم</item>
+    </plurals>
+    <!-- Settings -->
+    <string name="settings_delete_all_label">حذف كل البيانات</string>
+    <string name="settings_delete_all_a11y">حذف كل البيانات من هذا الجهاز</string>
+    <string name="settings_delete_all_hint_a11y">هذا الإجراء لا رجعة فيه وسيحذف كل بياناتك نهائياً</string>
+    <string name="settings_section_privacy">الخصوصية والأمان</string>
+    <string name="settings_section_tracking">المتابعة والتذكيرات</string>
+    <string name="settings_section_data">التصدير والاستعادة</string>
+    <string name="export_csv_label">تصدير إلى CSV</string>
+    <string name="export_encrypted_backup_label">نسخة احتياطية مشفّرة</string>
+    <string name="restore_encrypted_backup_label">استعادة نسخة احتياطية مشفّرة</string>
+    <string name="backup_pin_unavailable">رمز PIN غير متاح على هذا الجهاز</string>
+    <string name="backup_restore_success">تمت استعادة النسخة الاحتياطية بنجاح</string>
+    <string name="backup_restore_error">تعذّرت استعادة النسخة الاحتياطية</string>
+    <string name="backup_export_error">تعذّر تصدير النسخة الاحتياطية</string>
+    <string name="panic_wipe_confirm_title">حذف كل البيانات؟</string>
+    <string name="panic_wipe_confirm_message">سيؤدي هذا إلى حذف كل بيانات دورتك من هذا الجهاز نهائياً. لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="panic_wipe_confirm_button">حذف كل شيء</string>
+    <string name="panic_wipe_done_a11y">تم حذف كل البيانات</string>
+    <string name="lock_biometric_title">Luna</string>
+    <string name="lock_biometric_subtitle">افتحي القفل للوصول إلى بياناتك</string>
+    <string name="lock_subtitle">أدخلي رمز PIN لفتح القفل</string>
+    <string name="lock_use_pin">استخدام رمز PIN</string>
+    <string name="lock_wrong_pin">رمز PIN غير صحيح</string>
+    <string name="lock_max_attempts">محاولات كثيرة جداً. حاولي مرة أخرى لاحقاً.</string>
+    <string name="lock_unlocked_a11y">تم فتح الخزانة</string>
+    <string name="pin_delete_a11y">حذف الرقم الأخير</string>
+    <string name="pin_dots_a11y">تم إدخال %d أرقام</string>
+    <string name="previous_month_a11y">الشهر السابق</string>
+    <string name="next_month_a11y">الشهر التالي</string>
+    <string name="phase_changed_a11y">تغيّرت المرحلة: %s</string>
+    <string name="app_name">Luna</string>
+    <!-- Onboarding -->
+    <string name="onboarding_step_a11y">الخطوة %1$d من %2$d</string>
+    <string name="onboarding_welcome_title">مرحباً بك في Luna</string>
+    <string name="onboarding_welcome_subtitle">تابعي دورتك بخصوصية كاملة. بياناتك لا تغادر هاتفك أبداً.</string>
+    <string name="onboarding_last_period_title">آخر دورة</string>
+    <string name="onboarding_last_period_subtitle">متى بدأت آخر دورة لديك؟</string>
+    <string name="onboarding_cycle_profile_title">دورتك</string>
+    <string name="onboarding_cycle_profile_subtitle">ساعدينا على تخصيص توقعاتك</string>
+    <string name="onboarding_goals_title">أهدافك</string>
+    <string name="onboarding_goals_subtitle">ما الذي جاء بك إلى Luna؟ (اختاري كل ما ينطبق)</string>
+    <string name="onboarding_privacy_title">خصوصيتك</string>
+    <string name="onboarding_privacy_subtitle">أعدّي رمز PIN لحماية بياناتك</string>
+    <string name="onboarding_next_button">التالي</string>
+    <string name="onboarding_back">رجوع</string>
+    <string name="onboarding_start_button">ابدئي</string>
+    <!-- Notifications labels -->
+    <string name="notif_daily_log_label">تذكير بتسجيل اليوم</string>
+    <string name="notif_period_reminder_label">تذكير بالدورة</string>
+    <string name="notif_fertile_window_label">تنبيه نافذة الخصوبة</string>
+    <string name="notif_bbt_reminder_label">تذكير صباحي بدرجة الحرارة الأساسية</string>
+    <string name="energy_slider_a11y">شريط مستوى الطاقة</string>
+    <string name="onboarding_pin_hint">اختاري رمز PIN من 6 إلى 8 أرقام</string>
+    <string name="onboarding_pin_confirm_hint">أكّدي رمز PIN</string>
+    <string name="onboarding_pin_mismatch">رموز PIN غير متطابقة</string>
+    <string name="onboarding_pin_too_short">يجب أن يتكوّن رمز PIN من 6 إلى 8 أرقام</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">الاسم (اختياري)</string>
+    <string name="onboarding_skip">تخطي</string>
+    <string name="onboarding_period_duration_label">كم تستمر دورتك عادة؟</string>
+    <string name="onboarding_regularity_label">ما مدى انتظام دورتك؟</string>
+    <string name="regularity_very_regular">منتظمة جداً</string>
+    <string name="regularity_regular">منتظمة</string>
+    <string name="regularity_irregular">غير منتظمة</string>
+    <string name="regularity_unknown">لا أعرف</string>
+    <string name="day_abbr">ي</string>
+    <string name="goal_track">متابعة دورتي</string>
+    <string name="goal_understand_symptoms">فهم أعراضي</string>
+    <string name="goal_avoid_pregnancy">تجنّب الحمل</string>
+    <string name="goal_try_to_conceive">محاولة الحمل</string>
+    <string name="goal_track_pregnancy">متابعة الحمل</string>
+    <string name="goal_perimenopause">قبل انقطاع الطمث</string>
+    <string name="creating_vault_loading">جارٍ إنشاء خزانتك الآمنة…</string>
+    <!-- Notifications -->
+    <string name="notif_channel_period">تذكير الدورة</string>
+    <string name="notif_channel_fertile">نافذة الخصوبة</string>
+    <string name="notif_channel_pill">تذكير بوسائل منع الحمل</string>
+    <string name="notif_period_title">دورتك على وشك البدء</string>
+    <string name="notif_period_body">استعدي، من المتوقع أن تبدأ دورتك خلال يومين.</string>
+    <string name="notif_fertile_title">نافذة الخصوبة</string>
+    <string name="notif_fertile_body">تبدأ نافذة الخصوبة لديك اليوم.</string>
+    <string name="notif_pill_title">تذكير بحبوب منع الحمل</string>
+    <string name="notif_pill_body">لا تنسي وسيلة منع الحمل.</string>
+    <!-- Tracking mode -->
+    <string name="tracking_mode_regular">دورة منتظمة</string>
+    <string name="tracking_mode_ttc">محاولة الحمل (TTC)</string>
+    <string name="tracking_mode_pregnant">الحمل</string>
+    <string name="tracking_mode_postpartum">بعد الولادة</string>
+    <string name="tracking_mode_perimenopause">قبل انقطاع الطمث</string>
+    <string name="settings_tracking_mode">وضع المتابعة</string>
+    <!-- Charts -->
+    <string name="charts_cycle_lengths_a11y">مخطط أعمدة لأطوال الدورات</string>
+    <string name="charts_bbt_a11y">مخطط درجة حرارة الجسم الأساسية</string>
+    <string name="stats_avg_cycle_a11y">متوسط طول الدورة: %1$s يوماً</string>
+    <string name="stats_avg_period_a11y">متوسط مدة الدورة: %1$s يوماً</string>
+    <!-- Pill reminder -->
+    <string name="settings_pill_reminder">تذكير يومي بحبوب منع الحمل</string>
+    <!-- Perimenopause banners and dashboard -->
+    <string name="perimeno_banner_title">وضع ما قبل انقطاع الطمث — اضغطي لفتح اللوحة</string>
+    <string name="perimeno_banner_a11y">فتح لوحة ما قبل انقطاع الطمث</string>
+    <string name="ttc_banner_title">وضع محاولة الحمل — نافذة الخصوبة مميّزة</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">سجل الحمل</string>
+    <string name="hcg_test_label">اختبار hCG</string>
+    <string name="hcg_not_done">لم يُجرَ</string>
+    <string name="hcg_positive">إيجابي</string>
+    <string name="hcg_negative">سلبي</string>
+    <string name="kicks_label">حركات الجنين</string>
+    <string name="kicks_decrease">تقليل الحركات</string>
+    <string name="kicks_increase">زيادة الحركات</string>
+    <string name="nausea_label">مستوى الغثيان</string>
+    <string name="nausea_slider_a11y">مستوى الغثيان من 0 إلى 5</string>
+    <string name="weight_label">الوزن</string>
+    <string name="symptom_logged_a11y">تم تسجيل العَرَض</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">ما قبل انقطاع الطمث</string>
+    <string name="perimenopause_quick_log_title">تسجيل سريع للأعراض</string>
+    <string name="perimenopause_variability_title">تغيّر مدة الدورة</string>
+    <string name="perimenopause_need_more_data">سجّلي دورتين على الأقل لرؤية التغيّر</string>
+    <string name="perimenopause_variability_summary">المتوسط %1$d يوماً (النطاق: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">عن مرحلة ما قبل انقطاع الطمث</string>
+    <string name="perimenopause_info_body">تبدأ مرحلة ما قبل انقطاع الطمث عادة في الأربعينيات وقد تستمر عدة سنوات. قد يتغيّر طول الدورة بشكل ملحوظ، وتشيع أعراض مثل الهبّات الحرارية والتعرق الليلي. تساعدك المتابعة على فهم هذه المرحلة الانتقالية في جسمك.</string>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">المزامنة مع Health Connect</string>
+    <string name="health_connect_rationale_body">يمكن لـ LUNA مشاركة بيانات الدورة مع Health Connect.</string>
+    <string name="health_connect_privacy_policy_button">سياسة الخصوصية</string>
 </resources>

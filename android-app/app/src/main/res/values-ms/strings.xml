@@ -7,6 +7,7 @@
     <string name="log_today_button">Log hari ini</string>
     <string name="privacy_local_badge">Data tempatan</string>
     <string name="privacy_badge_a11y">Semua data anda disimpan secara setempat pada peranti ini</string>
+    <string name="toolbar_private_subtitle">Peribadi · Pada peranti ini</string>
     <string name="cycle_day_label">Hari %d</string>
     <string name="next_period_in">Dalam %d hari</string>
     <string name="cycle_progress_a11y">Hari kitaran %1$d. Tempoh seterusnya dalam %2$d hari.</string>
@@ -20,6 +21,7 @@
     <string name="mood_great">Hebat</string>
     <string name="energy_label">Tenaga</string>
     <string name="flow_label">Aliran</string>
+    <string name="flow_option_a11y">Aliran: %1$s</string>
     <string name="flow_none">tiada</string>
     <string name="flow_spotting">Mengesan</string>
     <string name="flow_light">Cahaya</string>
@@ -32,6 +34,7 @@
     <string name="notes_a11y">Nota teks percuma, disulitkan dan disimpan secara tempatan</string>
     <string name="save_button">Jimat</string>
     <string name="cancel_button">Batal</string>
+    <string name="open_button">Buka</string>
     <string name="log_saved_a11y">Hari dilog</string>
     <string name="symptom_cramps">Kekejangan</string>
     <string name="symptom_bloating">Kembung perut</string>
@@ -50,6 +53,7 @@
     <string name="symptom_migraine">Migrain</string>
     <string name="symptom_hot_flash">kilat panas</string>
     <string name="symptom_night_sweats">Berpeluh malam</string>
+    <string name="symptom_vaginal_dryness">Kekeringan faraj</string>
     <string name="bbt_label">Suhu badan basal (BBT)</string>
     <string name="bbt_hint">Diukur semasa bangun, sebelum sebarang pergerakan</string>
     <string name="bbt_placeholder">36.7</string>
@@ -60,14 +64,24 @@
     <string name="settings_delete_all_label">Padam semua data</string>
     <string name="settings_delete_all_a11y">Padamkan semua data daripada peranti ini</string>
     <string name="settings_delete_all_hint_a11y">Tindakan ini tidak boleh diterbalikkan dan akan memadamkan semua data anda secara kekal</string>
+    <!-- Settings -->
+    <string name="settings_section_privacy">Privasi dan keselamatan</string>
+    <string name="settings_section_tracking">Penjejakan dan peringatan</string>
+    <string name="settings_section_data">Eksport dan pemulihan</string>
     <string name="export_csv_label">Eksport ke CSV</string>
     <string name="export_encrypted_backup_label">Sandaran yang disulitkan</string>
+    <string name="restore_encrypted_backup_label">Pulihkan sandaran disulitkan</string>
+    <string name="backup_pin_unavailable">PIN tidak tersedia pada peranti ini</string>
+    <string name="backup_restore_success">Sandaran berjaya dipulihkan</string>
+    <string name="backup_restore_error">Sandaran tidak dapat dipulihkan</string>
+    <string name="backup_export_error">Sandaran tidak dapat dieksport</string>
     <string name="panic_wipe_confirm_title">Padamkan semua data?</string>
     <string name="panic_wipe_confirm_message">Ini akan memadamkan semua data kitaran anda secara kekal daripada peranti ini. Tindakan ini tidak boleh dibuat asal.</string>
     <string name="panic_wipe_confirm_button">Padam semua</string>
     <string name="panic_wipe_done_a11y">Semua data telah dipadamkan</string>
     <string name="lock_biometric_title">Luna</string>
     <string name="lock_biometric_subtitle">Buka kunci untuk mengakses data anda</string>
+    <string name="lock_subtitle">Masukkan PIN anda untuk membuka kunci</string>
     <string name="lock_use_pin">Gunakan PIN</string>
     <string name="lock_wrong_pin">PIN salah</string>
     <string name="lock_max_attempts">Terlalu banyak percubaan. Sila cuba lagi kemudian.</string>
@@ -101,6 +115,23 @@
     <string name="onboarding_pin_confirm_hint">Sahkan PIN</string>
     <string name="onboarding_pin_mismatch">PIN tidak sepadan</string>
     <string name="onboarding_pin_too_short">PIN mestilah 6–8 digit</string>
+    <!-- Onboarding form elements -->
+    <string name="onboarding_name_placeholder">Nama (pilihan)</string>
+    <string name="onboarding_skip">Langkau</string>
+    <string name="onboarding_period_duration_label">Berapa lama haid anda biasanya berlangsung?</string>
+    <string name="onboarding_regularity_label">Seberapa teratur kitaran anda?</string>
+    <string name="regularity_very_regular">Sangat teratur</string>
+    <string name="regularity_regular">Teratur</string>
+    <string name="regularity_irregular">Tidak teratur</string>
+    <string name="regularity_unknown">Saya tidak tahu</string>
+    <string name="day_abbr">h</string>
+    <string name="goal_track">Jejak kitaran saya</string>
+    <string name="goal_understand_symptoms">Fahami simptom saya</string>
+    <string name="goal_avoid_pregnancy">Elakkan kehamilan</string>
+    <string name="goal_try_to_conceive">Cuba hamil</string>
+    <string name="goal_track_pregnancy">Jejak kehamilan</string>
+    <string name="goal_perimenopause">Perimenopause</string>
+    <string name="creating_vault_loading">Mencipta peti besi selamat anda…</string>
     <string name="notif_channel_period">Peringatan kitaran</string>
     <string name="notif_channel_fertile">Tingkap yang subur</string>
     <string name="notif_channel_pill">Peringatan kontraseptif</string>
@@ -118,10 +149,34 @@
     <string name="settings_tracking_mode">Mod penjejakan</string>
     <string name="charts_cycle_lengths_a11y">Carta bar panjang kitaran</string>
     <string name="charts_bbt_a11y">Carta suhu badan basal</string>
+    <!-- Charts -->
+    <string name="stats_avg_cycle_a11y">Purata panjang kitaran: %1$s hari</string>
+    <string name="stats_avg_period_a11y">Purata tempoh haid: %1$s hari</string>
     <string name="settings_pill_reminder">Peringatan pil harian</string>
     <string name="perimeno_banner_title">Mod Perimenopause — Ketik untuk membuka papan pemuka</string>
     <string name="perimeno_banner_a11y">Buka papan pemuka perimenopause</string>
     <string name="ttc_banner_title">Mod TTC — Tetingkap subur diserlahkan</string>
+    <!-- Pregnancy Log -->
+    <string name="pregnancy_log_title">Log kehamilan</string>
+    <string name="hcg_test_label">Ujian hCG</string>
+    <string name="hcg_not_done">Belum dilakukan</string>
+    <string name="hcg_positive">Positif</string>
+    <string name="hcg_negative">Negatif</string>
+    <string name="kicks_label">Pergerakan janin</string>
+    <string name="kicks_decrease">Kurangkan pergerakan</string>
+    <string name="kicks_increase">Tambah pergerakan</string>
+    <string name="nausea_label">Tahap loya</string>
+    <string name="nausea_slider_a11y">Tahap loya dari 0 hingga 5</string>
+    <string name="weight_label">Berat badan</string>
+    <string name="symptom_logged_a11y">Simptom direkodkan</string>
+    <!-- Perimenopause Dashboard -->
+    <string name="perimenopause_dashboard_title">Perimenopause</string>
+    <string name="perimenopause_quick_log_title">Rekod simptom dengan pantas</string>
+    <string name="perimenopause_variability_title">Variasi kitaran</string>
+    <string name="perimenopause_need_more_data">Rekod sekurang-kurangnya 2 kitaran untuk melihat variasi</string>
+    <string name="perimenopause_variability_summary">Purata %1$d hari (julat: %2$d–%3$d)</string>
+    <string name="perimenopause_info_title">Tentang perimenopause</string>
+    <string name="perimenopause_info_body">Perimenopause biasanya bermula pada usia 40-an dan boleh berlangsung beberapa tahun. Panjang kitaran boleh berubah dengan ketara, dan simptom seperti bahang dan peluh malam adalah biasa. Penjejakan membantu anda memahami peralihan tubuh anda.</string>
     <plurals name="days_until_period">
         <item quantity="one">Dalam %d hari</item>
         <item quantity="other">Dalam %d hari</item>
@@ -130,4 +185,10 @@
         <item quantity="one">%d hari</item>
         <item quantity="other">%d hari</item>
     </plurals>
+
+    <!-- Health Connect (opt-in) -->
+    <string name="settings_section_health">Health Connect</string>
+    <string name="settings_health_connect_toggle">Segerak dengan Health Connect</string>
+    <string name="health_connect_rationale_body">LUNA boleh berkongsi data kitaran dengan Health Connect.</string>
+    <string name="health_connect_privacy_policy_button">Dasar privasi</string>
 </resources>
