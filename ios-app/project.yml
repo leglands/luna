@@ -42,6 +42,52 @@ targets:
         CFBundleLocalizations:
           - en
           - fr
+          - am
+          - ar
+          - bg
+          - bn
+          - ca
+          - cs
+          - da
+          - de
+          - el
+          - es
+          - es-MX
+          - et
+          - fa
+          - fi
+          - fr-CA
+          - he
+          - hi
+          - hr
+          - hu
+          - id
+          - it
+          - ja
+          - ko
+          - lt
+          - lv
+          - mk
+          - ms
+          - nb
+          - nl
+          - pl
+          - pt-BR
+          - pt-PT
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sv
+          - th
+          - tr
+          - uk
+          - ur
+          - vi
+          - zh-Hans
+          - zh-Hant
         LSRequiresIPhoneOS: YES
         UILaunchStoryboardName: ""
         UISupportedInterfaceOrientations:
@@ -67,6 +113,11 @@ targets:
         CODE_SIGN_ENTITLEMENTS: LunaApp/LunaApp.entitlements
     entitlements:
       path: LunaApp/LunaApp.entitlements
+      properties:
+        com.apple.developer.icloud-container-identifiers:
+          - iCloud.com.macaron.luna
+        com.apple.developer.icloud-services:
+          - CloudKit
     dependencies:
       - sdk: HealthKit.framework
       - sdk: CloudKit.framework

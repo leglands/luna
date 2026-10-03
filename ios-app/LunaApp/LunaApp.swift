@@ -4,12 +4,19 @@ import SwiftUI
 struct LunaApp: App {
 
     @StateObject private var appState = AppState()
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environmentObject(appState)
                 .preferredColorScheme(appState.colorScheme)
+                .onChange(of: scenePhase) { phase in
+                    // Retour au premier plan → sync opt-in (best-effort, non bloquant).
+                    if phase == .active {
+                        ICloudSyncService.shared.syncIfEnabled(engine: appState.engine)
+                    }
+                }
         }
     }
 }
@@ -134,6 +141,7 @@ final class AppState: ObservableObject {
     func openVault(pin: String) throws {
         engine = try LunaEngine.openVault(dbPath: dbPath, pin: pin)
         Task { await refreshCycleData() }
+        ICloudSyncService.shared.syncIfEnabled(engine: engine)
     }
 
     func lock() {

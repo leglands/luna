@@ -55,6 +55,7 @@ struct RootView: View {
                 appState.isVaultOpen = true
             }
             await appState.refreshCycleData()
+            ICloudSyncService.shared.syncIfEnabled(engine: appState.engine)
         } catch {
             // Vault corrupt or wrong key — wipe DB + salt and restart onboarding fresh.
             try? FileManager.default.removeItem(atPath: appState.dbPath)

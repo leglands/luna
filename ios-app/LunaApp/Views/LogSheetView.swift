@@ -297,6 +297,7 @@ struct LogSheetView: View {
 
         do {
             try engine.logDay(log: log)
+            ICloudSyncService.shared.logDidWrite(log)
             clearDraft()
             let generator = UIImpactFeedbackGenerator(style: .medium)
             generator.impactOccurred()
@@ -313,6 +314,7 @@ struct LogSheetView: View {
                 // Undo: restore previous log or delete if new
                 if let prev = savedPreviousLog {
                     try? engine.logDay(log: prev)
+                    ICloudSyncService.shared.logDidWrite(prev)
                 }
                 // Refresh cycle data after undo
                 Task { await appState.refreshCycleData() }

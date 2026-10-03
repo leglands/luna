@@ -12,9 +12,12 @@
 		1B8534F17127E1FA126FCFA4 /* LunaCrossPromoRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33558C33CD2D82B11A19E55B /* LunaCrossPromoRules.swift */; };
 		30189D89929D376BD8EEFAD0 /* LunaIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC92CA309F3E3E1B491B953 /* LunaIcons.swift */; };
 		37E3A763ECFE346CF20F3E49 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EA5A8EBE534FB7AD16159C /* HealthKitManager.swift */; };
+		3D86D5DC6DB50257B52B6C86 /* Localizable.xcstrings.bak-20260927 in Resources */ = {isa = PBXBuildFile; fileRef = DF2F65C9C4722DFE068106EA /* Localizable.xcstrings.bak-20260927 */; };
 		403BDA1F6BB3BCC55766BA3A /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 43346E56BE908EDFB76E32C2 /* Localizable.xcstrings */; };
+		45A791D9465E18AE81E460E0 /* Info.plist.bak-20260927 in Resources */ = {isa = PBXBuildFile; fileRef = 65B8BD2EFA1A154A7081823C /* Info.plist.bak-20260927 */; };
 		464711895FE40F3059C744F8 /* LifeDS in Frameworks */ = {isa = PBXBuildFile; productRef = 0B155D01319D6DA5219CCA83 /* LifeDS */; };
 		64DD10B597CB9F2A08466729 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7206D15DE48ECED3F80F9E /* KeychainService.swift */; };
+		68B078C1BA1940C1CF780FBA /* ICloudSyncServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 542FA130CD03B8766A03CD01 /* ICloudSyncServiceTests.swift */; };
 		6A1A4E3F68737A9153E99EAC /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE0A33431EF3DA3DF529CC6 /* NotificationManager.swift */; };
 		6D6147029D5E55E480A1B69E /* PregnancyLogSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6810FA093AD41D031AC57750 /* PregnancyLogSheet.swift */; };
 		72792192F33427A6ABF0168B /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 971DBB1CE53C346B5E17EF54 /* CalendarView.swift */; };
@@ -78,8 +81,10 @@
 		43346E56BE908EDFB76E32C2 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		452F7FFADD478A7E635F6835 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		52623540E048FE13A4563A21 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		542FA130CD03B8766A03CD01 /* ICloudSyncServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICloudSyncServiceTests.swift; sourceTree = "<group>"; };
 		55968AE93644270FC62BDB1F /* LunaApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LunaApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B7206D15DE48ECED3F80F9E /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		65B8BD2EFA1A154A7081823C /* Info.plist.bak-20260927 */ = {isa = PBXFileReference; path = "Info.plist.bak-20260927"; sourceTree = "<group>"; };
 		6810FA093AD41D031AC57750 /* PregnancyLogSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PregnancyLogSheet.swift; sourceTree = "<group>"; };
 		6878AAC48B5D9B0BAEBC5063 /* LockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockView.swift; sourceTree = "<group>"; };
 		69FCE9EBD23B9D56B8DFE644 /* LunaServicesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LunaServicesTests.swift; sourceTree = "<group>"; };
@@ -99,6 +104,7 @@
 		B7F9EB795651E29F4D40C3CE /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
 		BA17C955E1B7D2F645802165 /* LogSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogSheetView.swift; sourceTree = "<group>"; };
 		CF4F1D530B13DF5FA2F7E06E /* UserJourneyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserJourneyTests.swift; sourceTree = "<group>"; };
+		DF2F65C9C4722DFE068106EA /* Localizable.xcstrings.bak-20260927 */ = {isa = PBXFileReference; path = "Localizable.xcstrings.bak-20260927"; sourceTree = "<group>"; };
 		E1ECB9C85367EBC48EA53298 /* LunaUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = LunaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7A43E2CEB6A69A63C670D03 /* LunaTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LunaTokens.swift; sourceTree = "<group>"; };
 		F1C53C3CCE6D2D2A65C73E41 /* luna_core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = luna_core.swift; sourceTree = "<group>"; };
@@ -210,6 +216,7 @@
 			children = (
 				A294C1FC2A4EC6EBF1A91E8E /* Assets.xcassets */,
 				9409D2A3AD2210B433B1170F /* Info.plist */,
+				65B8BD2EFA1A154A7081823C /* Info.plist.bak-20260927 */,
 				100A0AECDEFF3DEA7303F3BB /* LunaApp.entitlements */,
 				914FFDD94F8F144CC9770FE4 /* LunaApp.swift */,
 				8448DAD08E1716509BAE559A /* PrivacyInfo.xcprivacy */,
@@ -229,6 +236,7 @@
 			children = (
 				452F7FFADD478A7E635F6835 /* Assets.xcassets */,
 				43346E56BE908EDFB76E32C2 /* Localizable.xcstrings */,
+				DF2F65C9C4722DFE068106EA /* Localizable.xcstrings.bak-20260927 */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -246,6 +254,7 @@
 		F0658E8A4BAA3825FA9EA3F5 /* LunaTests */ = {
 			isa = PBXGroup;
 			children = (
+				542FA130CD03B8766A03CD01 /* ICloudSyncServiceTests.swift */,
 				69FCE9EBD23B9D56B8DFE644 /* LunaServicesTests.swift */,
 				06D7F716B081BDC93C413177 /* LunaTests.swift */,
 			);
@@ -356,8 +365,54 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
+				am,
+				ar,
+				bg,
+				bn,
+				ca,
+				cs,
+				da,
+				de,
+				el,
 				en,
+				es,
+				"es-MX",
+				et,
+				fa,
+				fi,
 				fr,
+				"fr-CA",
+				he,
+				hi,
+				hr,
+				hu,
+				id,
+				it,
+				ja,
+				ko,
+				lt,
+				lv,
+				mk,
+				ms,
+				nb,
+				nl,
+				pl,
+				"pt-BR",
+				"pt-PT",
+				ro,
+				ru,
+				sk,
+				sl,
+				sq,
+				sr,
+				sv,
+				th,
+				tr,
+				uk,
+				ur,
+				vi,
+				"zh-Hans",
+				"zh-Hant",
 			);
 			mainGroup = 384A6FC407F9048C66A7E665;
 			minimizedProjectReferenceProxies = 1;
@@ -383,7 +438,9 @@
 			files = (
 				F34F3B1E524D99C8E67177D5 /* Assets.xcassets in Resources */,
 				EB0026149A5F76602AF9637C /* Assets.xcassets in Resources */,
+				45A791D9465E18AE81E460E0 /* Info.plist.bak-20260927 in Resources */,
 				403BDA1F6BB3BCC55766BA3A /* Localizable.xcstrings in Resources */,
+				3D86D5DC6DB50257B52B6C86 /* Localizable.xcstrings.bak-20260927 in Resources */,
 				E90D12F906C66CD9279B09BC /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -435,6 +492,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68B078C1BA1940C1CF780FBA /* ICloudSyncServiceTests.swift in Sources */,
 				8C2BDD2F02B6E7C559F0C5FE /* LunaServicesTests.swift in Sources */,
 				EF89EB700260C49A84E4DC7F /* LunaTests.swift in Sources */,
 			);

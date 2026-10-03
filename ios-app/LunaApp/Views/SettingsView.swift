@@ -37,7 +37,8 @@ struct SettingsView: View {
     @State private var healthKitEnabled: Bool = false
     @State private var showShareSheet: Bool = false
     @State private var shareItems: [Any] = []
-    @State private var iCloudSyncEnabled: Bool = UserDefaults.standard.bool(forKey: "icloud_sync_enabled")
+    @State private var iCloudSyncEnabled: Bool = UserDefaults.standard.bool(forKey: ICloudSyncService.enabledKey)
+    @ObservedObject private var cloud = ICloudSyncService.shared
 
     @State private var showICloudConfirm: Bool = false
     @StateObject private var themeManager = ThemeManager()
@@ -289,13 +290,13 @@ struct SettingsView: View {
             }
             .confirmationDialog("confirm_icloud_sync_title", isPresented: $showICloudConfirm, titleVisibility: .visible) {
                 Button("confirm_icloud_sync_confirm") {
-                    UserDefaults.standard.set(true, forKey: "icloud_sync_enabled")
+                    UserDefaults.standard.set(true, forKey: ICloudSyncService.enabledKey)
                     Task {
                         let available = await ICloudSyncService.shared.checkAccountStatus()
                         if !available {
                             await MainActor.run { iCloudSyncEnabled = false }
                         } else {
-                            await ICloudSyncService.shared.performFullSync(engine: appState.engine, appState: appState)
+                            await cloud.performFullSync(engine: appState.engine)
                         }
                     }
                 }
@@ -327,11 +328,11 @@ struct SettingsView: View {
     }
 
     private var iCloudStatusText: String {
-        switch ICloudSyncService.shared.syncStatus {
+        switch cloud.syncStatus {
         case .idle: return NSLocalizedString("settings_icloud_status_idle", comment: "")
         case .syncing: return NSLocalizedString("settings_icloud_status_syncing", comment: "")
         case .success:
-            if let date = ICloudSyncService.shared.lastSyncDate {
+            if let date = cloud.lastSyncDate {
                 let fmt = RelativeDateTimeFormatter()
                 fmt.unitsStyle = .short
                 return fmt.localizedString(for: date, relativeTo: Date())
@@ -389,6 +390,10 @@ struct SettingsView: View {
                 }
                 appState.isVaultOpen = false
                 appState.engine = nil
+                // Le cloud contient peut-être des records (sync opt-in) : on les purge aussi.
+                if UserDefaults.standard.bool(forKey: ICloudSyncService.enabledKey) || ICloudSyncService.shared.hasSyncedEver {
+                    Task { await ICloudSyncService.shared.deleteAllRecords() }
+                }
                 UIAccessibility.post(
                     notification: .announcement,
                     argument: NSLocalizedString("panic_wipe_done_a11y", comment: "")
@@ -446,6 +451,7 @@ struct ProfileEditView: View {
             ToolbarItem(placement: .confirmationAction) {
                 Button("save_button") {
                     appState.userName = name
+                    ICloudSyncService.shared.profileDidChange(engine: appState.engine)
                     dismiss()
                 }
             }
@@ -479,6 +485,7 @@ struct HealthKitSettingsView: View {
                                 healthSync: newVal
                             )
                             try? engine.setUserProfile(profile: profile)
+                            ICloudSyncService.shared.profileDidChange(engine: engine)
                         }
                     }
                 ))

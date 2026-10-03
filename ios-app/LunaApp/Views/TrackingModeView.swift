@@ -163,6 +163,7 @@ struct TrackingModeView: View {
                 profile.edd = nil
             }
             try? engine.setUserProfile(profile: profile)
+            ICloudSyncService.shared.profileDidChange(engine: engine)
         }
     }
 }
