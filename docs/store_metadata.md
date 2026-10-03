@@ -20,13 +20,14 @@ Current truthful product claim: **English cross-platform, plus French on iOS**.
 |-------|-------|
 | **App name** | LUNA — Cycle & Wellness |
 | **Subtitle (iOS)** | Private. Local. Yours. |
-| **Bundle ID (iOS)** | app.luna |
-| **Package (Android)** | app.luna |
+| **Bundle ID (iOS)** | com.macaron.luna |
+| **Package (Android)** | com.macaron.luna |
 | **Category** | Health & Fitness |
 | **Sub-category** | Women's Health |
 | **Age rating** | 12+ (iOS) / Teen (Android) |
 | **Version** | 0.1.0 (build 1) |
-| **Privacy Policy URL** | https://luna-health.github.io/luna/privacy |
+| **Privacy Policy URL** | https://luna.macaron-software.com/en/privacy/ (66 languages: /<lang>/privacy/) |
+| **Support URL** | https://luna.macaron-software.com/en/support/ |
 
 ---
 
