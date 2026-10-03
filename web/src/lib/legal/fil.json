@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Patakaran sa Pagkapribado",
+    "meta_title": "Patakaran sa Pagkapribado - Luna",
+    "summary_device": "Nananatili sa iyong device ang lahat ng datos ng iyong cycle: walang account, walang server.",
+    "summary_no_sell": "Hindi namin kailanman kinokolekta, ibinebenta, o ibinabahagi ang iyong personal na datos.",
+    "summary_sync": "Anumang backup na gawin mo ay naka-encrypt bago ito umalis sa iyong device: hindi namin ito mababasa.",
+    "summary_delete": "Burahin ang iyong datos sa Mga Setting, o i-delete ang app, para permanenteng mabura ang lahat.",
+    "full": "Buong patakaran",
+    "updated": "Huling na-update: Oktubre 2026",
+    "local_first": "Ang Luna ay isang local-first na aplikasyon. Ang personal na datos ay nakaimbak lamang sa iyong device: sa naka-encrypt na lokal na database sa iOS at Android (SQLCipher) at sa naka-encrypt na browser storage sa web (AES-256-GCM). Walang account, at wala kahit anong kaalaman ang Macaron Software sa iyong datos.",
+    "no_trackers": "Walang cookies, analytics, advertising, o third-party tracker na ginagamit.",
+    "contact": "Makipag-ugnayan:"
+  },
+  "terms": {
+    "title": "Mga Tuntunin ng Serbisyo",
+    "meta_title": "Mga Tuntunin ng Serbisyo - Luna",
+    "point_tool": "Ang Luna ay isang personal na kasangkapan sa pagsubaybay ng cycle: hindi ito kontraseptibo at hindi medikal na payo.",
+    "point_data": "Sa iyo ang iyong datos; wala kaming access dito.",
+    "point_free": "Libreng gamitin; hindi kailangan ng subscription.",
+    "point_open_source": "Open source sa ilalim ng mga lisensyang MIT at Apache-2.0.",
+    "full": "Buong tuntunin",
+    "updated": "Huling na-update: Oktubre 2026 - Bersyon 1.0",
+    "body_no_advice": "Hindi nagbibigay ang Luna ng medikal na payo, diagnosis, o paggamot, at hindi ito paraan ng pagpigil sa pagbubuntis. Palaging kumonsulta sa isang kwalipikadong propesyonal sa kalusugan para sa mga medikal na alalahanin.",
+    "body_as_is": "Ibinibigay ang app kung ano ito, walang mga warranty. Maaaring hindi tumpak ang mga hula sa cycle at mga pagtatantya ng fertile window; hindi mananagot ang Macaron Software sa mga desisyong ginawa batay sa impormasyong naitala sa app.",
+    "license": "Lisensya:"
+  },
+  "support": {
+    "title": "Suporta",
+    "help": "Kailangan mo ng tulong?",
+    "contact": "Makipag-ugnayan sa amin",
+    "response_time": "Karaniwang sumasagot kami sa loob ng 24 na oras."
+  },
+  "lang_name": "fil"
+}

@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "隐私政策",
+    "meta_title": "隐私政策 - Luna",
+    "summary_device": "您的所有周期数据都保存在您的设备上，无需账户，无需服务器。",
+    "summary_no_sell": "我们绝不收集、出售或分享您的个人数据。",
+    "summary_sync": "您创建的任何备份在离开设备前都会加密，我们无法读取。",
+    "summary_delete": "在设置中清除数据，或删除应用，即可永久抹除全部数据。",
+    "full": "完整政策",
+    "updated": "最后更新：2026年10月",
+    "local_first": "Luna 是一款本地优先（local-first）应用。个人数据仅存储在您的设备上：iOS 和 Android 上存储在加密的本地数据库（SQLCipher）中，网页端存储在加密的浏览器存储（AES-256-GCM）中。没有账户，Macaron Software 对您的数据一无所知。",
+    "no_trackers": "不使用任何 Cookie、分析、广告或第三方跟踪器。",
+    "contact": "联系方式："
+  },
+  "terms": {
+    "title": "服务条款",
+    "meta_title": "服务条款 - Luna",
+    "point_tool": "Luna 是一款个人周期追踪工具，不是避孕手段，也不提供医疗建议。",
+    "point_data": "您的数据属于您，我们无法访问。",
+    "point_free": "免费使用，无需订阅。",
+    "point_open_source": "基于 MIT 和 Apache-2.0 许可证开源。",
+    "full": "完整条款",
+    "updated": "最后更新：2026年10月 - 版本 1.0",
+    "body_no_advice": "Luna 不提供医疗建议、诊断或治疗，也不是避孕方法。如有医疗问题，请务必咨询合格的医疗专业人员。",
+    "body_as_is": "本应用按现状提供，不附带任何保证。周期预测和易孕期估算可能不准确；Macaron Software 对基于应用内记录信息所作出的决定不承担责任。",
+    "license": "许可证："
+  },
+  "support": {
+    "title": "支持",
+    "help": "需要帮助？",
+    "contact": "联系我们",
+    "response_time": "我们通常在 24 小时内回复。"
+  },
+  "lang_name": "zh"
+}

@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Privacy Policy",
+    "meta_title": "Privacy Policy - Luna",
+    "summary_device": "All your cycle data stays on your device - no account, no server.",
+    "summary_no_sell": "We never collect, sell, or share your personal data.",
+    "summary_sync": "Any backup you make is encrypted before it leaves your device - we cannot read it.",
+    "summary_delete": "Wipe your data in Settings, or delete the app, to erase everything permanently.",
+    "full": "Full policy",
+    "updated": "Last updated: October 2026",
+    "local_first": "Luna is a local-first application. Personal data is stored exclusively on your device: in an encrypted local database on iOS and Android (SQLCipher) and in encrypted browser storage on the web (AES-256-GCM). There is no account, and Macaron Software holds zero knowledge of your data.",
+    "no_trackers": "No cookies, analytics, advertising, or third-party trackers are used.",
+    "contact": "Contact:"
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "meta_title": "Terms of Service - Luna",
+    "point_tool": "Luna is a personal cycle-tracking tool - not a contraceptive, not medical advice.",
+    "point_data": "Your data belongs to you; we have no access to it.",
+    "point_free": "Free to use; no subscription required.",
+    "point_open_source": "Open source under the MIT and Apache-2.0 licenses.",
+    "full": "Full terms",
+    "updated": "Last updated: October 2026 - Version 1.0",
+    "body_no_advice": "Luna does not provide medical advice, diagnosis, or treatment, and is not a method of contraception. Always consult a qualified healthcare provider for medical concerns.",
+    "body_as_is": "The app is provided as-is without warranties. Cycle predictions and fertile-window estimates may be inaccurate; Macaron Software is not liable for decisions made based on information recorded in the app.",
+    "license": "License:"
+  },
+  "support": {
+    "title": "Support",
+    "help": "Need help?",
+    "contact": "Contact us",
+    "response_time": "We usually reply within 24 hours."
+  },
+  "lang_name": "en"
+}

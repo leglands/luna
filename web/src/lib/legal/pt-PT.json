@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Política de Privacidade",
+    "meta_title": "Política de Privacidade - Luna",
+    "summary_device": "Todos os dados do seu ciclo ficam no seu dispositivo: sem conta, sem servidor.",
+    "summary_no_sell": "Nunca recolhemos, vendemos ou partilhamos os seus dados pessoais.",
+    "summary_sync": "Qualquer cópia de segurança que faça é encriptada antes de sair do seu dispositivo. Não conseguimos lê-la.",
+    "summary_delete": "Apague os seus dados nas Definições, ou elimine a aplicação, para apagar tudo permanentemente.",
+    "full": "Política completa",
+    "updated": "Última atualização: outubro de 2026",
+    "local_first": "A Luna é uma aplicação local-first. Os dados pessoais são armazenados exclusivamente no seu dispositivo: numa base de dados local encriptada no iOS e no Android (SQLCipher) e em armazenamento encriptado do navegador na web (AES-256-GCM). Não existe conta, e a Macaron Software não tem qualquer conhecimento dos seus dados.",
+    "no_trackers": "Não são utilizados cookies, análises, publicidade ou rastreadores de terceiros.",
+    "contact": "Contacto:"
+  },
+  "terms": {
+    "title": "Termos de Serviço",
+    "meta_title": "Termos de Serviço - Luna",
+    "point_tool": "A Luna é uma ferramenta pessoal de acompanhamento do ciclo; não é um contracetivo nem aconselhamento médico.",
+    "point_data": "Os seus dados pertencem-lhe; não temos acesso a eles.",
+    "point_free": "De utilização gratuita; não é necessária subscrição.",
+    "point_open_source": "Código aberto ao abrigo das licenças MIT e Apache-2.0.",
+    "full": "Termos completos",
+    "updated": "Última atualização: outubro de 2026 - Versão 1.0",
+    "body_no_advice": "A Luna não fornece aconselhamento médico, diagnóstico ou tratamento e não é um método contracetivo. Consulte sempre um profissional de saúde qualificado para questões médicas.",
+    "body_as_is": "A aplicação é fornecida tal como está, sem garantias. As previsões do ciclo e as estimativas da janela fértil podem ser imprecisas; a Macaron Software não é responsável por decisões tomadas com base em informações registadas na aplicação.",
+    "license": "Licença:"
+  },
+  "support": {
+    "title": "Apoio",
+    "help": "Precisa de ajuda?",
+    "contact": "Contacte-nos",
+    "response_time": "Respondemos habitualmente no prazo de 24 horas."
+  },
+  "lang_name": "pt-PT"
+}

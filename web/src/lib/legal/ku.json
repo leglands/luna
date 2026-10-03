@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Polîtîkaya Nepeniyê",
+    "meta_title": "Polîtîkaya Nepeniyê - Luna",
+    "summary_device": "Hemû daneyên çerxa we li ser amûra we dimînin - bê hesab, bê server.",
+    "summary_no_sell": "Em qet daneyên we yên kesane berhev nakin, nefiroşin û parve nakin.",
+    "summary_sync": "Her kopiyeke hilanînê ya ku hûn çêdikin, berî ku ji amûra we derkeve tê şîfrekirin - em nikarin wê bixwînin.",
+    "summary_delete": "Daneyên xwe di Mîhengan de jê bibin, an sepanê jê bibin, da ku her tişt bi awayekî mayînde were jêbirin.",
+    "full": "Polîtîkaya tevahî",
+    "updated": "Nûvekirina dawî: Cotmeh 2026",
+    "local_first": "Luna sepanek local-first e. Daneyên kesane tenê li ser amûra we têne hilanîn: di databasa herêmî ya şîfrekirî de li ser iOS û Android (SQLCipher) û di hilanîna gerokê ya şîfrekirî de li ser webê (AES-256-GCM). Hesab tune ye, û Macaron Software tu zanyariyek li ser daneyên we nîne.",
+    "no_trackers": "Çerez, analîtîk, reklam an şopînerên partiya sêyem nayên bikaranîn.",
+    "contact": "Têkilî:"
+  },
+  "terms": {
+    "title": "Mercên Karûbarê",
+    "meta_title": "Mercên Karûbarê - Luna",
+    "point_tool": "Luna amûrek kesane ya şopandina çerxa mehane ye - ne rêbazeke pêşîgirtina ji ducaniyê ye û ne şîreta bijîjkî ye.",
+    "point_data": "Daneyên we aîdî we ne; em nikarin bigihîjin wan.",
+    "point_free": "Bikaranîn belaş e; abonetî nayê xwestin.",
+    "point_open_source": "Çavkaniya vekirî di bin lîsansên MIT û Apache-2.0 de.",
+    "full": "Mercên tevahî",
+    "updated": "Nûvekirina dawî: Cotmeh 2026 - Versiyon 1.0",
+    "body_no_advice": "Luna şîreta bijîjkî, teşhîs an dermankirinê pêşkêş nake û rêbazeke pêşîgirtina ji ducaniyê nîne. Ji bo pirsgirêkên bijîjkî her tim bi pisporê tenduristiyê yê jêhatî re şêwir bikin.",
+    "body_as_is": "Sepan wekî xwe, bê garantî tê pêşkêşkirin. Pêşbîniyên çerxê û texmînên heyama berdar dibe ku ne rast bin; Macaron Software ji bo biryarên ku li ser bingeha agahdariya tomarkirî di sepanê de têne girtin berpirsiyar nîne.",
+    "license": "Lîsans:"
+  },
+  "support": {
+    "title": "Piştgirî",
+    "help": "Alîkarî lazim e?",
+    "contact": "Bi me re têkilî daynin",
+    "response_time": "Em bi gelemperî di nav 24 saetan de bersivê didin."
+  },
+  "lang_name": "ku"
+}

@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Ìlànà Àṣírí",
+    "meta_title": "Ìlànà Àṣírí - Luna",
+    "summary_device": "Gbogbo dátà ìyípo oṣù rẹ wà lórí ẹ̀rọ rẹ - kò sí àkàǹtì, kò sí sáfà.",
+    "summary_no_sell": "A kì í ṣàkójọ, a kì í tà, a kì í sì pín dátà ara ẹni rẹ rárá.",
+    "summary_sync": "Gbogbo ẹ̀dà ìpamọ́ (backup) tí o bá ṣe ni a fi ìkọ̀kọ̀ bo kí ó tó kúrò lórí ẹ̀rọ rẹ - a kò lè kà á.",
+    "summary_delete": "Nu dátà rẹ kúrò nínú Ètò, tàbí yọ app náà kúrò, láti nu gbogbo rẹ̀ kúrò pátápátá.",
+    "full": "Ìlànà kíkún",
+    "updated": "Àtúnṣe tí ó kẹ́yìn: Oṣù Kẹwàá 2026",
+    "local_first": "Luna jẹ́ app kan tí ó dá lórí ìpamọ́ ní ẹ̀rọ rẹ fúnra rẹ̀ (local-first). Dátà ara ẹni wà lórí ẹ̀rọ rẹ nìkan: nínú ibi-ìpamọ́ dátà tí a fi ìkọ̀kọ̀ bo lórí iOS àti Android (SQLCipher), àti nínú ibi-ìpamọ́ browser tí a fi ìkọ̀kọ̀ bo lórí wẹ́ẹ̀bù (AES-256-GCM). Kò sí àkàǹtì kan, Macaron Software kò sì ní ìmọ̀ kankan nípa dátà rẹ.",
+    "no_trackers": "A kì í lo kúkì, analytics, ìpolówó ọjà, tàbí àwọn tracker ẹlẹ́ẹ̀kẹta.",
+    "contact": "Ìbáṣepọ̀:"
+  },
+  "terms": {
+    "title": "Àwọn Ìlànà Iṣẹ́",
+    "meta_title": "Àwọn Ìlànà Iṣẹ́ - Luna",
+    "point_tool": "Luna jẹ́ ohun èlò ìtọpinpin ìyípo oṣù fún ara ẹni - kì í ṣe oògùn ìdínà oyún, kì í sì ṣe ìmọ̀ràn ìṣègùn.",
+    "point_data": "Dátà rẹ jẹ́ tìẹ; a kò ní ànfàní sí i.",
+    "point_free": "Lílò rẹ̀ jẹ́ ọ̀fẹ́; kò sí ìsanwó oṣooṣù tí a nílò.",
+    "point_open_source": "Open source lábẹ́ àwọn ìwé àṣẹ MIT àti Apache-2.0.",
+    "full": "Àwọn ìlànà kíkún",
+    "updated": "Àtúnṣe tí ó kẹ́yìn: Oṣù Kẹwàá 2026 - Ẹ̀dà 1.0",
+    "body_no_advice": "Luna kò pèsè ìmọ̀ràn ìṣègùn, ìwádìí àrùn, tàbí ìtọ́jú, kì í sì ṣe ọ̀nà ìdínà oyún kan. Máa gbà ìmọ̀ràn lọ́dọ̀ oníṣẹ́ ìlera tí ó tóótun nígbà gbogbo fún àwọn àníyàn ìlera.",
+    "body_as_is": "A pèsè app náà bí ó ti rí láìsí àwọn ìdánilójú. Àwọn àsọtẹ́lẹ̀ ìyípo oṣù àti ìṣirò àkókò ìlóyún lè jẹ́ àìpé; Macaron Software kò jẹ̀bi àwọn ìpinnu tí a ṣe lórí ìsọfúnni tí a kọ sínú app náà.",
+    "license": "Ìwé àṣẹ:"
+  },
+  "support": {
+    "title": "Ìtìlẹ́yìn",
+    "help": "Ṣé o nílò ìrànlọ́wọ́?",
+    "contact": "Kàn sí wa",
+    "response_time": "Ní ọ̀pọ̀ ìgbà, a máa ń dáhùn láàárín wákàtí 24."
+  },
+  "lang_name": "yo"
+}

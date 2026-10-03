@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Adatvédelmi szabályzat",
+    "meta_title": "Adatvédelmi szabályzat - Luna",
+    "summary_device": "Minden ciklusadata a készülékén marad - nincs fiók, nincs szerver.",
+    "summary_no_sell": "Soha nem gyűjtjük, nem adjuk el és nem osztjuk meg az Ön személyes adatait.",
+    "summary_sync": "Az Ön által készített biztonsági mentés a készülék elhagyása előtt titkosításra kerül - nem tudjuk elolvasni.",
+    "summary_delete": "Törölje adatait a beállításokban, vagy törölje az alkalmazást, hogy minden véglegesen törlődjön.",
+    "full": "Teljes szabályzat",
+    "updated": "Utolsó frissítés: 2026. október",
+    "local_first": "A Luna helyi tárolásra épülő (local-first) alkalmazás. A személyes adatokat kizárólag a készülékén tárolja: iOS-en és Androidon titkosított helyi adatbázisban (SQLCipher), a weben pedig titkosított böngészőtárhelyen (AES-256-GCM). Nincs fiók, és a Macaron Software semmilyen ismerettel nem rendelkezik az Ön adatairól.",
+    "no_trackers": "Nem használunk sütiket, analitikát, reklámokat vagy harmadik féltől származó nyomkövetőket.",
+    "contact": "Kapcsolat:"
+  },
+  "terms": {
+    "title": "Használati feltételek",
+    "meta_title": "Használati feltételek - Luna",
+    "point_tool": "A Luna személyes cikluskövető eszköz - nem fogamzásgátló és nem orvosi tanács.",
+    "point_data": "Az adatai Önhöz tartoznak; hozzáférésünk nincs hozzájuk.",
+    "point_free": "Ingyenesen használható; előfizetés nem szükséges.",
+    "point_open_source": "Nyílt forráskódú, MIT és Apache-2.0 licencek alatt.",
+    "full": "Teljes feltételek",
+    "updated": "Utolsó frissítés: 2026. október - 1.0 verzió",
+    "body_no_advice": "A Luna nem nyújt orvosi tanácsot, diagnózist vagy kezelést, és nem fogamzásgátlási módszer. Egészségügyi aggályok esetén mindig forduljon szakképzett egészségügyi szolgáltatóhoz.",
+    "body_as_is": "Az alkalmazás jelen formájában, garancia nélkül kerül biztosításra. A ciklus-előrejelzések és a termékeny időszakra vonatkozó becslések pontatlanok lehetnek; a Macaron Software nem felel az alkalmazásban rögzített információk alapján hozott döntésekért.",
+    "license": "Licenc:"
+  },
+  "support": {
+    "title": "Támogatás",
+    "help": "Segítségre van szüksége?",
+    "contact": "Kapcsolatfelvétel",
+    "response_time": "Általában 24 órán belül válaszolunk."
+  },
+  "lang_name": "hu"
+}

@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "隱私權政策",
+    "meta_title": "隱私權政策 - Luna",
+    "summary_device": "您的所有週期資料都保存在您的裝置上，無需帳戶，無需伺服器。",
+    "summary_no_sell": "我們絕不收集、出售或分享您的個人資料。",
+    "summary_sync": "您建立的任何備份在離開裝置前都會加密，我們無法讀取。",
+    "summary_delete": "在設定中清除資料，或刪除應用程式，即可永久抹除全部資料。",
+    "full": "完整政策",
+    "updated": "最後更新：2026年10月",
+    "local_first": "Luna 是一款本機優先（local-first）應用程式。個人資料僅儲存在您的裝置上：iOS 與 Android 上儲存在加密的本機資料庫（SQLCipher）中，網頁端儲存在加密的瀏覽器儲存空間（AES-256-GCM）中。沒有帳戶，Macaron Software 對您的資料一無所知。",
+    "no_trackers": "不使用任何 Cookie、分析、廣告或第三方追蹤器。",
+    "contact": "聯絡方式："
+  },
+  "terms": {
+    "title": "服務條款",
+    "meta_title": "服務條款 - Luna",
+    "point_tool": "Luna 是一款個人週期追蹤工具，不是避孕手段，也不提供醫療建議。",
+    "point_data": "您的資料屬於您，我們無法存取。",
+    "point_free": "免費使用，無需訂閱。",
+    "point_open_source": "依 MIT 與 Apache-2.0 授權條款開源。",
+    "full": "完整條款",
+    "updated": "最後更新：2026年10月 - 版本 1.0",
+    "body_no_advice": "Luna 不提供醫療建議、診斷或治療，也不是避孕方法。如有醫療問題，請務必諮詢合格的醫療專業人員。",
+    "body_as_is": "本應用程式依現狀提供，不附帶任何保證。週期預測與易孕期估算可能不準確；Macaron Software 對基於應用程式內記錄資訊所作出的決定不承擔責任。",
+    "license": "授權條款："
+  },
+  "support": {
+    "title": "支援",
+    "help": "需要協助嗎？",
+    "contact": "聯絡我們",
+    "response_time": "我們通常在 24 小時內回覆。"
+  },
+  "lang_name": "zh-TW"
+}

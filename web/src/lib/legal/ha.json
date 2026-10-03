@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Manufar Sirri",
+    "meta_title": "Manufar Sirri - Luna",
+    "summary_device": "Duk bayanan al'adarka suna kasancewa a na'urarka: babu asusu, babu sabar.",
+    "summary_no_sell": "Ba mu taɓa tattara, sayar da, ko raba bayananka na sirri ba.",
+    "summary_sync": "Duk kwafin ajiyar da ka yi ana yin encryption da shi kafin ya bar na'urarka: ba za mu iya karanta shi ba.",
+    "summary_delete": "Goge bayananka a Saituna, ko share app ɗin, domin goge komai har abada.",
+    "full": "Cikakken manufa",
+    "updated": "Sabuntawa ta ƙarshe: Oktoba 2026",
+    "local_first": "Luna app ne da ke aiki a cikin na'ura da farko (local-first). Ana adana bayanan sirri a na'urarka kaɗai: a cikin rumbun ajiya na gida mai encryption (SQLCipher) a iOS da Android, da kuma a cikin ma'ajiyar burauza mai encryption a yanar gizo (AES-256-GCM). Babu asusu, kuma Macaron Software ba shi da wani sani game da bayananka.",
+    "no_trackers": "Ba a amfani da cookies, analytics, tallace-tallace, ko masu bin diddigin ɓangare na uku ba.",
+    "contact": "Tuntuɓi mu:"
+  },
+  "terms": {
+    "title": "Sharuɗɗan Sabis",
+    "meta_title": "Sharuɗɗan Sabis - Luna",
+    "point_tool": "Luna kayan aiki ne na sirri don bin diddigin al'ada: ba rigakafin ciki ba ne, ba kuma shawara ta likita ba.",
+    "point_data": "Bayananka naka ne; ba mu da hanyar samun su.",
+    "point_free": "Kyauta don amfani; ba a buƙatar biyan kuɗi na wata-wata ba.",
+    "point_open_source": "Buɗaɗɗen tushe (open source) ƙarƙashin lasisin MIT da Apache-2.0.",
+    "full": "Cikakken sharuɗɗa",
+    "updated": "Sabuntawa ta ƙarshe: Oktoba 2026 - Sigar 1.0",
+    "body_no_advice": "Luna ba ya bayar da shawara ta likita, ganewar asali, ko magani, kuma ba hanya ce ta rigakafin ciki ba. Koyaushe tuntuɓi ƙwararren likita game da matsalolin lafiya.",
+    "body_as_is": "Ana bayar da app ɗin yadda yake, ba tare da wani garanti ba. Hasashen al'ada da kiyasin lokacin haihuwa na iya zama marasa daidai; Macaron Software ba shi da alhakin shawarwarin da aka yanke bisa bayanan da aka rubuta a cikin app ɗin.",
+    "license": "Lasisin:"
+  },
+  "support": {
+    "title": "Taimako",
+    "help": "Kana buƙatar taimako?",
+    "contact": "Tuntuɓe mu",
+    "response_time": "Yawanci muna amsa cikin sa'o'i 24."
+  },
+  "lang_name": "ha"
+}

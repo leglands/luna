@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Kebijakan Privasi",
+    "meta_title": "Kebijakan Privasi - Luna",
+    "summary_device": "Semua data siklus Anda tetap di perangkat Anda - tanpa akun, tanpa server.",
+    "summary_no_sell": "Kami tidak pernah mengumpulkan, menjual, atau membagikan data pribadi Anda.",
+    "summary_sync": "Cadangan apa pun yang Anda buat akan dienkripsi sebelum meninggalkan perangkat Anda - kami tidak dapat membacanya.",
+    "summary_delete": "Hapus data Anda di Pengaturan, atau hapus aplikasinya, untuk menghapus semuanya secara permanen.",
+    "full": "Kebijakan lengkap",
+    "updated": "Terakhir diperbarui: Oktober 2026",
+    "local_first": "Luna adalah aplikasi local-first. Data pribadi disimpan secara eksklusif di perangkat Anda: dalam basis data lokal terenkripsi di iOS dan Android (SQLCipher) serta dalam penyimpanan browser terenkripsi di web (AES-256-GCM). Tidak ada akun, dan Macaron Software tidak memiliki pengetahuan apa pun tentang data Anda.",
+    "no_trackers": "Tidak ada cookie, analitik, iklan, atau pelacak pihak ketiga yang digunakan.",
+    "contact": "Kontak:"
+  },
+  "terms": {
+    "title": "Ketentuan Layanan",
+    "meta_title": "Ketentuan Layanan - Luna",
+    "point_tool": "Luna adalah alat pelacak siklus pribadi - bukan alat kontrasepsi, bukan nasihat medis.",
+    "point_data": "Data Anda milik Anda; kami tidak memiliki akses ke dalamnya.",
+    "point_free": "Gratis digunakan; tidak perlu berlangganan.",
+    "point_open_source": "Sumber terbuka di bawah lisensi MIT dan Apache-2.0.",
+    "full": "Ketentuan lengkap",
+    "updated": "Terakhir diperbarui: Oktober 2026 - Versi 1.0",
+    "body_no_advice": "Luna tidak memberikan nasihat medis, diagnosis, atau pengobatan, dan bukan alat kontrasepsi. Selalu konsultasikan dengan penyedia layanan kesehatan yang berkualifikasi untuk masalah medis.",
+    "body_as_is": "Aplikasi disediakan apa adanya tanpa jaminan. Prediksi siklus dan perkiraan jendela subur bisa tidak akurat; Macaron Software tidak bertanggung jawab atas keputusan yang dibuat berdasarkan informasi yang dicatat di aplikasi.",
+    "license": "Lisensi:"
+  },
+  "support": {
+    "title": "Dukungan",
+    "help": "Butuh bantuan?",
+    "contact": "Hubungi kami",
+    "response_time": "Kami biasanya membalas dalam 24 jam."
+  },
+  "lang_name": "id"
+}

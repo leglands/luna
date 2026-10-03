@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Pravila privatnosti",
+    "meta_title": "Pravila privatnosti - Luna",
+    "summary_device": "Svi podaci o vašem ciklusu ostaju na vašem uređaju - bez računa, bez poslužitelja.",
+    "summary_no_sell": "Nikada ne prikupljamo, ne prodajemo niti dijelimo vaše osobne podatke.",
+    "summary_sync": "Svaka sigurnosna kopija koju izradite šifrira se prije nego što napusti vaš uređaj - ne možemo je pročitati.",
+    "summary_delete": "Obrišite svoje podatke u postavkama ili izbrišite aplikaciju kako biste sve trajno izbrisali.",
+    "full": "Cijela politika",
+    "updated": "Posljednje ažuriranje: listopad 2026",
+    "local_first": "Luna je aplikacija usmjerena na lokalnu pohranu. Osobni podaci pohranjuju se isključivo na vašem uređaju: u šifriranoj lokalnoj bazi podataka na iOS-u i Androidu (SQLCipher) te u šifriranoj pohrani preglednika na webu (AES-256-GCM). Račun ne postoji, a Macaron Software nema nikakav uvid u vaše podatke.",
+    "no_trackers": "Ne koriste se kolačići, analitika, oglašavanje ni alati za praćenje trećih strana.",
+    "contact": "Kontakt:"
+  },
+  "terms": {
+    "title": "Uvjeti korištenja",
+    "meta_title": "Uvjeti korištenja - Luna",
+    "point_tool": "Luna je osobni alat za praćenje ciklusa - nije kontracepcijsko sredstvo ni medicinski savjet.",
+    "point_data": "Vaši podaci pripadaju vama; mi nemamo pristup njima.",
+    "point_free": "Besplatno korištenje; pretplata nije potrebna.",
+    "point_open_source": "Otvoreni kod pod licencijama MIT i Apache-2.0.",
+    "full": "Svi uvjeti",
+    "updated": "Posljednje ažuriranje: listopad 2026 - Verzija 1.0",
+    "body_no_advice": "Luna ne pruža medicinske savjete, dijagnozu ni liječenje i nije metoda kontracepcije. Za zdravstvene nedoumice uvijek se obratite kvalificiranom zdravstvenom djelatniku.",
+    "body_as_is": "Aplikacija se pruža takva kakva jest, bez jamstava. Predviđanja ciklusa i procjene plodnog razdoblja mogu biti netočne; Macaron Software ne odgovara za odluke donesene na temelju podataka zabilježenih u aplikaciji.",
+    "license": "Licenca:"
+  },
+  "support": {
+    "title": "Podrška",
+    "help": "Trebate pomoć?",
+    "contact": "Kontaktirajte nas",
+    "response_time": "Obično odgovaramo u roku od 24 sata."
+  },
+  "lang_name": "hr"
+}

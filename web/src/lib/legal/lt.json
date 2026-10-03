@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Privatumo politika",
+    "meta_title": "Privatumo politika - Luna",
+    "summary_device": "Visi jūsų ciklo duomenys lieka jūsų įrenginyje - jokios paskyros, jokio serverio.",
+    "summary_no_sell": "Mes niekada nerenkame, neparduodame ir nesidalijame jūsų asmens duomenimis.",
+    "summary_sync": "Bet kokia jūsų daroma atsarginė kopija užšifruojama prieš paliekant jūsų įrenginį - mes negalime jos perskaityti.",
+    "summary_delete": "Ištrinkite duomenis nustatymuose arba ištrinkite programėlę, kad viskas būtų visam laikui ištrinta.",
+    "full": "Visa politika",
+    "updated": "Paskutinį kartą atnaujinta: 2026 m. spalis",
+    "local_first": "Luna yra vietinio apdorojimo (local-first) programėlė. Asmens duomenys saugomi išimtinai jūsų įrenginyje: užšifruotoje vietinėje duomenų bazėje iOS ir Android sistemose (SQLCipher) bei užšifruotoje naršyklės saugykloje žiniatinklyje (AES-256-GCM). Paskyros nėra, o Macaron Software neturi jokių žinių apie jūsų duomenis.",
+    "no_trackers": "Nenaudojami jokie slapukai, analizė, reklama ar trečiųjų šalių stebėjimo priemonės.",
+    "contact": "Kontaktai:"
+  },
+  "terms": {
+    "title": "Paslaugų teikimo sąlygos",
+    "meta_title": "Paslaugų teikimo sąlygos - Luna",
+    "point_tool": "Luna yra asmeninė ciklo stebėjimo priemonė - ne kontracepcijos priemonė ir ne medicininė konsultacija.",
+    "point_data": "Jūsų duomenys priklauso jums; mes neturime prieigos prie jų.",
+    "point_free": "Naudojimas nemokamas; prenumerata nereikalinga.",
+    "point_open_source": "Atvirojo kodo, pagal MIT ir Apache-2.0 licencijas.",
+    "full": "Visos sąlygos",
+    "updated": "Paskutinį kartą atnaujinta: 2026 m. spalis - versija 1.0",
+    "body_no_advice": "Luna neteikia medicininių patarimų, diagnozės ar gydymo ir nėra kontracepcijos būdas. Sveikatos klausimais visada kreipkitės į kvalifikuotą sveikatos priežiūros specialistą.",
+    "body_as_is": "Programėlė teikiama tokia, kokia yra, be jokių garantijų. Ciklo prognozės ir vaisingo lango įverčiai gali būti netikslūs; Macaron Software neatsako už sprendimus, priimtus remiantis programėlėje įrašyta informacija.",
+    "license": "Licencija:"
+  },
+  "support": {
+    "title": "Pagalba",
+    "help": "Reikia pagalbos?",
+    "contact": "Susisiekite su mumis",
+    "response_time": "Paprastai atsakome per 24 valandas."
+  },
+  "lang_name": "lt"
+}

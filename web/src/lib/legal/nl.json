@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Privacybeleid",
+    "meta_title": "Privacybeleid - Luna",
+    "summary_device": "Al je cyclusgegevens blijven op je apparaat: geen account, geen server.",
+    "summary_no_sell": "We verzamelen, verkopen of delen je persoonsgegevens nooit.",
+    "summary_sync": "Elke back-up die je maakt, wordt versleuteld voordat deze je apparaat verlaat. Wij kunnen deze niet lezen.",
+    "summary_delete": "Wis je gegevens in Instellingen, of verwijder de app, om alles permanent te wissen.",
+    "full": "Volledig beleid",
+    "updated": "Laatst bijgewerkt: oktober 2026",
+    "local_first": "Luna is een local-first-app. Persoonsgegevens worden uitsluitend op je apparaat opgeslagen: in een versleutelde lokale database op iOS en Android (SQLCipher) en in versleutelde browseropslag op het web (AES-256-GCM). Er is geen account en Macaron Software heeft geen enkele kennis van je gegevens.",
+    "no_trackers": "Er worden geen cookies, analytics, advertenties of trackers van derden gebruikt.",
+    "contact": "Contact:"
+  },
+  "terms": {
+    "title": "Servicevoorwaarden",
+    "meta_title": "Servicevoorwaarden - Luna",
+    "point_tool": "Luna is een persoonlijk hulpmiddel voor cyclusregistratie: geen anticonceptiemiddel en geen medisch advies.",
+    "point_data": "Je gegevens zijn van jou; wij hebben er geen toegang toe.",
+    "point_free": "Gratis te gebruiken; geen abonnement nodig.",
+    "point_open_source": "Open source onder de licenties MIT en Apache-2.0.",
+    "full": "Volledige voorwaarden",
+    "updated": "Laatst bijgewerkt: oktober 2026 - Versie 1.0",
+    "body_no_advice": "Luna geeft geen medisch advies, diagnose of behandeling en is geen anticonceptiemethode. Raadpleeg bij medische vragen altijd een bevoegde zorgverlener.",
+    "body_as_is": "De app wordt geleverd zoals deze is, zonder garanties. Cyclusvoorspellingen en schattingen van het vruchtbare venster kunnen onjuist zijn; Macaron Software is niet aansprakelijk voor beslissingen die worden genomen op basis van informatie die in de app is vastgelegd.",
+    "license": "Licentie:"
+  },
+  "support": {
+    "title": "Ondersteuning",
+    "help": "Hulp nodig?",
+    "contact": "Neem contact op",
+    "response_time": "We antwoorden meestal binnen 24 uur."
+  },
+  "lang_name": "nl"
+}

@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Dasar Privasi",
+    "meta_title": "Dasar Privasi - Luna",
+    "summary_device": "Semua data kitaran anda kekal pada peranti anda - tiada akaun, tiada pelayan.",
+    "summary_no_sell": "Kami tidak pernah mengumpul, menjual atau berkongsi data peribadi anda.",
+    "summary_sync": "Sebarang sandaran yang anda buat disulitkan sebelum meninggalkan peranti anda - kami tidak dapat membacanya.",
+    "summary_delete": "Hapuskan data anda dalam Tetapan, atau padamkan aplikasi, untuk memadamkan semuanya secara kekal.",
+    "full": "Dasar penuh",
+    "updated": "Kemas kini terakhir: Oktober 2026",
+    "local_first": "Luna ialah aplikasi local-first. Data peribadi disimpan secara eksklusif pada peranti anda: dalam pangkalan data tempatan yang disulitkan pada iOS dan Android (SQLCipher) dan dalam storan pelayar yang disulitkan di web (AES-256-GCM). Tiada akaun, dan Macaron Software tidak mempunyai sebarang pengetahuan tentang data anda.",
+    "no_trackers": "Tiada kuki, analitik, pengiklanan atau penjejak pihak ketiga digunakan.",
+    "contact": "Hubungi:"
+  },
+  "terms": {
+    "title": "Terma Perkhidmatan",
+    "meta_title": "Terma Perkhidmatan - Luna",
+    "point_tool": "Luna ialah alat penjejakan kitaran peribadi - bukan kontraseptif, bukan nasihat perubatan.",
+    "point_data": "Data anda milik anda; kami tiada akses kepadanya.",
+    "point_free": "Percuma untuk digunakan; tiada langganan diperlukan.",
+    "point_open_source": "Sumber terbuka di bawah lesen MIT dan Apache-2.0.",
+    "full": "Terma penuh",
+    "updated": "Kemas kini terakhir: Oktober 2026 - Versi 1.0",
+    "body_no_advice": "Luna tidak memberikan nasihat perubatan, diagnosis atau rawatan, dan bukan kaedah kontrasepsi. Sentiasa berunding dengan penyedia penjagaan kesihatan yang berkelayakan untuk sebarang kebimbangan perubatan.",
+    "body_as_is": "Aplikasi ini disediakan seadanya tanpa jaminan. Ramalan kitaran dan anggaran tetingkap subur mungkin tidak tepat; Macaron Software tidak bertanggungjawab atas keputusan yang dibuat berdasarkan maklumat yang direkodkan dalam aplikasi.",
+    "license": "Lesen:"
+  },
+  "support": {
+    "title": "Sokongan",
+    "help": "Perlukan bantuan?",
+    "contact": "Hubungi kami",
+    "response_time": "Kami biasanya membalas dalam masa 24 jam."
+  },
+  "lang_name": "ms"
+}

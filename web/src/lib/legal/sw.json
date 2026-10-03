@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Sera ya Faragha",
+    "meta_title": "Sera ya Faragha - Luna",
+    "summary_device": "Data yako yote ya mzunguko hubaki kwenye kifaa chako - hakuna akaunti, hakuna seva.",
+    "summary_no_sell": "Hatuwahi kukusanya, kuuza, wala kushiriki data yako ya kibinafsi.",
+    "summary_sync": "Nakala yoyote ya akiba unayounda husimbwa kwa njia fiche kabla ya kuondoka kwenye kifaa chako - hatuwezi kuisoma.",
+    "summary_delete": "Futa data yako katika Mipangilio, au ufute programu, ili kufuta kila kitu kabisa.",
+    "full": "Sera kamili",
+    "updated": "Imesasishwa mara ya mwisho: Oktoba 2026",
+    "local_first": "Luna ni programu inayotanguliza hifadhi ya ndani (local-first). Data ya kibinafsi huhifadhiwa kwenye kifaa chako pekee: katika hifadhidata ya ndani iliyosimbwa kwa njia fiche kwenye iOS na Android (SQLCipher) na katika hifadhi ya kivinjari iliyosimbwa kwa njia fiche kwenye wavuti (AES-256-GCM). Hakuna akaunti, na Macaron Software haina ujuzi wowote kuhusu data yako.",
+    "no_trackers": "Hakuna kuki, uchanganuzi, matangazo, wala vifuatiliaji vya wahusika wengine vinavyotumika.",
+    "contact": "Mawasiliano:"
+  },
+  "terms": {
+    "title": "Masharti ya Huduma",
+    "meta_title": "Masharti ya Huduma - Luna",
+    "point_tool": "Luna ni zana ya kibinafsi ya kufuatilia mzunguko - si dawa ya kuzuia mimba, wala si ushauri wa kimatibabu.",
+    "point_data": "Data yako ni yako mwenyewe; hatuna uwezo wa kuifikia.",
+    "point_free": "Matumizi bila malipo; hakuna usajili unaohitajika.",
+    "point_open_source": "Chanzo huria chini ya leseni za MIT na Apache-2.0.",
+    "full": "Masharti kamili",
+    "updated": "Imesasishwa mara ya mwisho: Oktoba 2026 - Toleo la 1.0",
+    "body_no_advice": "Luna haitoi ushauri wa kimatibabu, utambuzi, wala matibabu, na si njia ya kuzuia mimba. Wasiliana na mtaalamu wa afya aliyestahili kila wakati kwa masuala ya kimatibabu.",
+    "body_as_is": "Programu inatolewa kama ilivyo, bila dhamana yoyote. Utabiri wa mzunguko na makadirio ya kipindi cha uwezekano wa kupata mimba yanaweza kuwa si sahihi; Macaron Software haiwajibiki kwa maamuzi yaliyofanywa kwa kuzingatia taarifa zilizoandikwa kwenye programu.",
+    "license": "Leseni:"
+  },
+  "support": {
+    "title": "Msaada",
+    "help": "Unahitaji msaada?",
+    "contact": "Wasiliana nasi",
+    "response_time": "Kwa kawaida tunajibu ndani ya saa 24."
+  },
+  "lang_name": "sw"
+}

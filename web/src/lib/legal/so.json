@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Siyaasadda Asturnaanta",
+    "meta_title": "Siyaasadda Asturnaanta - Luna",
+    "summary_device": "Dhammaan xogta wareegga caadadaada waxay ku hadhaa qalabkaaga: akoon ma jiro, server ma jiro.",
+    "summary_no_sell": "Marnaba ma uruurinno, ma iibinno, mana wadaagno xogtaada shakhsi ahaaneed.",
+    "summary_sync": "Nuqul kasta oo aad samaysato waa la sir-geliyaa ka hor inta uusan qalabkaaga ka bixin. Ma awoodno inaan akhrino.",
+    "summary_delete": "Si aad wax walba si joogto ah u tirtirto, xogtaada ka tirtir Dejinta, ama tirtir abka.",
+    "full": "Siyaasadda buuxda",
+    "updated": "Markii ugu dambeysay la cusboonaysiiyay: Oktoobar 2026",
+    "local_first": "Luna waa ab local-first ah. Xogta shakhsi ahaaneed waxaa lagu kaydiyaa oo keliya qalabkaaga: keyd xogeed maxalli ah oo sir-gelan oo ku yaal iOS iyo Android (SQLCipher), iyo kayd browser oo sir-gelan oo ku yaal web-ka (AES-256-GCM). Akoon ma jiro, Macaron Software-na waxba kama oga xogtaada.",
+    "no_trackers": "Lama isticmaalo cookies, falanqayn, xayeysiis, ama raadraacayaal dhinac saddexaad.",
+    "contact": "Xiriir:"
+  },
+  "terms": {
+    "title": "Shuruudaha Adeegga",
+    "meta_title": "Shuruudaha Adeegga - Luna",
+    "point_tool": "Luna waa qalab shakhsi ahaaneed oo lagu la socdo wareegga caadada; ma aha ka-hortagga uurka mana aha talo caafimaad.",
+    "point_data": "Xogtaada adigaa iska leh; annagu ma heli karno.",
+    "point_free": "Isticmaalku waa bilaash; diiwaangelin bille ah looma baahna.",
+    "point_open_source": "Kood furan oo hoos yimaada shatiyada MIT iyo Apache-2.0.",
+    "full": "Shuruudaha buuxa",
+    "updated": "Markii ugu dambeysay la cusboonaysiiyay: Oktoobar 2026 - Nooca 1.0",
+    "body_no_advice": "Luna ma bixiso talo caafimaad, ogaansho, ama daaweyn, mana aha hab ka-hortagga uurka. Wixii walaac caafimaad ah, waa in la tashado bixiye daryeel caafimaad oo u qalma.",
+    "body_as_is": "Abka waxaa la bixiyaa sida uu yahay, iyada oo aan dammaanad la siin. Saadaasha wareegga iyo qiyaasta muddada taranka waxay noqon karaan kuwo aan sax ahayn; Macaron Software mas'uul kama aha go'aannada lagu qaato macluumaadka abka lagu diiwaangeliyay.",
+    "license": "Shati:"
+  },
+  "support": {
+    "title": "Taageero",
+    "help": "Ma u baahan tahay caawimaad?",
+    "contact": "Nala soo xiriir",
+    "response_time": "Waxaan inta badan ku jawaabnaa 24 saac gudahood."
+  },
+  "lang_name": "so"
+}

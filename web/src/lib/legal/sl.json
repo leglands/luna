@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Politika zasebnosti",
+    "meta_title": "Politika zasebnosti - Luna",
+    "summary_device": "Vsi podatki o vašem ciklu ostanejo v vaši napravi: brez računa, brez strežnika.",
+    "summary_no_sell": "Vaših osebnih podatkov nikoli ne zbiramo, ne prodajamo in ne delimo.",
+    "summary_sync": "Vsaka varnostna kopija je šifrirana, preden zapusti vašo napravo. Ne moremo je prebrati.",
+    "summary_delete": "Vse trajno izbrišete tako, da podatke izbrišete v Nastavitvah ali izbrišete aplikacijo.",
+    "full": "Celotna politika",
+    "updated": "Zadnja posodobitev: oktober 2026",
+    "local_first": "Luna je aplikacija po načelu local-first. Osebni podatki se hranijo izključno v vaši napravi: v šifrirani lokalni zbirki podatkov v sistemih iOS in Android (SQLCipher) ter v šifriranem shrambi brskalnika na spletu (AES-256-GCM). Računa ni, in Macaron Software o vaših podatkih ne ve ničesar.",
+    "no_trackers": "Piškotki, analitika, oglaševanje in sledilniki tretjih strani se ne uporabljajo.",
+    "contact": "Kontakt:"
+  },
+  "terms": {
+    "title": "Pogoji uporabe",
+    "meta_title": "Pogoji uporabe - Luna",
+    "point_tool": "Luna je osebno orodje za spremljanje cikla, ni kontracepcija in ni zdravniški nasvet.",
+    "point_data": "Vaši podatki so vaši; do njih nimamo dostopa.",
+    "point_free": "Brezplačna uporaba; naročnina ni potrebna.",
+    "point_open_source": "Odprta koda pod licencama MIT in Apache-2.0.",
+    "full": "Celotni pogoji",
+    "updated": "Zadnja posodobitev: oktober 2026 - Različica 1.0",
+    "body_no_advice": "Luna ne nudi zdravniškega nasveta, diagnoze ali zdravljenja in ni metoda kontracepcije. Za zdravstvene težave se vedno posvetujte s kvalificiranim zdravstvenim delavcem.",
+    "body_as_is": "Aplikacija je na voljo takšna, kot je, brez jamstev. Napovedi cikla in ocene plodnega okna so lahko netočne; Macaron Software ne odgovarja za odločitve, sprejete na podlagi informacij, zabeleženih v aplikaciji.",
+    "license": "Licenca:"
+  },
+  "support": {
+    "title": "Podpora",
+    "help": "Potrebujete pomoč?",
+    "contact": "Stopite v stik z nami",
+    "response_time": "Običajno odgovorimo v 24 urah."
+  },
+  "lang_name": "sl"
+}

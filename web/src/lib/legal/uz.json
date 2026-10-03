@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Maxfiylik siyosati",
+    "meta_title": "Maxfiylik siyosati - Luna",
+    "summary_device": "Tsikl maʼlumotlaringizning barchasi qurilmangizda qoladi - hisob yoʻq, server yoʻq.",
+    "summary_no_sell": "Biz shaxsiy maʼlumotlaringizni hech qachon toʻplamaymiz, sotmaymiz yoki ulashmaymiz.",
+    "summary_sync": "Siz yaratgan har qanday zaxira nusxa qurilmangizdan chiqishdan oldin shifrlanadi - biz uni oʻqiy olmaymiz.",
+    "summary_delete": "Maʼlumotlaringizni Sozlamalarda tozalang yoki ilovani oʻchirib tashlang - hammasi butunlay yoʻq qilinadi.",
+    "full": "Toʻliq siyosat",
+    "updated": "Oxirgi yangilanish: oktabr 2026",
+    "local_first": "Luna mahalliy saqlashga ustuvorlik beruvchi (local-first) ilovadir. Shaxsiy maʼlumotlar faqat qurilmangizda saqlanadi: iOS va Android tizimlarida shifrlangan mahalliy maʼlumotlar bazasida (SQLCipher), vebda esa shifrlangan brauzer xotirasida (AES-256-GCM). Hisob mavjud emas va Macaron Software sizning maʼlumotlaringiz haqida mutlaqo bexabar.",
+    "no_trackers": "Cookie fayllar, analitika, reklama yoki uchinchi tomon kuzatuvchilari ishlatilmaydi.",
+    "contact": "Aloqa:"
+  },
+  "terms": {
+    "title": "Xizmat koʻrsatish shartlari",
+    "meta_title": "Xizmat koʻrsatish shartlari - Luna",
+    "point_tool": "Luna shaxsiy tsiklni kuzatish vositasidir - u kontratseptiv vosita ham, tibbiy maslahat ham emas.",
+    "point_data": "Maʼlumotlaringiz sizga tegishli; bizda ularga kirish imkoni yoʻq.",
+    "point_free": "Bepul foydalanish mumkin; obuna talab qilinmaydi.",
+    "point_open_source": "MIT va Apache-2.0 litsenziyalari ostida ochiq kodli.",
+    "full": "Toʻliq shartlar",
+    "updated": "Oxirgi yangilanish: oktabr 2026 - Versiya 1.0",
+    "body_no_advice": "Luna tibbiy maslahat, tashxis yoki davolashni taqdim etmaydi va kontratseptsiya usuli emas. Tibbiy masalalar boʻyicha har doim malakali tibbiyot xodimiga murojaat qiling.",
+    "body_as_is": "Ilova hech qanday kafolatlarsiz, mavjud holida taqdim etiladi. Tsikl prognozlari va fertil davr hisob-kitoblari notoʻgʻri boʻlishi mumkin; Macaron Software ilovada qayd etilgan maʼlumotlarga asoslanib qabul qilingan qarorlar uchun javobgar emas.",
+    "license": "Litsenziya:"
+  },
+  "support": {
+    "title": "Qoʻllab-quvvatlash",
+    "help": "Yordam kerakmi?",
+    "contact": "Biz bilan bogʻlaning",
+    "response_time": "Odatda 24 soat ichida javob beramiz."
+  },
+  "lang_name": "uz"
+}

@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Personvernerklæring",
+    "meta_title": "Personvernerklæring - Luna",
+    "summary_device": "Alle syklusdataene dine forblir på enheten din: ingen konto, ingen server.",
+    "summary_no_sell": "Vi samler aldri inn, selger eller deler personopplysningene dine.",
+    "summary_sync": "Enhver sikkerhetskopi du lager, krypteres før den forlater enheten din. Vi kan ikke lese den.",
+    "summary_delete": "Slett alle dataene dine i Innstillinger, eller slett appen, for å fjerne alt permanent.",
+    "full": "Fullstendig erklæring",
+    "updated": "Sist oppdatert: oktober 2026",
+    "local_first": "Luna er en local-first-app. Personopplysninger lagres utelukkende på enheten din: i en kryptert lokal database på iOS og Android (SQLCipher) og i kryptert nettleserlagring på nettet (AES-256-GCM). Det finnes ingen konto, og Macaron Software har ingen kunnskap om dataene dine.",
+    "no_trackers": "Det brukes ingen informasjonskapsler, analyseverktøy, annonser eller sporing fra tredjeparter.",
+    "contact": "Kontakt:"
+  },
+  "terms": {
+    "title": "Vilkår for bruk",
+    "meta_title": "Vilkår for bruk - Luna",
+    "point_tool": "Luna er et personlig verktøy for syklussporing, ikke et prevensjonsmiddel og ikke medisinsk rådgivning.",
+    "point_data": "Dataene dine tilhører deg; vi har ingen tilgang til dem.",
+    "point_free": "Gratis å bruke; abonnement er ikke nødvendig.",
+    "point_open_source": "Åpen kildekode under lisensene MIT og Apache-2.0.",
+    "full": "Fullstendige vilkår",
+    "updated": "Sist oppdatert: oktober 2026 - Versjon 1.0",
+    "body_no_advice": "Luna gir ikke medisinsk rådgivning, diagnose eller behandling og er ikke en prevensjonsmetode. Rådfør deg alltid med kvalifisert helsepersonell ved medisinske bekymringer.",
+    "body_as_is": "Appen leveres som den er, uten garantier. Syklusprognoser og estimater for fruktbarhetsvinduet kan være unøyaktige; Macaron Software er ikke ansvarlig for beslutninger som tas på grunnlag av informasjon registrert i appen.",
+    "license": "Lisens:"
+  },
+  "support": {
+    "title": "Støtte",
+    "help": "Trenger du hjelp?",
+    "contact": "Kontakt oss",
+    "response_time": "Vi svarer vanligvis innen 24 timer."
+  },
+  "lang_name": "nb"
+}

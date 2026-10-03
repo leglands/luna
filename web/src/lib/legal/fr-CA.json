@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Politique de confidentialité",
+    "meta_title": "Politique de confidentialité - Luna",
+    "summary_device": "Toutes les données de votre cycle restent sur votre appareil : aucun compte, aucun serveur.",
+    "summary_no_sell": "Nous ne recueillons, ne vendons ni ne partageons jamais vos données personnelles.",
+    "summary_sync": "Toute sauvegarde que vous créez est chiffrée avant de quitter votre appareil : nous ne pouvons pas la lire.",
+    "summary_delete": "Effacez vos données dans les Paramètres, ou supprimez l'application, pour tout effacer définitivement.",
+    "full": "Politique complète",
+    "updated": "Dernière mise à jour : octobre 2026",
+    "local_first": "Luna est une application fonctionnant en priorité en local (local-first). Les données personnelles sont stockées exclusivement sur votre appareil : dans une base de données locale chiffrée sur iOS et Android (SQLCipher) et dans un stockage de navigateur chiffré sur le Web (AES-256-GCM). Il n'y a aucun compte, et Macaron Software n'a aucune connaissance de vos données.",
+    "no_trackers": "Aucun témoin de connexion, outil d'analyse, publicité ou traceur tiers n'est utilisé.",
+    "contact": "Contact :"
+  },
+  "terms": {
+    "title": "Conditions d'utilisation",
+    "meta_title": "Conditions d'utilisation - Luna",
+    "point_tool": "Luna est un outil personnel de suivi du cycle : ce n'est ni un contraceptif ni un avis médical.",
+    "point_data": "Vos données vous appartiennent ; nous n'y avons aucun accès.",
+    "point_free": "Gratuit ; aucun abonnement requis.",
+    "point_open_source": "Logiciel libre sous les licences MIT et Apache-2.0.",
+    "full": "Conditions complètes",
+    "updated": "Dernière mise à jour : octobre 2026 - Version 1.0",
+    "body_no_advice": "Luna ne fournit aucun avis médical, diagnostic ou traitement, et ne constitue pas une méthode de contraception. Consultez toujours un professionnel de la santé qualifié pour toute question médicale.",
+    "body_as_is": "L'application est fournie telle quelle, sans garantie. Les prédictions de cycle et les estimations de la fenêtre fertile peuvent être inexactes ; Macaron Software n'est pas responsable des décisions prises sur la base des informations consignées dans l'application.",
+    "license": "Licence :"
+  },
+  "support": {
+    "title": "Assistance",
+    "help": "Besoin d'aide ?",
+    "contact": "Contactez-nous",
+    "response_time": "Nous répondons habituellement dans les 24 heures."
+  },
+  "lang_name": "fr-CA"
+}

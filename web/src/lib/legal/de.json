@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Datenschutzerklärung",
+    "meta_title": "Datenschutzerklärung - Luna",
+    "summary_device": "Alle Ihre Zyklusdaten bleiben auf Ihrem Gerät: kein Konto, kein Server.",
+    "summary_no_sell": "Wir erheben, verkaufen oder teilen Ihre personenbezogenen Daten niemals.",
+    "summary_sync": "Jede von Ihnen erstellte Sicherung wird verschlüsselt, bevor sie Ihr Gerät verlässt: Wir können sie nicht lesen.",
+    "summary_delete": "Löschen Sie Ihre Daten in den Einstellungen oder löschen Sie die App, um alles dauerhaft zu entfernen.",
+    "full": "Vollständige Richtlinie",
+    "updated": "Zuletzt aktualisiert: Oktober 2026",
+    "local_first": "Luna ist eine Local-First-Anwendung. Personenbezogene Daten werden ausschließlich auf Ihrem Gerät gespeichert: in einer verschlüsselten lokalen Datenbank unter iOS und Android (SQLCipher) und in einem verschlüsselten Browserspeicher im Web (AES-256-GCM). Es gibt kein Konto, und Macaron Software hat keinerlei Kenntnis von Ihren Daten.",
+    "no_trackers": "Es werden keine Cookies, Analysen, Werbung oder Tracker von Drittanbietern verwendet.",
+    "contact": "Kontakt:"
+  },
+  "terms": {
+    "title": "Nutzungsbedingungen",
+    "meta_title": "Nutzungsbedingungen - Luna",
+    "point_tool": "Luna ist ein persönliches Werkzeug zur Zyklusverfolgung: kein Verhütungsmittel, keine medizinische Beratung.",
+    "point_data": "Ihre Daten gehören Ihnen; wir haben keinen Zugriff darauf.",
+    "point_free": "Kostenlos nutzbar; kein Abonnement erforderlich.",
+    "point_open_source": "Open Source unter den Lizenzen MIT und Apache-2.0.",
+    "full": "Vollständige Bedingungen",
+    "updated": "Zuletzt aktualisiert: Oktober 2026 - Version 1.0",
+    "body_no_advice": "Luna bietet keine medizinische Beratung, Diagnose oder Behandlung und ist keine Verhütungsmethode. Wenden Sie sich bei medizinischen Fragen stets an eine qualifizierte medizinische Fachkraft.",
+    "body_as_is": "Die App wird so bereitgestellt, wie sie ist, ohne Gewährleistung. Zyklusvorhersagen und Schätzungen des fruchtbaren Fensters können ungenau sein; Macaron Software haftet nicht für Entscheidungen, die auf Grundlage der in der App erfassten Informationen getroffen werden.",
+    "license": "Lizenz:"
+  },
+  "support": {
+    "title": "Support",
+    "help": "Brauchen Sie Hilfe?",
+    "contact": "Kontaktieren Sie uns",
+    "response_time": "Wir antworten in der Regel innerhalb von 24 Stunden."
+  },
+  "lang_name": "de"
+}

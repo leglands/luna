@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Gizlilik Politikası",
+    "meta_title": "Gizlilik Politikası - Luna",
+    "summary_device": "Tüm döngü verileriniz cihazınızda kalır - hesap yok, sunucu yok.",
+    "summary_no_sell": "Kişisel verilerinizi hiçbir zaman toplamayız, satmayız veya paylaşmayız.",
+    "summary_sync": "Oluşturduğunuz her yedek, cihazınızdan çıkmadan önce şifrelenir - okuyamayız.",
+    "summary_delete": "Verilerinizi Ayarlar'dan silin veya uygulamayı kaldırın; her şey kalıcı olarak silinir.",
+    "full": "Politikanın tamamı",
+    "updated": "Son güncelleme: Ekim 2026",
+    "local_first": "Luna yerel öncelikli (local-first) bir uygulamadır. Kişisel veriler yalnızca cihazınızda saklanır: iOS ve Android'de şifrelenmiş yerel veritabanında (SQLCipher), web'de ise şifrelenmiş tarayıcı depolamasında (AES-256-GCM). Hesap yoktur ve Macaron Software'in verileriniz hakkında hiçbir bilgisi yoktur.",
+    "no_trackers": "Çerez, analiz, reklam veya üçüncü taraf izleyici kullanılmaz.",
+    "contact": "İletişim:"
+  },
+  "terms": {
+    "title": "Hizmet Şartları",
+    "meta_title": "Hizmet Şartları - Luna",
+    "point_tool": "Luna kişisel bir döngü takip aracıdır - doğum kontrol yöntemi değildir, tıbbi tavsiye değildir.",
+    "point_data": "Verileriniz size aittir; bunlara erişimimiz yoktur.",
+    "point_free": "Ücretsiz kullanım; abonelik gerekmez.",
+    "point_open_source": "MIT ve Apache-2.0 lisansları altında açık kaynak.",
+    "full": "Şartların tamamı",
+    "updated": "Son güncelleme: Ekim 2026 - Sürüm 1.0",
+    "body_no_advice": "Luna tıbbi tavsiye, teşhis veya tedavi sunmaz ve bir doğum kontrol yöntemi değildir. Tıbbi endişeleriniz için her zaman yetkin bir sağlık uzmanına başvurun.",
+    "body_as_is": "Uygulama, hiçbir garanti verilmeksizin olduğu gibi sunulmaktadır. Döngü tahminleri ve doğurganlık penceresi tahminleri hatalı olabilir; Macaron Software uygulamaya kaydedilen bilgilere dayanılarak alınan kararlardan sorumlu tutulamaz.",
+    "license": "Lisans:"
+  },
+  "support": {
+    "title": "Destek",
+    "help": "Yardıma mı ihtiyacınız var?",
+    "contact": "Bize ulaşın",
+    "response_time": "Genellikle 24 saat içinde yanıt veririz."
+  },
+  "lang_name": "tr"
+}

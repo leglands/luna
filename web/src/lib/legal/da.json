@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Privatlivspolitik",
+    "meta_title": "Privatlivspolitik - Luna",
+    "summary_device": "Alle dine cyklusdata forbliver på din enhed: ingen konto, ingen server.",
+    "summary_no_sell": "Vi indsamler, sælger eller deler aldrig dine personoplysninger.",
+    "summary_sync": "Enhver sikkerhedskopi, du opretter, krypteres, før den forlader din enhed: vi kan ikke læse den.",
+    "summary_delete": "Slet dine data i Indstillinger, eller slet appen, for at slette alt permanent.",
+    "full": "Fuld politik",
+    "updated": "Senest opdateret: oktober 2026",
+    "local_first": "Luna er en local-first-applikation. Personoplysninger gemmes udelukkende på din enhed: i en krypteret lokal database på iOS og Android (SQLCipher) og i krypteret browserlager på nettet (AES-256-GCM). Der er ingen konto, og Macaron Software har intet kendskab til dine data.",
+    "no_trackers": "Der bruges ingen cookies, analyser, reklamer eller sporing fra tredjeparter.",
+    "contact": "Kontakt:"
+  },
+  "terms": {
+    "title": "Servicevilkår",
+    "meta_title": "Servicevilkår - Luna",
+    "point_tool": "Luna er et personligt værktøj til cyklusregistrering: ikke et præventionsmiddel og ikke medicinsk rådgivning.",
+    "point_data": "Dine data tilhører dig; vi har ingen adgang til dem.",
+    "point_free": "Gratis at bruge; intet abonnement påkrævet.",
+    "point_open_source": "Åben kildekode under MIT- og Apache-2.0-licenserne.",
+    "full": "Fuldstændige vilkår",
+    "updated": "Senest opdateret: oktober 2026 - Version 1.0",
+    "body_no_advice": "Luna giver ikke medicinsk rådgivning, diagnose eller behandling og er ikke en præventionsmetode. Kontakt altid en kvalificeret sundhedsperson ved medicinske spørgsmål.",
+    "body_as_is": "Appen leveres, som den er, uden garantier. Cyklusforudsigelser og skøn over den fertile periode kan være unøjagtige; Macaron Software er ikke ansvarlig for beslutninger, der træffes på grundlag af oplysninger registreret i appen.",
+    "license": "Licens:"
+  },
+  "support": {
+    "title": "Support",
+    "help": "Brug for hjælp?",
+    "contact": "Kontakt os",
+    "response_time": "Vi svarer normalt inden for 24 timer."
+  },
+  "lang_name": "da"
+}

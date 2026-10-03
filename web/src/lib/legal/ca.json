@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Política de privacitat",
+    "meta_title": "Política de privacitat - Luna",
+    "summary_device": "Totes les dades del teu cicle es queden al teu dispositiu: sense compte, sense servidor.",
+    "summary_no_sell": "No recollim, venem ni compartim mai les teves dades personals.",
+    "summary_sync": "Qualsevol còpia de seguretat que facis es xifra abans de sortir del teu dispositiu: no la podem llegir.",
+    "summary_delete": "Esborra les teves dades a Configuració, o desinstal·la l'aplicació, per eliminar-ho tot permanentment.",
+    "full": "Política completa",
+    "updated": "Darrera actualització: octubre 2026",
+    "local_first": "Luna és una aplicació que prioritza el funcionament local (local-first). Les dades personals s'emmagatzemen exclusivament al teu dispositiu: en una base de dades local xifrada a iOS i Android (SQLCipher) i en un emmagatzematge de navegador xifrat al web (AES-256-GCM). No hi ha cap compte, i Macaron Software no té cap coneixement de les teves dades.",
+    "no_trackers": "No s'utilitzen galetes, analítica, publicitat ni rastrejadors de tercers.",
+    "contact": "Contacte:"
+  },
+  "terms": {
+    "title": "Condicions del servei",
+    "meta_title": "Condicions del servei - Luna",
+    "point_tool": "Luna és una eina personal de seguiment del cicle: no és un anticonceptiu ni consell mèdic.",
+    "point_data": "Les teves dades són teves; no hi tenim cap accés.",
+    "point_free": "Ús gratuït; no cal cap subscripció.",
+    "point_open_source": "Codi obert sota les llicències MIT i Apache-2.0.",
+    "full": "Condicions completes",
+    "updated": "Darrera actualització: octubre 2026 - Versió 1.0",
+    "body_no_advice": "Luna no ofereix consell mèdic, diagnòstic ni tractament, i no és un mètode anticonceptiu. Consulta sempre un professional sanitari qualificat per a qualsevol qüestió mèdica.",
+    "body_as_is": "L'aplicació es proporciona tal com és, sense garanties. Les prediccions del cicle i les estimacions de la finestra fèrtil poden ser inexactes; Macaron Software no es responsabilitza de les decisions preses a partir de la informació registrada a l'aplicació.",
+    "license": "Llicència:"
+  },
+  "support": {
+    "title": "Suport",
+    "help": "Necessites ajuda?",
+    "contact": "Contacta'ns",
+    "response_time": "Normalment responem en menys de 24 hores."
+  },
+  "lang_name": "ca"
+}

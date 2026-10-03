@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Politika e Privatësisë",
+    "meta_title": "Politika e Privatësisë - Luna",
+    "summary_device": "Të gjitha të dhënat e ciklit tuaj qëndrojnë në pajisjen tuaj: pa llogari, pa server.",
+    "summary_no_sell": "Ne nuk i mbledhim, shesim apo ndajmë kurrë të dhënat tuaja personale.",
+    "summary_sync": "Çdo kopje rezervë që krijoni kriptohet përpara se të largohet nga pajisja tuaj. Ne nuk mund ta lexojmë atë.",
+    "summary_delete": "Fshini të dhënat tuaja në Cilësimet, ose fshini aplikacionin, për të fshirë gjithçka përgjithmonë.",
+    "full": "Politika e plotë",
+    "updated": "Përditësuar për herë të fundit: tetor 2026",
+    "local_first": "Luna është një aplikacion local-first. Të dhënat personale ruhen ekskluzivisht në pajisjen tuaj: në një bazë të dhënash lokale të kriptuar në iOS dhe Android (SQLCipher) dhe në ruajtjen e kriptuar të shfletuesit në web (AES-256-GCM). Nuk ka llogari dhe Macaron Software nuk ka asnjë njohuri për të dhënat tuaja.",
+    "no_trackers": "Nuk përdoren cookie, analitikë, reklama apo gjurmues të palëve të treta.",
+    "contact": "Kontakt:"
+  },
+  "terms": {
+    "title": "Kushtet e Shërbimit",
+    "meta_title": "Kushtet e Shërbimit - Luna",
+    "point_tool": "Luna është një mjet personal për ndjekjen e ciklit, nuk është kontraceptiv dhe nuk është këshillë mjekësore.",
+    "point_data": "Të dhënat tuaja ju përkasin juve; ne nuk kemi akses në to.",
+    "point_free": "Përdorim falas; nuk kërkohet abonim.",
+    "point_open_source": "Kod i hapur sipas licencave MIT dhe Apache-2.0.",
+    "full": "Kushtet e plota",
+    "updated": "Përditësuar për herë të fundit: tetor 2026 - Versioni 1.0",
+    "body_no_advice": "Luna nuk ofron këshillë mjekësore, diagnozë apo trajtim dhe nuk është metodë kontracepsioni. Për shqetësime mjekësore, konsultohuni gjithmonë me një ofrues të kualifikuar të kujdesit shëndetësor.",
+    "body_as_is": "Aplikacioni ofrohet ashtu siç është, pa garanci. Parashikimet e ciklit dhe vlerësimet e dritares fertile mund të jenë të pasakta; Macaron Software nuk mban përgjegjësi për vendimet e marra në bazë të informacionit të regjistruar në aplikacion.",
+    "license": "Licenca:"
+  },
+  "support": {
+    "title": "Mbështetje",
+    "help": "Keni nevojë për ndihmë?",
+    "contact": "Na kontaktoni",
+    "response_time": "Zakonisht përgjigjemi brenda 24 orëve."
+  },
+  "lang_name": "sq"
+}

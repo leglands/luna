@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Politica de confidențialitate",
+    "meta_title": "Politica de confidențialitate - Luna",
+    "summary_device": "Toate datele ciclului tău rămân pe dispozitivul tău: fără cont, fără server.",
+    "summary_no_sell": "Nu colectăm, nu vindem și nu partajăm niciodată datele tale personale.",
+    "summary_sync": "Orice copie de siguranță pe care o faci este criptată înainte de a părăsi dispozitivul tău. Nu o putem citi.",
+    "summary_delete": "Șterge-ți datele din Setări sau șterge aplicația pentru a elimina totul definitiv.",
+    "full": "Politica completă",
+    "updated": "Ultima actualizare: octombrie 2026",
+    "local_first": "Luna este o aplicație local-first. Datele personale sunt stocate exclusiv pe dispozitivul tău: într-o bază de date locală criptată pe iOS și Android (SQLCipher) și în stocarea criptată a browserului pe web (AES-256-GCM). Nu există cont, iar Macaron Software nu are nicio cunoștință despre datele tale.",
+    "no_trackers": "Nu sunt utilizate cookie-uri, instrumente de analiză, publicitate sau trackere terțe.",
+    "contact": "Contact:"
+  },
+  "terms": {
+    "title": "Termeni și condiții",
+    "meta_title": "Termeni și condiții - Luna",
+    "point_tool": "Luna este un instrument personal de urmărire a ciclului, nu un contraceptiv și nu sfat medical.",
+    "point_data": "Datele tale îți aparțin; noi nu avem acces la ele.",
+    "point_free": "Gratuit de utilizat; nu este necesar abonament.",
+    "point_open_source": "Cod sursă deschis sub licențele MIT și Apache-2.0.",
+    "full": "Termenii compleți",
+    "updated": "Ultima actualizare: octombrie 2026 - Versiunea 1.0",
+    "body_no_advice": "Luna nu oferă sfaturi medicale, diagnostic sau tratament și nu este o metodă de contracepție. Consultă întotdeauna un furnizor de asistență medicală calificat pentru probleme medicale.",
+    "body_as_is": "Aplicația este furnizată ca atare, fără garanții. Previziunile ciclului și estimările ferestrei fertile pot fi inexacte; Macaron Software nu este răspunzătoare pentru deciziile luate pe baza informațiilor înregistrate în aplicație.",
+    "license": "Licență:"
+  },
+  "support": {
+    "title": "Asistență",
+    "help": "Ai nevoie de ajutor?",
+    "contact": "Contactează-ne",
+    "response_time": "De obicei răspundem în 24 de ore."
+  },
+  "lang_name": "ro"
+}

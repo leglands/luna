@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Integritetspolicy",
+    "meta_title": "Integritetspolicy - Luna",
+    "summary_device": "All din cykeldata stannar på din enhet - inget konto, ingen server.",
+    "summary_no_sell": "Vi samlar aldrig in, säljer eller delar dina personuppgifter.",
+    "summary_sync": "Säkerhetskopior krypteras innan de lämnar din enhet - vi kan inte läsa dem.",
+    "summary_delete": "Radera dina data i Inställningar, eller avinstallera appen, för att radera allt permanent.",
+    "full": "Fullständig policy",
+    "updated": "Senast uppdaterad: oktober 2026",
+    "local_first": "Luna är en local-first-applikation. Personuppgifter lagras uteslutande på din enhet: i en krypterad lokal databas på iOS och Android (SQLCipher) samt på webben i krypterad webbläsarlagring (AES-256-GCM). Det finns inget konto, och Macaron Software har noll kunskap om dina data.",
+    "no_trackers": "Inga cookies, inga analysverktyg, ingen reklam och inga tredjepartsspårare används.",
+    "contact": "Kontakt:"
+  },
+  "terms": {
+    "title": "Användarvillkor",
+    "meta_title": "Användarvillkor - Luna",
+    "point_tool": "Luna är ett personligt verktyg för cykelspårning - inte ett preventivmedel, inte medicinsk rådgivning.",
+    "point_data": "Dina data tillhör dig; vi har ingen åtkomst till dem.",
+    "point_free": "Gratis att använda; ingen prenumeration krävs.",
+    "point_open_source": "Öppen källkod under licenserna MIT och Apache-2.0.",
+    "full": "Fullständiga villkor",
+    "updated": "Senast uppdaterad: oktober 2026 - Version 1.0",
+    "body_no_advice": "Luna ger inte medicinsk rådgivning, diagnos eller behandling och är inte en preventivmetod. Rådgör alltid med kvalificerad vårdpersonal vid medicinska frågor.",
+    "body_as_is": "Appen tillhandahålls i befintligt skick utan garantier. Cykelprognoser och uppskattningar av fertila fönster kan vara felaktiga; Macaron Software ansvarar inte för beslut som fattats utifrån information som registrerats i appen.",
+    "license": "Licens:"
+  },
+  "support": {
+    "title": "Support",
+    "help": "Behöver du hjälp?",
+    "contact": "Kontakta oss",
+    "response_time": "Vi svarar vanligtvis inom 24 timmar."
+  },
+  "lang_name": "sv"
+}

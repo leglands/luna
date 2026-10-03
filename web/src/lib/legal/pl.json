@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Polityka prywatności",
+    "meta_title": "Polityka prywatności - Luna",
+    "summary_device": "Wszystkie Twoje dane o cyklu pozostają na Twoim urządzeniu: bez konta, bez serwera.",
+    "summary_no_sell": "Nigdy nie gromadzimy, nie sprzedajemy ani nie udostępniamy Twoich danych osobowych.",
+    "summary_sync": "Każda kopia zapasowa jest szyfrowana, zanim opuści Twoje urządzenie. Nie możemy jej odczytać.",
+    "summary_delete": "Usuń swoje dane w Ustawieniach lub usuń aplikację, aby trwale wymazać wszystko.",
+    "full": "Pełna polityka",
+    "updated": "Ostatnia aktualizacja: październik 2026",
+    "local_first": "Luna to aplikacja działająca w modelu local-first. Dane osobowe są przechowywane wyłącznie na Twoim urządzeniu: w zaszyfrowanej lokalnej bazie danych na iOS i Androidzie (SQLCipher) oraz w zaszyfrowanej pamięci przeglądarki w wersji webowej (AES-256-GCM). Nie ma konta, a Macaron Software nie ma żadnej wiedzy o Twoich danych.",
+    "no_trackers": "Nie stosujemy plików cookies, narzędzi analitycznych, reklam ani trackerów stron trzecich.",
+    "contact": "Kontakt:"
+  },
+  "terms": {
+    "title": "Warunki korzystania z usługi",
+    "meta_title": "Warunki korzystania z usługi - Luna",
+    "point_tool": "Luna to osobiste narzędzie do śledzenia cyklu; nie jest środkiem antykoncepcyjnym ani poradą medyczną.",
+    "point_data": "Twoje dane należą do Ciebie; nie mamy do nich dostępu.",
+    "point_free": "Bezpłatna w użyciu; subskrypcja nie jest wymagana.",
+    "point_open_source": "Otwarty kod źródłowy na licencjach MIT i Apache-2.0.",
+    "full": "Pełne warunki",
+    "updated": "Ostatnia aktualizacja: październik 2026 - Wersja 1.0",
+    "body_no_advice": "Luna nie udziela porad medycznych, nie diagnozuje ani nie leczy i nie jest metodą antykoncepcji. W sprawach zdrowotnych zawsze skonsultuj się z wykwalifikowanym pracownikiem ochrony zdrowia.",
+    "body_as_is": "Aplikacja jest udostępniana w stanie, w jakim się znajduje, bez gwarancji. Prognozy cyklu i szacunki okna płodnego mogą być niedokładne; Macaron Software nie ponosi odpowiedzialności za decyzje podjęte na podstawie informacji zapisanych w aplikacji.",
+    "license": "Licencja:"
+  },
+  "support": {
+    "title": "Wsparcie",
+    "help": "Potrzebujesz pomocy?",
+    "contact": "Skontaktuj się z nami",
+    "response_time": "Zwykle odpowiadamy w ciągu 24 godzin."
+  },
+  "lang_name": "pl"
+}

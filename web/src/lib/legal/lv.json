@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Privātuma politika",
+    "meta_title": "Privātuma politika - Luna",
+    "summary_device": "Visi jūsu cikla dati paliek jūsu ierīcē - bez konta, bez servera.",
+    "summary_no_sell": "Mēs nekad nevācam, nepārdodam un nekopīgojam jūsu personas datus.",
+    "summary_sync": "Jebkurš jūsu veidotais dublējums tiek šifrēts pirms tā atstāj jūsu ierīci - mēs to nevaram nolasīt.",
+    "summary_delete": "Dzēsiet savus datus iestatījumos vai dzēsiet lietotni, lai visu neatgriezeniski izdzēstu.",
+    "full": "Pilna politika",
+    "updated": "Pēdējoreiz atjaunināts: 2026. gada oktobris",
+    "local_first": "Luna ir lokāli prioritāra (local-first) lietotne. Personas dati tiek glabāti tikai jūsu ierīcē: šifrētā vietējā datubāzē iOS un Android ierīcēs (SQLCipher) un šifrētā pārlūka krātuvē tīmeklī (AES-256-GCM). Konta nav, un Macaron Software par jūsu datiem nezina neko.",
+    "no_trackers": "Netiek izmantotas sīkdatnes, analītika, reklāma vai trešo pušu izsekotāji.",
+    "contact": "Kontakti:"
+  },
+  "terms": {
+    "title": "Pakalpojuma noteikumi",
+    "meta_title": "Pakalpojuma noteikumi - Luna",
+    "point_tool": "Luna ir personīgs cikla izsekošanas rīks - nevis kontracepcijas līdzeklis un nevis medicīnisks padoms.",
+    "point_data": "Jūsu dati pieder jums; mums nav piekļuves tiem.",
+    "point_free": "Lietošana bez maksas; abonements nav nepieciešams.",
+    "point_open_source": "Atvērtā pirmkoda, saskaņā ar MIT un Apache-2.0 licencēm.",
+    "full": "Pilni noteikumi",
+    "updated": "Pēdējoreiz atjaunināts: 2026. gada oktobris - versija 1.0",
+    "body_no_advice": "Luna nesniedz medicīniskus padomus, diagnozi vai ārstēšanu un nav kontracepcijas metode. Medicīnisku jautājumu gadījumā vienmēr konsultējieties ar kvalificētu veselības aprūpes speciālistu.",
+    "body_as_is": "Lietotne tiek nodrošināta tāda, kāda tā ir, bez garantijām. Cikla prognozes un auglīgā loga aplēses var būt neprecīzas; Macaron Software nav atbildīgs par lēmumiem, kas pieņemti, pamatojoties uz lietotnē reģistrēto informāciju.",
+    "license": "Licence:"
+  },
+  "support": {
+    "title": "Atbalsts",
+    "help": "Nepieciešama palīdzība?",
+    "contact": "Sazinieties ar mums",
+    "response_time": "Mēs parasti atbildam 24 stundu laikā."
+  },
+  "lang_name": "lv"
+}

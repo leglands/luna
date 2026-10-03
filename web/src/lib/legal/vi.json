@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Chính sách quyền riêng tư",
+    "meta_title": "Chính sách quyền riêng tư - Luna",
+    "summary_device": "Toàn bộ dữ liệu chu kỳ của bạn nằm trên thiết bị của bạn - không tài khoản, không máy chủ.",
+    "summary_no_sell": "Chúng tôi không bao giờ thu thập, bán hoặc chia sẻ dữ liệu cá nhân của bạn.",
+    "summary_sync": "Mọi bản sao lưu bạn tạo đều được mã hóa trước khi rời khỏi thiết bị của bạn - chúng tôi không thể đọc được.",
+    "summary_delete": "Xóa dữ liệu của bạn trong Cài đặt, hoặc gỡ ứng dụng, để xóa vĩnh viễn mọi thứ.",
+    "full": "Chính sách đầy đủ",
+    "updated": "Cập nhật lần cuối: tháng 10 năm 2026",
+    "local_first": "Luna là ứng dụng ưu tiên cục bộ (local-first). Dữ liệu cá nhân chỉ được lưu trên thiết bị của bạn: trong cơ sở dữ liệu cục bộ được mã hóa trên iOS và Android (SQLCipher) và trong bộ nhớ trình duyệt được mã hóa trên web (AES-256-GCM). Không có tài khoản, và Macaron Software hoàn toàn không biết gì về dữ liệu của bạn.",
+    "no_trackers": "Không sử dụng cookie, phân tích, quảng cáo hay trình theo dõi của bên thứ ba.",
+    "contact": "Liên hệ:"
+  },
+  "terms": {
+    "title": "Điều khoản dịch vụ",
+    "meta_title": "Điều khoản dịch vụ - Luna",
+    "point_tool": "Luna là công cụ theo dõi chu kỳ cá nhân - không phải biện pháp tránh thai, không phải lời khuyên y tế.",
+    "point_data": "Dữ liệu của bạn thuộc về bạn; chúng tôi không có quyền truy cập.",
+    "point_free": "Dùng miễn phí; không cần đăng ký thuê bao.",
+    "point_open_source": "Mã nguồn mở theo giấy phép MIT và Apache-2.0.",
+    "full": "Điều khoản đầy đủ",
+    "updated": "Cập nhật lần cuối: tháng 10 năm 2026 - Phiên bản 1.0",
+    "body_no_advice": "Luna không cung cấp lời khuyên y tế, chẩn đoán hay điều trị, và không phải là một biện pháp tránh thai. Hãy luôn tham khảo ý kiến của nhân viên y tế có chuyên môn khi có lo ngại về sức khỏe.",
+    "body_as_is": "Ứng dụng được cung cấp nguyên trạng, không kèm bảo đảm. Các dự đoán chu kỳ và ước tính cửa sổ thụ thai có thể không chính xác; Macaron Software không chịu trách nhiệm cho các quyết định dựa trên thông tin được ghi lại trong ứng dụng.",
+    "license": "Giấy phép:"
+  },
+  "support": {
+    "title": "Hỗ trợ",
+    "help": "Cần trợ giúp?",
+    "contact": "Liên hệ với chúng tôi",
+    "response_time": "Chúng tôi thường phản hồi trong vòng 24 giờ."
+  },
+  "lang_name": "vi"
+}

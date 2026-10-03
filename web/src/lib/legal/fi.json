@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Tietosuojakäytäntö",
+    "meta_title": "Tietosuojakäytäntö - Luna",
+    "summary_device": "Kaikki kiertosi tiedot pysyvät laitteellasi: ei tiliä, ei palvelinta.",
+    "summary_no_sell": "Emme koskaan kerää, myy tai jaa henkilötietojasi.",
+    "summary_sync": "Tekemäsi varmuuskopio salataan ennen kuin se poistuu laitteeltasi: emme voi lukea sitä.",
+    "summary_delete": "Poista tiedot Asetuksissa tai poista sovellus, niin kaikki poistuu pysyvästi.",
+    "full": "Täysi käytäntö",
+    "updated": "Viimeksi päivitetty: lokakuu 2026",
+    "local_first": "Luna on local-first-sovellus. Henkilötiedot tallennetaan ainoastaan laitteellesi: salattuun paikalliseen tietokantaan iOSissa ja Androidissa (SQLCipher) ja salattuun selaimen tallennustilaan verkossa (AES-256-GCM). Tiliä ei ole, eikä Macaron Softwarella ole mitään tietoa tiedoistasi.",
+    "no_trackers": "Evästeitä, analytiikkaa, mainontaa tai kolmannen osapuolen seuraimia ei käytetä.",
+    "contact": "Yhteystiedot:"
+  },
+  "terms": {
+    "title": "Käyttöehdot",
+    "meta_title": "Käyttöehdot - Luna",
+    "point_tool": "Luna on henkilökohtainen kierron seurantatyökalu: ei ehkäisyväline eikä lääketieteellinen neuvo.",
+    "point_data": "Tietosi kuuluvat sinulle; meillä ei ole niihin pääsyä.",
+    "point_free": "Ilmainen käyttää; tilausta ei tarvita.",
+    "point_open_source": "Avoin lähdekoodi MIT- ja Apache-2.0-lisenssien alla.",
+    "full": "Täydet ehdot",
+    "updated": "Viimeksi päivitetty: lokakuu 2026 - Versio 1.0",
+    "body_no_advice": "Luna ei tarjoa lääketieteellistä neuvontaa, diagnoosia tai hoitoa, eikä se ole ehkäisymenetelmä. Käänny lääketieteellisissä kysymyksissä aina pätevän terveydenhuollon ammattilaisen puoleen.",
+    "body_as_is": "Sovellus tarjotaan sellaisenaan ilman takuita. Kiertoa koskevat ennusteet ja hedelmällisen ajan arviot voivat olla epätarkkoja; Macaron Software ei vastaa päätöksistä, jotka tehdään sovellukseen tallennettujen tietojen perusteella.",
+    "license": "Lisenssi:"
+  },
+  "support": {
+    "title": "Tuki",
+    "help": "Tarvitsetko apua?",
+    "contact": "Ota yhteyttä",
+    "response_time": "Vastaamme yleensä 24 tunnin kuluessa."
+  },
+  "lang_name": "fi"
+}

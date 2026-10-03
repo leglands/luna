@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Zásady ochrany osobních údajů",
+    "meta_title": "Zásady ochrany osobních údajů - Luna",
+    "summary_device": "Všechna data o vašem cyklu zůstávají ve vašem zařízení: žádný účet, žádný server.",
+    "summary_no_sell": "Vaše osobní údaje nikdy neshromažďujeme, neprodáváme ani nesdílíme.",
+    "summary_sync": "Každá záloha, kterou vytvoříte, se před opuštěním vašeho zařízení zašifruje: nedokážeme ji přečíst.",
+    "summary_delete": "Vymažte svá data v Nastavení nebo odstraňte aplikaci a všechno trvale smažete.",
+    "full": "Úplné zásady",
+    "updated": "Poslední aktualizace: říjen 2026",
+    "local_first": "Luna je aplikace fungující přednostně lokálně (local-first). Osobní údaje se ukládají výhradně ve vašem zařízení: v šifrované místní databázi na iOS a Androidu (SQLCipher) a v šifrovaném úložišti prohlížeče na webu (AES-256-GCM). Neexistuje žádný účet a Macaron Software o vašich datech nic neví.",
+    "no_trackers": "Nepoužívají se žádné soubory cookie, analytické nástroje, reklama ani sledovací prvky třetích stran.",
+    "contact": "Kontakt:"
+  },
+  "terms": {
+    "title": "Podmínky služby",
+    "meta_title": "Podmínky služby - Luna",
+    "point_tool": "Luna je osobní nástroj pro sledování cyklu: není antikoncepcí ani lékařskou radou.",
+    "point_data": "Vaše data patří vám; nemáme k nim přístup.",
+    "point_free": "Zdarma k použití; není vyžadováno předplatné.",
+    "point_open_source": "Otevřený zdroj pod licencemi MIT a Apache-2.0.",
+    "full": "Úplné podmínky",
+    "updated": "Poslední aktualizace: říjen 2026 - Verze 1.0",
+    "body_no_advice": "Luna neposkytuje lékařské rady, diagnostiku ani léčbu a není metodou antikoncepce. V případě zdravotních obtíží se vždy obraťte na kvalifikovaného zdravotnického pracovníka.",
+    "body_as_is": "Aplikace je poskytována tak, jak je, bez záruk. Předpovědi cyklu a odhady plodného okna mohou být nepřesné; Macaron Software neodpovídá za rozhodnutí učiněná na základě informací zaznamenaných v aplikaci.",
+    "license": "Licence:"
+  },
+  "support": {
+    "title": "Podpora",
+    "help": "Potřebujete pomoc?",
+    "contact": "Kontaktujte nás",
+    "response_time": "Obvykle odpovídáme do 24 hodin."
+  },
+  "lang_name": "cs"
+}

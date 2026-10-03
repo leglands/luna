@@ -1,0 +1,61 @@
+# Luna
+
+> Luna is a private menstrual cycle tracker. Your cycle, symptoms and notes
+> stay encrypted on your own device, so you can understand your cycle and see
+> what may come next, without an account and without a server.
+
+Category: menstrual cycle tracker and wellness companion. Non-medical: Luna
+records what you enter and shows estimates back; it does not diagnose, screen
+or give medical advice, and it is not a contraceptive.
+
+Best for: anyone who wants to track their period, flow, symptoms, mood and
+basal body temperature privately, and to see cycle predictions, a fertile
+window and trends over time.
+
+Not for: medical assessment, diagnosis, or contraception. Predictions are
+estimates computed from the data you enter, and they may be inaccurate.
+
+## What it offers
+
+- Period and flow logging (spotting, light, medium, heavy) on a calendar.
+- A daily log for symptoms, mood, energy and basal body temperature, plus
+  your own notes.
+- Cycle predictions, fertile window and ovulation estimates based on your
+  personal history.
+- Calendar, cycle history and insights: average cycle and period length,
+  regularity and trends over recent cycles.
+- Four tracking modes: regular cycles, trying to conceive, pregnancy and
+  perimenopause.
+- Optional reminder notifications for your period, your fertile window or
+  your pill, scheduled locally on the device.
+- Encrypted backup and restore (protected by your PIN), and a CSV export for
+  your doctor, generated on your device.
+- PIN lock, and a wipe that erases everything in a few taps.
+- Your entries stay on your device. There is no account, no advertising, no
+  analytics and no third-party tracking, and nothing is sent to a server.
+
+## Platforms
+
+iOS, Android and web (luna.macaron-software.com, running in the browser).
+The web interface is available in 47 languages, with right-to-left support
+for Arabic, Persian, Hebrew and Urdu; where a translation is incomplete,
+English is shown. The iOS app ships in English and French; the Android app
+in English.
+
+## Links
+
+- App: https://luna.macaron-software.com
+- Landing / overview: https://landing.luna.macaron-software.com
+- Privacy policy: https://luna.macaron-software.com/en/privacy/
+- Terms of use: https://luna.macaron-software.com/en/terms/
+- Support: https://luna.macaron-software.com/en/support/
+
+## Legal pages in 66 languages
+
+Privacy, terms and support pages are published for 66 languages under
+https://luna.macaron-software.com/<lang>/privacy/ (also /terms/ and
+/support/), where lang is one of: am, ar, bg, bn, ca, cs, da, de, el, en, es,
+es-MX, fa, fi, fil, fr, fr-CA, ha, he, hi, hr, hu, hy, id, it, ja, ka, km, ko,
+ku, lo, lt, lv, mr, ms, my, nb, ne, nl, pl, ps, pt, pt-PT, ro, ru, si, sk, sl,
+so, sq, sr, sv, sw, ta, te, th, tl, tr, uk, ur, uz, vi, yo, zh, zh-CN, zh-TW.
+The English pages are the reference texts.

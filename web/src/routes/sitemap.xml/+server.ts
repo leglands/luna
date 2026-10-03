@@ -1,4 +1,5 @@
 import type { RequestHandler } from './$types';
+import { readdirSync } from 'node:fs';
 
 export const prerender = true;
 
@@ -14,6 +15,19 @@ const LOCALES = [
 const PAGES = [
   { path: '/', priority: '1.0', changefreq: 'weekly' },
 ];
+
+// Pages légales localisées : dossiers statiques /<lang>/{privacy,terms,support}/
+// générés par scripts/gen-legal.py depuis src/lib/legal/<lang>.json (66 langues).
+const LEGAL_LANGS = (() => {
+  try {
+    return readdirSync('src/lib/legal')
+      .filter((f) => f.endsWith('.json'))
+      .map((f) => f.replace(/\.json$/, ''))
+      .sort();
+  } catch {
+    return [];
+  }
+})();
 
 function hreflangLinks(path: string): string {
   const url = `${BASE}${path}`;
@@ -34,12 +48,23 @@ ${hreflangLinks(path)}
   </url>`
   ).join('\n');
 
+  const legalUrls = LEGAL_LANGS.flatMap((lang) =>
+    ['privacy', 'terms', 'support'].map(
+      (doc) => `  <url>
+    <loc>${BASE}/${lang}/${doc}/</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>`
+    )
+  ).join('\n');
+
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
 >
 ${urls}
+${legalUrls}
 </urlset>`;
 
   return new Response(body, {

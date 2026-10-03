@@ -1,0 +1,35 @@
+{
+  "privacy": {
+    "title": "Zásady ochrany osobných údajov",
+    "meta_title": "Zásady ochrany osobných údajov - Luna",
+    "summary_device": "Všetky údaje o vašom cykle zostávajú vo vašom zariadení: žiadny účet, žiadny server.",
+    "summary_no_sell": "Vaše osobné údaje nikdy nezhromažďujeme, nepredávame ani nezdieľame.",
+    "summary_sync": "Každá záloha, ktorú vytvoríte, je zašifrovaná skôr, než opustí vaše zariadenie. Nedokážeme ju prečítať.",
+    "summary_delete": "Všetko natrvalo vymažete vymazaním údajov v Nastaveniach alebo odinštalovaním aplikácie.",
+    "full": "Úplné zásady",
+    "updated": "Posledná aktualizácia: október 2026",
+    "local_first": "Luna je aplikácia s prístupom local-first. Osobné údaje sa ukladajú výhradne vo vašom zariadení: v zašifrovanej lokálnej databáze na iOS a Androide (SQLCipher) a v zašifrovanom úložisku prehliadača na webe (AES-256-GCM). Neexistuje žiadny účet a Macaron Software nemá o vašich údajoch žiadne poznatky.",
+    "no_trackers": "Nepoužívajú sa žiadne cookies, analytické nástroje, reklama ani sledovacie prvky tretích strán.",
+    "contact": "Kontakt:"
+  },
+  "terms": {
+    "title": "Podmienky používania",
+    "meta_title": "Podmienky používania - Luna",
+    "point_tool": "Luna je osobný nástroj na sledovanie cyklu, nie je antikoncepcia ani lekárska rada.",
+    "point_data": "Vaše údaje patria vám; nemáme k nim prístup.",
+    "point_free": "Používanie je bezplatné; predplatné sa nevyžaduje.",
+    "point_open_source": "Otvorený zdrojový kód pod licenciami MIT a Apache-2.0.",
+    "full": "Úplné podmienky",
+    "updated": "Posledná aktualizácia: október 2026 - Verzia 1.0",
+    "body_no_advice": "Luna neposkytuje lekársku radu, diagnostiku ani liečbu a nie je metódou antikoncepcie. V prípade zdravotných ťažkostí sa vždy poraďte s kvalifikovaným poskytovateľom zdravotnej starostlivosti.",
+    "body_as_is": "Aplikácia sa poskytuje tak, ako je, bez záruk. Predpovede cyklu a odhady plodného okna môžu byť nepresné; Macaron Software nezodpovedá za rozhodnutia prijaté na základe informácií zaznamenaných v aplikácii.",
+    "license": "Licencia:"
+  },
+  "support": {
+    "title": "Podpora",
+    "help": "Potrebujete pomoc?",
+    "contact": "Kontaktujte nás",
+    "response_time": "Zvyčajne odpovedáme do 24 hodín."
+  },
+  "lang_name": "sk"
+}
