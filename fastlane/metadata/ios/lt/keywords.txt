@@ -1,1 +1,1 @@
-[lt] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+nėštumas,ciklas,ovuliacija,vaisingumas,kalendorius,simptomai,privatumas,šifravimas,temperatūra,PMS

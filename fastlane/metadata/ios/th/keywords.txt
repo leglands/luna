@@ -1,1 +1,1 @@
-[th] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+ประจำเดือน,วัยทอง,ไข่ตก,ตกไข่,ตั้งครรภ์,ปฏิทิน,สุขภาพสตรี,ความเป็นส่วนตัว,ความปลอดภัย,ออฟไลน์,อาการ

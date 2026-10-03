@@ -1,1 +1,15 @@
-[vi] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.
+Luna là ứng dụng theo dõi kinh nguyệt đặt quyền riêng tư lên hàng đầu: toàn bộ dữ liệu được mã hóa và chỉ lưu trên thiết bị của bạn. Theo dõi chu kỳ, dự đoán kỳ kinh tiếp theo, ghi lại triệu chứng, tâm trạng và nhiệt độ cơ thể cơ sở. Không cần mạng: dữ liệu không bao giờ rời khỏi điện thoại.
+
+Tính năng:
+- Dự đoán chu kỳ kèm khoảng tin cậy và nhắc nhở
+- Ghi chép hằng ngày triệu chứng, tâm trạng và năng lượng
+- Biểu đồ nhiệt độ cơ thể cơ sở (BBT)
+- Ước lượng ngày rụng trứng và cửa sổ sinh sản
+- Nhiều chế độ: chu kỳ đều, đang cố gắng thụ thai, mang thai, tiền mãn kinh
+- Chế độ Tĩnh lặng giúp giảm lo âu
+- Sao lưu và phục hồi được mã hóa
+- Xóa dữ liệu khẩn cấp (nút hoảng loạn)
+- 4 giao diện (sáng, tối, tương phản)
+- Hỗ trợ VoiceOver và Dynamic Type
+
+Luna dùng mã hóa AES-256-GCM và không bao giờ kết nối internet. Không cần tài khoản. Không thu thập dữ liệu.

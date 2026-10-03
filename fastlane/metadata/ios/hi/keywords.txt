@@ -1,1 +1,1 @@
-[hi] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+ट्रैकर,मासिक धर्म,माहवारी,ओव्यूलेशन,गर्भावस्था,लक्षण,कैलेंडर,रिमाइंडर,महिला,स्वास्थ्य,निजता,सुरक्षित

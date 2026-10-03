@@ -1,1 +1,15 @@
-[tr] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.
+Luna, gizliliği ön planda tutan bir adet takvimidir: tüm verileriniz cihazınızda şifreli olarak kalır. Döngünüzü takip edin, bir sonraki adetinizi önceden görün; belirtileri, ruh halinizi ve bazal vücut sıcaklığınızı kaydedin. Ağ yok: verileriniz telefondan hiç çıkmaz.
+
+Özellikler:
+- Güven aralıklarıyla döngü tahmini
+- Belirti, ruh hali ve enerjinin günlük kaydı
+- Bazal vücut sıcaklığı (BVT) grafiği
+- Yumurtlama ve doğurganlık penceresi tahmini
+- Birden çok mod: düzenli döngü, hamile kalmaya çalışma, hamilelik, perimenopoz
+- Kaygıyı azaltan Sakin Mod
+- Şifreli yedekleme ve geri yükleme
+- Acil veri silme (panik düğmesi)
+- 4 tema (açık/koyu/kontrast)
+- VoiceOver ve Dynamic Type desteği
+
+Luna AES-256-GCM şifreleme kullanır ve internete asla bağlanmaz. Hesap gerekmez. Veri toplama yok.

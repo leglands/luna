@@ -1,1 +1,1 @@
-[mk] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+менструација,бременост,овулација,плодност,календар,приватност,шифрирање,симптоми,здравје,офлајн,ПМС

@@ -1,1 +1,1 @@
-[ja] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.
+プライバシー優先の周期管理。AES-256暗号化。クラウドなし。追跡なし。

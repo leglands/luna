@@ -1,1 +1,1 @@
-[ur] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+ماہواری,حیض,ٹریکر,بیضہ ریزی,زرخیزی,یاد دہانی,کیلنڈر,رازداری,خفیہ کاری,آف لائن,حمل,درجہ حرارت,صحت

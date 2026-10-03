@@ -1,1 +1,1 @@
-règles,cycle,tracker,ménstruel,fertilité,ovulation,TCB,confidentialité,chiffré
+menstruations,ovulation,fertilité,symptômes,calendrier,rappel,confidentialité,chiffrement,spm,tcb

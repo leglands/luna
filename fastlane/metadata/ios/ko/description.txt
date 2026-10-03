@@ -1,1 +1,17 @@
-[ko] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.
+Luna는 프라이버시를 중시하는 생리 주기 앱으로, 모든 데이터를 기기 안에 암호화해 저장합니다. 주기를 기록하고 다음 생리를 예측하며, 증상과 기분, 기초 체온을 매일 기록할 수 있습니다. 계정 가입이 필요 없고 네트워크에도 연결하지 않아, 입력한 데이터는 휴대폰 밖으로 나가지 않습니다.
+
+기능:
+- 신뢰 구간이 포함된 주기 예측으로 다음 생리일 확인
+- 증상·기분·컨디션·에너지를 매일 기록하고 변화 확인
+- 기초 체온(BBT) 그래프로 저온기와 고온기 확인
+- 배란일과 가임기 추정
+- 여러 기록 모드: 규칙적 주기, 임신 준비 중, 임신 중, 폐경 이행기
+- 불안과 스트레스를 줄이는 차분 모드
+- 생리 알림과 달력 보기
+- 암호화 백업 및 복원
+- 긴급 상황에서 데이터를 지우는 패닉 버튼
+- 여러 테마(라이트, 다크, 고대비)
+- 인터넷 없이 작동하며 비행기 모드에서도 사용 가능
+- VoiceOver 및 Dynamic Type 지원
+
+Luna는 AES-256-GCM 암호화를 사용하며 인터넷에 연결하지 않습니다. 계정이 필요 없고 데이터 수집도 하지 않습니다.

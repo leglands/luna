@@ -1,1 +1,16 @@
-[lt] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.
+Luna, privatumą pirmiausia kelianti ciklo stebėjimo programėlė: visi duomenys saugomi užšifruoti tavo įrenginyje. Stebėk ciklą, numatyk kitas mėnesines ir fiksuok simptomus, nuotaiką, PMS bei bazinę kūno temperatūrą. Jokio tinklo: tavo duomenys niekada nepalieka telefono.
+
+Funkcijos:
+- Ciklo prognozė su pasikliautinaisiais intervalais
+- Vaisingumo lango ir ovuliacijos įvertinimas
+- Kasdienis simptomų, nuotaikos ir energijos fiksavimas
+- Bazinės kūno temperatūros (BBT) grafikas
+- Kalendorius su priminimais apie kitas mėnesines
+- Keli režimai: Reguliarus, Bandymas pastoti, Nėštumas, Perimenopauzė
+- Ramybės režimas nerimui ir stresui mažinti
+- Užšifruotas atsarginis kopijavimas ir atkūrimas
+- Skubus duomenų ištrynimas (panikos mygtukas)
+- Keli dizainai (šviesus/tamsus/kontrastinis)
+- „VoiceOver“ ir „Dynamic Type“ palaikymas
+
+Luna naudoja AES-256-GCM šifravimą ir niekada nesijungia prie interneto. Jokios paskyros. Jokio duomenų rinkimo.

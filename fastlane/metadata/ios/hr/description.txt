@@ -1,1 +1,16 @@
-[hr] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.
+Luna je tracker ciklusa usmjeren na privatnost: sve tvoje podatke čuva šifrirane na tvom uređaju. Prati ciklus, predvidi sljedeću menstruaciju i bilježi simptome, raspoloženje i bazalnu tjelesnu temperaturu. Bez mreže: tvoji podaci nikad ne napuštaju tvoj telefon.
+
+Značajke:
+- Predviđanje ciklusa s intervalima pouzdanosti
+- Procjena plodnog prozora i ovulacije
+- Svakodnevno bilježenje simptoma, raspoloženja i energije
+- Grafikon bazalne tjelesne temperature (BBT)
+- Kalendar s podsjetnicima na sljedeću menstruaciju
+- Nekoliko načina: Redovit, Pokušaj začeća, Trudnoća, Perimenopauza
+- Mirni način za smanjenje tjeskobe i stresa
+- Šifrirana sigurnosna kopija i vraćanje
+- Hitno brisanje podataka (panik gumb)
+- Nekoliko tema (svijetla/tamna/kontrast)
+- Podrška za VoiceOver i Dynamic Type
+
+Luna koristi šifriranje AES-256-GCM i nikad se ne povezuje s internetom. Bez računa. Bez prikupljanja podataka.

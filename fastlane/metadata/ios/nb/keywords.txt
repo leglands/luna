@@ -1,1 +1,0 @@
-[nb] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted

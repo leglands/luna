@@ -1,1 +1,1 @@
-[fi] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+kuukautiset,pms,ovulaatio,hedelmällisyys,raskaus,oireet,kalenteri,yksityisyys,salaus,terveys

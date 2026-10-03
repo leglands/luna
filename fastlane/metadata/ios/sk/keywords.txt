@@ -1,1 +1,1 @@
-[sk] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+menštruácia,PMS,plodnosť,ovulácia,príznaky,kalendár,súkromie,šifrovanie,offline,zdravie,teplota

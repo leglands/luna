@@ -1,1 +1,1 @@
-[et] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+menstruatsioon,periood,ovulatsioon,viljakus,rasedus,sümptomid,kalender,tervis,privaatsus,kaitstud

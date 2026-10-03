@@ -1,1 +1,1 @@
-[zh-Hans] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+月经,例假,大姨妈,周期,排卵,备孕,基础体温,症状,提醒,日历,女性健康,隐私,安全,离线,怀孕

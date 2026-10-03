@@ -1,1 +1,15 @@
-[ms] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.
+Luna ialah penjejak haid yang mengutamakan privasi: semua data anda disimpan dalam bentuk disulitkan pada peranti anda sendiri. Jejak kitaran anda, ramalkan haid seterusnya dan catat simptom, mood serta suhu badan basal. Sifar rangkaian: data anda tidak pernah meninggalkan telefon anda.
+
+Ciri-ciri:
+- Ramalan kitaran dengan selang keyakinan
+- Penjejakan harian simptom, mood dan tenaga
+- Graf suhu badan basal (BBT)
+- Anggaran tetingkap kesuburan dan ovulasi
+- Beberapa mod: kitaran biasa, cuba hamil, kehamilan, perimenopaus
+- Mod Tenang untuk mengurangkan kebimbangan
+- Sandaran dan pemulihan disulitkan
+- Pemadaman data kecemasan (butang panik)
+- 4 tema (cerah, gelap, kontras)
+- Sokongan VoiceOver dan Dynamic Type
+
+Luna menggunakan penyulitan AES-256-GCM dan tidak pernah menyambung ke internet. Tiada akaun diperlukan. Tiada pengumpulan data.

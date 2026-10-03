@@ -1,1 +1,1 @@
-[tr] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+adet,regl,hamilelik,yumurtlama,doğurganlık,belirti,takvim,gizlilik,şifreleme,çevrimdışı,sağlık,PMS

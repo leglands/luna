@@ -1,1 +1,1 @@
-[ms] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+haid,PMS,kesuburan,ovulasi,kalendar,privasi,penyulitan,simptom,luar talian,kesihatan,kehamilan

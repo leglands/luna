@@ -1,10 +1,16 @@
-LUNA — application de suivi du cycle menstruel avec respect total de la vie privée. Vos données ne quittent jamais votre appareil, chiffrées AES-256.
+Luna est une application de suivi du cycle qui garde toutes vos données chiffrées sur votre appareil. Suivez votre cycle, anticipez vos prochaines règles, notez vos symptômes, votre humeur et votre température basale. Zéro réseau : vos données ne quittent jamais votre téléphone.
 
-FONCTIONNALITÉS
-Suivi du cycle et des symptômes, graphique TCB, humeur
-4 modes : Régulier, TTC, Grossesse, Périménopause
-Fenêtre fertile et ovulation
+Fonctionnalités
+- Prédiction du cycle avec intervalles de confiance
+- Estimation de la fenêtre de fertilité et de l'ovulation
+- Suivi quotidien des symptômes, de l'humeur et de l'énergie
+- Graphique de température corporelle basale (TCB)
+- Rappels de vos prochaines règles
+- Plusieurs modes : cycle régulier, désir de grossesse, grossesse, périménopause
+- Mode Calme pour réduire l'anxiété
+- Sauvegarde et restauration chiffrées
+- Effacement d'urgence des données (bouton panique)
+- 4 thèmes (clair, sombre, contraste)
+- Prise en charge de VoiceOver et Dynamic Type
 
-VIE PRIVÉE
-AES-256, sans compte, sans nuage, sans publicité
-Code source ouvert : https://github.com/macaron-software/luna
+Luna utilise un chiffrement AES-256-GCM et ne se connecte jamais à internet. Aucun compte requis. Aucune collecte de données.

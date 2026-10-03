@@ -1,1 +1,1 @@
-[pt-BR] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+menstruação,gravidez,fertilidade,ovulação,TPM,cólica,sintomas,calendário,privacidade,criptografia

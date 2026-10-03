@@ -1,1 +1,15 @@
-[sk] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.
+Luna je kalendár menštruácie postavený na ochrane súkromia: všetky údaje zostávajú zašifrované vo vašom zariadení. Sledujte svoj cyklus, predpovedajte ďalšiu menštruáciu a zaznamenávajte príznaky, náladu aj bazálnu teplotu. Nula siete: vaše údaje nikdy neopustia telefón.
+
+Funkcie:
+- Predpoveď cyklu s intervalmi spoľahlivosti
+- Denné záznamy príznakov, nálady a energie
+- Graf bazálnej telesnej teploty (BTT)
+- Odhad plodného okna a ovulácie
+- Viac režimov: pravidelný cyklus, snaženie o počatie, tehotenstvo, perimenopauza
+- Tichý režim na zmiernenie úzkosti
+- Šifrovaná záloha a obnovenie
+- Núdzové vymazanie údajov (tlačidlo paniky)
+- 4 témy (svetlá, tmavá, kontrast)
+- Podpora VoiceOver a Dynamic Type
+
+Luna používa šifrovanie AES-256-GCM a nikdy sa nepripája na internet. Žiadny účet. Žiadne zbieranie údajov.

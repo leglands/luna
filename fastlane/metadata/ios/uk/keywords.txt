@@ -1,1 +1,1 @@
-[uk] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+місячні,менструація,фаза,овуляція,нагадування,календар,приватність,шифрування,вагітність,ПМС,офлайн

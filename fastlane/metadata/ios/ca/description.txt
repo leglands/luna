@@ -1,1 +1,16 @@
-[ca] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.
+Luna és un seguiment de la regla centrat en la privacitat: conserva totes les dades xifrades al teu dispositiu. Segueix el teu cicle, prediu la propera menstruació i anota els símptomes, l'estat d'ànim i la temperatura corporal basal. Sense xarxa: les teves dades no surten mai del telèfon.
+
+Funcions:
+- Predicció del cicle amb intervals de confiança
+- Estimació de la finestra de fertilitat i de l'ovulació
+- Registre diari de símptomes, estat d'ànim i energia
+- Gràfic de la temperatura corporal basal (TCB)
+- Calendari amb recordatoris de la propera regla
+- Diversos modes: Regular, Busca d'embaràs, Embaràs, Perimenopausa
+- Mode Calma per reduir l'ansietat
+- Còpia de seguretat i restauració xifrades
+- Esborrat d'emergència de les dades (botó de pànic)
+- Diversos temes (clar, fosc, alt contrast)
+- Compatible amb VoiceOver i Dynamic Type
+
+Luna fa servir xifratge AES-256-GCM i no es connecta mai a internet. Sense compte. Sense recollida de dades.

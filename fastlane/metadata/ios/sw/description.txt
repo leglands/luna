@@ -1,1 +1,15 @@
-[sw] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.
+Luna ni kalenda ya hedhi inayotanguliza usiri: data yako yote huhifadhiwa ikiwa imesimbwa kwa fiche kwenye kifaa chako pekee. Fuatilia mzunguko wako, tabiri hedhi ijayo na rekodi dalili, hisia na joto la msingi la mwili. Hakuna mtandao: data yako haitoki kwenye simu yako kamwe.
+
+Vipengele:
+- Utabiri wa mzunguko na ukumbusho, pamoja na vipindi vya uhakika
+- Kurekodi kila siku dalili, hisia na nguvu
+- Grafu ya joto la msingi la mwili (BBT)
+- Ukadiriaji wa kipindi cha uzazi na ovulisheni
+- Hali kadhaa: mzunguko wa kawaida, kujaribu kupata mimba, ujauzito, perimenopauza
+- Hali ya Utulivu kupunguza wasiwasi
+- Hifadhi na urejeshaji uliosimbwa
+- Kufuta data kwa dharura (kitufe cha hofu)
+- Mandhari 4 (angavu, giza, utofautishaji)
+- Msaada wa VoiceOver na Dynamic Type
+
+Luna hutumia usimbaji fiche wa AES-256-GCM na haiunganishi kamwe na intaneti. Hakuna akaunti. Hakuna kukusanya data.

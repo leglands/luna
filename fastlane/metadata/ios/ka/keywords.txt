@@ -1,1 +1,1 @@
-[ka] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+მენსტრუაცია,პმს,ოვულაცია,ნაყოფიერება,ორსულობა,სიმპტომები,კალენდარი,შეხსენება,უსაფრთხოება,დაშიფვრა

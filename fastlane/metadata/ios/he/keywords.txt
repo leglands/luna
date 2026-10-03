@@ -1,1 +1,1 @@
-[he] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+מעקב,וסת,ביוץ,פוריות,הריון,תסמינים,יומן,תזכורות,רווחה,נשים,פרטיות,הצפנה,אופליין

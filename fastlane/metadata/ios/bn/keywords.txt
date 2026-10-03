@@ -1,1 +1,1 @@
-[bn] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+মাসিক,পিরিয়ড,ঋতুস্রাব,ক্যালেন্ডার,ডিম্বস্ফোটন,উর্বরতা,লক্ষণ,স্বাস্থ্য,রিমাইন্ডার,নারী,গোপনীয়তা

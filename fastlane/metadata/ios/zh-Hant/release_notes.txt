@@ -1,1 +1,1 @@
-[zh-Hant] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.
+首個版本。

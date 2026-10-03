@@ -1,1 +1,1 @@
-cycle,menstruations,fertilité,ovulation,confidentialité,hors ligne
+menstruations,règles,fertilité,ovulation,symptômes,calendrier,rappels,confidentialité,grossesse,spm

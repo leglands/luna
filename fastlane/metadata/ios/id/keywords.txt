@@ -1,1 +1,1 @@
-[id] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+haid,menstruasi,pms,ovulasi,kesuburan,gejala,kalender,pengingat,kesehatan,wanita,privasi,hamil

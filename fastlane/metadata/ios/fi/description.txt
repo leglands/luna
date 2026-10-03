@@ -1,1 +1,16 @@
-[fi] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.
+Luna on yksityisyyden edellä kulkeva kuukautisten seurantasovellus: kaikki tietosi säilytetään salattuina omalla laitteellasi. Seuraa kiertoasi, ennusta seuraavat kuukautiset ja kirjaa oireet, mieliala ja peruslämpötila. Ei verkkoa: tietosi eivät koskaan poistu puhelimestasi.
+
+Ominaisuudet:
+- Kierron ennuste luottamusväleineen
+- Hedelmällisyysikkunan ja ovulaation arvio
+- Päivittäinen oireiden, mielialan, PMS-oireiden ja energian kirjaus
+- Peruslämpötilakäyrä (BBT)
+- Kalenteri ja muistutukset seuraavista kuukautisista
+- Useita tiloja: Säännöllinen, Raskautta yrittävä, Raskaus, Perimenopaussi
+- Rauha-tila ahdistuksen ja stressin vähentämiseen
+- Salattu varmuuskopiointi ja palautus
+- Hätäpoisto (paniikkipainike)
+- Useita teemoja (vaalea, tumma, kontrasti)
+- VoiceOver- ja Dynamic Type -tuki
+
+Luna käyttää AES-256-GCM-salausta eikä koskaan yhdisty internetiin. Ei tiliä. Ei tiedonkeruuta.

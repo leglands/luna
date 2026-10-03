@@ -1,3 +1,0 @@
-• Anello ciclo segmentato con codice colore
-• Garanzie di privacy migliorate
-• Archiviazione crittografata AES-256-GCM

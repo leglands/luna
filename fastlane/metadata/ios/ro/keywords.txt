@@ -1,1 +1,1 @@
-[ro] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+menstruație,sarcină,fertilitate,ovulație,simptome,calendar,confidențialitate,criptare,offline,PMS

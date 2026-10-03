@@ -1,1 +1,1 @@
-ciclo,período,fertilidad,ovulación,privacidad,offline,cifrado,salud
+regla,período,menstruación,ovulación,fertilidad,embarazo,síntomas,calendario,privacidad,encriptado

@@ -1,1 +1,1 @@
-[vi] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.
+Phiên bản đầu tiên.

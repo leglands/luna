@@ -1,1 +1,1 @@
-[el] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+περίοδος,ΠΜΣ,ωορρηξία,γονιμότητα,υγεία,συμπτώματα,ημερολόγιο,γυναίκα,ιδιωτικότητα,κρυπτογράφηση

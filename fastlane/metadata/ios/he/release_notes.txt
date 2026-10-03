@@ -1,1 +1,1 @@
-[he] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.
+גרסה ראשונה.

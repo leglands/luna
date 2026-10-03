@@ -1,1 +1,16 @@
-[da] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.
+Luna er en periodetracker med privatlivet i første række: alle dine data opbevares krypteret på din egen enhed. Følg din cyklus, forudsig din næste menstruation og registrér symptomer, humør, PMS og basal kropstemperatur. Ingen netværksforbindelse: dine data forlader aldrig din telefon.
+
+Funktioner:
+- Cyklusprognose med konfidensintervaller
+- Estimering af frugtbarhedsvindue omkring ægløsning
+- Daglig registrering af symptomer, humør og energi
+- Grafik for basal kropstemperatur (BBT)
+- Kalender med påmindelser om næste periode
+- Flere tilstande: Regelmæssig, Forsøger at blive gravid, Graviditet, Perimenopause
+- Rolig-tilstand, der mindsker angst og stress
+- Krypteret backup og gendannelse
+- Nødsletning af data (panikknap)
+- Flere temaer (lyst, mørkt, kontrast)
+- Understøtter VoiceOver og Dynamic Type
+
+Luna bruger AES-256-GCM-kryptering og opretter aldrig forbindelse til internettet. Ingen konto. Ingen dataindsamling.

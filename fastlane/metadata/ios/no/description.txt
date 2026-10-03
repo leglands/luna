@@ -1,10 +1,15 @@
-LUNA — personvernfokusert app for menstruasjonssyklus. Data forlater aldri enheten din, kryptert med AES-256.
+Luna er en menstruasjonsapp med personvern i fokus som holder alle dataene dine kryptert på enheten din. Følg syklusen, forutsi neste menstruasjon og logg symptomer, humør og basal kroppstemperatur. Null nettverk: dataene dine forlater aldri telefonen.
 
-FUNKSJONER
-Menstruasjons- og symptomsporing, BBT-diagram, humørsporing
-4 modi: Regelmessig, TTC, Graviditet, Perimenopause
-Fertilitetsvindu og eggløsning
+Funksjoner:
+- Syklusprognose med konfidensintervaller
+- Daglig logging av symptomer, humør og energi
+- Graf for basal kroppstemperatur (BBT)
+- Beregning av fruktbarhetsvindu og eggløsning
+- Flere moduser: vanlig syklus, prøver å bli gravid, graviditet, perimenopause
+- Rolig modus som demper angst
+- Kryptert sikkerhetskopi og gjenoppretting
+- Nødsletting av data (panikknapp)
+- 4 temaer (lys/mørk/kontrast)
+- Støtte for VoiceOver og Dynamic Type
 
-PERSONVERN
-AES-256, ingen konto, ingen sky, ingen reklamer, ingen sporere
-Åpen kildekode: https://github.com/macaron-software/luna
+Luna bruker AES-256-GCM-kryptering og kobler aldri til internett. Ingen konto kreves. Ingen datainnsamling.

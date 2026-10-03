@@ -1,1 +1,1 @@
-[ja] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+婦人科,月経,排卵,妊活,基礎体温,妊娠,記録,カレンダー,通知,女性,健康,周期予測,プライバシー,ローカル保存,オフライン

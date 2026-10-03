@@ -1,1 +1,1 @@
-[fa] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+پریود,قاعدگی,سیکل,تخمک‌گذاری,باروری,بارداری,علائم,تقویم,یادآوری,سلامت,بانوان,شخصی,امنیت,ترکر

@@ -1,1 +1,16 @@
-[fil] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.
+Ang Luna ay period tracker na inuuna ang privacy: naka-encrypt ang lahat ng datos mo sa sarili mong device. Subaybayan ang cycle mo, hulaan ang susunod na regla, at itala ang sintomas, mood, at basal body temperature. Walang internet: hindi kailanman lumalabas ang datos mo sa telepono mo.
+
+Mga Tampok:
+- Prediksiyon ng cycle na may confidence intervals
+- Tantiya ng fertility window at ovulasyon
+- Araw-araw na pagtala ng sintomas, mood, at enerhiya
+- Chart ng basal body temperature (BBT)
+- Kalendaryo na may paalala para sa susunod na regla
+- Maraming mode: Regular, Sumusubok magbuntis, Pagbubuntis, Perimenopause
+- Calm Mode para mabawasan ang pagkabalisa
+- Naka-encrypt na backup at restore
+- Emergency na pagbura ng datos (panic button)
+- Ilang tema (maliwanag, madilim, contrast)
+- Suporta sa VoiceOver at Dynamic Type
+
+Gumagamit ang Luna ng AES-256-GCM encryption at hindi kailanman kumokonekta sa internet. Walang account. Walang pangongolekta ng datos.

@@ -1,1 +1,15 @@
-[pt-PT] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.
+O Luna é um calendário menstrual focado na privacidade: todos os seus dados ficam encriptados no seu dispositivo. Acompanhe o ciclo, preveja as próximas regras e registe sintomas, humor e temperatura basal. Zero rede: os seus dados nunca saem do telemóvel.
+
+Funcionalidades:
+- Previsão do ciclo com intervalos de confiança
+- Registo diário de sintomas, humor e energia
+- Gráfico de temperatura basal corporal (TBC)
+- Estimativa da janela de fertilidade e da ovulação
+- Vários modos: ciclo regular, a tentar engravidar, gravidez, perimenopausa
+- Modo Calmo para reduzir a ansiedade
+- Cópia de segurança e restauro encriptados
+- Eliminação de emergência dos dados (botão de pânico)
+- 4 temas (claro, escuro, contraste)
+- Suporte para VoiceOver e Dynamic Type
+
+O Luna usa encriptação AES-256-GCM e nunca se liga à internet. Não precisa de conta. Nenhuma recolha de dados.

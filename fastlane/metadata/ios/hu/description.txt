@@ -1,1 +1,16 @@
-[hu] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.
+A Luna adatvédelem-központú cikluskövető, amely minden adatodat titkosítva, a saját készülékeden tárolja. Kövesd a ciklusodat, jelezd előre a következő menstruációt, és rögzíts tüneteket, hangulatot, PMS-t és bazális testhőmérsékletet. Nincs hálózat: az adataid soha nem hagyják el a telefonodat.
+
+Funkciók:
+- Ciklus-előrejelzés konfidenciaintervallumokkal
+- A termékenységi ablak és az ovuláció becslése
+- Napi tünet-, hangulat- és energia-naplózás
+- Bazális testhőmérséklet (BBT) grafikon
+- Naptár és emlékeztetők a következő menstruációra
+- Több követési mód: Rendszeres, Babatervezés, Terhesség, Perimenopauza
+- Nyugodt mód a szorongás és a stressz csökkentésére
+- Titkosított mentés és visszaállítás
+- Vészhelyzeti adattörlés (pánikgomb)
+- Több téma (világos, sötét, kontraszt)
+- VoiceOver- és Dynamic Type-támogatás
+
+A Luna AES-256-GCM-titkosítást használ, és soha nem csatlakozik az internetre. Nincs fiók. Nincs adatgyűjtés.

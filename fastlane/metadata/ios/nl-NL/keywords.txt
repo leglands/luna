@@ -1,1 +1,1 @@
-[nl-NL] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+menstruatie,krampen,vruchtbaarheid,eisprong,kalender,privacy,versleuteling,offline,zwangerschap,PMS

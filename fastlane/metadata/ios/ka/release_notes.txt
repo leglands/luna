@@ -1,1 +1,1 @@
-[ka] Privacy-first cycle tracking. AES-256 encryption. No cloud. No tracking.
+პირველი ვერსია.

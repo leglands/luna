@@ -1,1 +1,16 @@
-[id] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.
+Luna adalah pelacak haid yang mengutamakan privasi: semua datamu tersimpan terenkripsi di perangkatmu sendiri. Lacak siklus menstruasimu, perkirakan haid berikutnya, dan catat gejala, suasana hati, serta suhu basal tubuh. Tanpa internet: datamu tidak pernah keluar dari ponselmu.
+
+Fitur:
+- Prediksi siklus dengan interval keyakinan
+- Perkiraan jendela kesuburan dan ovulasi
+- Pencatatan harian gejala, PMS, suasana hati, dan energi
+- Grafik suhu basal tubuh (BBT)
+- Kalender dengan pengingat haid berikutnya
+- Beberapa mode: Reguler, Mencoba hamil, Kehamilan, Perimenopause
+- Mode Tenang untuk mengurangi kecemasan dan stres
+- Backup dan pemulihan terenkripsi
+- Hapus data darurat (tombol panik)
+- Beberapa tema (terang, gelap, kontras)
+- Dukungan VoiceOver dan Dynamic Type
+
+Luna memakai enkripsi AES-256-GCM dan tidak pernah terhubung ke internet. Tanpa akun. Tanpa pengumpulan data.

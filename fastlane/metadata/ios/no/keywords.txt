@@ -1,1 +1,1 @@
-syklus,menstruasjon,fruktbarhet,eggløsning,personvern,offline
+menstruasjon,fruktbarhet,eggløsning,kalender,personvern,kryptering,offline,symptomer,graviditet,PMS

@@ -1,15 +1,16 @@
-Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.
+Luna is a period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network: your data never leaves your phone.
 
 Features:
 - Cycle prediction with confidence intervals
 - Daily symptom, mood, and energy tracking
 - Basal body temperature (BBT) charting
-- Fertile window estimation
+- Period reminders
+- Fertile window and ovulation estimation
 - Multiple tracking modes: Regular, TTC, Pregnant, Perimenopause
 - Calm Mode to reduce anxiety
 - Encrypted backup and restore
 - Emergency data wipe (panic button)
-- 47 languages, 4 themes (light/dark/contrast)
+- 4 themes (light, dark, contrast)
 - VoiceOver and Dynamic Type support
 
-Your privacy matters. Luna uses military-grade encryption (AES-256-GCM) and never connects to the internet. No account required. No data collection. Period.
+Luna uses AES-256-GCM encryption and never connects to the internet. No account required. No data collection.

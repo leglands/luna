@@ -1,1 +1,1 @@
-[zh-Hant] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+月經,生理期,週期,排卵,基礎體溫,備孕,症狀,提醒,行事曆,女性健康,隱私,安全,離線,懷孕,安全期

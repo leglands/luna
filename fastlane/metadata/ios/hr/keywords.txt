@@ -1,1 +1,1 @@
-[hr] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+menstruacija,PMS,ovulacija,plodnost,simptomi,kalendar,podsjetnici,zdravlje,privatnost,šifriranje

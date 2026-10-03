@@ -1,1 +1,15 @@
-[zh-Hans] Luna is a privacy-first period tracker that keeps all your data encrypted on your device. Track your cycle, predict your next period, monitor symptoms, mood, and BBT. Zero network - your data never leaves your phone.
+Luna 是一款注重隐私的经期追踪应用：所有数据都经过加密，只保存在你的设备上，不经过任何服务器。记录周期、预测下次月经、追踪症状、情绪与基础体温，全部在离线状态下完成，数据不会离开你的手机。
+
+功能：
+- 周期预测：根据历史记录估算下次月经日期，并给出置信区间
+- 每日记录症状、情绪与精力
+- 基础体温（BBT）曲线图，用于判断排卵与黄体期
+- 排卵日与易孕窗口估算
+- 多种模式：规律周期、备孕、怀孕、围绝经期
+- 平静模式：温和提示与呼吸练习，缓解经前焦虑和压力
+- 加密备份与恢复，支持导出加密文件
+- 紧急数据擦除（紧急按钮），一键清空全部记录
+- 4 种主题（浅色、深色、高对比度）
+- 支持 VoiceOver 与动态字体
+
+Luna 采用 AES-256-GCM 加密，不会连接互联网，也不读取你的位置或通讯录。无需注册账号，不收集任何数据，也不投放广告。

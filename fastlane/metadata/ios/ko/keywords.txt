@@ -1,1 +1,1 @@
-[ko] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+월경,배란,가임기,예측,달력,증상,알림,여성,프라이버시,암호화,오프라인

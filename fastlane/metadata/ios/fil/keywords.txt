@@ -1,1 +1,1 @@
-[fil] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+regla,buwanang,dalaw,ovulasyon,pagbubuntis,babae,kalendaryo,paalala,sintomas,menstruasyon,privacy

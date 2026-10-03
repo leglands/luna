@@ -1,1 +1,1 @@
-[hu] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+menstruáció,pms,ovuláció,termékenység,terhesség,tünetek,naptár,emlékeztetők,egészség,adatvédelem

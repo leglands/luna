@@ -1,1 +1,1 @@
-[ar-SA] period,cycle,tracker,menstrual,fertility,ovulation,BBT,privacy,encrypted
+حاسبة,حيض,تبويض,خصوبة,حمل,متابعة,تقويم,تذكير,صحة,المرأة,خصوصية,تشفير,بدون إنترنت
