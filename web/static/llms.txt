@@ -37,10 +37,21 @@ estimates computed from the data you enter, and they may be inaccurate.
 ## Platforms
 
 iOS, Android and web (luna.macaron-software.com, running in the browser).
-The web interface is available in 47 languages, with right-to-left support
+The web interface is available in 46 languages, with right-to-left support
 for Arabic, Persian, Hebrew and Urdu; where a translation is incomplete,
 English is shown. The iOS app ships in English and French; the Android app
 in English.
+
+## Device integrations
+
+- Apple Health (HealthKit, iOS): optional and opt-in. Luna can read and write
+  menstrual cycle and basal body temperature data with Apple Health. The data
+  stays on your device under Apple's HealthKit rules, and access can be
+  revoked at any time in iOS Settings.
+- Health Connect (Android): optional and opt-in, same scope. Access can be
+  revoked at any time in Android Settings.
+- iCloud (iOS): optional and opt-in sync to your own private iCloud account
+  (CloudKit, end-to-end encrypted record fields). No server of ours is involved.
 
 ## Links
 
